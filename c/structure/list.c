@@ -4,7 +4,7 @@
 
 typedef struct LNode {
 	int data;
-	struct LNode *next;
+struct LNode *next;
 } LNode, LinkList;
 
 LinkList* ListCreate(void)
