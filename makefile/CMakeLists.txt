@@ -20,3 +20,8 @@ add_executable(${TEST_WRAP} ${SRC})
 #	PRIVATE
 #	-Wl,--wrap=test01_print
 #	)
+
+#set_target_properties(${TEST_WRAP}
+#	PROPERTIES
+#	COMPILE_FLAGS "-Wl,--wrap=test01_print"
+#	)

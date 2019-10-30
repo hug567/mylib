@@ -6,6 +6,7 @@ static int g_test_var = 0;
 void test01_add(void)
 {
 	g_test_var++;
+	test01_print();
 }
 
 void test01_print(void)

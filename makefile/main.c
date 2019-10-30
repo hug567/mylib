@@ -6,6 +6,11 @@ void __wrap_test01_print(void)
 	printf("__wrap_test01_print\n");
 }
 
+void __wrapm_test01_print(void)
+{
+	printf("__wrapm_test01_print\n");
+}
+
 int main()
 {
 	printf("hello makefile!\n");
