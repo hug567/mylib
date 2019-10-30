@@ -1,16 +1,16 @@
-/* 队列 */
+/* 链表 */
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef struct LNode {
 	int data;
-struct LNode *next;
+	struct LNode *next;
 } LNode, LinkList;
 
-LinkList* ListCreate(void)
+LinkList* ListCreate(int val)
 {
 	LinkList *list = (LinkList *)malloc(sizeof(LinkList));
-	list->data = 0;
+	list->data = val;
 	list->next = NULL;
 	return list;
 }
@@ -112,11 +112,10 @@ void ListPrint(LinkList *list)
 int main()
 {
 	int i = 0;
-	int err = 0;
 	int data[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 	int len = sizeof(data) / sizeof(int);
 
-	LinkList *list = ListCreate();
+	LinkList *list = ListCreate(0);
 	for (i = 0; i < len; i++) {
 		ListInsertEnd(list, data[i]);
 	}
