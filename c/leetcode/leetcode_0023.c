@@ -1,4 +1,4 @@
-/* leetcode 21: 合并两个有序链表(简单) */
+/* leetcode 23: 合并K个排序链表(困难) */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,41 +8,9 @@ struct ListNode {
 	struct ListNode *next;
 };
 
-struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
+struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
 {
-	if (l1 == NULL && l2 == NULL) {
-		return NULL;
-	} else if (l1 == NULL) {
-		return l2;
-	} else if (l2 == NULL) {
-		return l1;
-	}
-
-	struct ListNode *head = NULL, *tail = NULL;
-	struct ListNode *min = NULL;
-
-	while (l1 != NULL && l2 != NULL) {
-		if (l1->val < l2->val) {
-			min = l1;
-			l1 = l1->next;
-		} else {
-			min = l2;
-			l2 = l2->next;
-		}
-		if (head == NULL) {
-			head = min;
-			tail = min;
-		} else {
-			tail->next = min;
-			tail = tail->next;
-		}
-	}
-	if (l1 != NULL) {
-		tail->next = l1;
-	} else if (l2 != NULL) {
-		tail->next = l2;
-	}
-
+	struct ListNode *head = NULL;
 	return head;
 }
 
@@ -53,6 +21,8 @@ int main()
 	int val2[] = {1, 3, 4};
 	struct ListNode *l1 = NULL, *l2 = NULL;
 	struct ListNode *next = NULL, *tmp = NULL;
+	int listsSize = 3;
+	struct ListNode *lists[3];
 
 	/* 构造链表 */
 	for (i = 0; i < sizeof(val1) / sizeof(int); i++) {
@@ -95,7 +65,7 @@ int main()
 	}
 	printf("\n");
 
-	tmp = mergeTwoLists(l1, l2);
+	tmp = mergeKLists(lists, listsSize);
 	printf("merge list : ");
 	while (tmp != NULL) {
 		printf("%d ", tmp->val);
