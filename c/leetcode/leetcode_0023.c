@@ -10,18 +10,8 @@ struct ListNode {
 
 struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
 {
-	int i = 0, j = 0;
+	int i = 0, j = 0, swap = 0;
 	struct ListNode *head = NULL, *tail = NULL, *tmp = NULL;
-
-//	for (i = 0; i < listsSize; i++) {
-//		head = lists[i];
-//		printf("list%d: ", i);
-//		while (head != NULL) {
-//			printf("%d ", head->val);
-//			head = head->next;
-//		}
-//		printf("\n");
-//	}
 
 	int sum = 0;
 	for (i = 0; i < listsSize; i++) {
@@ -31,7 +21,7 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
 			tmp = tmp->next;
 		}
 	}
-	printf("sum = %d\n", sum);
+
 	int *nums = (int *)malloc(sum * sizeof(int));
 	j = 0; head = NULL;
 	for (i = 0; i < listsSize; i++) {
@@ -49,12 +39,7 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
 			tmp = tmp->next;
 		}
 	}
-//	printf("nums: ");
-//	for (i = 0; i < sum; i++) {
-//		printf("%d ", nums[i]);
-//	}
-//	printf("\n");
-	int swap = 0;
+
 	for (i = 0; i < sum - 1; i++) {
 		for (j = i + 1; j < sum; j++) {
 			if (nums[i] > nums[j]) {
@@ -64,11 +49,6 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
 			}
 		}
 	}
-//	printf("nums: ");
-//	for (i = 0; i < sum; i++) {
-//		printf("%d ", nums[i]);
-//	}
-//	printf("\n");
 
 	tmp = head;
 	for (i = 0; i < sum; i++) {
