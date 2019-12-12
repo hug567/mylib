@@ -3,4 +3,4 @@
 *.swp
 *.out
 *.elf
-build*
+build-*
