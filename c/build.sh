@@ -8,5 +8,7 @@ fi
 
 cp -r Makefile ${BUILD_DIR}
 cp -r leetcode ${BUILD_DIR}
+cp -r build.sh ${BUILD_DIR}
+cp -r clean.sh ${BUILD_DIR}
 cd ${BUILD_DIR}
-make
+make build
