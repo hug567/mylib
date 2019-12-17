@@ -3,27 +3,52 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct q_node {
+typedef struct l_node {
 	int data;
-	struct q_node *next;
+	struct l_node *next;
+} ListNode;
+
+typedef struct q_node {
+	ListNode *head;
+	ListNode *tail;
+	int size;
 } MyQueue;
 
-void myQueuePush(MyQueue *obj, int x) {
+MyQueue *myQueueCreate(void)
+{
 	MyQueue *q = (MyQueue *)malloc(sizeof(MyQueue));
-	q->data = x;
-	q->next = NULL;
-	MyQueue *tmp = obj;
-	while (tmp->next != NULL) {
-		tmp = tmp->next;
+	q->head = NULL;
+	q->tail = NULL;
+	q->size = 0;
+	return 0;
+}
+
+void myQueuePush(MyQueue *obj, int x) {
+	if (obj == NULL) {
+		return;
 	}
-	tmp->next = q;
+
+	if (obj->head == NULL) {
+		obj->head = (ListNode *)malloc(sizeof(ListNode));
+		obj->head->data = x;
+		obj->head->next = NULL;
+		obj->tail = obj->head;
+	} else {
+		ListNode *l = (ListNode *)malloc(sizeof(ListNode));
+		l->data = x;
+		l->next = NULL;
+		obj->head->next = l;
+		obj->head = l;
+	}
+	obj->size++;
 }
 
 int myQueuePop(MyQueue *obj) {
-	int data = obj->data;
-	MyQueue *tmp = obj;
-	obj = obj->next;
+	int data = obj->tail->data;
+	ListNode *tmp = obj->tail;
+	obj->tail = obj->tail->next;
 	free(tmp);
+	obj->size--;
 	return data;
 }
 
@@ -36,21 +61,27 @@ typedef struct {
 
 MyStack* myStackCreate() {
 	MyStack *obj = (MyStack *)malloc(sizeof(MyStack));
+	obj->q1 = myQueueCreate();
+	obj->q2 = myQueueCreate();
 }
 
 /** Push element x onto stack. */
 void myStackPush(MyStack* obj, int x) {
-	if (obj->q1 == NULL) {
-		obj->q1 = (MyQueue *)malloc(sizeof(MyQueue));
-		obj->q1->data = x;
-		obj->q1->next = NULL;
-		return;
-	}
 	int data = 0;
-	while (obj->q1 != NULL) {
-		obj->q1 = obj->q1->next;
-		data = myQueuePop(obj->q1);
-		myQueuePush(obj->q1, data);
+
+	if (obj->q1->size == 0) {
+		myQueuePush(obj->q1, x);
+		return;
+	} else {
+		while (obj->q1->size > 0) {
+			data = myQueuePop(obj->q1);
+			myQueuePush(obj->q2, data);
+		}
+		myQueuePush(obj->q1, x);
+		while (obj->q2->size > 0) {
+			data = myQueuePop(obj->q2);
+			myQueuePush(obj->q1, data);
+		}
 	}
 }
 

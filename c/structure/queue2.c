@@ -27,7 +27,7 @@ Queue* QueueCreate(void)
 
 int QueueEmpty(Queue *q)
 {
-	if (q->size == 0) {
+	if (q == NULL || q->size == 0) {
 		return 1;
 	} else {
 		return 0;
@@ -66,17 +66,31 @@ int QueueOut(Queue *q)
 	return data;
 }
 
+void QueueDelete(Queue *q)
+{
+	List *l = q->tail;
+	List *tmp = NULL;
+	while (l != NULL) {
+		tmp = l;
+		free(tmp);
+		l = l->next;
+	}
+	free(q);
+}
+
 int main()
 {
 	int i = 0;
 
-	Queue* queue = QueueCreate();
+	Queue* q = QueueCreate();
 	for (i = 0; i < 10; i++) {
-		QueueIn(queue, i);
+		QueueIn(q, i);
 	}
+	/*QueueDelete(q);
+	q = NULL;*/
 	printf("queue: ");
 	for (i = 0; i < 10; i++) {
-		printf("%d ", QueueOut(queue));
+		printf("%d ", QueueOut(q));
 	}
 	printf("\n");
 
