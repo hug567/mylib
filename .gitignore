@@ -3,4 +3,5 @@
 *.swp
 *.out
 *.elf
+*.exe
 build-*

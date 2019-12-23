@@ -1,4 +1,4 @@
-/* leetcode 225: 用队列实现栈(中等) */
+/* leetcode 225: 用队列实现栈(简单) */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
