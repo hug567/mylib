@@ -3,53 +3,86 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct l_node {
+typedef struct node {
 	int data;
-	struct l_node *next;
-} ListNode;
+	struct node *next;
+} MyList;
 
-typedef struct q_node {
-	ListNode *head;
-	ListNode *tail;
+typedef struct {
+	MyList *head;
+	MyList *tail;
 	int size;
 } MyQueue;
 
-MyQueue *myQueueCreate(void)
+MyQueue *myQueueCreate()
 {
 	MyQueue *q = (MyQueue *)malloc(sizeof(MyQueue));
+	q->size = 0;
 	q->head = NULL;
 	q->tail = NULL;
-	q->size = 0;
-	return 0;
+	return q;
 }
 
-void myQueuePush(MyQueue *obj, int x) {
-	if (obj == NULL) {
+int myQueueEmpty(MyQueue *q)
+{
+	if (q  == NULL || q->size <= 0) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+void myQueuePush(MyQueue *q, int data)
+{
+	if (q == NULL) {
+		printf("queue is NULL\n");
 		return;
 	}
-
-	if (obj->head == NULL) {
-		obj->head = (ListNode *)malloc(sizeof(ListNode));
-		obj->head->data = x;
-		obj->head->next = NULL;
-		obj->tail = obj->head;
+	if (q->size <= 0 || q->head == NULL) {
+		q->head = (MyList *)malloc(sizeof(MyList));
+		q->head->data = data;
+		q->head->next = NULL;
+		q->tail = q->head;
+		q->size = 1;
 	} else {
-		ListNode *l = (ListNode *)malloc(sizeof(ListNode));
-		l->data = x;
+		MyList *l = (MyList *)malloc(sizeof(MyList));
+		l->data = data;
 		l->next = NULL;
-		obj->head->next = l;
-		obj->head = l;
+		q->head->next = l;
+		q->head = l;
+		q->size++;
 	}
-	obj->size++;
 }
 
-int myQueuePop(MyQueue *obj) {
-	int data = obj->tail->data;
-	ListNode *tmp = obj->tail;
-	obj->tail = obj->tail->next;
-	free(tmp);
-	obj->size--;
+int myQueuePop(MyQueue *q)
+{
+	if (myQueueEmpty(q)) {
+		printf("queue is empty\n");
+		return (int)(1U<<(8 * sizeof(int) - 1));
+	}
+
+	MyList *l = q->tail;
+	int data = l->data;
+	q->tail = q->tail->next;
+	q->size--;
+	free(l);
 	return data;
+}
+
+void myQueueFree(MyQueue *q)
+{
+	if (q == NULL || q->head == NULL) {
+		return;
+	}
+	MyList *tmp = q->tail;
+	while (tmp != NULL) {
+		printf("free tmp\n");
+		q->tail = q->tail->next;
+		free(tmp);
+		tmp = q->tail;
+	}
+	free(q);
+	q = NULL;
 }
 
 typedef struct {
@@ -58,46 +91,68 @@ typedef struct {
 } MyStack;
 
 /** Initialize your data structure here. */
-
 MyStack* myStackCreate() {
 	MyStack *obj = (MyStack *)malloc(sizeof(MyStack));
 	obj->q1 = myQueueCreate();
 	obj->q2 = myQueueCreate();
+	return obj;
+}
+
+/** Returns whether the stack is empty. */
+bool myStackEmpty(MyStack* obj) {
+	if (obj == NULL || obj->q1 == NULL || obj->q1->size <= 0) {
+		printf("stack is empty\n");
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /** Push element x onto stack. */
 void myStackPush(MyStack* obj, int x) {
-	int data = 0;
-
-	if (obj->q1->size == 0) {
-		myQueuePush(obj->q1, x);
+	if (obj == NULL || obj->q1 == NULL || obj->q2 == NULL) {
 		return;
+	}
+
+	int tmp;
+	if (obj->q1->size <= 0) {
+		myQueuePush(obj->q1, x);
 	} else {
-		while (obj->q1->size > 0) {
-			data = myQueuePop(obj->q1);
-			myQueuePush(obj->q2, data);
+		while (!myQueueEmpty(obj->q1)) {
+			tmp = myQueuePop(obj->q1);
+			myQueuePush(obj->q2, tmp);
 		}
 		myQueuePush(obj->q1, x);
-		while (obj->q2->size > 0) {
-			data = myQueuePop(obj->q2);
-			myQueuePush(obj->q1, data);
+		while (!myQueueEmpty(obj->q2)) {
+			tmp = myQueuePop(obj->q2);
+			myQueuePush(obj->q1, tmp);
 		}
 	}
 }
 
 /** Removes the element on top of the stack and returns that element. */
 int myStackPop(MyStack* obj) {
+	if (myStackEmpty(obj)) {
+		return (int)(1L << (8 * sizeof(int) - 1));
+	} else {
+		return myQueuePop(obj->q1);
+	}
 }
 
 /** Get the top element. */
 int myStackTop(MyStack* obj) {
-}
-
-/** Returns whether the stack is empty. */
-bool myStackEmpty(MyStack* obj) {
+	if (myStackEmpty(obj)) {
+		return (int)(1L << (8 * sizeof(int) - 1));
+	} else {
+		return obj->q1->tail->data;
+	}
 }
 
 void myStackFree(MyStack* obj) {
+	myQueueFree(obj->q1);
+	myQueueFree(obj->q2);
+	free(obj);
+	obj = NULL;
 }
 
 /**
@@ -116,5 +171,15 @@ void myStackFree(MyStack* obj) {
 
 int main()
 {
+	int i;
+	MyStack *s = myStackCreate();
+	for (i = 0; i < 10; i++) {
+		myStackPush(s, i);
+	}
+	printf("stack: ");
+	for (i = 0; i < 10; i++) {
+		printf("%d ", myStackPop(s));
+	}
+	printf("\n");
 	return 0;
 }
