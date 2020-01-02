@@ -23,7 +23,6 @@ MyStack* myStackCreate(void)
 int myStackEmpty(MyStack *obj)
 {
 	if (obj == NULL || obj->top == NULL) {
-		printf("stack is empty\n");
 		return 1;
 	} else {
 		return 0;
@@ -136,11 +135,30 @@ int myQueuePop(MyQueue* obj) {
 
 /** Get the front element. */
 int myQueuePeek(MyQueue* obj) {
-
+	if (myQueueEmpty(obj)) {
+		printf("queue is empty\n");
+		return (int)(1U<<(8 * sizeof(int) - 1)); /* min int */
+	}
+	int tmp, x;
+	while (!myStackEmpty(obj->s1)) {
+		tmp = myStackPop(obj->s1);
+		myStackPush(obj->s2, tmp);
+	}
+	x = myStackPeek(obj->s2);
+	while (!myStackEmpty(obj->s2)) {
+		tmp = myStackPop(obj->s2);
+		myStackPush(obj->s1, tmp);
+	}
+	return x;
 }
 
 void myQueueFree(MyQueue* obj) {
-
+	if (obj == NULL) {
+		return;
+	}
+	myStackFree(obj->s1);
+	myStackFree(obj->s2);
+	free(obj);
 }
 
 /**
@@ -157,7 +175,7 @@ void myQueueFree(MyQueue* obj) {
  * myQueueFree(obj);
 */
 
-int main()
+int main(int argc, char *argv[])
 {
 	int i;
 
@@ -168,8 +186,20 @@ int main()
 	printf("peek: %d\n", myStackPeek(s));
 	printf("stack: ");
 	for (i = 0; i < 10; i++) {
-		printf("%d ", myStackPop(s));
+		printf("%2d ", myStackPop(s));
 	}
 	printf("\n");
+
+	MyQueue *q = myQueueCreate();
+	for (i = 0; i < 10; i++) {
+		myQueuePush(q, i + 10);
+	}
+	printf("peek: %d\n", myQueuePeek(q));
+	printf("queue: ");
+	for (i = 0; i < 10; i++) {
+		printf("%d ", myQueuePop(q));
+	}
+	printf("\n");
+
 	return 0;
 }
