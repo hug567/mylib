@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 1000
 
 typedef struct {
-	int data[MAX_SIZE];
+	long data[MAX_SIZE];
 	int top;
 } MyStack;
 
@@ -19,22 +19,23 @@ static int myStackEmpty(MyStack *s)
 	return 0;
 }
 
-static void myStackPush(MyStack *s, int data)
+static void myStackPush(MyStack *s, long data)
 {
 	s->top++;
 	s->data[s->top] = data;
 }
 
-static int myStackPop(MyStack *s)
+static long myStackPop(MyStack *s)
 {
-	int data = s->data[s->top];
+	long data = s->data[s->top];
 	s->top--;
 	return data;
 }
 
-int calculate(char * s){
-	int i = 0, j = 0, tmp = 0, ret = 0, flag = 0;
-	char str[100] = "\0";
+long calculate(char * s){
+	int i = 0, j = 0, flag = 0;
+	long tmp = 0, ret = 0;
+	char str[1000000] = "\0";
 	MyStack s1 = {.data = {0}, .top = -1};
 	MyStack s2 = {.data = {0}, .top = -1};
 
@@ -95,5 +96,10 @@ int main(int argc, char *argv[])
 	char str3[] = "(1+(4+5+2)-3)+(6+8)";
 	printf("%s = %d(23)\n", str3, calculate(str3));
 
+	char str4[] = "2147483647 + 55";
+	printf("%s = %ld(2147483702)\n", str4, calculate(str4));
+
+	char str5[] = "5+3-4-(1+2-7+(10-1+3+5+(3-0+(8-(3+(8-(10-(6-10-8-7+(0+0+7)-10+5-3-2+(9+0+(7+(2-(2-(9)-2+5+4+2+(2+9+1+5+5-8-9-2-9+1+0)-(5-(9)-(0-(7+9)+(10+(6-4+6))+0-2+(10+7+(8+(7-(8-(3)+(2)+(10-6+10-(2)-7-(2)+(3+(8))+(1-3-8)+6-(4+1)+(6))+6-(1)-(10+(4)+(8)+(5+(0))+(3-(6))-(9)-(4)+(2))))))-1)))+(9+6)+(0))))+3-(1))+(7))))))))";
+	printf("%s = %ld(-35), strlen = %d\n", str5, calculate(str5), strlen(str5));
 	return 0;
 }
