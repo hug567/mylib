@@ -1,4 +1,4 @@
-/* 无向图，边带权，邻接矩阵 */
+/* 无向图，边带权，邻接表 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
