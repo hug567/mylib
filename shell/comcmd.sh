@@ -1,3 +1,20 @@
 #!/bin/bash
 
-RESET=""
+BLACK="\033[30m"
+RED="\033[31m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+BLUE="\033[34m"
+PURPLE="\033[35m"
+SKYBLUE="\033[36m"
+WHITE="\033[37m"
+RESET="\033[0m"
+
+echo -e "${BLACK}test color${RESET}"
+echo -e "${RED}test color${RESET}"
+echo -e "${GREEN}test color${RESET}"
+echo -e "${YELLOW}test color${RESET}"
+echo -e "${BLUE}test color${RESET}"
+echo -e "${PURPLE}test color${RESET}"
+echo -e "${SKYBLUE}test color${RESET}"
+echo -e "${WHITE}test color${RESET}"
