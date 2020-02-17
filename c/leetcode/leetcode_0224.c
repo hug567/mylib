@@ -88,18 +88,18 @@ long calculate(char * s){
 int main(int argc, char *argv[])
 {
 	char str1[] = "1 -0+ 1 + 0";
-	printf("%s = %d(2)\n", str1, calculate(str1));
+	printf("%s = %ld(2)\n", str1, calculate(str1));
 
 	char str2[] = "2-1 + 2";
-	printf("%s = %d(3)\n", str2, calculate(str2));
+	printf("%s = %ld(3)\n", str2, calculate(str2));
 
 	char str3[] = "(1+(4+5+2)-3)+(6+8)";
-	printf("%s = %d(23)\n", str3, calculate(str3));
+	printf("%s = %ld(23)\n", str3, calculate(str3));
 
 	char str4[] = "2147483647 + 55";
 	printf("%s = %ld(2147483702)\n", str4, calculate(str4));
 
 	char str5[] = "5+3-4-(1+2-7+(10-1+3+5+(3-0+(8-(3+(8-(10-(6-10-8-7+(0+0+7)-10+5-3-2+(9+0+(7+(2-(2-(9)-2+5+4+2+(2+9+1+5+5-8-9-2-9+1+0)-(5-(9)-(0-(7+9)+(10+(6-4+6))+0-2+(10+7+(8+(7-(8-(3)+(2)+(10-6+10-(2)-7-(2)+(3+(8))+(1-3-8)+6-(4+1)+(6))+6-(1)-(10+(4)+(8)+(5+(0))+(3-(6))-(9)-(4)+(2))))))-1)))+(9+6)+(0))))+3-(1))+(7))))))))";
-	printf("%s = %ld(-35), strlen = %d\n", str5, calculate(str5), strlen(str5));
+	printf("%s = %ld(-35), strlen = %ld\n", str5, calculate(str5), strlen(str5));
 	return 0;
 }
