@@ -3,116 +3,51 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_INT (int)((~0U) >> 1)
-#define MIN_INT (int)(1 << (8 * sizeof(int) - 1))
-#define MAX_SIZE 100
+#define MAX_INT (int)((~0U) >> 1) /* 最大整数 */
+#define MIN_INT (int)(1 << (8 * sizeof(int) - 1)) /* 最小整数 */
+#define MAX_VEX 100 /* 支持的最大顶点值 */
 
-typedef struct {
-	int vexs[MAX_SIZE]; /* 顶点可能值：非负整数 */
-	int arcs[MAX_SIZE][MAX_SIZE]; /* 无权边：1有，0无 */
-	int num_vex;  /* 当前顶点数 */
-	int num_arc; /* 当前边数 */
-} MyGraph;
+/* 弧 */
+typedef struct _arc {
+	int vex;
+	int weight;
+	struct _arc *next;
+} Arc;
 
-static int graph_vex_pos(MyGraph *g, int vex)
-{
-	int i = 0;
-	while (g->vexs[i] != -1 && i < MAX_SIZE) {
-		if (g->vexs[i] == vex) {
-			return i;
-		}
-		i++;
-	}
-	if (i < MAX_SIZE) {
-		g->num_vex++;
-		g->vexs[i] = vex;
-//printf("[vex]: i = %d\n", i);
-		return i;
-	} else {
-		return -1;
-	}
-}
+/* 顶点 */
+typedef struct _vex {
+	int data;
+	struct _arc *first_arc;
+} Vex;
 
-static void graph_init(MyGraph *g)
+/* 无向图，边带权，邻接表 */
+typedef struct _graph {
+	struct _vex vexs[MAX_VEX];
+	int num_vex; /* 顶点数 */
+	int num_arc; /* 弧数 */
+} Graph;
+
+static void graph_init(Graph *g)
 {
 	if (g == NULL) {
 		return;
 	}
 
-	int i, j;
-	for (i = 0; i < MAX_SIZE; i++) {
-		g->vexs[i] = -1;  /* 顶点值均初始化为-1 */
-	}
-	for (i = 0; i < MAX_SIZE; i++) {
-		for (j = 0; j < MAX_SIZE; j++) {
-			g->arcs[i][j] = MIN_INT; /* 无向边均初始化为0 */
-		}
+	int i;
+	for (i = 0; i < MAX_VEX; i++) {
+		g->vexs[i].data = MIN_INT;
+		g->vexs[i].first_arc = NULL;
 	}
 	g->num_vex = 0;
 	g->num_arc = 0;
 }
 
-static void graph_add_arc(MyGraph *g, int v1, int v2, int weight)
-{
-	int index1, index2;
-
-	if (g == NULL) {
-		printf("[%s][%d] g is NULL\n", __func__, __LINE__);
-		return;
-	}
-	index1 = graph_vex_pos(g, v1);
-	if (index1 < 0) {
-		return;
-	}
-	index2 = graph_vex_pos(g, v2);
-	if (index2 < 0) {
-		return;
-	}
-//printf("index1 = %d, index2 = %d\n", index1, index2);
-	if (g->arcs[index1][index2] == MIN_INT) {
-		g->num_arc++;
-	}
-	g->arcs[index1][index2] = weight;
-	g->arcs[index2][index1] = weight;
-}
-
-static void graph_print(MyGraph *g)
-{
-	int i, j;
-
-	if (g == NULL) {
-		return;
-	}
-	printf("num_vex = %d, num_arc = %d\n", g->num_vex, g->num_arc);
-	printf("vex: ");
-	for (i = 0; i < g->num_vex; i++) {
-		printf("%4d ", g->vexs[i]);
-	}
-	printf("\n");
-	for (i = 0; i < g->num_vex; i++) {
-		printf("%3d: ", g->vexs[i]);
-		for (j = 0; j < g->num_vex; j++) {
-			if (g->arcs[i][j] == MIN_INT) {
-				printf("  *  ");
-			}
-			else {
-				printf("%4d ", g->arcs[i][j]);
-			}
-		}
-		printf("\n");
-	}
-}
-
 int main()
 {
-	MyGraph *g = (MyGraph *)malloc(sizeof(MyGraph));
+	printf("hello graph2\n");
+	Graph *g = (Graph *)malloc(sizeof(Graph));
+
 	graph_init(g);
-	graph_add_arc(g, 0, 1, 100);
-	graph_add_arc(g, 1, 2, 101);
-	graph_add_arc(g, 2, 3, 102);
-	graph_add_arc(g, 3, 4, 103);
-	graph_add_arc(g, 4, 0, 104);
-	graph_print(g);
 
 	free(g);
 	return 0;

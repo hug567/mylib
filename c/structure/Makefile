@@ -1,4 +1,4 @@
-
+srctree = .
 CC = gcc
 CFLAGS := -Wall -g
 LIBS := -lm
@@ -23,6 +23,9 @@ stack:
 
 tree:
 	@$(CC) $(CFLAGS) tree.c -o tree.out
+
+graph2:
+	@$(CC) $(CFLAGS) graph2.c
 
 .PHONY: clean
 clean:
