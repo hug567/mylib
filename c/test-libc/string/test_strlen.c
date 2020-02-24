@@ -3,6 +3,7 @@
 
 int main()
 {
-	printf("hello test libc in string.h\n");
+	char *str = "1234567890";
+	printf("strlen(\"%s\") = %ld\n", str, strlen(str));
 	return 0;
 }

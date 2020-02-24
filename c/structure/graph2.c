@@ -9,14 +9,13 @@
 
 /* 弧 */
 typedef struct _arc {
-	int vex;
 	int weight;
 	struct _arc *next;
 } Arc;
 
 /* 顶点 */
 typedef struct _vex {
-	int data;
+	int vex;
 	struct _arc *first_arc;
 } Vex;
 
@@ -27,7 +26,7 @@ typedef struct _graph {
 	int num_arc; /* 弧数 */
 } Graph;
 
-static void graph_init(Graph *g)
+void graph_init(Graph *g)
 {
 	if (g == NULL) {
 		return;
@@ -35,19 +34,114 @@ static void graph_init(Graph *g)
 
 	int i;
 	for (i = 0; i < MAX_VEX; i++) {
-		g->vexs[i].data = MIN_INT;
+		g->vexs[i].vex = MIN_INT;
 		g->vexs[i].first_arc = NULL;
 	}
 	g->num_vex = 0;
 	g->num_arc = 0;
 }
 
+/* 顶点已存在则返回下标，顶点不存在则返回最近的空节点下标 */
+static int get_vex_index(Graph *g, int v)
+{
+	if (g == NULL) {
+		return -1;
+	}
+
+	int i;
+	for (i = 0; i < MAX_VEX; i++) {
+		if (g->vexs[i].vex == v) {
+//printf("[%s]: num_vex 1 = %d\n", __func__, g->num_vex);
+			return i;
+		} else if (g->vexs[i].vex == MIN_INT) {
+//printf("[%s]: num_vex 2 = %d\n", __func__, g->num_vex);
+			g->vexs[i].vex = v;
+			g->num_vex++;
+//printf("[%s]: i = %d\n", __func__, i);
+			return i;
+		}
+	}
+//printf("[%s]: i = %d\n", __func__, i);
+	return -1;  /* 顶点数超过MAX_VEX */
+}
+
+/* 根据顶点下标添加弧 */
+static void add_arc(Graph *g, int idx, int weight)
+{
+	if (g == NULL) {
+		return;
+	}
+
+	if (g->vexs[idx].first_arc == NULL) {
+		g->vexs[idx].first_arc = (struct _arc *)malloc(sizeof(struct _arc));
+		g->vexs[idx].first_arc->weight = weight;
+		g->vexs[idx].first_arc->next = NULL;
+	} else {
+		struct _arc *arc = g->vexs[idx].first_arc;
+		while (arc->next != NULL) {
+			arc = arc->next;
+		}
+		struct _arc *new_arc = (struct _arc *)malloc(sizeof(struct _arc));
+		new_arc->weight = weight;
+		new_arc->next = NULL;
+		arc->next = new_arc;
+	}
+}
+
+/* 假设每一次添加的均是新弧，不重复添加弧 */
+void graph_add_arc(Graph *g, int v1, int v2, int weight)
+{
+	if (g == NULL) {
+		return;
+	}
+
+	int idx1 = get_vex_index(g, v1);
+	int idx2 = get_vex_index(g, v2);
+//printf("v1 = %d, v2 = %d\n", v1, v2);
+//printf("idx1 = %d, idx2 = %d\n", idx1, idx2);
+
+	if (idx1 < 0 || idx2 < 0 || idx1 == idx2) {
+		return;
+	}
+	add_arc(g, idx1, weight);
+	add_arc(g, idx2, weight);
+	g->num_arc++;
+}
+
+void graph_print(Graph *g)
+{
+	if (g == NULL) {
+		return;
+	}
+
+	int i;
+	struct _arc *arc = NULL;
+
+	printf("num_vex = %d\n", g->num_vex);
+	printf("num_arc = %d\n", g->num_arc);
+	for (i = 0; i < g->num_vex; i++) {
+		printf("%d: ", g->vexs[i].vex);
+		arc = g->vexs[i].first_arc;
+		while (arc != NULL) {
+			printf("%d ", arc->weight);
+			arc = arc->next;
+		}
+		printf("\n");
+	}
+
+}
+
 int main()
 {
-	printf("hello graph2\n");
 	Graph *g = (Graph *)malloc(sizeof(Graph));
 
 	graph_init(g);
+	graph_add_arc(g, 0, 1, 111);
+	graph_add_arc(g, 1, 2, 222);
+	graph_add_arc(g, 2, 3, 333);
+	graph_add_arc(g, 3, 4, 444);
+	graph_add_arc(g, 4, 0, 555);
+	graph_print(g);
 
 	free(g);
 	return 0;

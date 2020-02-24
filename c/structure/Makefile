@@ -7,25 +7,28 @@ default:
 	@echo "data structure practice"
 
 bstree:
-	@$(CC) $(CFLAGS) bstree.c -o bstree.out
+	@$(CC) $(CFLAGS) $(LIBS) bstree.c
 
 heap:
-	@$(CC) $(CFLAGS) heap.c -o heap.out
+	@$(CC) $(CFLAGS) $(LIBS) heap.c
 
 list:
-	@$(CC) $(CFLAGS) list.c -o list.out
+	@$(CC) $(CFLAGS) $(LIBS) list.c
 
 queue:
-	@$(CC) $(CFLAGS) queue.c -o queue.out
+	@$(CC) $(CFLAGS) $(LIBS) queue.c
 
 stack:
-	@$(CC) $(CFLAGS) stack.c -o stack.out
+	@$(CC) $(CFLAGS) $(LIBS) stack.c
 
 tree:
-	@$(CC) $(CFLAGS) tree.c -o tree.out
+	@$(CC) $(CFLAGS) $(LIBS) tree.c
+
+graph:
+	@$(CC) $(CFLAGS) $(LIBS) graph.c
 
 graph2:
-	@$(CC) $(CFLAGS) graph2.c
+	@$(CC) $(CFLAGS) $(LIBS) graph2.c
 
 .PHONY: clean
 clean:
