@@ -16,4 +16,13 @@ print(sheets_name)
 
 # 获取第一个sheet
 sheet = workbook.get_sheet_by_name(sheets_name[0].title())
-print("A1 = %d" % sheet['A1'].value)
+cell = sheet['A1']
+print("A1 = %d" % cell.value)
+
+# 插入列
+sheet.insert_rows(1, 0)
+cell = sheet['A1']
+cell.value = "进度"
+
+# 保持workbook
+workbook.save("test2.xlsx")
