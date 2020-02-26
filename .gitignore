@@ -3,5 +3,9 @@
 *.swp
 *.out
 *.elf
+
 *.exe
+*.xls
+*.xlsx
+
 build-*
