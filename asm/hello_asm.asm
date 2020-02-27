@@ -1,6 +1,8 @@
-extern	hello_print_c	;声明C函数
+;extern	hello_print_c	;声明C函数
+extern	add	;声明C函数
 ;extern _exit
-
+;IMPORT add
+;EXPORT add
 
 ; 数据段
 section .data                               ;section declaration
@@ -13,15 +15,20 @@ global _start          ;loader. They conventionally recognize _start as their
 
 _start:
 	; 打印字符串
-	mov	eax,4     ;system call number (sys_write)
+	mov	eax,4     ; 系统调用write()
 	mov     ebx,1     ;first argument: file handle (stdout)
 	mov     ecx,msg   ;second argument: pointer to message to write
 	mov     edx,len   ;third argument: message length
-	int     0x80      ;call kernel
+	int     0x80      ; 开始系统调用
 	; 调用C语言函数
 	;bl	hello_print_c	;调用C语言函数
-	call	hello_print_c	;调用C语言函数
+	;call	hello_print_c	;调用C语言函数
+	;STR	lr,[sp,#-4]!
+	;ldr	r0,=0x01
+	;ldr	r1,=0x02
+	;call	add
+	;addl	$0x10, %esp
 	; 程序退出
-	mov     eax,1     ;system call number (sys_exit)
-	xor     ebx,ebx   ;first syscall argument: exit code
-	int     0x80      ;call kernel
+	mov     eax,1		; 系统调用exit()
+	xor     ebx,ebx		;first syscall argument: exit code
+	int     0x80		; 开始系统调用

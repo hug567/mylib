@@ -3,8 +3,8 @@ CC = gcc
 CFLAGS = -static
 LD = ld
 LDFLAGS =
-LIB = -lc
-OBJ = hello_asm.o hello_c.o
+LIB =
+OBJ = hello_asm.o #hello_c.o
 
 all:
 	@nasm -f elf64 -o hello_asm.o hello_asm.asm
