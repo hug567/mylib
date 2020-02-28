@@ -9,9 +9,9 @@
 
 /* 弧 */
 typedef struct _arc {
+	int adj_idx;  /* 弧的邻接点在顶点数组中的索引 */
 	int weight; /* 权 */
-	int adj_idx; /* 邻接点在顶点数组中的下标 */
-	struct _arc *next; /* 指向连接在同一顶点的下一个弧 */
+	struct _arc *next; /* 指向同一顶点的下一条弧 */
 } Arc;
 
 /* 顶点 */
@@ -75,6 +75,7 @@ static void add_arc(Graph *g, int idx, int adj_idx, int weight)
 
 	if (g->vexs[idx].first_arc == NULL) {
 		g->vexs[idx].first_arc = (struct _arc *)malloc(sizeof(struct _arc));
+		g->vexs[idx].first_arc->adj_idx = adj_idx;
 		g->vexs[idx].first_arc->weight = weight;
 		g->vexs[idx].first_arc->adj_idx = adj_idx;
 		g->vexs[idx].first_arc->next = NULL;
@@ -84,6 +85,7 @@ static void add_arc(Graph *g, int idx, int adj_idx, int weight)
 			arc = arc->next;
 		}
 		struct _arc *new_arc = (struct _arc *)malloc(sizeof(struct _arc));
+		new_arc->adj_idx = adj_idx;
 		new_arc->weight = weight;
 		new_arc->adj_idx = adj_idx;
 		new_arc->next = NULL;
@@ -111,6 +113,7 @@ void graph_add_arc(Graph *g, int v1, int v2, int weight)
 	g->num_arc++;
 }
 
+/* 打印邻接表 */
 void graph_print(Graph *g)
 {
 	if (g == NULL) {
@@ -120,13 +123,13 @@ void graph_print(Graph *g)
 	int i;
 	struct _arc *arc = NULL;
 
-	printf("num_vex = %d\n", g->num_vex);
-	printf("num_arc = %d\n", g->num_arc);
+	printf("num_vex = %d\n", g->num_vex); /* 顶点数量 */
+	printf("num_arc = %d\n", g->num_arc); /* 弧数量 */
 	for (i = 0; i < g->num_vex; i++) {
 		printf("%d(%d): ", i, g->vexs[i].vex);
 		arc = g->vexs[i].first_arc;
 		while (arc != NULL) {
-			printf("%d/%d ", arc->adj_idx, arc->weight);
+			printf("%d[%d] ", arc->adj_idx, arc->weight);
 			arc = arc->next;
 		}
 		printf("\n");
