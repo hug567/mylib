@@ -2,9 +2,11 @@ srctree = .
 CC = gcc
 CFLAGS := -Wall -g
 LIBS := -lm
+OS_TYPE = $(shell uname)
 
-default:
+test:
 	@echo "data structure practice"
+	@echo "OS type is: $(OS_TYPE)"
 
 bstree:
 	@$(CC) $(CFLAGS) $(LIBS) bstree.c
