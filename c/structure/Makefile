@@ -5,7 +5,6 @@ LIBS := -lm
 OS_TYPE = $(shell uname)
 
 test:
-	@echo "data structure practice"
 	@echo "OS type is: $(OS_TYPE)"
 
 bstree:

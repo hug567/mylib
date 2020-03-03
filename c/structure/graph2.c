@@ -9,19 +9,20 @@
 
 /* 弧 */
 typedef struct _arc {
-	int weight;
-	struct _arc *next;
+	int weight; /* 权 */
+	int adj_idx; /* 邻接点在顶点数组中的下标 */
+	struct _arc *next; /* 指向连接在同一顶点的下一个弧 */
 } Arc;
 
 /* 顶点 */
 typedef struct _vex {
-	int vex;
-	struct _arc *first_arc;
+	int vex; /* 顶点值 */
+	struct _arc *first_arc; /* 指向第一个弧 */
 } Vex;
 
 /* 无向图，边带权，邻接表 */
 typedef struct _graph {
-	struct _vex vexs[MAX_VEX];
+	struct _vex vexs[MAX_VEX]; /* 顶点数组 */
 	int num_vex; /* 顶点数 */
 	int num_arc; /* 弧数 */
 } Graph;
@@ -66,7 +67,7 @@ static int get_vex_index(Graph *g, int v)
 }
 
 /* 根据顶点下标添加弧 */
-static void add_arc(Graph *g, int idx, int weight)
+static void add_arc(Graph *g, int idx, int adj_idx, int weight)
 {
 	if (g == NULL) {
 		return;
@@ -75,6 +76,7 @@ static void add_arc(Graph *g, int idx, int weight)
 	if (g->vexs[idx].first_arc == NULL) {
 		g->vexs[idx].first_arc = (struct _arc *)malloc(sizeof(struct _arc));
 		g->vexs[idx].first_arc->weight = weight;
+		g->vexs[idx].first_arc->adj_idx = adj_idx;
 		g->vexs[idx].first_arc->next = NULL;
 	} else {
 		struct _arc *arc = g->vexs[idx].first_arc;
@@ -83,6 +85,7 @@ static void add_arc(Graph *g, int idx, int weight)
 		}
 		struct _arc *new_arc = (struct _arc *)malloc(sizeof(struct _arc));
 		new_arc->weight = weight;
+		new_arc->adj_idx = adj_idx;
 		new_arc->next = NULL;
 		arc->next = new_arc;
 	}
@@ -103,8 +106,8 @@ void graph_add_arc(Graph *g, int v1, int v2, int weight)
 	if (idx1 < 0 || idx2 < 0 || idx1 == idx2) {
 		return;
 	}
-	add_arc(g, idx1, weight);
-	add_arc(g, idx2, weight);
+	add_arc(g, idx1, idx2, weight);
+	add_arc(g, idx2, idx1, weight);
 	g->num_arc++;
 }
 
@@ -120,15 +123,14 @@ void graph_print(Graph *g)
 	printf("num_vex = %d\n", g->num_vex);
 	printf("num_arc = %d\n", g->num_arc);
 	for (i = 0; i < g->num_vex; i++) {
-		printf("%d: ", g->vexs[i].vex);
+		printf("%d(%d): ", i, g->vexs[i].vex);
 		arc = g->vexs[i].first_arc;
 		while (arc != NULL) {
-			printf("%d ", arc->weight);
+			printf("%d/%d ", arc->adj_idx, arc->weight);
 			arc = arc->next;
 		}
 		printf("\n");
 	}
-
 }
 
 int main()
@@ -136,11 +138,11 @@ int main()
 	Graph *g = (Graph *)malloc(sizeof(Graph));
 
 	graph_init(g);
-	graph_add_arc(g, 0, 1, 111);
-	graph_add_arc(g, 1, 2, 222);
-	graph_add_arc(g, 2, 3, 333);
-	graph_add_arc(g, 3, 4, 444);
-	graph_add_arc(g, 4, 0, 555);
+	graph_add_arc(g, 100, 101, 111);
+	graph_add_arc(g, 101, 102, 222);
+	graph_add_arc(g, 102, 103, 333);
+	graph_add_arc(g, 103, 104, 444);
+	graph_add_arc(g, 104, 100, 555);
 	graph_print(g);
 
 	free(g);
