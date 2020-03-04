@@ -1,79 +1,101 @@
 /*
  * 题目：leetcode 151: 翻转字符串里的单词
- * 难度：
+ * 难度：中等
  * 时间：2020-03-03
  * */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
-char *handle_space(char *s)
+char *reverse_one(char *str, int start, int len)
 {
-	int len = strlen(s);
-	char *str = (char *)malloc(len + 1);
-	memset(str, '\0', len + 1);
+	int i;
+	char tmp;
 
-	while (*s != '\0' && *s == ' ') {
-		s++;
-	}
-	if (*s == '\0') {
-		return NULL;
-	}
-
-	char *tmp = str;
-	while (*s != '\0') {
-		while (*s == ' ' && *(s + 1) != '\0' && *(s + 1) == ' ') {
-			s++;
-		}
-		*tmp = *s;
-		tmp++;
-		s++;
-	}
-	if (*str == ' ') {
-		str++;
-	}
-	if (*(str + strlen(str) - 1) == ' ') {
-		*(str + strlen(str) - 1) = '\0';
+	for (i = 0; i < len / 2; i++) {
+		tmp = *(str + start + i);
+		*(str + start + i) = *(str + start + len - i - 1);
+		*(str + start + len - i - 1) = tmp;
 	}
 	return str;
 }
 
-void reverse_one(char *s, int start, int len)
+char *handle_space(char *str)
 {
-	char tmp;
-	for (int i = start; i < len / 2; i++) {
-		tmp = *(s + i);
-		*(s + i) = * (s + len - i);
-		*(s + len - i) = tmp;
-	}
-}
+	int len = strlen(str);
+	char *str2 = (char *)malloc(len + 1);
+	char *tmp = str2;
 
-char *reverse_str(char *s)
-{
-	int start = 0;
-	int end = 0;
-	for (int i = 0; i < strlen(s); i++) {
-		start = i;
-		if (*(s + i) == ' ') {
-			end = i - 1;
+	memset(str2, '\0', len + 1);
+	while (*str != '\0') {
+		if ((*str != ' ') || (*str == ' ' && *str != '\0' && *(str + 1)  != ' ')) {
+			*tmp = *str;
+			tmp++;
 		}
+		str++;
 	}
+	if (*str2 == ' ') {
+		str2++;
+	}
+	if (*(str2 + strlen(str2) - 1) == ' ') {
+		*(str2 + strlen(str2) - 1) = '\0';
+	}
+
+	return str2;
 }
 
-char * reverseWords(char * s) {
-	char *str = handle_space(s);
-	if (str == NULL) {
+char *reverseWords(char *s)
+{
+	if (*s == '\0') {
 		return "";
 	}
-	return reverse(str);
+	int i;
+	int flag = 0;
+	int len = 0;
+	int start = 0;
+
+	char *str = handle_space(s);
+
+	str = reverse_one(str, 0, strlen(str));
+	for (i = 0; i < strlen(str); i++) {
+		if (flag == 1) {
+			start = i;
+			flag = 0;
+		}
+		if (str[i] != ' ' && str[i + 1] != '\0') {
+			len++;
+		} else {
+			if (str[i + 1] == '\0') {
+				len++;
+			}
+			str = reverse_one(str, start, len);
+			flag = 1;
+			len = 0;
+		}
+	}
+
+	return str;
 }
 
 int main()
 {
-	char *s = "  hello world!  ";
-
-	printf("handle space: [%s]\n", handle_space(s));
-	printf("reverse: %s\n", reverseWords(s));
+	printf("reverse: [%s]\n", reverseWords(""));
+	printf("reverse: [%s]\n", reverseWords("  "));
+	printf("reverse: [%s]\n", reverseWords("h"));
+	printf("reverse: [%s]\n", reverseWords("hello"));
+	printf("reverse: [%s]\n", reverseWords(" hello"));
+	printf("reverse: [%s]\n", reverseWords("hello "));
+	printf("reverse: [%s]\n", reverseWords("  hello"));
+	printf("reverse: [%s]\n", reverseWords("hello  "));
+	printf("reverse: [%s]\n", reverseWords(" hello "));
+	printf("reverse: [%s]\n", reverseWords("  hello  "));
+	printf("reverse: [%s]\n", reverseWords("hello world!"));
+	printf("reverse: [%s]\n", reverseWords(" hello world!"));
+	printf("reverse: [%s]\n", reverseWords("  hello world!"));
+	printf("reverse: [%s]\n", reverseWords("hello world! "));
+	printf("reverse: [%s]\n", reverseWords("hello world!  "));
+	printf("reverse: [%s]\n", reverseWords(" hello world! "));
+	printf("reverse: [%s]\n", reverseWords("  hello world!  "));
+	printf("reverse: [%s]\n", reverseWords("hello  world!"));
 	return 0;
 }
