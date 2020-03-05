@@ -56,6 +56,10 @@ void post_order(btnode *tree)
 
 int main()
 {
+/* 测试用例：
+AB##C##
+ABD##E##C##
+ */
 	btnode *tree = (btnode *)malloc(sizeof(btnode));
 
 	printf("input tree: ");
