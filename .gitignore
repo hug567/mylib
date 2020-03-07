@@ -7,5 +7,6 @@
 *.exe
 *.xls
 *.xlsx
+.vscode
 
 build-*
