@@ -1,4 +1,10 @@
-/* leetcode 232: 用栈实现队列(简单) */
+/*
+ * 题目：leetcode 232: 用栈实现队列
+ * 难度：简单
+ * 技巧：两个栈实现队列的先进先出
+ * 时间：2020-03-08
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

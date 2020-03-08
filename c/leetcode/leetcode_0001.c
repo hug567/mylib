@@ -1,5 +1,8 @@
 /*
- * leetcode 1: 两数之和(简单)
+ * 题目：leetcode 1: 两数之和
+ * 难度：简单
+ * 技巧：无
+ * 时间：2020-03-08
  */
 #include <stdio.h>
 #include <stdlib.h>

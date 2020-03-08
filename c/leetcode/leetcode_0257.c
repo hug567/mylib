@@ -3,7 +3,7 @@
  * 难度：简单
  * 技巧：dfs
  * 时间：2020-03-05
- * */
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
