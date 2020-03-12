@@ -2,7 +2,7 @@
  * 题目：11、Olympic Game
  * 难度：中等
  * 技巧：
- * 时间：200-03-11
+ * 时间：2020-03-11
  */
 /*
 5
@@ -25,14 +25,34 @@ struct Country {
 	char gold;
 	char silver;
 	char bronze;
+	struct Country *next;
 };
 
-void DebugPrint(struct Country *cty, int n)
+struct Country *InsertCountry(struct Country *head, struct Country *tmp)
 {
-	int i;
-	printf("----- cty info, n = %d -----\n", n);
-	for (i = 0; i < n; i++) {
-		printf("%s %d %d %d\n", cty[i].name, cty[i].gold, cty[i].silver, cty[i].bronze);
+	struct Country *tail = head;
+	if (head == NULL) {
+		if (tmp == NULL) {
+			return NULL;
+		} else {
+			return tmp;
+		}
+	}
+	while (tail->next != NULL) {
+		tail = tail->next;
+	}
+	tail->next = tmp;
+	return head;
+}
+
+void PrintSorted(struct Country *head)
+{
+	if (head == NULL) {
+		return;
+	}
+	while (head != NULL) {
+		(void)printf("%s\n", head->name);
+		head = head->next;
 	}
 }
 
@@ -44,16 +64,18 @@ int main()
 	if (scanf_s("%d", &n) != 1) {
 		return -1;
 	}
-	/* malloc struct array */
-	struct Country *cty = (struct Country *)malloc(n * sizeof(struct Country));
+	struct Country *head = NULL ;
+	struct Country *tmp = NULL ;
 	for (i = 0; i < n; i++) {
-		(void)memset_s(&cty[i], sizeof(struct Country), 0, sizeof(struct Country));
-		if (scanf_s("%s %d %d %d", cty[i].name, &cty[i].gold, &cty[i].silver,
-			    &cty[i].bronze, sizeof(struct Country)) != 4) {
+		tmp = (struct Country *)malloc(sizeof(struct Country));
+		if (scanf_s("%s %d %d %d", tmp->name, &tmp->gold, &tmp->silver,
+			    &tmp->bronze, sizeof(struct Country)) != 4) {
 			return -1;
 		}
+		tmp->next = NULL;
+		head = InsertCountry(head, tmp);
 	}
-	DebugPrint(cty, n);
+	PrintSorted(head);
 
 	return 0;
 }
