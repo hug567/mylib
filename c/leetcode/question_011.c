@@ -28,61 +28,57 @@ struct Country {
 	struct Country *next;
 };
 
-int CompareCountry(struct Country *cty1, strucy Country *cty2)
+int CompareCountry(struct Country *cty1, struct Country *cty2)
 {
 	int cmp;
 
+	if (cty1 == NULL || cty2 == NULL) {
+		return 0;
+	}
+
 	if (cty1->gold > cty2->gold) {
 		return 1;
-	} else if (cty1->gold < cty->gold) {
+	} else if (cty1->gold < cty2->gold) {
 		return -1;
 	}
+
 	if (cty1->silver > cty2->silver) {
 		return 1;
-	} else if (cty1->silver < cty->silver) {
+	} else if (cty1->silver < cty2->silver) {
 		return -1;
 	}
+
 	if (cty1->bronze > cty2->bronze) {
 		return 1;
-	} else if (cty1->bronze < cty->bronze) {
+	} else if (cty1->bronze < cty2->bronze) {
 		return -1;
 	}
-	if (cty1->bronze > cty2->bronze) {
-		return 1;
-	} else if (cty1->bronze < cty->bronze) {
-		return -1;
-	}
-	return strcmp(cty2->name, cty1->name)
+
+	return strcmp(cty2->name, cty1->name);
 }
 
 struct Country *InsertCountry(struct Country *head, struct Country *tmp)
 {
-	struct Country *tail = head;
 	struct Country *cur = head;
 
-	if (head == NULL) {
-		if (tmp == NULL) {
-			return NULL;
-		} else {
-			return tmp;
-		}
+	if (tmp == NULL) {
+		return head;
+	} else if (head == NULL) {
+		return tmp;
 	}
 	if (CompareCountry(head, tmp) < 0) {
 		tmp->next = head;
 		return tmp;
 	}
-	while (tail->next != NULL) {
-		tail = tail->next;
-	}
-	while (cur->next != NULL && cur->next->gold > tmp->gold) {
+	while (cur->next != NULL && CompareCountry(cur->next, tmp) > 0) {
 		cur = cur->next;
 	}
-	if (cur->next != NULL && cur->next->gold < tmp->gold) {
+	if (cur->next == NULL) {
+		cur->next = tmp;
+	} else {
 		tmp->next = cur->next;
 		cur->next = tmp;
-		return head;
 	}
-	tail->next = tmp;
 	return head;
 }
 
