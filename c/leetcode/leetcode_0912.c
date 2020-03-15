@@ -3,7 +3,7 @@
  * 难度：中等
  * 技巧：递归实现快速排序
  * 时间：2020-03-04
- * */
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

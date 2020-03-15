@@ -1,4 +1,9 @@
-/* leetcode 225: 用队列实现栈(简单) */
+/*
+ * 题目：leetcode 225: 用队列实现栈
+ * 难度：简单
+ * 技巧：两个队列实现栈
+ * 时间：2020-03-04
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

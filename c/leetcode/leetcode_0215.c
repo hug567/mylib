@@ -1,4 +1,9 @@
-/* leetcode 215: 数组中的第K个最大元素(中等) */
+/*
+ * 题目：leetcode 215: 数组中第k大的元素
+ * 难度：中等
+ * 技巧：
+ * 时间：2020-03-15
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
