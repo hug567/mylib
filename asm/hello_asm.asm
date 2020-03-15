@@ -15,11 +15,11 @@ global _start          ;loader. They conventionally recognize _start as their
 
 _start:
 	; 打印字符串
-	mov	eax,4     ; 系统调用write()
-	mov     ebx,1     ;first argument: file handle (stdout)
-	mov     ecx,msg   ;second argument: pointer to message to write
-	mov     edx,len   ;third argument: message length
-	int     0x80      ; 开始系统调用
+	mov	eax, 4		; 系统调用write()
+	mov	ebx, 1		; 第一个参数：fd = 1, stdout
+	mov	ecx, msg	; 第二个参数：buf
+	mov	edx, len	; 第三个参数: length
+	int	0x80		; 开始系统调用
 	; 调用C语言函数
 	;bl	hello_print_c	;调用C语言函数
 	;call	hello_print_c	;调用C语言函数
@@ -29,6 +29,6 @@ _start:
 	;call	add
 	;addl	$0x10, %esp
 	; 程序退出
-	mov     eax,1		; 系统调用exit()
-	xor     ebx,ebx		;first syscall argument: exit code
+	mov     eax, 1		; 系统调用exit()
+	xor     ebx, ebx	; 第一个参数：退出码
 	int     0x80		; 开始系统调用
