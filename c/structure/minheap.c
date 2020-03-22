@@ -1,5 +1,5 @@
 /*
- * 练习：最大堆
+ * 练习：最小堆
  * 当前节点：i(i>0)
  * 父节点：i/2
  * 左子节点：2*i
@@ -40,7 +40,7 @@ void InsertNode(struct Heap *heap, int data)
 		return;
 	}
 	heap->size++; /* 下标从1开始 */
-	for (i = heap->size; i > 1 && heap->data[i/2] < data; i /= 2) {
+	for (i = heap->size; i > 1 && heap->data[i/2] > data; i /= 2) {
 		heap->data[i] = heap->data[i/2];
 	}
 	heap->data[i] = data;
@@ -62,12 +62,12 @@ int DeleteTop(struct Heap *heap)
 	heap->size--;
 	i = 1;
 	while (i <= heap->size) {
-		if (2 * i <= heap->size && heap->data[i] < heap->data[2 * i]) {
+		if (2 * i <= heap->size && heap->data[i] > heap->data[2 * i]) {
 			tmp = heap->data[i];
 			heap->data[i] = heap->data[2 * i];
 			heap->data[2 * i] = tmp;
 			i = 2 * i;
-		} else if (2 * i + 1 <= heap->size && heap->data[i] < heap->data[2 * i + 1]) {
+		} else if (2 * i + 1 <= heap->size && heap->data[i] > heap->data[2 * i + 1]) {
 			tmp = heap->data[i];
 			heap->data[i] = heap->data[2 * i + 1];
 			heap->data[2 * i + 1] = tmp;
@@ -108,13 +108,13 @@ int main()
 	printf("heap top: %d\n", HeapTop(heap));
 	PrintHeap(heap);
 	printf("heap:\n");
-	printf("           9\n");
+	printf("           0\n");
 	printf("         /  \\\n");
-	printf("        8    5\n");
+	printf("        1    2\n");
 	printf("       / \\  / \\\n");
-	printf("      6   7 1 4\n");
+	printf("      3   4 5  6\n");
 	printf("     / \\ /\n");
-	printf("    0  3 2\n");
+	printf("    7  8 9\n");
 	printf("delete top: %d\n", DeleteTop(heap));
 	PrintHeap(heap);
 	return 0;
