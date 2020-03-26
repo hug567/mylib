@@ -16,12 +16,21 @@ struct Heap {
 	int maxSize;
 };
 
-struct Heap *CreateHeap()
+void SwapInt(int *a, int *b)
+{
+	int tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+struct Heap *CreateHeap(void)
 {
 	struct Heap *heap = (struct Heap *)malloc(sizeof(struct Heap));
 	heap->data = (int *)malloc((MAXSIZE + 1) * sizeof(int));
 	heap->size = 0;
 	heap->maxSize = MAXSIZE;
+	return heap;
 }
 
 void InsertNode(struct Heap *heap, int data)
@@ -48,47 +57,64 @@ void InsertNode(struct Heap *heap, int data)
 	}
 }
 
-void RefreshTop(struct Heap *heap, int data)
+int SinkBig(struct Heap *heap, int parent)
 {
-	int i = 1;
+	int left = 2 * parent;
+	int right = 2 * parent + 1;
 	int tmp;
 
-	heap->data[1] = data;
-	while (i <= heap->size) {
-		if (2 * i <= heap->size && heap->data[i] > heap->data[2 * i]) {
-			tmp = heap->data[i];
-			heap->data[i] = heap->data[2 * i];
-			heap->data[2 * i] = tmp;
-		} else if ((2 * i + 1) <= heap->size && heap->data[i] > heap->data[2 * i + 1]) {
-			tmp = heap->data[i];
-			heap->data[i] = heap->data[2 * i + 1];
-			heap->data[2 * i + 1] = tmp;
-		} else {
-			return;
-		}
+	if (left > heap->size ||
+	    (right > heap->size && heap->data[parent] <= heap->data[left]) ||
+	    (right <= heap->size && heap->data[parent] <= heap->data[left] &&
+	     heap->data[parent] <= heap->data[right])) {
+		return 0;
+	}
+	if ((right > heap->size)  ||
+	    (heap->data[parent] > heap->data[left] && heap->data[parent] <= heap->data[right]) ||
+	    (heap->data[parent] > heap->data[right]  && heap->data[right]) > heap->data[left]) {
+		SwapInt(&heap->data[parent], &heap->data[left]);
+		return left;
+	}
+	if ((heap->data[left] >= heap->data[parent] && heap->data[parent] > heap->data[right]) ||
+	    (heap->data[parent] > heap->data[left]  && heap->data[left]) > heap->data[right]) {
+		SwapInt(&heap->data[parent], &heap->data[right]);
+		return right;
 	}
 }
 
-int NotExist(struct Heap *heap, int data)
+void RefreshTop(struct Heap *heap, int data)
+{
+	int pos = 1;
+
+	heap->data[1] = data;
+	do {
+		pos = SinkBig(heap, pos);
+	} while (pos);
+}
+
+void PrintHeap(struct Heap *heap)
 {
 	int i;
+
+	printf("heap: ");
 	for (i = 1; i <= heap->size; i++) {
-		if (heap->data[i] == data) {
-			return 0;
-		}
+		printf("%d ", heap->data[i]);
 	}
-	return 1;
+	printf("\n");
 }
 
 int findKthLargest(int* nums, int numsSize, int k){
 	int i;
 	struct Heap *heap = CreateHeap();
 
-	for (i = 0; i < numsSize; i++) {
-		if (heap->size < k && NotExist(heap, nums[i])) {
-			InsertNode(heap, nums[i]);
-		} else if (heap->size == k && heap->data[1] < nums[i]) {
+	for (i = 0; i < k; i++) {
+		InsertNode(heap, nums[i]);
+	}
+PrintHeap(heap);
+	for (i = k; i < numsSize; i++) {
+		if (heap->data[1] < nums[i]) {
 			RefreshTop(heap, nums[i]);
+PrintHeap(heap);
 		}
 	}
 
@@ -97,9 +123,12 @@ int findKthLargest(int* nums, int numsSize, int k){
 
 int main(int argc, char *argv[])
 {
-	int nums[] = {3, 2, 1, 5, 6, 4};
-	int numsSize = 6;
-	int k = 2;
+	//int nums[] = {3, 2, 1, 5, 6, 4};
+	//int numsSize = 6;
+	//int k = 2;
+	int nums[] = {3, 2, 3, 1, 2, 4, 5, 5, 6};
+	int numsSize = sizeof(nums) / sizeof(int);
+	int k = 4;
 
 	printf("kth num = %d\n", findKthLargest(nums, numsSize, k));
 	return 0;
