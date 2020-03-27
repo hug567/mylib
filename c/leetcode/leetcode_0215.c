@@ -1,14 +1,14 @@
 /*
  * 题目：leetcode 215: 数组中第k大的元素
  * 难度：中等
- * 技巧：维护一个k个不重复元素的最小堆
+ * 技巧：维护一个k个元素的最小堆
  * 时间：2020-03-15
  */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define MAXSIZE 100
+#define MAXSIZE 10000
 
 struct Heap {
 	int *data;
@@ -63,20 +63,27 @@ int SinkBig(struct Heap *heap, int parent)
 	int right = 2 * parent + 1;
 	int tmp;
 
-	if (left > heap->size ||
-	    (right > heap->size && heap->data[parent] <= heap->data[left]) ||
-	    (right <= heap->size && heap->data[parent] <= heap->data[left] &&
-	     heap->data[parent] <= heap->data[right])) {
+	if (left > heap->size) {
 		return 0;
-	}
-	if ((right > heap->size)  ||
-	    (heap->data[parent] > heap->data[left] && heap->data[parent] <= heap->data[right]) ||
-	    (heap->data[parent] > heap->data[right]  && heap->data[right]) > heap->data[left]) {
+	} else if (right > heap->size) {
+		if (heap->data[parent] > heap->data[left]) {
+			SwapInt(&heap->data[parent], &heap->data[left]);
+		}
+		return 0;
+	} else if (heap->data[left] >= heap->data[parent]) {
+		if (heap->data[right] < heap->data[parent]) {
+			SwapInt(&heap->data[parent], &heap->data[right]);
+			return right;
+		} else {
+			return 0;
+		}
+	} else if (heap->data[right] >= heap->data[parent]) {
 		SwapInt(&heap->data[parent], &heap->data[left]);
 		return left;
-	}
-	if ((heap->data[left] >= heap->data[parent] && heap->data[parent] > heap->data[right]) ||
-	    (heap->data[parent] > heap->data[left]  && heap->data[left]) > heap->data[right]) {
+	} else if (heap->data[left] <= heap->data[right]) {
+		SwapInt(&heap->data[parent], &heap->data[left]);
+		return left;
+	} else {
 		SwapInt(&heap->data[parent], &heap->data[right]);
 		return right;
 	}
@@ -110,11 +117,9 @@ int findKthLargest(int* nums, int numsSize, int k){
 	for (i = 0; i < k; i++) {
 		InsertNode(heap, nums[i]);
 	}
-PrintHeap(heap);
 	for (i = k; i < numsSize; i++) {
 		if (heap->data[1] < nums[i]) {
 			RefreshTop(heap, nums[i]);
-PrintHeap(heap);
 		}
 	}
 
@@ -124,7 +129,7 @@ PrintHeap(heap);
 int main(int argc, char *argv[])
 {
 	//int nums[] = {3, 2, 1, 5, 6, 4};
-	//int numsSize = 6;
+	//int numsSize = sizeof(nums) / sizeof(int);
 	//int k = 2;
 	int nums[] = {3, 2, 3, 1, 2, 4, 5, 5, 6};
 	int numsSize = sizeof(nums) / sizeof(int);
