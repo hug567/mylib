@@ -2,6 +2,7 @@
  * 题目：leetcode 295: 数据流的中位数
  * 难度：困难
  * 技巧：双向链表插入排序
+ * 其他：用一个最大堆一个最小堆分别保存，未实现
  * 时间：2020-03-27
  */
 #include <stdio.h>
@@ -14,12 +15,11 @@ struct Node {
 	struct Node *next;
 };
 
+/* initialize your data structure here. */
 typedef struct {
 	struct Node *head;
 	int len;
 } MedianFinder;
-
-/** initialize your data structure here. */
 
 MedianFinder* medianFinderCreate() {
 	MedianFinder *obj = (MedianFinder *)malloc(sizeof(MedianFinder));

@@ -1,3 +1,8 @@
+################################################################################
+# python练习：变量的定义与使用
+# python版本：python 3.6.3
+# 时间：2020-03-29
+################################################################################
 import sys
 
 # print
@@ -35,8 +40,3 @@ favorite = "python      "
 print("favorite: ", favorite, ".")
 print("favorite: ", favorite.rstrip(), ".")
 sys.stdout.write("favorite: %s.\n" % favorite.rstrip())
-
-
-
-
-

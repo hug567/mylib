@@ -1,5 +1,8 @@
 
 CC := gcc
+CFLAGS = -Wall
+LIBS =
+LIBPATH =
 
 
 main:

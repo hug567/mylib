@@ -1,3 +1,8 @@
+/*
+ * 简介：验证fork创建子进程
+ * 系统：Linux (ubuntu 18.04)
+ * 时间：2020-03-29
+ */
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
