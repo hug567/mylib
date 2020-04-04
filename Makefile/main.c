@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "test01.h"
+#include <test01.h>
 
 void __wrap_test01_print(void)
 {
