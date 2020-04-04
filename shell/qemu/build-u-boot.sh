@@ -17,5 +17,7 @@ make mrproper
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_ca9x4_config
 # 编译文件
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
+# 拷贝u-boot文件至tftp根目录
+sudo cp u-boot /var/lib/tftproot
 # qemu启动命令
 echo -e "\n${YELLOW}Verify: ${GREEN}qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic${RESET}"
