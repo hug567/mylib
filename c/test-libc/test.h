@@ -6,11 +6,17 @@
 #ifndef __TEST_H__
 #define __TEST_H__
 
-typedef (int *)func(void) TestFunc;
+typedef int (*TestFunc(void));
 
 struct TestCase {
 	char *name;
 	TestFunc *func;
+	struct TestCase *next;
+};
+
+struct TestModule {
+	struct TestCase *head;
+	struct TestMode *next;
 };
 
 #define mt_log(fmt, ...) printf("[mytest][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
