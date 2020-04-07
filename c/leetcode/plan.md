@@ -19,3 +19,15 @@
 9、动态规划：70、198、53、322、120、300、64、174
 
 10、复杂数据结构：208、211、547、307
+
+## C语言解LeetCode需注意：
+```c
+void func(int **nums, int col)
+{
+	/* 本地编译获取二维数组 */
+	int (*data)[col] = (int(*)[maxCol])nums;
+
+	/* leetcode获取二维数组 */
+	//int **data = nums;
+}
+```
