@@ -25,7 +25,7 @@
 void func(int **nums, int col)
 {
 	/* 本地编译获取二维数组 */
-	int (*data)[col] = (int(*)[maxCol])nums;
+	int (*data)[col] = (int(*)[col])nums;
 
 	/* leetcode获取二维数组 */
 	//int **data = nums;

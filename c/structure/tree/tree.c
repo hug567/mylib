@@ -2,14 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tree.h"
 
-typedef struct node {
-	char data;
-	struct node *lchild;
-	struct node *rchild;
-} btnode;
-
-void create_tree(btnode **tree)
+/*
+ * example: AB##C##
+ */
+void CreateTree(BTNode **tree)
 {
 	char ch;
 	scanf("%c", &ch);
@@ -17,10 +15,10 @@ void create_tree(btnode **tree)
 		*tree = NULL;
 		return;
 	} else {
-		*tree = (btnode *)malloc(sizeof(btnode));
+		*tree = (struct BTNode *)malloc(sizeof(struct BTNode));
 		(*tree)->data = ch;
-		create_tree(&((*tree)->lchild));
-		create_tree(&((*tree)->rchild));
+		CreateTree(&((*tree)->left));
+		CreateTree(&((*tree)->right));
 	}
 }
 
