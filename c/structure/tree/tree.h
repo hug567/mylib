@@ -13,4 +13,9 @@ struct BTNode {
 	struct BTNode *right;
 };
 
+void CreateTree(struct BTNode **tree);
+void PreOrder(struct BTNode *tree);
+void InOrder(struct BTNode *tree);
+void PostOrder(struct BTNode *tree);
+
 #endif /* __TREE_H__ */

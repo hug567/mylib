@@ -7,7 +7,7 @@
 /*
  * example: AB##C##
  */
-void CreateTree(BTNode **tree)
+void CreateTree(struct BTNode **tree)
 {
 	char ch;
 	scanf("%c", &ch);
@@ -22,53 +22,32 @@ void CreateTree(BTNode **tree)
 	}
 }
 
-void pre_order(btnode *tree)
+void PreOrder(struct BTNode *tree)
 {
 	if (tree == NULL) {
 		return;
 	}
 	printf("%c", tree->data);
-	pre_order(tree->lchild);
-	pre_order(tree->rchild);
+	PreOrder(tree->left);
+	PreOrder(tree->right);
 }
 
-void in_order(btnode *tree)
+void InOrder(struct BTNode *tree)
 {
 	if (tree == NULL) {
 		return;
 	}
-	pre_order(tree->lchild);
+	InOrder(tree->left);
 	printf("%c", tree->data);
-	pre_order(tree->rchild);
+	InOrder(tree->right);
 }
 
-void post_order(btnode *tree)
+void PostOrder(struct BTNode *tree)
 {
 	if (tree == NULL) {
 		return;
 	}
-	pre_order(tree->lchild);
-	pre_order(tree->rchild);
+	PostOrder(tree->left);
+	PostOrder(tree->right);
 	printf("%c", tree->data);
-}
-
-int main()
-{
-/* 测试用例：
-AB##C##
-ABD##E##C##
- */
-	btnode *tree = (btnode *)malloc(sizeof(btnode));
-
-	printf("input tree: ");
-	create_tree(&tree);
-	printf("pre order: ");
-	pre_order(tree);
-	printf("\nin order: ");
-	in_order(tree);
-	printf("\npost order: ");
-	post_order(tree);
-	printf("\n");
-
-	return 0;
 }
