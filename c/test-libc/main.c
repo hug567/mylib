@@ -22,11 +22,12 @@ static void usage(const char *name)
 
 int main(int argc, char *argv[])
 {
-	int ret;
-	int modulesNum = sizeof(gTestModules) / sizeof(char *);
+	//int modulesNum = sizeof(gTestModules) / sizeof(char *);
 
-	usage(argv[0]);
-	struct TestModule *module = CreateTestModule(gTestModules, modulesNum);
+    if (argc == 2 && (strcmp(argv[1], "-h") == 0)) {
+        usage(argv[0]);
+    }
+	//struct TestModule *module = CreateTestModule(gTestModules, modulesNum);
 
 	return 0;
 }

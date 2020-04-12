@@ -17,30 +17,30 @@
 
 int Compare(const void *a, const void *b)
 {
-	//return *(int *)a - *(int *)b; /* 升序 */
-	return *(int *)b - *(int *)a; /* 降序 */
+    //return *(int *)a - *(int *)b; /* 升序 */
+    return *(int *)b - *(int *)a; /* 降序 */
 }
 
 void PrintArray(int *data, int size)
 {
-	int i;
-	printf("array[%d]: ", size);
-	for (i = 0; i < size; i++) {
-		printf("%d ", data[i]);
-	}
-	printf("\n");
+    int i;
+    printf("array[%d]: ", size);
+    for (i = 0; i < size; i++) {
+        printf("%d ", data[i]);
+    }
+    printf("\n");
 }
 
-int main()
+int stdlib_qsort_main()
 {
-	int i;
-	int nums[SIZE] = {0};
+    int i;
+    int nums[SIZE] = {0};
 
-	for (i = 0; i < SIZE; i++) {
-		nums[i] = rand() % 20;
-	}
-	PrintArray(nums, SIZE);
-	qsort(nums, SIZE, sizeof(int), Compare);
-	PrintArray(nums, SIZE);
-	return 0;
+    for (i = 0; i < SIZE; i++) {
+        nums[i] = rand() % 20;
+    }
+    PrintArray(nums, SIZE);
+    qsort(nums, SIZE, sizeof(int), Compare);
+    PrintArray(nums, SIZE);
+    return 0;
 }

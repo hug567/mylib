@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-int main()
+int string_main()
 {
-	char *str = "1234567890";
-	printf("strlen(\"%s\") = %ld\n", str, strlen(str));
-	return 0;
+    char *str = "1234567890";
+    printf("strlen(\"%s\") = %d\n", str, (int)strlen(str));
+    return 0;
 }

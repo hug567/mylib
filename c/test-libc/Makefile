@@ -1,8 +1,13 @@
+CC=gcc
+CFLAGS=-Wall -g
 
+RM=rm -rf
 
-OUTPUT_DIR = $O
+ALL_SRC=$(shell find . -name "*.c")
 
-test:
-	@echo "Hello Makfile"
-	@./build.sh ${OUTPUT_DIR}
+all:
+	${CC} ${CFLAGS} ${ALL_SRC} -o a.exe
+
+clean:
+	${RM} *.o *.exe *.elf
 

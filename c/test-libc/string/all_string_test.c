@@ -7,9 +7,9 @@
 
 int all_string_test(void)
 {
-	int ret;
+    //int ret;
 
-	RUN_TEST(test_strlen);
+    //RUN_TEST(test_strlen);
 
-	return 0;
+    return 0;
 }

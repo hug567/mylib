@@ -16,40 +16,40 @@
 #define SIZE 10
 
 struct Node {
-	int x;
-	int y;
+    int x;
+    int y;
 };
 
-int Compare(const void *a, const void *b)
+int Compare2(const void *a, const void *b)
 {
-	//return *(int *)a - *(int *)b; /* 升序 */
-	//return *(int *)b - *(int *)a; /* 降序 */
-	struct Node *n1 = (struct Node *)a;
-	struct Node *n2 = (struct Node *)b;
+    //return *(int *)a - *(int *)b; /* 升序 */
+    //return *(int *)b - *(int *)a; /* 降序 */
+    struct Node *n1 = (struct Node *)a;
+    struct Node *n2 = (struct Node *)b;
 
-	return n1->y - n2->y;
+    return n1->y - n2->y;
 }
 
-void PrintArray(struct Node *points, int size)
+void PrintArray2(struct Node *points, int size)
 {
-	int i;
-	printf(">>> print points: <<<\n");
-	for (i = 0; i < size; i++) {
-		printf("point[%d]: %d %d\n", i, points[i].x, points[i].y);
-	}
+    int i;
+    printf(">>> print points: <<<\n");
+    for (i = 0; i < size; i++) {
+        printf("point[%d]: %d %d\n", i, points[i].x, points[i].y);
+    }
 }
 
-int main()
+int stdlib_qsort2_main()
 {
-	int i;
-	struct Node points[SIZE] = {0};
+    int i;
+    struct Node points[SIZE];
 
-	for (i = 0; i < SIZE; i++) {
-		points[i].x = rand() % 20;
-		points[i].y = rand() % 20;
-	}
-	PrintArray(points, SIZE);
-	qsort(points, SIZE, sizeof(struct Node), Compare);
-	PrintArray(points, SIZE);
-	return 0;
+    for (i = 0; i < SIZE; i++) {
+        points[i].x = rand() % 20;
+        points[i].y = rand() % 20;
+    }
+    PrintArray2(points, SIZE);
+    qsort(points, SIZE, sizeof(struct Node), Compare2);
+    PrintArray2(points, SIZE);
+    return 0;
 }

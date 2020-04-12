@@ -7,32 +7,31 @@
 
 int __test_sizeof_str_arr(void)
 {
-	const char *strs[] = {
-		"12345",
-		"1234567890",
-		"a",
-		"bbbbb",
-		"ccc",
-	};
+    const char *strs[] = {
+        "12345",
+        "1234567890",
+        "a",
+        "bbbbb",
+        "ccc",
+    };
 
-	/* ans = 20, 指针长度(4) x 数组长度(5) */
-	printf("sizeof string array = %d\n", sizeof(strs));
-	/* size = 5 */
-	printf("array size = %d\n", sizeof(strs) / sizeof(char *));
+    /* ans = 20, 指针长度(4) x 数组长度(5) */
+    printf("sizeof string array = %d\n", sizeof(strs));
+    /* size = 5 */
+    printf("array size = %d\n", sizeof(strs) / sizeof(char *));
+    return 0;
 }
 
-int main()
+int stdio_main()
 {
-	int ret;
+    int ret;
 
-	int oneDimArray[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-	int oneDimArraySize = sizeof(oneDimArray) / sizeof(int);
-	/* oneDimArraySize = 10 */
-	printf("one dimensional array size = %d\n", oneDimArraySize);
+    int oneDimArray[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    int oneDimArraySize = sizeof(oneDimArray) / sizeof(int);
+    /* oneDimArraySize = 10 */
+    printf("one dimensional array size = %d\n", oneDimArraySize);
 
-	RUN_TEST(__test_sizeof_str_arr);
+    RUN_TEST(__test_sizeof_str_arr);
 
-
-
-	return 0;
+    return 0;
 }
