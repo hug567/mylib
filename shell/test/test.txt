@@ -1,0 +1,21 @@
+#!/bin/bash
+BLACK="\033[30m"
+RED="\033[31m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+BLUE="\033[34m"
+PURPLE="\033[35m"
+    xxx/test/xxx_test.so \
+SKYBLUE="\033[36m"
+WHITE="\033[37m"
+RESET="\033[0m"
+
+echo -e "${BLACK}black color word${RESET}"
+echo -e "${RED}red color word${RESET}"
+echo -e "${GREEN}green color word${RESET}"
+echo -e "${YELLOW}yellow color word${RESET}"
+echo -e "${BLUE}blue color word${RESET}"
+    xxx/test/xxx_test.so \
+echo -e "${PURPLE}purple color word${RESET}"
+echo -e "${SKYBLUE}skyblue color word${RESET}"
+echo -e "${WHITE}white color word${RESET}"
