@@ -14,6 +14,8 @@ ABD##E##C##
 ABC##D##EF##G##
 */
 
+typedef char ElementType;
+
 void TestPrintStack(struct Stack *s)
 {
 }

@@ -16,7 +16,7 @@ int StackIsEmpty(struct Stack *s)
     }
 }
 
-struct Stack *StackCreate(ElementType)
+struct Stack *StackCreate(void)
 {
     struct Stack *s = (struct Stack *)malloc(sizeof(struct Stack));
     s->top = NULL;
@@ -34,12 +34,13 @@ void StackDestory(struct Stack *s)
     while (s->top != NULL) {
         tmp = s->top;
         s->top = s->top->next;
+        free(tmp->data);
         free(tmp);
     }
     free(s);
 }
 
-void StackPush(struct Stack *s, void *data)
+void StackPush(struct Stack *s, void *data, size_t size)
 {
     struct SNode *tmp = NULL;
 
@@ -47,7 +48,8 @@ void StackPush(struct Stack *s, void *data)
         return;
     }
     tmp = (struct SNode *)malloc(sizeof(struct SNode));
-    tmp->data = data;
+    tmp->data = malloc(size);
+    memcpy(tmp->data, data, size);
     tmp->next = NULL;
     if (StackIsEmpty(s)) {
         s->top = tmp;
@@ -72,6 +74,7 @@ int StackPop(struct Stack *s, void *data, size_t size)
         s->top = s->top->next;
         s->len--;
         memcpy(data, tmp->data, size);
+        free(tmp->data);
         free(tmp);
         return 0;
     }

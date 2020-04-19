@@ -21,7 +21,7 @@ struct Stack {
 int StackIsEmpty(struct Stack *s);
 struct Stack *StackCreate(void);
 void StackDestory(struct Stack *s);
-void StackPush(struct Stack *s, void *data);
+void StackPush(struct Stack *s, void *data, size_t size);
 int StackPop(struct Stack *s, void *data, size_t size);
 
 #endif /* __STACK_H__ */

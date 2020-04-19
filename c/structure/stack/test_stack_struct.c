@@ -7,11 +7,13 @@
 #include <string.h>
 #include <stack.h>
 
-typedef int ElementType;
+typedef struct {
+    int a;
+    char b;
+} ElementType;
 
 static void StackPrint(struct Stack *s)
 {
-    ElementType *data = NULL;
     struct SNode *top = NULL;
 
     if (StackIsEmpty(s)) {
@@ -20,8 +22,7 @@ static void StackPrint(struct Stack *s)
     top = s->top;
     printf("stack: ");
     while (top != NULL) {
-        data = top->data;
-        printf("%d ", *data);
+        printf("%c ", *(ElementType *)top->data);
         top = top->next;
     }
     printf("\n");
@@ -30,25 +31,21 @@ static void StackPrint(struct Stack *s)
 int main(int argc, char *argv[])
 {
     int i;
-    ElementType *tmp = NULL;
-    ElementType data;
+    ElementType tmp;
     struct Stack *s = NULL;
     printf("hello stack\n");
 
     s = StackCreate();
-    for (i = 0; i < 10; i++) {
-        tmp = (int *)malloc(sizeof(int));
-        *tmp = i;
-        StackPush(s, tmp);
+    for (i = 0 + 'a'; i < 10 + 'a'; i++) {
+        StackPush(s, &i, sizeof(ElementType));
     }
     StackPrint(s);
-    if (StackPop(s, &data, sizeof(ElementType)) == 0) {
-        printf("stack pop data = %d\n", data);
+    if (StackPop(s, &tmp, sizeof(ElementType)) == 0) {
+        printf("stack pop data = %c\n", tmp);
     }
     StackPrint(s);
-    tmp = (int *)malloc(sizeof(int));
-    *tmp = 100;
-    StackPush(s, tmp);
+    tmp = 10 + 'a';
+    StackPush(s, &tmp, sizeof(ElementType));
     StackPrint(s);
     return 0;
 }
