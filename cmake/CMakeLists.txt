@@ -4,6 +4,20 @@ cmake_minimum_required(VERSION 2.6)
 # cmake工程名称
 project(cmake_practice)
 
+# 添加搜索.cmake路径
+# 包含cmake脚本
+include(./script/common.cmake)
+mt_log("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
+mt_info("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
+mt_error("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
+mt_var(CMAKE_CURRENT_SOURCE_DIR)
+set(tmp_var ${CMAKE_CURRENT_SOURCE_DIR})
+mt_var(tmp_var)
+
+mt_file("test function mt_file")
+mt_file_var(CMAKE_CURRENT_SOURCE_DIR)
+mt_file_var(CMAKE_CURRENT_SOURCE_DIR_XXX)
+
 #消息提示
 message("[INFO]: start compile project")
 # 工程源码路径
