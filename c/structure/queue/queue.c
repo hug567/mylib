@@ -1,61 +1,55 @@
 /* 基本队列 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <queue.h>
 
-#define MAX_SIZE 100
-
-typedef struct {
-	int data[MAX_SIZE];
-	int front;
-	int rear;
-	int size;
-} Queue;
-
-void QueueInit(Queue *queue)
+struct Queue *QueueCreate(void)
 {
-	queue->front = -1;
-	queue->rear = -1;
-	queue->size = 0;
+    struct Queue *q = (struct Queue *)malloc(sizeof(struct Queue));
+    q->head = NULL;
+    q->tail = NULL;
+    q->len = 0;
 }
 
-void QueueIn(Queue *queue, int data)
+int QueueIsEmpty(struct Queue *q)
 {
-	if (queue->size >= MAX_SIZE) {
-		printf("queue full!");
-		return;
-	}
-	queue->front++;
-	queue->front %= MAX_SIZE;
-	queue->data[queue->front] = data;
-	queue->size++;
+    if (q == NULL || q->len == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
-int QueueOut(Queue *queue)
+void QueuePush(struct Queue *q, void *data, size_t size)
 {
-	if (queue->size == 0) {
-		printf("queue empty!\n");
-		return -1;
-	}
-	queue->rear++;
-	queue->rear %= MAX_SIZE;
-	queue->size--;
-	return queue->data[queue->rear];
+    struct QNode *node = (struct QNode *)malloc(sizeof(struct QNode));
+    node->data = malloc(size);
+    node->next = NULL;
+    memcpy(node->data, data, size);
+    if (QueueIsEmpty(q)) {
+        q->head = node;
+        q->tail = node;
+    } else {
+        q->tail->next = node;
+        q->tail = q->tail->next;
+    }
+    q->len++;
 }
 
-int main()
+int QueuePop(struct Queue *q, void *data, size_t size)
 {
-	int i = 0;
-	Queue *queue = (Queue *)malloc(sizeof(Queue));
+    struct QNode *node = NULL;
 
-	QueueInit(queue);
-	for (i = 0; i < 10; i++) {
-		QueueIn(queue, i);
-	}
-	printf("queue: ");
-	for (i = 0; i < 10; i++) {
-		printf("%d ", QueueOut(queue));
-	}
-	printf("\n");
-
-	return 0;
+    if (QueueIsEmpty(q) || data == NULL) {
+        return -1;
+    } else {
+        node = q->head;
+        q->head = q->head->next;
+        q->len--;
+        memcpy(data, node->data, size);
+        free(node->data);
+        free(node);
+        return 0;
+    }
 }

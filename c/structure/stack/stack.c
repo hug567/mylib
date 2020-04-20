@@ -9,7 +9,7 @@
 
 int StackIsEmpty(struct Stack *s)
 {
-    if (s->len == 0) {
+    if (s == NULL || s->len == 0) {
         return 1;
     } else {
         return 0;
@@ -64,10 +64,7 @@ int StackPop(struct Stack *s, void *data, size_t size)
 {
     struct SNode *tmp = NULL;
 
-    if (s == NULL || data == NULL) {
-        return -1;
-    }
-    if (StackIsEmpty(s)) {
+    if (StackIsEmpty(s) || data == NULL) {
         return -1;
     } else {
         tmp = s->top;

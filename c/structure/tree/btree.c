@@ -16,25 +16,21 @@ ABC##D##EF##G##
 
 typedef char ElementType;
 
-void TestPrintStack(struct Stack *s)
+void PrintfPath(struct Stack *s)
 {
 }
 
-void TestStackChar(void)
+void PrintAllPath(struct BTNode *node, struct Stack *s)
 {
-    int i;
-    char *ch = NULL;
-    struct Stack *s = NULL;
-
-    s = StackCreate();
-    for (i = 0; i < 26; i++) {
-        ch = (char *)
+    if (node->left == NULL && node->right == NULL) {
+        PrintPath(struct Stack *s);
     }
 }
 
 int main()
 {
 	struct BTNode *tree = (struct BTNode *)malloc(sizeof(struct BTNode));
+    struct Stack *s = StackCtrate();
 
 	CreateTree(&tree);
 	printf("pre order: ");
