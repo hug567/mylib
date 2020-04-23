@@ -14,8 +14,8 @@ struct QNode {
 
 /* 链栈 */
 struct Queue {
-    struct QNode *head;
-    struct QNode *tail;
+    struct QNode *head; /* pop from head */
+    struct QNode *tail; /* push to tail */
     int len;
 };
 

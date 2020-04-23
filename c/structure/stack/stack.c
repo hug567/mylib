@@ -16,6 +16,10 @@ int StackIsEmpty(struct Stack *s)
     }
 }
 
+/*
+ * top
+ * n1 -> n2 -> ...  ->nk
+ */
 struct Stack *StackCreate(void)
 {
     struct Stack *s = (struct Stack *)malloc(sizeof(struct Stack));
@@ -40,6 +44,7 @@ void StackDestory(struct Stack *s)
     free(s);
 }
 
+/* stack push to top */
 void StackPush(struct Stack *s, void *data, size_t size)
 {
     struct SNode *tmp = NULL;
@@ -60,6 +65,7 @@ void StackPush(struct Stack *s, void *data, size_t size)
     s->len++;
 }
 
+/* stack pop from top */
 int StackPop(struct Stack *s, void *data, size_t size)
 {
     struct SNode *tmp = NULL;

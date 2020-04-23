@@ -4,12 +4,32 @@
 #include <string.h>
 #include <queue.h>
 
+/*
+ * head                        tail
+ *  n1 -> n2 -> n3 -> .....  -> nk
+ */
 struct Queue *QueueCreate(void)
 {
     struct Queue *q = (struct Queue *)malloc(sizeof(struct Queue));
     q->head = NULL;
     q->tail = NULL;
     q->len = 0;
+    return q;
+}
+
+void QueueDestory(struct Queue *q)
+{
+    struct QNode *node = NULL;
+
+    if (q == NULL) {
+        return;
+    }
+    while (q->head != NULL) {
+        node = q->head;
+        q->head = q->head->next;
+        free(node);
+    }
+    free(q);
 }
 
 int QueueIsEmpty(struct Queue *q)
@@ -21,6 +41,7 @@ int QueueIsEmpty(struct Queue *q)
     }
 }
 
+/* queue push to tail */
 void QueuePush(struct Queue *q, void *data, size_t size)
 {
     struct QNode *node = (struct QNode *)malloc(sizeof(struct QNode));
@@ -37,6 +58,7 @@ void QueuePush(struct Queue *q, void *data, size_t size)
     q->len++;
 }
 
+/* queue pop from head */
 int QueuePop(struct Queue *q, void *data, size_t size)
 {
     struct QNode *node = NULL;
