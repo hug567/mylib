@@ -16,9 +16,9 @@ int __test_sizeof_str_arr(void)
     };
 
     /* ans = 20, 指针长度(4) x 数组长度(5) */
-    printf("sizeof string array = %d\n", sizeof(strs));
+    printf("sizeof string array = %ld\n", sizeof(strs));
     /* size = 5 */
-    printf("array size = %d\n", sizeof(strs) / sizeof(char *));
+    printf("array size = %ld\n", sizeof(strs) / sizeof(char *));
     return 0;
 }
 
