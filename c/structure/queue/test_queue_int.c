@@ -36,13 +36,22 @@ int main(int argc, char *argv[])
     for (i = 0; i < 10; i++) {
         QueuePush(q, &i, sizeof(ElementType));
     }
+
     QueuePrint(q);
     if (QueuePop(q, &tmp, sizeof(ElementType)) == 0) {
         printf("queue pop data = %d\n", tmp);
     }
     QueuePrint(q);
+
     tmp = 100;
     QueuePush(q, &tmp, sizeof(ElementType));
     QueuePrint(q);
+
+    QueuePop(q, NULL, 0);
+    QueuePrint(q);
+
+    /* 销毁队列 */
+    QueueDestory(q);
+
     return 0;
 }

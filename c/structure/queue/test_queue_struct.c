@@ -1,28 +1,32 @@
 /*
- * 练习：队列库函数
- * 时间：2020-04-23
+ * 练习：栈库函数
+ * 时间：2020-04-12
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <queue.h>
 
-typedef char ElementType;
+typedef struct {
+    int num;
+    char ch;
+} ElementType;
 
 static void QueuePrint(struct Queue *q)
 {
     struct QNode *head = NULL;
+    ElementType *data;
 
     if (QueueIsEmpty(q)) {
         return;
     }
     head = q->head;
-    printf("queue: ");
+    printf("queue: \n");
     while (head != NULL) {
-        printf("%c ", *(ElementType *)head->data);
+        data = (ElementType *)head->data;
+        printf("    num = %d, ch = %c\n", data->num, data->ch);
         head = head->next;
     }
-    printf("\n");
 }
 
 int main(int argc, char *argv[])
@@ -34,19 +38,24 @@ int main(int argc, char *argv[])
 
     /* 创建队列 */
     q = QueueCreate();
-    for (i = 0 + 'a'; i < 10 + 'a'; i++) {
-        QueuePush(q, &i, sizeof(ElementType));
+    /* 入队 */
+    for (i = 0; i < 10; i++) {
+        tmp.num = i;
+        tmp.ch = i + 'a';
+        QueuePush(q, &tmp, sizeof(ElementType));
     }
+    /* 队列打印 */
     QueuePrint(q);
 
     /* 出队 */
     if (QueuePop(q, &tmp, sizeof(ElementType)) == 0) {
-        printf("queue pop data = %c\n", tmp);
+        printf("stack pop, num = %d, ch = %c\n", tmp.num, tmp.ch);
     }
     QueuePrint(q);
 
     /* 入队 */
-    tmp = 10 + 'a';
+    tmp.num = 10;
+    tmp.ch = 10 + 'a';
     QueuePush(q, &tmp, sizeof(ElementType));
     QueuePrint(q);
 

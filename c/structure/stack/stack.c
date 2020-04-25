@@ -70,13 +70,15 @@ int StackPop(struct Stack *s, void *data, size_t size)
 {
     struct SNode *tmp = NULL;
 
-    if (StackIsEmpty(s) || data == NULL) {
+    if (StackIsEmpty(s)) {
         return -1;
     } else {
         tmp = s->top;
         s->top = s->top->next;
         s->len--;
-        memcpy(data, tmp->data, size);
+        if (data != NULL) {
+            memcpy(data, tmp->data, size);
+        }
         free(tmp->data);
         free(tmp);
         return 0;

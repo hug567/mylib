@@ -7,7 +7,7 @@ all:
 	@echo "[01] make btree:           binary tree"
 
 btree:
-	${CC} ${CFLAGS}  ${INCLUDE_PATH} tree.c btree.c -o a.exe
+	${CC} ${CFLAGS}  ${INCLUDE_PATH} tree.c ../stack/stack.c test_btree.c -o a.exe
 
 clean:
 	rm -rf *.o *.exe

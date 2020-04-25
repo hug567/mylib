@@ -1,4 +1,7 @@
-/* 基本队列 */
+/*
+ * 练习：链式队列库函数
+ * 时间：2020-04-25
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +9,8 @@
 
 /*
  * head                        tail
- *  n1 -> n2 -> n3 -> .....  -> nk
+ * n1 -> n2 -> n3 -> .....  -> nk
+ * pop from head               push to tail
  */
 struct Queue *QueueCreate(void)
 {
@@ -63,13 +67,15 @@ int QueuePop(struct Queue *q, void *data, size_t size)
 {
     struct QNode *node = NULL;
 
-    if (QueueIsEmpty(q) || data == NULL) {
+    if (QueueIsEmpty(q)) {
         return -1;
     } else {
         node = q->head;
         q->head = q->head->next;
         q->len--;
-        memcpy(data, node->data, size);
+        if (data != NULL) {
+            memcpy(data, node->data, size);
+        }
         free(node->data);
         free(node);
         return 0;
