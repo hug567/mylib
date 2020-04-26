@@ -68,12 +68,6 @@ int findMinArrowShots(int** points, int pointsSize, int* pointsColSize){
             i++;
         }
         min++;
-        i++;
-        if (i < pointsSize) {
-            end = pts[i].end;
-        } else if (i == pointsSize) {
-            min++;
-        }
     }
     printf("i = %d\n", i);
 
