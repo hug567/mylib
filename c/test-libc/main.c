@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     if (argc == 2 && (strcmp(argv[1], "-h") == 0)) {
         usage(argv[0]);
     }
-    //InitTestModules();
 
     return 0;
 }
