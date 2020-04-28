@@ -6,32 +6,37 @@
 #ifndef __TEST_H__
 #define __TEST_H__
 
-typedef int (*TestFunc(void));
+typedef int TestFunc(void);
 
 struct TestCase {
-    char *name;
-    TestFunc *func;
-    struct TestCase *next;
+	const char *name;
+	int (*func)(void);
+	struct TestCase *next;
 };
 
 struct TestModule {
-    struct TestCase *head;
-    struct TestModule *next;
+	const char *name;
+	struct TestCase *head;
+	struct TestModule *next;
 };
 
-#define mt_log(fmt, ...)  printf("[LOG ][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
-#define mt_succ(fmt, ...) printf("[SUCC][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
-#define mt_fail(fmt, ...) printf("[FAIL][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define mt_info(fmt, ...)  printf("[INFO][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define mt_error(fmt, ...) printf("[ERROR][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define mt_succ(fmt, ...)  printf("[SUCC][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define mt_fail(fmt, ...)  printf("[FAIL][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
 
 #define RUN_TEST(__test__) \
-    do { \
-        printf("--------------- %s ---------------\n", #__test__); \
-        ret = __test__(); \
-        if (ret < 0) { \
-            mt_fail("%s failed\n", #__test__); \
-        }\
-    } while (0)
+	do { \
+		printf("--------------- %s ---------------\n", #__test__); \
+		ret = __test__(); \
+		if (ret < 0) { \
+			mt_fail("%s failed\n", #__test__); \
+		}\
+	} while (0)
 
-void InitTestModules(void);
+void AddTestModule(const char *moduleName);
+void AddTestCase(const char *moduleName, const char *caseName, TestFunc *func);
+
+int string_main(void);
 
 #endif /* __TEST_H__ */

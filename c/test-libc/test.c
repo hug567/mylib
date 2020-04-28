@@ -6,40 +6,67 @@
 #include <string.h>
 #include "test.h"
 
-//struct TestModule *gTestModules = NULL;
-
-char *g_modulesName[] = {
-    "stdio",
-    "stdlib",
-    "string",
-};
-
 struct TestModule *g_modules = NULL;
 
-int RegisterTestModules(const char *name)
+void AddTestModule(const char *moduleName)
 {
-    return 0;
+	struct TestModule *tmp = g_modules;
+	struct TestModule *new = (struct TestModule *)malloc(sizeof(struct TestModule));
+
+	new->name = moduleName;
+	new->head = NULL;
+	new->next = NULL;
+	if (g_modules == NULL) {
+		g_modules = new;
+	} else {
+		while (tmp->next != NULL) {
+			tmp = tmp->next;
+		}
+		tmp->next = NULL;
+	}
 }
 
-void InitTestModules(void)
+void AddTestCase(const char *moduleName, const char *caseName, TestFunc *func)
 {
-    int i;
-    struct TestModule *new = NULL;
-    struct TestModule *tail = NULL;
-    int modulesNum = sizeof(g_modulesName) / sizeof(char *);
-mt_log("modulesNum = %d\n", modulesNum);
+	struct TestModule *module = g_modules;
+	struct TestCase *tmp = NULL;
+	struct TestCase *new = (struct TestCase *)malloc(sizeof(struct TestCase));
 
-    for (i = 0; i < modulesNum; i++) {
-        new = (struct TestModule *)malloc(sizeof(struct TestModule));
-        new->head = NULL;
-        new->next = NULL;
-        if (g_modules == NULL) {
-            g_modules = new;
-            tail = new;
-        } else {
-            tail->next = new;
-            tail = tail->next;
-        }
-    }
+	new->name = caseName;
+	new->func = func;
+	new->next = NULL;
+	if (g_modules == NULL) {
+		mt_error("g_modules is NULL\n");
+		return;
+	}
+	while (module != NULL) {
+		if (strcmp(module->name, moduleName) == 0) {
+			break;
+		}
+		module = module->next;
+	}
+	if (module == NULL) {
+		mt_error("there is no %s module\n", moduleName);
+		return;
+	}
 
+	tmp = module->head;
+	if (tmp == NULL) {
+		module->head = new;
+	} else {
+		while (tmp->next != NULL) {
+			tmp = tmp->next;
+		}
+		tmp->next = new;
+	}
+}
+
+int RunTestCase(struct TestMode *module, struct TestCase *Case)
+{
+	return 0;
+}
+
+int RunTestModule(struct TestMode *module)
+{
+	return 0;
 }
