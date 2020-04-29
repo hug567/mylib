@@ -3,6 +3,12 @@
 #include <string.h>
 #include "test.h"
 
+static const char *g_modules_name[] = {
+	"stdio",
+	"stdlib",
+	"string",
+};
+
 static void usage(const char *name)
 {
     printf("Usage:\n");
@@ -14,15 +20,37 @@ static void usage(const char *name)
     printf("%s -r <module> -t <test>  run the specified test case in the specified module\n", name);
 }
 
+static void ListAllModules(const char **modules, int count)
+{
+	int i;
+
+	for (i = 0; i < count; i++) {
+		printf("%s\n", modules[i]);
+	}
+}
+
+static void add_all_test_modules(const char **modules, int count)
+{
+	int i;
+
+	for (i = 0; i < count; i++) {
+		AddTestModule(modules[i]);
+	}
+}
+
 int main(int argc, char *argv[])
 {
-    if (argc == 2 && (strcmp(argv[1], "-h") == 0)) {
-        usage(argv[0]);
-    }
+	int count = sizeof(g_modules_name) / sizeof(char *);
 
-    AddTestModule("string");
+	if (argc == 2 && (strcmp(argv[1], "-h") == 0)) {
+		usage(argv[0]);
+	}
 
-    string_main();
+	add_all_test_modules(g_modules_name, count);
+	string_main();
 
-    return 0;
+	if (argc == 2 && (strcmp(argv[1], "-l") == 0)) {
+		ListAllModules(g_modules_name, count);
+	}
+	return 0;
 }

@@ -61,12 +61,12 @@ void AddTestCase(const char *moduleName, const char *caseName, TestFunc *func)
 	}
 }
 
-int RunTestCase(struct TestMode *module, struct TestCase *Case)
+int RunTestCase(struct TestModule *module, struct TestCase *Case)
 {
 	return 0;
 }
 
-int RunTestModule(struct TestMode *module)
+int RunTestModule(struct TestModule *module)
 {
 	return 0;
 }
