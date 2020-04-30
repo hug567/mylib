@@ -11,10 +11,7 @@
 
 int string_main(void)
 {
-    //int ret;
+	add_test_case("string", "strlen", test_strlen);
 
-    //RUN_TEST(test_strlen);
-	AddTestCase("string", "strlen", test_strlen);
-
-    return 0;
+	return 0;
 }
