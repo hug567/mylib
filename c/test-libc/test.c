@@ -95,6 +95,14 @@ void add_test_case(const char *moduleName, const char *caseName, TestFunc *func)
 	}
 }
 
+static int init_test_cases(void)
+{
+	stdio_main();
+	string_main();
+
+	return 0;
+}
+
 int init_test_modules(const char **modules, const int count)
 {
 	int i;
@@ -106,6 +114,9 @@ int init_test_modules(const char **modules, const int count)
 	for (i = 0; i < count; i++) {
 		add_test_module(modules[i]);
 	}
+
+	init_test_cases();
+
 	return 0;
 }
 
@@ -141,11 +152,6 @@ int list_test_cases(const char *name)
 	return 0;
 }
 
-int run_one_module(const char *name)
-{
-	return 0;
-}
-
 int run_one_case(const char *module_name, const char *case_name)
 {
 	struct TestModule *module = NULL;
@@ -164,8 +170,37 @@ int run_one_case(const char *module_name, const char *case_name)
 	}
 
 	if (tcase->func != NULL) {
+		printf("\n---------- %s ----------\n", tcase->name);
 		return tcase->func();
 	}
 
 	return -1;
+}
+
+int run_one_module(const char *name)
+{
+	struct TestModule *module = NULL;
+	struct TestCase *tcase = NULL;
+
+	module = find_module(name);
+	if (module == NULL) {
+		mt_error("there is no %s module\n", name);
+		return -1;
+	}
+
+	tcase = module->head;
+	while (tcase != NULL) {
+		if (tcase->func != NULL) {
+			printf("\n---------- %s ----------\n", tcase->name);
+			tcase->func();
+		}
+		tcase = tcase->next;
+	}
+
+	return 0;
+}
+
+int run_all_module(void)
+{
+	return 0;
 }

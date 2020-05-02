@@ -10,14 +10,15 @@ typedef int TestFunc(void);
 
 struct TestCase {
 	const char *name;
-	int (*func)(void);
 	struct TestCase *next;
+	int (*func)(void);
 };
 
 struct TestModule {
 	const char *name;
 	struct TestCase *head;
 	struct TestModule *next;
+	int (*init)(void);
 };
 
 #define mt_debug(fmt, ...) printf("[DEBUG][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
@@ -40,9 +41,11 @@ void add_test_case(const char *moduleName, const char *caseName, TestFunc *func)
 int init_test_modules(const char **modules, const int count);
 int list_test_modules(void);
 int list_test_cases(const char *name);
-int run_one_module(const char *name);
 int run_one_case(const char *module_name, const char *case_name);
+int run_one_module(const char *name);
+int run_all_module(void);
 
+int stdio_main(void);
 int string_main(void);
 
 #endif /* __TEST_H__ */

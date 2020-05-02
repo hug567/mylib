@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "test_string.h"
+#include "string_header.h"
 
-int test_strlen()
+int test_strlen(void)
 {
 	char *str = "1234567890";
 	printf("strlen(\"%s\") = %d\n", str, (int)strlen(str));

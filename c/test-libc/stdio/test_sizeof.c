@@ -22,7 +22,7 @@ int __test_sizeof_str_arr(void)
     return 0;
 }
 
-int stdio_main()
+int test_sizeof()
 {
     int ret;
 
