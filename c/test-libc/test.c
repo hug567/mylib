@@ -1,12 +1,21 @@
 /*
- *
+ * Description:
+ * Author: huangxing567@163.com
+ * Create: 2020.05.03 17:06
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #include "test.h"
 
-struct TestModule *g_modules = NULL;
+#define LOG_FILE "/tmp/debug.log"
+#define LOG_BUF_SIZE 1024
+
+static char log_buf[LOG_BUF_SIZE];
+static struct TestModule *g_modules = NULL;
 
 static struct TestModule *find_module(const char *name)
 {
@@ -95,32 +104,6 @@ void add_test_case(const char *moduleName, const char *caseName, TestFunc *func)
 	}
 }
 
-static int init_test_cases(void)
-{
-	stdio_main();
-	string_main();
-	file_main();
-
-	return 0;
-}
-
-int init_test_modules(const char **modules, const int count)
-{
-	int i;
-
-	if (modules == NULL || count <= 0) {
-		mt_error("There are no modules to initialize\n");
-		return -1;
-	}
-	for (i = 0; i < count; i++) {
-		add_test_module(modules[i]);
-	}
-
-	init_test_cases();
-
-	return 0;
-}
-
 int list_test_modules(void)
 {
 	struct TestModule *module = g_modules;
@@ -203,5 +186,69 @@ int run_one_module(const char *name)
 
 int run_all_module(void)
 {
+	return 0;
+}
+
+static int init_log_file(struct test_struct *test)
+{
+	int ret;
+	int fd = -1;
+
+	ret = access(LOG_FILE, 0);
+	if (ret < 0) {
+		mt_info("%s does not exist, will create it\n", LOG_FILE);
+		fd = creat(LOG_FILE, S_IRUSR | S_IWUSR);
+		if (fd < 0) {
+			mt_error("create %s failed\n", LOG_FILE);
+			return -1;
+		}
+	}
+
+	fd = open(LOG_FILE, O_RDWR);
+	if (fd < 0) {
+		mt_error("open %s failed\n", LOG_FILE);
+		return -1;
+	}
+	/* clear log file */
+	ftruncate(fd, 0);
+	lseek(fd, 0, SEEK_SET);
+
+	test->fd = fd;
+
+	return 0;
+}
+
+static int init_test_cases(void)
+{
+	stdio_main();
+	string_main();
+	file_main();
+
+	return 0;
+}
+
+int init_test_modules(const char **modules, const int count)
+{
+	int i;
+	struct test_struct *test = NULL;
+
+	test = (struct test_struct *)malloc(sizoef(struct test_struct));
+	if (test == NULL) {
+		mt_error("malloc for test_struct faied\n");
+		return -1;
+	}
+
+	if (modules == NULL || count <= 0) {
+		mt_error("There are no modules to initialize\n");
+		free(test);
+		return -1;
+	}
+	for (i = 0; i < count; i++) {
+		add_test_module(modules[i]);
+	}
+
+	init_log_file(test);
+	init_test_cases();
+
 	return 0;
 }

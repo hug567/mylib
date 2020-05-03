@@ -23,6 +23,10 @@ struct TestModule {
 	int (*init)(void);
 };
 
+struct test_struct {
+	int fd; /* log file's fd */
+};
+
 #define mt_debug(fmt, ...) printf("[DEBUG][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
 #define mt_info(fmt, ...)  printf("[INFO][%s@%d]: "  fmt, __func__, __LINE__, ##__VA_ARGS__)
 #define mt_error(fmt, ...) printf("[ERROR][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
