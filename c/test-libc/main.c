@@ -15,6 +15,7 @@ static const char *g_modules_name[] = {
 	"stdio",
 	"stdlib",
 	"string",
+	"file",
 };
 
 static void usage(const char *name)

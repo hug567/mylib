@@ -6,6 +6,8 @@
 #ifndef __TEST_H__
 #define __TEST_H__
 
+#include <stdio.h>
+
 typedef int TestFunc(void);
 
 struct TestCase {
@@ -47,5 +49,6 @@ int run_all_module(void);
 
 int stdio_main(void);
 int string_main(void);
+int file_main(void);
 
 #endif /* __TEST_H__ */

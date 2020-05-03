@@ -20,7 +20,7 @@ fi
 mkdir -p ${WORK_DIR}/rootfs
 cd ${WORK_DIR}/rootfs
 sudo cp -rf ${BUSYBOX}/_install/* ./
-sudo mkdir proc sys dev etc etc/init.d
+sudo mkdir -p proc sys dev etc etc/init.d tmp
 sudo touch ./etc/init.d/rcS
 sudo chmod a+x ./etc/init.d/rcS
 sudo sh -c 'echo "#!/bin/sh\nmount -t proc none /proc\nmount -t sysfs none /sys\n/sbin/mdev -s" > ./etc/init.d/rcS'

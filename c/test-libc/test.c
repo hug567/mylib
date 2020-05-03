@@ -99,6 +99,7 @@ static int init_test_cases(void)
 {
 	stdio_main();
 	string_main();
+	file_main();
 
 	return 0;
 }
