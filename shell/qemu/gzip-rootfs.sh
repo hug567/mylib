@@ -1,21 +1,24 @@
 #!/bin/bash
 
+# All path variables are absolute paths, and you can execute the current script anywhere.
+
 MYLIB="${HOME}/code/mylib"
 LINUX_TEST="${MYLIB}/linux/linux-test/linux-test.elf"
 BUSYBOX="${HOME}/code/linux/busybox-1.27.2"
+WORK_DIR="${HOME}/code/linux"
 
-if [ -f ./rootfs.img ]; then
-    sudo rm -rf ./rootfs.img
+if [ -f "${WORK_DIR}/rootfs.img" ]; then
+    sudo rm -rf ${WORK_DIR}/rootfs.img
 fi
-if [ -f ./rootfs.img.gz ]; then
-    sudo rm -rf ./rootfs.img.gz
+if [ -f "${WORK_DIR}/rootfs.img.gz" ]; then
+    sudo rm -rf ${WORK_DIR}/rootfs.img.gz
 fi
-if [ -d ./rootfs ]; then
-    sudo rm -rf ./rootfs
+if [ -d "${WORK_DIR}/rootfs" ]; then
+    sudo rm -rf ${WORK_DIR}/rootfs
 fi
 
-mkdir -p rootfs
-cd rootfs
+mkdir -p ${WORK_DIR}/rootfs
+cd ${WORK_DIR}/rootfs
 sudo cp -rf ${BUSYBOX}/_install/* ./
 sudo mkdir proc sys dev etc etc/init.d
 sudo touch ./etc/init.d/rcS
