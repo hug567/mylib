@@ -10,6 +10,10 @@
 
 typedef int TestFunc(void);
 
+struct test_struct {
+	int fd; /* log file's fd */
+};
+
 struct TestCase {
 	const char *name;
 	struct TestCase *next;
@@ -20,11 +24,7 @@ struct TestModule {
 	const char *name;
 	struct TestCase *head;
 	struct TestModule *next;
-	int (*init)(void);
-};
-
-struct test_struct {
-	int fd; /* log file's fd */
+	int (*init)(struct test_struct *test);
 };
 
 #define mt_debug(fmt, ...) printf("[DEBUG][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
@@ -44,7 +44,7 @@ struct test_struct {
 
 void add_test_module(const char *moduleName);
 void add_test_case(const char *moduleName, const char *caseName, TestFunc *func);
-int init_test_modules(const char **modules, const int count);
+int init_test(const char **modules, const int count);
 int list_test_modules(void);
 int list_test_cases(const char *name);
 int run_one_case(const char *module_name, const char *case_name);
@@ -53,6 +53,5 @@ int run_all_module(void);
 
 int stdio_main(void);
 int string_main(void);
-int file_main(void);
 
 #endif /* __TEST_H__ */

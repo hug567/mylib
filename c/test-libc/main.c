@@ -7,7 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 #include "test.h"
+#include "module.h"
 
 #define OPT_STR "hl:r:t:"
 
@@ -15,7 +17,6 @@ static const char *g_modules_name[] = {
 	"stdio",
 	"stdlib",
 	"string",
-	"file",
 };
 
 static void usage(const char *name)
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 	char *module_name = NULL;
 	char *case_name = NULL;
 
-	init_test_modules(g_modules_name, count);
+	init_test(g_modules_name, count);
 
 	while ((ret = getopt(argc, argv, OPT_STR)) != -1) {
 		switch (ret) {

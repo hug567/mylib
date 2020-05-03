@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include "test.h"
+#include "module.h"
 
 #define LOG_FILE "/tmp/debug.log"
 #define LOG_BUF_SIZE 1024
@@ -218,21 +219,21 @@ static int init_log_file(struct test_struct *test)
 	return 0;
 }
 
-static int init_test_cases(void)
+static int init_test_module(struct test_struct *test)
 {
 	stdio_main();
 	string_main();
-	file_main();
+	file_main(test);
 
 	return 0;
 }
 
-int init_test_modules(const char **modules, const int count)
+int init_test(const char **modules, const int count)
 {
 	int i;
 	struct test_struct *test = NULL;
 
-	test = (struct test_struct *)malloc(sizoef(struct test_struct));
+	test = (struct test_struct *)malloc(sizeof(struct test_struct));
 	if (test == NULL) {
 		mt_error("malloc for test_struct faied\n");
 		return -1;
@@ -248,7 +249,12 @@ int init_test_modules(const char **modules, const int count)
 	}
 
 	init_log_file(test);
-	init_test_cases();
+	init_test_module(test);
 
+	return 0;
+}
+
+int register_module(const char *name)
+{
 	return 0;
 }

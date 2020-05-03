@@ -5,9 +5,9 @@
  */
 #include "file_main.h"
 
-int file_main(void)
+int file_main(struct test_struct *test)
 {
-	add_test_case("file", "test_write", test_write);
+	//add_test_case("file", "test_write", test_write);
 
 	return 0;
 }
