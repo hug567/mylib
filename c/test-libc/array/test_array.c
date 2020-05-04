@@ -1,6 +1,6 @@
 
 
-
+#include <stdio.h>
 
 static int test_array_increment(void)
 {
@@ -19,5 +19,6 @@ static int test_array_increment(void)
 
 int main(void)
 {
+    test_array_increment();
     return 0;
 }
