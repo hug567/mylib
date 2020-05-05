@@ -6,8 +6,8 @@
 #ifndef __FILE_MAIN_H__
 #define __FILE_MAIN_H__
 
-#include "../module.h"
+#include "../test.h"
 
-int test_write(void);
+//int test_write(void);
 
 #endif /* __FILE_MAIN_H__ */

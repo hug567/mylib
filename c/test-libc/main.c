@@ -7,9 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 #include "test.h"
-#include "module.h"
 
 #define OPT_STR "hl:r:t:"
 

@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include "test.h"
-#include "module.h"
 
 #define LOG_FILE "/tmp/debug.log"
 #define LOG_BUF_SIZE 1024
@@ -218,6 +217,8 @@ static int init_log_file(struct test_struct *test)
 
 	return 0;
 }
+
+extern int file_main(struct test_struct *test);
 
 static int init_test_module(struct test_struct *test)
 {
