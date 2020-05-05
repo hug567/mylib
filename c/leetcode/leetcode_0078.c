@@ -19,20 +19,24 @@
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 int** subsets(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
-    int i, j, idx;
+    int i, j;
+    int num;
     int **sub = NULL;
 
     *returnSize = (int)pow(2, numsSize);
-    returnColumnSize[0] = (int *)malloc(*returnSizr * sizeof(int));
+    returnColumnSizes[0] = (int *)malloc(*returnSize * sizeof(int));
     sub = (int **)malloc(*returnSize * sizeof(int *));
     for (i = 0; i < *returnSize; i++) {
         sub[i] = (int *)malloc(numsSize * sizeof(int));
-
-        idx = 0;
-        returnColumnSize[]
-
-
-
+        num = i;
+        returnColumnSizes[0][i] = 0;
+        for (j = 0; j < numsSize; j++) {
+            if (num & 0x01) {
+                sub[i][returnColumnSizes[0][i]] = nums[j];
+                returnColumnSizes[0][i]++;
+            }
+            num >>= 1;
+        }
     }
 
     return sub;
@@ -44,8 +48,15 @@ int main(int argc, char *argv[])
     int nums[] = {1, 2, 3};
     int numsSize = sizeof(nums) / sizeof(int);
     int returnSize;
-    int *returnColumnSize;
-    int **sub = subsets(nums, numsSize, &returnSize, &returnColumnSize);
+    int **returnColumnSize = (int **)malloc(sizeof(int *));
+    int **sub = subsets(nums, numsSize, &returnSize, returnColumnSize);
+
+    for (i = 0; i < returnSize; i++) {
+        for (j = 0; j < returnColumnSize[0][i]; j++) {
+            printf("%d ", sub[i][j]);
+        }
+        printf("\n");
+    }
 
     return 0;
 }
