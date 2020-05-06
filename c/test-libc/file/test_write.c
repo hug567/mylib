@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "file_main.h"
+#include "../test.h"
 
 #define LOG_FILE "/tmp/debug.log"
 

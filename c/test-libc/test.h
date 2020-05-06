@@ -44,14 +44,11 @@ struct TestModule {
 
 void add_test_module(const char *moduleName);
 void add_test_case(const char *moduleName, const char *caseName, TestFunc *func);
-int init_test(const char **modules, const int count);
+int init_test(void);
 int list_test_modules(void);
 int list_test_cases(const char *name);
 int run_one_case(const char *module_name, const char *case_name);
 int run_one_module(const char *name);
 int run_all_module(void);
-
-int stdio_main(void);
-int string_main(void);
 
 #endif /* __TEST_H__ */

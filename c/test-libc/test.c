@@ -218,35 +218,31 @@ static int init_log_file(struct test_struct *test)
 	return 0;
 }
 
+extern int array_main(struct test_struct *test);
 extern int file_main(struct test_struct *test);
+extern int stdio_main(struct test_struct *test);
+extern int stdlib_main(struct test_struct *test);
+extern int string_main(struct test_struct *test);
 
 static int init_test_module(struct test_struct *test)
 {
-	stdio_main();
-	string_main();
+	array_main(test);
 	file_main(test);
+	stdio_main(test);
+	stdlib_main(test);
+	string_main(test);
 
 	return 0;
 }
 
-int init_test(const char **modules, const int count)
+int init_test(void)
 {
-	int i;
 	struct test_struct *test = NULL;
 
 	test = (struct test_struct *)malloc(sizeof(struct test_struct));
 	if (test == NULL) {
 		mt_error("malloc for test_struct faied\n");
 		return -1;
-	}
-
-	if (modules == NULL || count <= 0) {
-		mt_error("There are no modules to initialize\n");
-		free(test);
-		return -1;
-	}
-	for (i = 0; i < count; i++) {
-		add_test_module(modules[i]);
 	}
 
 	init_log_file(test);

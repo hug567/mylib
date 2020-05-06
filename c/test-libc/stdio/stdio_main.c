@@ -7,10 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stdio_header.h"
+#include "../test.h"
 
-int stdio_main(void)
+extern int test_sizeof(void);
+
+int stdio_main(struct test_struct *test)
 {
+	add_test_module("stdio");
+
 	add_test_case("stdio", "test_sizeof", test_sizeof);
 
 	return 0;

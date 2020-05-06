@@ -11,12 +11,6 @@
 
 #define OPT_STR "hl:r:t:"
 
-static const char *g_modules_name[] = {
-	"stdio",
-	"stdlib",
-	"string",
-};
-
 static void usage(const char *name)
 {
     printf("Usage:\n");
@@ -31,11 +25,10 @@ static void usage(const char *name)
 int main(int argc, char *argv[])
 {
 	int ret;
-	int count = sizeof(g_modules_name) / sizeof(char *);
 	char *module_name = NULL;
 	char *case_name = NULL;
 
-	init_test(g_modules_name, count);
+	init_test();
 
 	while ((ret = getopt(argc, argv, OPT_STR)) != -1) {
 		switch (ret) {

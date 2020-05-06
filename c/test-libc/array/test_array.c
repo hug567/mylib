@@ -17,7 +17,7 @@ static int test_array_increment(void)
     return 0;
 }
 
-int array_main(void)
+int test_array(void)
 {
     test_array_increment();
     return 0;

@@ -31,7 +31,7 @@ void PrintArray(int *data, int size)
     printf("\n");
 }
 
-int stdlib_qsort_main()
+int test_qsort(void)
 {
     int i;
     int nums[SIZE] = {0};

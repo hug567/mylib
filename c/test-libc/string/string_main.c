@@ -7,10 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "string_header.h"
+#include "../test.h"
 
-int string_main(void)
+extern int test_strlen(void);
+
+int string_main(struct test_struct *test)
 {
+	add_test_module("string");
+
 	add_test_case("string", "test_strlen", test_strlen);
 
 	return 0;
