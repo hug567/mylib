@@ -8,6 +8,9 @@
 
 #include <stdio.h>
 
+#define test_module TestModule
+#define test_case TestCase
+
 typedef int TestFunc(void);
 
 struct test_struct {
@@ -44,11 +47,14 @@ struct TestModule {
 
 void add_test_module(const char *moduleName);
 void add_test_case(const char *moduleName, const char *caseName, TestFunc *func);
-int init_test(void);
 int list_test_modules(void);
 int list_test_cases(const char *name);
-int run_one_case(const char *module_name, const char *case_name);
-int run_one_module(const char *name);
+struct test_module *find_module(const char *module_name);
+struct test_case *find_case(const char *module_name, const char *case_name);
+int run_one_case(struct test_case *tcase);
+int run_one_module(struct test_module *module);
 int run_all_module(void);
+struct test_struct *get_test_struct(void);
+int init_test(void);
 
 #endif /* __TEST_H__ */

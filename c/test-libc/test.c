@@ -15,14 +15,19 @@
 #define LOG_BUF_SIZE 1024
 
 static char log_buf[LOG_BUF_SIZE];
-static struct TestModule *g_modules = NULL;
+static struct test_struct *g_test = NULL;
+static struct test_module *g_modules = NULL;
 
-static struct TestModule *find_module(const char *name)
+struct test_module *find_module(const char *module_name)
 {
-	struct TestModule *module = g_modules;
+	struct test_module *module = g_modules;
 
+	if (module_name == NULL) {
+		mt_error("module name is NULL\n");
+		return NULL;
+	}
 	while (module != NULL) {
-		if (strcmp(module->name, name) == 0) {
+		if (strcmp(module->name, module_name) == 0) {
 			return module;
 		}
 		module = module->next;
@@ -31,10 +36,17 @@ static struct TestModule *find_module(const char *name)
 	return NULL;
 }
 
-static struct TestCase *find_case(struct TestModule *module, const char *name)
+struct test_case *find_case(const char *module_name, const char *case_name)
 {
-	struct TestCase *tcase = NULL;
+	struct test_module *module = NULL;
+	struct test_case *tcase = NULL;
 
+	if (module_name == NULL || case_name == NULL) {
+		mt_error("module_name or case_name is NULL\n");
+		return NULL;
+	}
+
+	module = find_module(module_name);
 	if (module == NULL) {
 		mt_error("module is NULL\n");
 		return NULL;
@@ -42,7 +54,7 @@ static struct TestCase *find_case(struct TestModule *module, const char *name)
 
 	tcase = module->head;
 	while (tcase != NULL) {
-		if (strcmp(tcase->name, name) == 0) {
+		if (strcmp(tcase->name, case_name) == 0) {
 			return tcase;
 		}
 		tcase = tcase->next;
@@ -53,8 +65,8 @@ static struct TestCase *find_case(struct TestModule *module, const char *name)
 
 void add_test_module(const char *moduleName)
 {
-	struct TestModule *tmp = g_modules;
-	struct TestModule *new = (struct TestModule *)malloc(sizeof(struct TestModule));
+	struct test_module *tmp = g_modules;
+	struct test_module *new = (struct test_module *)malloc(sizeof(struct test_module));
 
 	new->name = moduleName;
 	new->head = NULL;
@@ -71,9 +83,9 @@ void add_test_module(const char *moduleName)
 
 void add_test_case(const char *moduleName, const char *caseName, TestFunc *func)
 {
-	struct TestModule *module = g_modules;
-	struct TestCase *tmp = NULL;
-	struct TestCase *new = (struct TestCase *)malloc(sizeof(struct TestCase));
+	struct test_module *module = g_modules;
+	struct test_case *tmp = NULL;
+	struct test_case *new = (struct test_case *)malloc(sizeof(struct test_case));
 
 	new->name = caseName;
 	new->func = func;
@@ -106,7 +118,7 @@ void add_test_case(const char *moduleName, const char *caseName, TestFunc *func)
 
 int list_test_modules(void)
 {
-	struct TestModule *module = g_modules;
+	struct test_module *module = g_modules;
 
 	while (module != NULL) {
 		printf("module: %s\n", module->name);
@@ -116,30 +128,10 @@ int list_test_modules(void)
 	return 0;
 }
 
-int list_test_cases(const char *name)
+int list_test_cases(const char *module_name)
 {
-	struct TestModule *module = NULL;
-	struct TestCase *tcase = NULL;
-
-	module = find_module(name);
-	if (module == NULL) {
-		mt_error("there is no %s module\n", name);
-		return -1;
-	}
-
-	tcase = module->head;
-	printf("module: %s\n", name);
-	while (tcase != NULL) {
-		printf("    %s\n", tcase->name);
-		tcase = tcase->next;
-	}
-	return 0;
-}
-
-int run_one_case(const char *module_name, const char *case_name)
-{
-	struct TestModule *module = NULL;
-	struct TestCase *tcase = NULL;
+	struct test_module *module = NULL;
+	struct test_case *tcase = NULL;
 
 	module = find_module(module_name);
 	if (module == NULL) {
@@ -147,9 +139,20 @@ int run_one_case(const char *module_name, const char *case_name)
 		return -1;
 	}
 
-	tcase = find_case(module, case_name);
+	tcase = module->head;
+	printf("module: %s\n", module_name);
+	while (tcase != NULL) {
+		printf("    %s\n", tcase->name);
+		tcase = tcase->next;
+	}
+
+	return 0;
+}
+
+int run_one_case(struct test_case *tcase)
+{
 	if (tcase == NULL) {
-		mt_error("there is no %s test case\n", case_name);
+		mt_error("tcase is NULL\n");
 		return -1;
 	}
 
@@ -158,17 +161,15 @@ int run_one_case(const char *module_name, const char *case_name)
 		return tcase->func();
 	}
 
-	return -1;
+	return 0;
 }
 
-int run_one_module(const char *name)
+int run_one_module(struct test_module *module)
 {
-	struct TestModule *module = NULL;
-	struct TestCase *tcase = NULL;
+	struct test_case *tcase = NULL;
 
-	module = find_module(name);
 	if (module == NULL) {
-		mt_error("there is no %s module\n", name);
+		mt_error("module is NULL\n");
 		return -1;
 	}
 
@@ -186,6 +187,13 @@ int run_one_module(const char *name)
 
 int run_all_module(void)
 {
+	struct test_module *module = g_modules;
+
+	while (module != NULL) {
+		run_one_module(module);
+		module = module->next;
+	}
+
 	return 0;
 }
 
@@ -218,21 +226,9 @@ static int init_log_file(struct test_struct *test)
 	return 0;
 }
 
-extern int array_main(struct test_struct *test);
-extern int file_main(struct test_struct *test);
-extern int stdio_main(struct test_struct *test);
-extern int stdlib_main(struct test_struct *test);
-extern int string_main(struct test_struct *test);
-
-static int init_test_module(struct test_struct *test)
+struct test_struct *get_test_struct(void)
 {
-	array_main(test);
-	file_main(test);
-	stdio_main(test);
-	stdlib_main(test);
-	string_main(test);
-
-	return 0;
+	return g_test;
 }
 
 int init_test(void)
@@ -246,12 +242,8 @@ int init_test(void)
 	}
 
 	init_log_file(test);
-	init_test_module(test);
 
-	return 0;
-}
+	g_test = test;
 
-int register_module(const char *name)
-{
 	return 0;
 }
