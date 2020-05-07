@@ -1,5 +1,6 @@
-CC=gcc
+CC = $(CROSS_COMPILE)gcc
 CFLAGS=-Wall -g
+LDFLAGS=-static
 RM=rm -rf
 
 OUTPUT=obj
@@ -12,7 +13,7 @@ define compile_src
 endef
 
 link: compile
-	$(CC) $(ALL_OBJ) -o ./$(OUTPUT)/test-libc.elf
+	$(CC) ${LDFLAGS} $(ALL_OBJ) -o ./$(OUTPUT)/test-libc.elf
 
 compile:
 	rm -rf $(OUTPUT)
