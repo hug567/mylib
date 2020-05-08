@@ -12,7 +12,15 @@
 
 #define LOG_FILE "/tmp/debug.log"
 
-int test_write(void)
+static int test_write02(void)
+{
+	write_to_file("/tmp/test.log", "Enter %s success\n", __func__);
+	write_to_file("/tmp/test.log", "file: %s, func: %s, line: %d\n",
+		      __FILE__, __func__, __LINE__);
+	return 0;
+}
+
+int test_write01(void)
 {
 	mt_info("Enter %s success\n", __func__);
 
@@ -42,5 +50,11 @@ int test_write(void)
 	}
 
 	close(fd);
+	return 0;
+}
+
+int test_write(void)
+{
+	test_write02();
 	return 0;
 }

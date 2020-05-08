@@ -4,6 +4,7 @@ LDFLAGS=-static
 RM=rm -rf
 
 OUTPUT=obj
+TARGET=test-libc.elf
 ALL_SRC=$(shell find . -path "./obj" -prune -o -name "*.c" -print)
 ALL_OBJ=$(addprefix ./$(OUTPUT)/,$(patsubst %.c,%.o,$(notdir $(ALL_SRC))))
 
@@ -13,7 +14,7 @@ define compile_src
 endef
 
 link: compile
-	$(CC) ${LDFLAGS} $(ALL_OBJ) -o ./$(OUTPUT)/test-libc.elf
+	$(CC) ${LDFLAGS} $(ALL_OBJ) -o ./$(OUTPUT)/$(TARGET)
 
 compile:
 	rm -rf $(OUTPUT)

@@ -8,26 +8,20 @@
 
 #include <stdio.h>
 
-#define test_module TestModule
-#define test_case TestCase
-
-typedef int TestFunc(void);
-
 struct test_struct {
 	int fd; /* log file's fd */
 };
 
-struct TestCase {
+struct test_case {
 	const char *name;
-	struct TestCase *next;
+	struct test_case *next;
 	int (*func)(void);
 };
 
-struct TestModule {
+struct test_module {
 	const char *name;
-	struct TestCase *head;
-	struct TestModule *next;
-	int (*init)(struct test_struct *test);
+	struct test_case *head;
+	struct test_module *next;
 };
 
 #define mt_debug(fmt, ...) printf("[DEBUG][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
@@ -35,6 +29,14 @@ struct TestModule {
 #define mt_error(fmt, ...) printf("[ERROR][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
 #define mt_succ(fmt, ...)  printf("[SUCC][%s@%d]: "  fmt, __func__, __LINE__, ##__VA_ARGS__)
 #define mt_fail(fmt, ...)  printf("[FAIL][%s@%d]: "  fmt, __func__, __LINE__, ##__VA_ARGS__)
+
+FILE *__fp;
+#define write_to_file(path, fmt, ...) \
+do { \
+	__fp = fopen(path, "a"); \
+	fprintf(__fp, fmt, __VA_ARGS__); \
+	fclose(__fp); \
+} while(0)
 
 #define RUN_TEST(__test__) \
 	do { \
@@ -46,7 +48,7 @@ struct TestModule {
 	} while (0)
 
 void add_test_module(const char *moduleName);
-void add_test_case(const char *moduleName, const char *caseName, TestFunc *func);
+void add_test_case(const char *moduleName, const char *caseName, int (*func)(void));
 int list_test_modules(void);
 int list_test_cases(const char *name);
 struct test_module *find_module(const char *module_name);

@@ -6,15 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
 #include "test.h"
 
-#define LOG_FILE "/tmp/debug.log"
-#define LOG_BUF_SIZE 1024
-
-static char log_buf[LOG_BUF_SIZE];
 static struct test_struct *g_test = NULL;
 static struct test_module *g_modules = NULL;
 
@@ -81,7 +74,7 @@ void add_test_module(const char *moduleName)
 	}
 }
 
-void add_test_case(const char *moduleName, const char *caseName, TestFunc *func)
+void add_test_case(const char *moduleName, const char *caseName, int (*func)(void))
 {
 	struct test_module *module = g_modules;
 	struct test_case *tmp = NULL;
@@ -157,7 +150,8 @@ int run_one_case(struct test_case *tcase)
 	}
 
 	if (tcase->func != NULL) {
-		printf("\n---------- %s ----------\n", tcase->name);
+		printf("\n---------- Start test case: %s ----------\n",
+		       tcase->name);
 		return tcase->func();
 	}
 
@@ -176,7 +170,8 @@ int run_one_module(struct test_module *module)
 	tcase = module->head;
 	while (tcase != NULL) {
 		if (tcase->func != NULL) {
-			printf("\n---------- %s ----------\n", tcase->name);
+			printf("\n---------- Start test case: %s ----------\n",
+			       tcase->name);
 			tcase->func();
 		}
 		tcase = tcase->next;
@@ -197,35 +192,6 @@ int run_all_module(void)
 	return 0;
 }
 
-static int init_log_file(struct test_struct *test)
-{
-	int ret;
-	int fd = -1;
-
-	ret = access(LOG_FILE, 0);
-	if (ret < 0) {
-		mt_info("%s does not exist, will create it\n", LOG_FILE);
-		fd = creat(LOG_FILE, S_IRUSR | S_IWUSR);
-		if (fd < 0) {
-			mt_error("create %s failed\n", LOG_FILE);
-			return -1;
-		}
-	}
-
-	fd = open(LOG_FILE, O_RDWR);
-	if (fd < 0) {
-		mt_error("open %s failed\n", LOG_FILE);
-		return -1;
-	}
-	/* clear log file */
-	ftruncate(fd, 0);
-	lseek(fd, 0, SEEK_SET);
-
-	test->fd = fd;
-
-	return 0;
-}
-
 struct test_struct *get_test_struct(void)
 {
 	return g_test;
@@ -240,8 +206,6 @@ int init_test(void)
 		mt_error("malloc for test_struct faied\n");
 		return -1;
 	}
-
-	init_log_file(test);
 
 	g_test = test;
 

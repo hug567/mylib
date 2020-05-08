@@ -4,7 +4,6 @@
  * Create: 2020-04-30
  */
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "test.h"
@@ -75,6 +74,11 @@ int main(int argc, char *argv[])
 	char *module_name = NULL;
 	char *case_name = NULL;
 	struct test_struct *test = NULL;
+
+	if (argc < 2 || argc > 4) {
+		usage(argv[0]);
+		return -1;
+	}
 
 	init_test();
 	test = get_test_struct();
