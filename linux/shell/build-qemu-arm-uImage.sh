@@ -23,9 +23,9 @@ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules
 # 编译dts文件(生成dtb文件)
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs
 # 拷贝uImage文件至tftp根目录
-sudo cp arch/arm/boot/uImage /var/lib/tftproot
+#sudo cp arch/arm/boot/uImage /var/lib/tftproot
 # 拷贝dtb文件至tftp根目录
-sudo cp arch/arm/boot/dts/vexpress-v2p-ca9.dtb /var/lib/tftproot
+#sudo cp arch/arm/boot/dts/vexpress-v2p-ca9.dtb /var/lib/tftproot
 
 # qemu启动命令
 #echo -e "\n${YELLOW}Run kernel: ${GREEN}~/code/mylib/shell/qemu/qemu-run.sh${RESET}"

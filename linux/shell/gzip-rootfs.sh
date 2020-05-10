@@ -45,3 +45,6 @@ find . | cpio -o --format=newc > ../rootfs.img
 echo "gzip rootfs.img.gz"
 cd ..
 gzip -c rootfs.img > rootfs.img.gz
+
+sudo rm -rf ${WORK_DIR}/rootfs.img
+sudo rm -rf ${WORK_DIR}/rootfs
