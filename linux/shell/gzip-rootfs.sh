@@ -31,11 +31,11 @@ sudo touch ./etc/init.d/rcS
 sudo chmod a+x ./etc/init.d/rcS
 sudo sh -c 'echo "#!/bin/sh\nmount -t proc none /proc\nmount -t sysfs none /sys\n/sbin/mdev -s" > ./etc/init.d/rcS'
 
-echo "copy {LINUX_TEST} file to rootfs"
-sudo cp ${LINUX_TEST} ./
-sudo chmod a+x ${LINUX_TEST}
+#echo "copy {LINUX_TEST} to rootfs"
+#sudo cp ${LINUX_TEST} ./
+#sudo chmod a+x ${LINUX_TEST}
 
-echo "copy ${TEST_ELF} file to rootfs"
+echo "copy ${TEST_ELF} to rootfs"
 sudo cp ${TEST_ELF} ./
 sudo chmod a+x ${TEST_ELF}
 
