@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	char *case_name = NULL;
 	struct test_struct *test = NULL;
 
-	if (argc < 2 || argc > 4) {
+	if (argc < 2 || argc > 5) {
 		usage(argv[0]);
 		return -1;
 	}
