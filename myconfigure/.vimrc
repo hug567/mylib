@@ -10,6 +10,8 @@ set number
 set hlsearch
 " 逐个字符高亮
 set incsearch
+" 自动缩进
+set autoindent
 " 设置配色主题
 colorscheme molokai
 " 显示tab
@@ -92,10 +94,6 @@ hi Statement cterm=NONE ctermfg=198
 hi Constant cterm=NONE ctermfg=141
 " sizeof等
 hi Operator ctermfg=198
-" 根据文件后缀加载配置文件
-autocmd BufNewFile,BufRead *.c source ~/.vim/scripts/myc.vim
-autocmd BufNewFile,BufRead *.h source ~/.vim/scripts/myc.vim
-autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
 "-----------------------------------------------"
 " 打开NERDTree快捷键
 map <F9> :NERDTreeToggle<CR>
@@ -148,4 +146,10 @@ func SetTitle()
 endfunc
 " 新建文件后，自动定位到末尾
 autocmd BufNewFile * normal G
+"-----------------------------------------------"
+" 根据文件后缀加载配置文件
+autocmd BufNewFile,BufRead *.c source ~/.vim/scripts/myc.vim
+autocmd BufNewFile,BufRead *.h source ~/.vim/scripts/myc.vim
+autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
+autocmd BufNewFile,BufRead *.html source ~/.vim/scripts/myhtml.vim
 "-----------------------------------------------"
