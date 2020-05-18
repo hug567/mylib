@@ -116,6 +116,8 @@ hi NERDTreeFile ctermfg=253
 hi NERDTreeExecFile ctermfg=119
 " 根节点颜色
 hi NERDTreeCWD ctermfg=198
+" 忽略指定文件
+let NERDTreeIgnore=['\.o$', '\.elf', '\.swp$', '\.out$']
 "-----------------------------------------------"
 " 只显示当前文件tag
 let Tlist_Show_One_File=1
@@ -130,4 +132,20 @@ let Tlist_WinWidth = 40
 " Taglist开启、关闭快捷键
 map <F6> :TlistOpen<CR>
 map <F7> :TlistClose<CR>
+"-----------------------------------------------"
+" 新建文件自动插入文件头
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py,*.java exec ":call SetTitle()"
+" 定义函数SetTitle，自动插入文件头
+func SetTitle()
+    if &filetype == 'c'
+        call setline(1,"/*")
+        call append(line(".")," * Description: xxx")
+        call append(line(".")+1, " * Author: huangxing567@163.com")
+        call append(line(".")+2, " * Create: ".strftime("%Y-%m-%d %H:%M:%S"))
+        call append(line(".")+3, " */")
+        call append(line(".")+4, "")
+    endif
+endfunc
+" 新建文件后，自动定位到末尾
+autocmd BufNewFile * normal G
 "-----------------------------------------------"

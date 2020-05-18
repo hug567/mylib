@@ -1,69 +1,110 @@
+/*
+ * Introduction: the main function of the test suite
+ * Author: huangxing567@163.com
+ * Create: 2020-04-30
+ */
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <termios.h>
-#include <errno.h>
+#include "test.h"
 
-static int test_tcgetattr(void)
+#define OPT_STR "hl:r:t:"
+
+extern int termios_main(struct test_struct *test);
+
+static void usage(const char *name)
 {
-	int ret;
-	int fd = 0;
-	struct termios tio;
+    printf("Usage:\n");
+    printf("%s -h                     get help information\n", name);
+    printf("%s -l all                 list all modules\n", name);
+    printf("%s -l <module>            list all test case in the specified module\n", name);
+    printf("%s -r all                 run all test case\n", name);
+    printf("%s -r <module>            run all test case in the specified module\n", name);
+    printf("%s -r <module> -t <test>  run the specified test case in the specified module\n", name);
+}
 
-	ret = tcgetattr(fd, &tio);
-	if (ret < 0) {
-		printf("tcgetattr failed, ret = %d, errno = %d\n", ret, errno);
-		return -1;
-	}
-
-	printf("tio.c_iflag = 0x%x\n", tio.c_iflag);
-	printf("tio.c_oflag = 0x%x\n", tio.c_oflag);
-	printf("tio.c_cflag = 0x%x\n", tio.c_cflag);
-	printf("tio.c_lflag = 0x%x\n", tio.c_lflag);
-	printf("tio.c_cc = %s\n", tio.c_cc);
-
+static int init_all_modules(struct test_struct *test)
+{
+	termios_main(test);
 	return 0;
 }
 
-static int test_tcflow(int action)
+static int run_test(const char *module_name, const char *case_name)
 {
 	int ret;
-	int fd = 0;
+	struct test_module *module = NULL;
+	struct test_case *tcase = NULL;
 
-	printf("TCOOFF = %d, TCOON = %d, TCIOFF = %d, TCION = %d, action = %d\n",
-	       TCOOFF, TCOON, TCIOFF, TCION, action);
-	ret = tcflow(fd, action);
-	if (ret < 0) {
-		printf("tcflow failed, ret = %d, errno = %d\n", ret, errno);
-		return -1;
+	if (module_name != NULL && strcmp(module_name, "all") == 0) {
+		ret = run_all_module();
+		if (ret < 0) {
+			mt_error("run all module failed\n");
+			return -1;
+		}
+	} else if (module_name != NULL && case_name == NULL) {
+		module = find_module(module_name);
+		ret = run_one_module(module);
+		if (ret < 0) {
+			mt_error("run module %s failed\n", module_name);
+			return -1;
+		}
+	} else if (module_name != NULL && case_name != NULL) {
+		module = find_module(module_name);
+		tcase = find_case(module_name, case_name);
+		ret = run_one_case(tcase);
+		if (ret < 0) {
+			mt_error("run case %s failed\n", case_name);
+			return -1;
+		}
 	}
-
 	return 0;
 }
 
 int main(int argc, char *argv[])
 {
-	int action = TCOON;
-	printf("hello world in linux\n");
+	int ret;
+	char *module_name = NULL;
+	char *case_name = NULL;
+	struct test_struct *test = NULL;
 
-	if (argc == 2) {
-		if (strcmp(argv[1], "OOFF") == 0) {
-			action = TCOOFF;
-		} else if (strcmp(argv[1], "OON") == 0) {
-			action = TCOON;
-		} else if (strcmp(argv[1], "IOFF") == 0) {
-			action = TCIOFF;
-		} else if (strcmp(argv[1], "ION") == 0) {
-			action = TCION;
-		} else {
-			action = TCOON;
+	if (argc < 2 || argc > 5) {
+		usage(argv[0]);
+		return -1;
+	}
+
+	init_test();
+	test = get_test_struct();
+	if (test == NULL) {
+		mt_error("get test struct failed\n");
+		return -1;
+	}
+	init_all_modules(test);
+
+	while ((ret = getopt(argc, argv, OPT_STR)) != -1) {
+		switch (ret) {
+		case 'h':
+			usage(argv[0]);
+			break;
+		case 'l':
+			if (strcmp(optarg, "all") == 0) {
+				list_test_modules();
+			} else {
+				list_test_cases(optarg);
+			}
+			break;
+		case 'r':
+			module_name = optarg;
+			break;
+		case 't':
+			case_name = optarg;
+			break;
+		default:
+			usage(argv[0]);
+			break;
 		}
 	}
 
-	printf("\n-------------------- test_tcgetattr -------------------\n");
-	test_tcgetattr();
-	printf("\n-------------------- test_tcflow -------------------\n");
-	test_tcflow(action);
+	run_test(module_name, case_name);
 
 	return 0;
 }
