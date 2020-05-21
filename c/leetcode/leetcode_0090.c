@@ -16,22 +16,26 @@ int compare(const void *a, const void *b)
     return *(int *)a - *(int *)b;
 }
 
+void dfs(int *nums, int n, int numsSize, int *arr, int ind, int **sub, int *returnSize, int **returnColumnSizes)
+{
+    ret
+}
+
 /**
  * Return an array of arrays of size *returnSize.
  * The sizes of the arrays are returned as *returnColumnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 int** subsetsWithDup(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
-    int i;
     int **sub = NULL;
+    int *arr = NULL;
 
     qsort(nums, numsSize, sizeof(int), compare);
     *returnSize = (int)pow(2, numsSize);
     sub = (int **)malloc(*returnSize * sizeof(int *));
-    for (i = 0; i < *returnSize; i++) {
-        sub[i] = (int *)malloc(numsSize * sizeof(int));
-    }
-
+    (*returnColumnSizes) = (int *)malloc((*returnSize) * sizeof(int));
+    arr = (int *)malloc(numsSize * sizeof(int));
+    dfs();
     return sub;
 }
 
