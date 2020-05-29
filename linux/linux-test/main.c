@@ -11,6 +11,7 @@
 #define OPT_STR "hl:r:t:"
 
 extern int termios_main(struct test_struct *test);
+extern int uart_main(struct test_struct *test);
 
 static void usage(const char *name)
 {
@@ -26,6 +27,7 @@ static void usage(const char *name)
 static int init_all_modules(struct test_struct *test)
 {
 	termios_main(test);
+	uart_main(test);
 	return 0;
 }
 

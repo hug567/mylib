@@ -58,3 +58,32 @@ int test_write(void)
 	test_write02();
 	return 0;
 }
+
+#define MAX_BUF_SIZE 100
+char g_buf[MAX_BUF_SIZE];
+
+int test_write_char()
+{
+	int len;
+	int fd = 0;
+	char *tty_name = NULL;
+
+	tty_name = ttyname(fd);
+	if (tty_name == NULL) {
+		mt_fail("get ttyname(%d) failed\n", fd);
+		return -1;
+	}
+	mt_succ("ttyname(%d) = %s\n", fd, tty_name);
+
+	fd = open(tty_name, O_RDWR);
+	if (fd < 0) {
+		mt_fail("open %s failed\n", tty_name);
+		return -1;
+	}
+
+	memset(g_buf, 0, MAX_BUF_SIZE);
+	len = sprintf(g_buf, "Enter %s success\n", __func__);
+	write(fd, g_buf, len);
+
+	return 0;
+}

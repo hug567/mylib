@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main()
+int test_fork_main()
 {
 	pid_t pid, pid1;
 
