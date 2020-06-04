@@ -8,6 +8,30 @@ WORK_DIR="${HOME}/code/linux"
 TEST_ELF="${MYLIB}/c/test-libc/obj/test-libc.elf"
 LINUX_TEST="${MYLIB}/linux/linux-test/obj/linux-test.elf"
 
+GCC_LIB_DIR="${HOME}/tools/arm-2014.05/arm-none-linux-gnueabi/libc/usr"
+LIB_HEADERS="${GCC_LIB_DIR}/include"
+#LIB_STATIC=" \
+#	${GCC_LIB_DIR}/lib/libc.a \
+#	${GCC_LIB_DIR}/lib/librt.a \
+#	"
+LIB_STATIC[0]="${GCC_LIB_DIR}/lib/libc.a"
+LIB_STATIC[1]="${GCC_LIB_DIR}/lib/librt.a"
+LIB_SHARED=" \
+	${GCC_LIB_DIR}/lib/libc.so \
+	"
+LIB_OBJECT=" \
+	${GCC_LIB_DIR}/lib/crt1.o \
+	"
+
+copy_lib_to_image() {
+	#echo ${1}
+	libs=$1
+	for lib in ${libs[*]}
+	do
+		echo ${lib}
+	done
+}
+
 if [ -f "${WORK_DIR}/rootfs.img" ]; then
     echo "delete old file ${WORK_DIR}/rootfs.img"
     sudo rm -rf ${WORK_DIR}/rootfs.img
@@ -38,6 +62,11 @@ sudo chmod a+x ${LINUX_TEST}
 echo "copy ${TEST_ELF} to rootfs"
 sudo cp ${TEST_ELF} ./
 sudo chmod a+x ${TEST_ELF}
+
+copy_lib_to_image ${LIB_HEADERS}
+copy_lib_to_image ${LIB_STATIC}
+copy_lib_to_image ${LIB_SHARED}
+copy_lib_to_image ${LIB_OBJECT}
 
 echo "package rootfs.img"
 find . | cpio -o --format=newc > ../rootfs.img
