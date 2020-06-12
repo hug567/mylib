@@ -1,17 +1,17 @@
 #!/bin/bash
-echo "qemu to run linux"
 
-WORK_DIR="${HOME}/code/linux"
-LINUX_DIR="${WORK_DIR}/linux-4.15"
-IMAGE="${LINUX_DIR}/arch/arm/boot/zImage"
-ROOTFS="${WORK_DIR}/rootfs.img.gz"
+ROOTFS="${HOME}/code/rootfs/rootfs.img.gz"
 
+if [ ! -f ./include/linux/kernel.h ]; then
+    echo -e "${RED}Error: ${RESET}You are not in linux src root dir....."
+    exit
+fi
 
 qemu-system-arm \
     -M virt  \
     -smp 1 \
     -m 256 \
-    -kernel ${IMAGE} \
+    -kernel ./arch/arm/boot/zImage \
     -initrd ${ROOTFS} \
     -nographic \
     -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
