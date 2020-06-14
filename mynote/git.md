@@ -95,7 +95,7 @@ git stash                                                //暂存
 git log --oneline                                        //查看指定commit的ID
 git rebase -i <ID>^                                      //移动HEAD至指定ccommit
 git rebase -i HEAD~5                                     //移动HEAD至指定ccommit
-/* 首行pick改为e，保存并推出 */                            //编辑
+/* 首行pick改为e，保存并推出 */                          //编辑
 git stash pop                                            //取出暂存
 git add <file>                                           //添加文件
 git commit --amend                                       //追加至指定commit
@@ -110,8 +110,8 @@ git rebase -i <ID>^                                      //定位至最早需要
 /* 首行pick不动，下面需要被合并的commit将pick改为s，:wq */
 /* 修改commit message，若有冲突则解决冲去，:wq */
 //----------调整commit顺序------------------------------------------------//
-
-
+git rebase -i HEAD~<n>                                   //定位至最前一条commit
+/* 调整commit顺序后，:wq报错退出 */
 ```
 
 ### 2.5、撤销操作
@@ -121,7 +121,7 @@ git rebase -i <ID>^                                      //定位至最早需要
 git reset --mixed HEAD^                        //撤销最近一条commit，撤销add
 git reset --soft HEAD                          //撤销最近一条commit，不撤销add
 git reset --hard HEAD~1                        //删除最近一条commit
-git reset HAED                                 //撤销所有文件add
+git reset HEAD                                 //撤销所有文件add
 git reset HEAD <file>                          //撤销指定文件的add
 git checkout .                                 //删除所有未add更改
 git chechoout <file>                           //删除指定文件未add更改
