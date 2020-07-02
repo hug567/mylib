@@ -14,6 +14,7 @@ struct BTNode {
 };
 
 void CreateTree(struct BTNode **tree);
+struct BTNode *CreateTreeByArray(char *buf, int index);
 void PreOrder(struct BTNode *tree);
 void InOrder(struct BTNode *tree);
 void PostOrder(struct BTNode *tree);

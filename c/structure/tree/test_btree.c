@@ -21,58 +21,62 @@ typedef char ElementType;
 /* 打印一条路径，先翻转栈，再打印 */
 void PrintPath(struct Stack *s)
 {
-    struct SNode *top = NULL;
-    struct Stack *tmp = StackCreate();
+	struct SNode *top = NULL;
+	struct Stack *tmp = StackCreate();
 
-    if (s == NULL) {
-        return;
-    }
+	if (s == NULL) {
+		return;
+	}
 
-    /* 翻转栈 */
-    top = s->top;
-    while (top != NULL) {
-        StackPush(tmp, top->data, sizeof(ElementType));
-        top = top->next;
-    }
+	/* 翻转栈 */
+	top = s->top;
+	while (top != NULL) {
+		StackPush(tmp, top->data, sizeof(ElementType));
+		top = top->next;
+	}
 
-    /* 打印路径 */
-    top = tmp->top;
-    printf("path: ");
-    while (top != NULL) {
-        printf("%c", *(ElementType *)top->data);
-        top = top->next;
-        if (top != NULL) {
-            printf(" -> ");
-        }
-    }
-    printf("\n");
+	/* 打印路径 */
+	top = tmp->top;
+	printf("path: ");
+	while (top != NULL) {
+		printf("%c", *(ElementType *)top->data);
+		top = top->next;
+		if (top != NULL) {
+			printf(" -> ");
+		}
+	}
+	printf("\n");
 
-    StackDestory(tmp);
+	StackDestory(tmp);
 }
 
-/* 递归打印素所有路径 */
+/* 递归打印所有路径 */
 void PrintAllPath(struct BTNode *node, struct Stack *s)
 {
-    if (node == NULL) {
-        return;
-    }
-    StackPush(s, &node->data, sizeof(ElementType));
-    if (node->left == NULL && node->right == NULL) {
-        PrintPath(s);
-    } else {
-        PrintAllPath(node->left, s);
-        StackPop(s, NULL, 0);
-        PrintAllPath(node->right, s);
-        StackPop(s, NULL, 0);
-    }
+	if (node == NULL) {
+		return;
+	}
+	StackPush(s, &node->data, sizeof(ElementType));
+	if (node->left == NULL && node->right == NULL) {
+		PrintPath(s);
+	} else {
+		PrintAllPath(node->left, s);
+		StackPop(s, NULL, 0);
+		PrintAllPath(node->right, s);
+		StackPop(s, NULL, 0);
+	}
 }
 
 int main()
 {
-	struct BTNode *tree = (struct BTNode *)malloc(sizeof(struct BTNode));
-    struct Stack *s = StackCreate();
+	//struct BTNode *tree = (struct BTNode *)malloc(sizeof(struct BTNode));
+	struct BTNode *tree = NULL;
+	struct Stack *s = StackCreate();
+	char *str = "AB##C##";
 
-	CreateTree(&tree);
+	printf("str = %s\n", str);
+	//CreateTree(&tree);
+	tree = CreateTreeByArray(str, 0);
 	printf("tree pre order: ");
 	PreOrder(tree);
 	printf("\ntree in order: ");
@@ -81,9 +85,9 @@ int main()
 	PostOrder(tree);
 	printf("\n");
 
-    PrintAllPath(tree, s);
+	PrintAllPath(tree, s);
 
-    StackDestory(s);
+	StackDestory(s);
 
 	return 0;
 }
