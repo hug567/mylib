@@ -34,18 +34,20 @@ void CreateTree(struct BTNode **tree)
  * / \
  * b c
  */
-struct BTNode *CreateTreeByArray(char *buf, int index)
+
+static int sub = 0;
+struct BTNode *CreateTreeByArray(char *buf)
 {
 	struct BTNode *tree = NULL;
-	if (buf[index] == '#') {
-		tree = NULL;
+	if (buf[sub] == '#') {
+		sub++;
 	} else {
 		tree = (struct BTNode *)malloc(sizeof(struct BTNode));
-		tree->data = buf[index];
-		tree->left = CreateTreeByArray(buf, index + 1);
-		tree->right = CreateTreeByArray(buf, index + 2);
+		tree->data = buf[sub];
+		sub++;
+		tree->left = CreateTreeByArray(buf);
+		tree->right = CreateTreeByArray(buf);
 	}
-
 	return tree;
 }
 

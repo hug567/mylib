@@ -72,11 +72,12 @@ int main()
 	//struct BTNode *tree = (struct BTNode *)malloc(sizeof(struct BTNode));
 	struct BTNode *tree = NULL;
 	struct Stack *s = StackCreate();
-	char *str = "AB##C##";
+	//char *str = "AB##C##";
+	char *str = "ABD##E##CF##G##";
 
 	printf("str = %s\n", str);
 	//CreateTree(&tree);
-	tree = CreateTreeByArray(str, 0);
+	tree = CreateTreeByArray(str);
 	printf("tree pre order: ");
 	PreOrder(tree);
 	printf("\ntree in order: ");
