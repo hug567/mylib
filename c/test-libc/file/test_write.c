@@ -64,6 +64,7 @@ char g_buf[MAX_BUF_SIZE];
 
 int test_write_char()
 {
+#ifdef OS_LINUX
 	int len;
 	int fd = 0;
 	char *tty_name = NULL;
@@ -84,6 +85,7 @@ int test_write_char()
 	memset(g_buf, 0, MAX_BUF_SIZE);
 	len = sprintf(g_buf, "Enter %s success\n", __func__);
 	write(fd, g_buf, len);
+#endif
 
 	return 0;
 }

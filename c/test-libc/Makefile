@@ -20,6 +20,13 @@ define compile_src
 	$(CC) $(CFLAGS) -c $(1) -o $(addprefix ./$(OUTPUT)/,$(patsubst %.c,%.o,$(1)))
 endef
 
+OS=$(shell uname -s)
+ifeq ($(OS), Linux)
+	CFLAGS += -DOS_LINUX
+else
+	CFLAGS += -DOS_WINDOWS
+endif
+
 all: link
 
 link: compile
