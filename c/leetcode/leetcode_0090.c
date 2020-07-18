@@ -10,15 +10,34 @@
 #include <math.h>
 
 #define LOCAL_DEBUG
+#define dprintf(fmt, ...) printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+
+int rsize = 0;
 
 int compare(const void *a, const void *b)
 {
     return *(int *)a - *(int *)b;
 }
 
-void dfs(int *nums, int n, int numsSize, int *arr, int ind, int **sub, int *returnSize, int **returnColumnSizes)
+void dfs(int **retarr, int itend, int *nums, int numsSize,
+         int **returnColumnSizes, int *column, int *temp)
 {
-    ret
+    int i;
+
+    returnColumnSizes[0][rsize] = *column;
+    memcpy(retarr[rsize], temp, (*column) * sizeof(int));
+    rsize++;
+
+    for (i = itend; i < numsSize; i++) {
+        temp[*column] = nums[i];
+        *column = *column + 1;
+        dfs(retarr, i + 1, nums, numsSize, returnColumnSizes, column, temp);
+        *column = *column - 1;
+        temp[*column] = 0;
+        while ((i + 1) < numsSize && nums[i] == nums[i + 1]) {
+            i++;
+        }
+    }
 }
 
 /**
@@ -26,34 +45,56 @@ void dfs(int *nums, int n, int numsSize, int *arr, int ind, int **sub, int *retu
  * The sizes of the arrays are returned as *returnColumnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-int** subsetsWithDup(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
-    int **sub = NULL;
-    int *arr = NULL;
+int** subsetsWithDup(int* nums, int numsSize, int* returnSize,
+                     int** returnColumnSizes)
+{
+    int i, j;
+    int t = 1U << numsSize;
+    int colCount = 0;
+    int **retarr = NULL;
+    int *temp = NULL;
 
+    *returnSize = t;
+    returnColumnSizes[0] = (int *)malloc(sizeof(int) * t);
+    temp = (int *)malloc(sizeof(int) * t);
+    memset(temp, 0, sizeof(int) * t);
+    retarr = (int **)malloc(sizeof(int *) * t);
+    if (numsSize == 1 && nums[0] == 0) {
+        temp = (int *)malloc(sizeof(int));
+        returnColumnSizes[0][0] = 0;
+        returnColumnSizes[0][1] = 1;
+        retarr[0] = NULL;
+        retarr[1] = (int *)malloc(sizeof(int));
+        retarr[1][0] = 0;
+        return retarr;
+    }
+
+    for (i = 0; i < t; i++) {
+        retarr[i] = (int *)malloc(sizeof(int) * t);
+        memset(retarr[i], 0, sizeof(int) * t);
+    }
     qsort(nums, numsSize, sizeof(int), compare);
-    *returnSize = (int)pow(2, numsSize);
-    sub = (int **)malloc(*returnSize * sizeof(int *));
-    (*returnColumnSizes) = (int *)malloc((*returnSize) * sizeof(int));
-    arr = (int *)malloc(numsSize * sizeof(int));
-    dfs();
-    return sub;
+    dfs(retarr, 0, nums, numsSize, returnColumnSizes, &colCount, temp);
+
+    *returnSize = rsize;
+    return retarr;
 }
 
 int main(int argc, char *argv[])
 {
     int i, j;
-    int nums[] = {2, 1, 2};
+    int nums[] = {1, 1};
     int numsSize = sizeof(nums) / sizeof(int);
     int returnSize;
     int **returnColumnSize = (int **)malloc(sizeof(int *));
     int **sub = subsetsWithDup(nums, numsSize, &returnSize, returnColumnSize);
-/*
     for (i = 0; i < returnSize; i++) {
+        printf("[");
         for (j = 0; j < returnColumnSize[0][i]; j++) {
             printf("%d ", sub[i][j]);
         }
-        printf("\n");
+        printf("]\n");
     }
-*/
+
     return 0;
 }
