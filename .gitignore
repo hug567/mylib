@@ -3,6 +3,9 @@
 *.swp
 *.out
 *.elf
+*.ko
+*.mk
+*.cmd
 
 *.exe
 *.xls

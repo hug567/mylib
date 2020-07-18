@@ -38,7 +38,7 @@ long tchar_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 
 static struct file_operations g_tchar_fops = {
 	.owner		= THIS_MODULE,
-	.open		= tchar_read,
+	.open		= tchar_open,
 	.read		= tchar_read,
 	.write		= tchar_write,
 	.unlocked_ioctl	= tchar_ioctl,
@@ -47,15 +47,15 @@ static struct file_operations g_tchar_fops = {
 static int __init test_char_init(void)
 {
 	g_tchar_major = register_chrdev(0, "test_char", &g_tchar_fops);
-	if (ret < 0) {
+	if (g_tchar_major < 0) {
 		printk(KERN_ERR "register chrdev failed\n");
-		return ret;
+		return -ENODEV;
 	}
 
 	g_tchar_class = class_create(THIS_MODULE, "test_char");
 	if (IS_ERR(g_tchar_class)) {
 		printk(KERN_ERR "class create failed\n");
-		unregister_chrdev(g_tchar_major, "test_char")
+		unregister_chrdev(g_tchar_major, "test_char");
 		return PTR_ERR(g_tchar_class);
 	}
 
