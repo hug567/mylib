@@ -14,4 +14,6 @@ qemu-system-arm \
     -kernel ./arch/arm/boot/zImage \
     -initrd ${ROOTFS} \
     -nographic \
+    -net nic -net tap,ifname=tap0,script=no,downscript=no \
     -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
+#    -net nic,model=e1000 -net tap,ifname=tap0 \

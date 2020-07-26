@@ -15,7 +15,7 @@ cd ${rootfs_dir}/rootfs
 
 echo "copy busybox file to rootfs"
 sudo cp -rf ../busybox-1.27.2/_install/* ./
-sudo mkdir -p proc sys dev etc etc/init.d tmp usr usr/bin
+sudo mkdir -p proc sys dev etc etc/init.d tmp usr usr/bin lib/modules
 sudo touch ./etc/init.d/rcS
 sudo chmod a+x ./etc/init.d/rcS
 sudo sh -c 'echo "#!/bin/sh\nmount -t proc none /proc\nmount \
