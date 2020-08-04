@@ -1,3 +1,9 @@
+/*
+ * 练习：
+ * 1、链栈
+ * 2、根据数组创建二叉树
+ * 3、遍历二叉树的所有路径
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -106,9 +112,9 @@ void PrintAllPath(struct Tree *t)
     g_s = Push(g_s, t->data);
     if (t->left == NULL && t->right == NULL) {
         PrintOnePath(g_s);
+        g_s = Pop(g_s, NULL);
     } else {
         PrintAllPath(t->left);
-        g_s = Pop(g_s, NULL);
         PrintAllPath(t->right);
         g_s = Pop(g_s, NULL);
     }
@@ -119,7 +125,7 @@ int main(void)
     int i;
     struct Stack *s = NULL;
     struct Tree *t = NULL;
-    int arr[] = {1, 2, -1, -1, 3, -1, -1};
+    int arr[] = {5, 4, 11, 7, -1, -1, 2, -1, -1, -1, 8, 13, -1, -1, 4, 5, -1, -1, 1, -1, -1};
 
     for (i = 0; i < 10; i++) {
         s = Push(s, i);
