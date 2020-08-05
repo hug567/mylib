@@ -65,6 +65,19 @@ int Pop(struct Queue *q)
     return val;
 }
 
+int Empty(struct Queue *q)
+{
+    if (q == NULL) {
+        printf("q is NULL\n");
+        return 1;
+    }
+    if (q->head == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 void PrintQueue(struct Queue *q)
 {
     if (q == NULL) {
@@ -106,6 +119,12 @@ void PreOrder(struct TreeNode *t)
     printf("%d ", t->val);
     PreOrder(t->left);
     PreOrder(t->right);
+}
+
+/* 二叉树的层次遍历 */
+void LevelOrder(struct TreeNode *t)
+{
+    
 }
 
 int main(void)
