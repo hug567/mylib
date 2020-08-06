@@ -1,24 +1,24 @@
 ## 1、初始化设置
----
+
 - **离线安装插件：**
   ```c
   Extensions (Ctrl+Shift+X) -> 从VSIX安装
   ```
-  ---
+
 - **设置中文：**
   ```c
   Ctrl+Shift+P -> Configure Display Language -> Install additioal languages
   Chinese (Simplified) Language -> Install
   Ctrl+Shift+P -> zh-ch -> Restart
   ```
-  ---
+
 - **使用bash：**
   ```c
   /* 安装git bash -> 将安装路径添加至系统变量PATH */
   bash --version                                       //在cmd中验证设置是否成功
   /* 在vscode的任意shell中执行：bash */
   ```
-  ---
+
 - **常用插件：**
   ```c
   c/c++
@@ -26,7 +26,7 @@
   vim
   ```
 ## 2、编译调试：
----
+
 - **编译调试C语言**
   ```c
   调试 -> 添加配置 -> C++(GDB/LLDB)
@@ -91,3 +91,18 @@
     ],
   }
   ```
+
+## 3、常用快捷键：
+```c
+Ctrl + Enter                    //在光标下一行插入新行
+Shift + Alt + Up                //复制当前行至光标上一行
+Shift + Alt + Down              //复制当前行至光标下一行
+Ctrl + C                        //不选中时，复制当前行
+Ctrl + V                        //粘贴至光标上一行
+Ctrl + Up                       //视图上移
+Ctrl + Down                     //视图下移
+
+/* 自定义快捷键 */
+Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
+Ctrl + Alt + ]                  //聚焦至终端 (workbenck.panel.terminal.focus)
+```
