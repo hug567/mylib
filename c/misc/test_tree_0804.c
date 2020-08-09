@@ -17,7 +17,7 @@ struct TreeNode {
 };
 
 struct QueueNode {
-    struct TreeNode *t;
+    struct TreeNode *val;
     struct QueueNode *next;
 };
 
@@ -39,44 +39,38 @@ void InitQueue(struct Queue *q)
 
 void EnQueue(struct Queue *q, struct TreeNode *t)
 {
-    if (q == NULL) {
-        printf("queue is NULL\n");
+    struct QueueNode *qn = NULL;
+    if (q == NULL || t == NULL) {
+        printf("queue or tree node is NULL\n");
         return;
     }
+    qn = (struct QueueNode *)malloc(sizeof(struct QueueNode));
+    qn->val = t;
+    qn->next = NULL;
     if (q->size == 0) {
-        q->head = t;
-        q->tail = t;
+        q->head = qn;
+        q->tail = qn;
     } else {
-        q->tail->next = t;
-        q->tail = t;
+        q->tail->next = qn;
+        q->tail = qn;
     }
     q->size++;
 }
 
 struct TreeNode *DeQueue(struct Queue *q)
 {
-    struct TreeNode *t = NULL;
-    if (q == NULL || q->size == 0) {
+    struct QueueNode *qn = NULL;
+    struct TreeNode *tn = NULL;
+    if (q == NULL || q->size <= 0) {
         printf("queue is empty\n");
         return NULL;
     }
-    t = q->head;
+    qn = q->head;
     q->head = q->head->next;
     q->size--;
-    return t;
-}
-
-int Empty(struct Queue *q)
-{
-    if (q == NULL) {
-        printf("q is NULL\n");
-        return 1;
-    }
-    if (q->head == NULL) {
-        return 1;
-    } else {
-        return 0;
-    }
+    tn = qn->val;
+    free(qn);
+    return tn;
 }
 
 void PrintQueue(struct Queue *q)
@@ -85,11 +79,11 @@ void PrintQueue(struct Queue *q)
         printf("q is NULL\n");
         return;
     }
-    struct QueueNode *node = q->head;
+    struct QueueNode *qn = q->head;
     printf("Queue: ");
-    while (node != NULL) {
-        printf("%d ", node->val);
-        node = node->next;
+    while (qn != NULL) {
+        printf("%d ", qn->val->val);
+        qn = qn->next;
     }
     printf("\n");
 }
@@ -125,29 +119,56 @@ void PreOrder(struct TreeNode *t)
 /* 二叉树的层次遍历 */
 void LevelOrder(struct TreeNode *t)
 {
+    struct Queue *q = NULL;
+    struct TreeNode *tn = NULL;
 
+    if (t == NULL) {
+        return;
+    }
+    q = (struct Queue *)malloc(sizeof(struct Queue));
+    InitQueue(q);
+    EnQueue(q, t);
+    while (q->size > 0) {
+        tn = DeQueue(q);
+        printf("%d ", tn->val);
+        if (tn->left != NULL) {
+            EnQueue(q, tn->left);
+        }
+        if (tn->right != NULL) {
+            EnQueue(q, tn->right);
+        }
+    }
+
+    free(q);
 }
 
 int main(void)
 {
     int i;
-    struct Queue *q = NULL;
+    struct Queue q;
     struct TreeNode *t = NULL;
     int arr[] = {5, 4, 11, 7, -1, -1, 2, -1, -1, -1, 8, 13, -1, -1, 4, 5, -1, -1, 1, -1, -1};
 
-    q = CreateQueue();
+    InitQueue(&q);
     for (i = 0; i < 10; i++) {
-        Push(q, i);
+        t = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        t->val = i;
+        EnQueue(&q, t);
     }
-    PrintQueue(q);
+    PrintQueue(&q);
 
-    i = Pop(q);
-    printf("i = %d\n", i);
-    PrintQueue(q);
+    t = DeQueue(&q);
+    printf("i = %d\n", t->val);
+    free(t);
+    PrintQueue(&q);
 
     t = CreateTreeByArray(arr, sizeof(arr) / sizeof(arr[0]));
     printf("tree pre order: ");
     PreOrder(t);
+    printf("\n");
+
+    printf("tree level order: ");
+    LevelOrder(t);
     printf("\n");
 
     return 0;
