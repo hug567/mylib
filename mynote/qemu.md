@@ -29,3 +29,29 @@ qemu-system-arm -machine virt -cpu help  //查看开发板支持的CPU
 qemu-system-arm -machine vexpress-a9 -nic model=help  //查看支持的nic模式
 qemu-system-x86_64 -device help    //查看支持的设备模块
 ```
+
+```c
+/* u-boot通过tftp下载镜像： */
+sudo apt install tftp-hpa tftpd-hpa xinetd              //安装tftp
+cd ~; mkdir tftpboot; sudo chmod 777 tftpboot          //创建tftp根目录
+sudo vim /etc/default/tftpd-hpa                         //编辑配置文件
+/* ------------------------------------------------------------ */
+# /etc/default/tftpd-hpa
+
+TFTP_USERNAME="tftp"
+TFTP_DIRECTORY="/home/ubuntu/tftpboot"
+TFTP_ADDRESS="0.0.0.0:69"
+#TFTP_OPTIONS="--secure"
+TFTP_OPTIONS="-l -c -s"
+/* ------------------------------------------------------------ */
+sudo service tftpd-hpa restart                          //重启tftp
+
+/* 测试连接： */
+cd ~
+tftp localhost                    //连接至本机
+tftp>get test1.txt                //获取文件
+tftp>put test2.txt                //上传文件
+tftp>q                            //推出连接
+
+/* 创建虚拟网口： */
+```
