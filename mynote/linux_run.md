@@ -43,7 +43,12 @@ wget https://busybox.net/downloads/busybox-1.27.2.tar.bz2       //下载busybox
 tar -xjvf busybox-1.27.2.tar.bz2                                //解压busybox
 cd busybox-1.27.2                                               //进入目录
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- menuconfig  //手动配置
-/* 进入第一行"Busybox Setting", 按Y选中"Build Busybox as a static binary" */
+/* 选中以下配置： */
+Busybox Settings  --->
+    [*] Build BusyBox as a static binary (no shared libs)
+Networking Utilities  --->
+    [*] telnetd
+    [*]   Support standalone telnetd (not inetd only)
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-             //编译
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- install     //安装
 /* 所需内容在busybox-1.27.2/_install目录下 */
