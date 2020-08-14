@@ -233,3 +233,9 @@ bootm 0x60003000 - 0x60500000                            //启动内核
 
 setenv bootargs "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
 ```
+
+## 4、qemu运行linux aarch64:
+```c
+/* 下载工具链： */
+https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
+```
