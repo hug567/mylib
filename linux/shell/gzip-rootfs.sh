@@ -14,11 +14,18 @@ cd rootfs
 
 echo "[INFO]: copy busybox file to rootfs"
 sudo cp -rf ${busybox_dir}/_install/* ./
-sudo mkdir -p proc sys dev etc etc/init.d tmp usr usr/bin lib/modules
-sudo touch ./etc/init.d/rcS
-sudo chmod a+x ./etc/init.d/rcS
-sudo sh -c 'echo "#!/bin/sh\nmount -t proc none /proc\nmount \
--t sysfs none /sys\n/sbin/mdev -s" > ./etc/init.d/rcS'
+sudo mkdir -p proc sys tmp dev/pts etc/init.d usr/bin lib/modules
+sudo touch etc/init.d/rcS
+sudo chmod a+x etc/init.d/rcS
+sudo sh -c 'echo "#!/bin/sh" > etc/init.d/rcS'
+sudo sh -c 'echo "mount -t proc none /proc" >> etc/init.d/rcS'
+sudo sh -c 'echo "mount -t sysfs none /sys" >> etc/init.d/rcS'
+sudo sh -c 'echo "/sbin/mdev -s" >> etc/init.d/rcS'
+sudo sh -c 'echo "mount -t devpts devpts /dev/pts" >> etc/init.d/rcS'
+sudo sh -c 'echo "telnetd" >> etc/init.d/rcS'
+sudo sh -c 'echo "ifconfig eth0 192.168.0.101 netmask 255.255.255.0" >> etc/init.d/rcS'
+sudo touch etc/passwd
+sudo sh -c 'echo "root::0:0:root:/root:/bin/sh" > etc/passwd'
 
 echo "[INFO]: copy ${linux_test_elf} to rootfs"
 sudo cp -r ${linux_test_elf} usr/bin
