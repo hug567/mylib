@@ -8,6 +8,8 @@ PWD = $(shell pwd)
 
 modules:
 	make -C $(KERNEL) M=$(PWD) modules
+	rm -rf modules.order Module.symvers .cache.mk .tmp_versions
+	rm -rf .*.ko.cmd .*.o.cmd *.o *.mod.c
 
 .PHONEY: clean
 clean:

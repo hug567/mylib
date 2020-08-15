@@ -30,10 +30,10 @@ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
 
 # 编译内核模块(.ko)
-#make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules
 
 # 编译dts文件(生成dtb文件)
-#make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs
 
 # qemu启动命令
 echo -e "\n${GREEN}Run kernel: ${RESET}~/code/mylib/shell/qemu/qemu-run.sh"

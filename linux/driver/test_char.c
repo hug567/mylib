@@ -16,23 +16,27 @@ static struct class *g_tchar_class = NULL;
 
 static int tchar_open(struct inode *inode, struct file *file)
 {
+	printk("[%s:%d] Enter %s success\n", __func__, __LINE__, __func__);
 	return 0;
 }
 
 static ssize_t tchar_read(struct file *file, char __user *buf, size_t count,
 			  loff_t *offp)
 {
+	printk("[%s:%d] Enter %s success\n", __func__, __LINE__, __func__);
 	return 0;
 }
 
 static ssize_t tchar_write(struct file *file, const char __user *buf,
 			   size_t count, loff_t *offtp)
 {
+	printk("[%s:%d] Enter %s success\n", __func__, __LINE__, __func__);
 	return 0;
 }
 
 long tchar_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
+	printk("[%s:%d] Enter %s success\n", __func__, __LINE__, __func__);
 	return 0;
 }
 
