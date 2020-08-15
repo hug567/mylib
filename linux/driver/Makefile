@@ -6,8 +6,9 @@ obj-m += test_char.o
 KERNEL := /lib/modules/`uname -r`/build
 PWD = $(shell pwd)
 
+	#make ARCH=${ARCH} CROSS_COMPILE=$(CROSS_COMPILE) M=$(PWD) -C $(KERNEL) modules
 modules:
-	make -C $(KERNEL) M=$(PWD) modules
+	make M=$(PWD) -C $(KERNEL) modules
 	rm -rf modules.order Module.symvers .cache.mk .tmp_versions
 	rm -rf .*.ko.cmd .*.o.cmd *.o *.mod.c
 

@@ -38,6 +38,10 @@ TEST_FILE="${MYLIB}/c/test-libc/obj/test-libc.elf "
 TEST_FILE+="${MYLIB}/linux/linux-test/obj/linux-test.elf "
 sudo cp -r ${TEST_FILE} tmp
 
+echo "[INFO]: copy module ko file to rootfs"
+MODULE_KO_FILE="${BASE_DIR}/linux-4.15/drivers/mytest/mytest.ko "
+sudo cp -r ${MODULE_KO_FILE} lib/modules
+
 echo "[INFO]: make rootfs.ext3 file"
 cd ..
 dd if=/dev/zero of=rootfs.ext3 bs=1M count=32
