@@ -134,12 +134,31 @@ qemu命令：
 
 ```c
 wget https://download.qemu.org/qemu-4.0.1.tar.xz          //下载qemu 4.0
-sudo apt-get install python python3 zlib1g-dev libglib2.0-dev \
+sudo apt install python python3 zlib1g-dev libglib2.0-dev \
     libtool autoconf libpixman-1-dev flex bison           //安装依赖
 ./configure                                               //配置
 make                                                      //编译
 sudo make install                                         //安装
 ```
+
+### 1.7、gdb调试linux内核：
+
+```c
+/* 启动内核： */
+qemu-system-arm \
+    -M virt -smp 1 -m 256 -nographic -s \
+    -kernel arch/arm/boot/zImage \
+    -initrd ../rootfs.img.gz \
+    -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
+    -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,guest_ufo=off \
+    -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
+
+/* 启动gdb： */
+arm-none-linux-gnueabi-gdb vmlinux
+(gdb) target remote:1234
+```
+
+
 
 ## 2、各版本gcc区别：
 
@@ -245,6 +264,39 @@ https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-li
 /* 编译linux-4.18： */
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+
+/* 编译busybox-1.27.1： */
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig  //手动配置
+/* 选中以下配置： */
+Busybox Settings  --->
+    [*] Build BusyBox as a static binary (no shared libs)
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-             //编译
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install     //安装
+
+/* 制作rootfs: */
+mkdir rootfs                                              //新建文件夹
+cd rootfs                                                 //进入目录
+sudo cp -rf ../busybox-1.27.2/_install/* ./               //复制文件
+sudo mkdir -p proc sys dev etc/init.d                     //新建目录
+sudo vim etc/init.d/rcS                                   //新建文件并写入
+/*-------------------------------------------------------*/
+#!/bin/sh
+mount -t proc none /proc
+mount -t sysfs none /sys
+/sbin/mdev -s
+/*-------------------------------------------------------*/
+sudo chmod a+x etc/init.d/rcS                             //添加可执行权限
+find . | cpio -o --format=newc > ../rootfs.img            //制作文件系统
+cd ..                                                     //返回上层目录
+gzip -c rootfs.img > rootfs.aarch64                       //压缩文件系统
+sudo rm -rf rootfs rootfs.img
+
+/* 启动内核： */
+qemu-system-aarch64 \
+    -M virt -cpu cortex-a57 -smp 1 -m 256 -nographic \
+    -initrd ../rootfs.aarch64 \
+    -kernel arch/arm64/boot/Image  \
+    --append "console=ttyAMA0 rdinit=/linuxrc"
 ```
 
 ## 5、Linaro arm工具链编译linux内核：
@@ -261,12 +313,9 @@ qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
     -kernel arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
 /* 启动内核： */
 qemu-system-arm \
-    -M virt -smp 1 -m 256 \
+    -M virt -smp 1 -m 256 -nographic \
     -kernel ./arch/arm/boot/zImage \
     -initrd ../rootfs.img.gz \
-    -nographic \
     -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0"
-
-
 ```
 
