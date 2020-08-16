@@ -106,15 +106,11 @@ qemu-system-arm \
     -append "root=/dev/mmcblk0 rw console=ttyAMA0"
 ```
 
-
-
 ### 1.5、运行kernel：
 
 ```c
 qemu-system-arm \
-    -M virt  \
-    -smp 1 \
-    -m 256 \
+    -M virt -smp 1 -m 256 \
     -kernel ./arch/arm/boot/zImage \
     -initrd ../rootfs.img.gz \
     -nographic \
@@ -222,7 +218,7 @@ sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
 qemu-system-arm -M vexpress-a9 \
     -kernel u-boot \
     -nographic \
-    -initrd /home/ubuntu/code/linux/rootfs.img.gz \
+    -initrd ~/code/linux/rootfs.img.gz \
     -net nic -net tap,ifname=tap0 \
     -m 512M
 
@@ -241,8 +237,36 @@ bootm 0x60003000 - 0x60500000                            //启动内核
 setenv bootargs "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
 ```
 
-## 4、qemu运行linux aarch64:
+## 4、Linaro aarch64工具链编译linux内核:
 ```c
 /* 下载工具链： */
 https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
+
+/* 编译linux-4.18： */
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 ```
+
+## 5、Linaro arm工具链编译linux内核：
+
+```c
+/* 下载工具链： */
+http://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabi/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi.tar.xz
+
+/* 编译linux-4.18： */
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_defconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
+/* 无文件系统启动验证： */
+qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
+    -kernel arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
+/* 启动内核： */
+qemu-system-arm \
+    -M virt -smp 1 -m 256 \
+    -kernel ./arch/arm/boot/zImage \
+    -initrd ../rootfs.img.gz \
+    -nographic \
+    -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0"
+
+
+```
+
