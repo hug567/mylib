@@ -80,9 +80,8 @@ gzip -c rootfs.img > rootfs.img.gz                        //压缩文件系统
 mkdir rootfs
 cd rootfs
 sudo cp -r ../busybox-1.27.2/_install/* .
-sudo mkdir lib
+sudo mkdir -p lib dev
 sudo cp -r ~/tools/arm-2014.05/arm-none-linux-gnueabi/libc/lib/* lib/
-mkdir dev
 cd dev
 sudo mknod -m 666 tty1 c 4 1
 sudo mknod -m 666 tty2 c 4 2
@@ -96,7 +95,15 @@ mkfs.ext3 rootfs.ext3
 sudo mount -t ext3 rootfs.ext3 /mnt -o loop
 sudo cp -r rootfs/* /mnt
 sudo umount /mnt
-~/code/mylib/linux/shell/run-qemu-arm-sd.sh
+
+qemu-system-arm \
+    -M vexpress-a9 -m 512M -nographic \
+    -kernel arch/arm/boot/zImage \
+    -dtb arch/arm/boot/dts/vexpress-v2p-ca9.dtb \
+    -sd ~/code/linux/rootfs.ext3 \
+    -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
+    -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,guest_ufo=off \
+    -append "root=/dev/mmcblk0 rw console=ttyAMA0"
 ```
 
 
