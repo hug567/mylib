@@ -40,6 +40,7 @@ sudo cp -r ${TEST_FILE} tmp
 
 echo "[INFO]: copy module ko file to rootfs"
 MODULE_KO_FILE="${BASE_DIR}/linux-4.15/drivers/mytest/mytest.ko "
+MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char.ko "
 sudo cp -r ${MODULE_KO_FILE} lib/modules
 
 echo "[INFO]: make rootfs.ext3 file"
