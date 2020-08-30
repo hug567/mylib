@@ -26,11 +26,17 @@ tar -xvf linux-4.15.tar.gz                                 //解压linux内核
 cd linux-4.15                                              //进入目录
 make clean; make mrproper                                  //清除临时文件
 /* 配置及编译： */
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules    //编译内核模块
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs       //编译dts文件
-find ./ -name "*Image*"                                     //查看Image文件
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_defconfig  //加载默认配置
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig  //手动配置
+General setup ---->
+    [*] Configure standard kernel features (expert users)  --->
+        [*]   Enable support for printk (NEW)
+        [*] load all symbols for debugging/ksymoops
+        [*]     Include all symbols in kallsyms
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-             //编译内核
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules     //编译内核模块
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- dtbs        //编译dts文件
+find ./ -name "*Image*"                                         //查看Image文件
 /* 无文件系统启动验证： */
 qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
     -kernel arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
@@ -42,19 +48,28 @@ qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
 wget https://busybox.net/downloads/busybox-1.27.2.tar.bz2       //下载busybox
 tar -xjvf busybox-1.27.2.tar.bz2                                //解压busybox
 cd busybox-1.27.2                                               //进入目录
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- menuconfig  //手动配置
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig  //手动配置
 /* 选中以下配置： */
 Busybox Settings  --->
     [*] Build BusyBox as a static binary (no shared libs)
+Linux System Utilities ---->
+    [*] mdev
+    [*]   Support /etc/mdev.conf
+    [*]     Support subdirs/symlinks
+    [*]       Support regular expressions substitutions when renaming device
+    [*]     Support command execution at device addition/removal
+    [*]   Support loading of firmwares
 Networking Utilities  --->
     [*] telnetd
     [*]   Support standalone telnetd (not inetd only)
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-             //编译
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- install     //安装
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-             //编译
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install     //安装
 /* 所需内容在busybox-1.27.2/_install目录下 */
 ```
 
 ### 1.4、制作文件系统：
+
+#### 1.4.1、制作init.d启动内核
 
 ```c
 mkdir rootfs                                              //新建文件夹
@@ -74,14 +89,30 @@ find . | cpio -o --format=newc > ../rootfs.img            //制作文件系统
 cd ..                                                     //返回上层目录
 gzip -c rootfs.img > rootfs.img.gz                        //压缩文件系统
 ```
-
+#### 1.4.2、制作从sd卡启动内核：
 ```c
-/* 制作从sd卡启动的根文件系统： */
 mkdir rootfs
 cd rootfs
 sudo cp -r ../busybox-1.27.2/_install/* .
-sudo mkdir -p lib dev
-sudo cp -r ~/tools/arm-2014.05/arm-none-linux-gnueabi/libc/lib/* lib/
+sudo mkdir -p proc sys tmp root dev etc/init.d usr/bin lib/modules
+sudo vim etc/init.d/rcS
+/*********************************************************************/
+#!/bin/sh
+mount -t tmpfs tmpfs /dev
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+/sbin/mdev -s
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+telnetd
+ifconfig eth0 192.168.0.101 netmask 255.255.255.0
+/*********************************************************************/
+sddo chmod a+x etc/init.d/rcS
+sudo vim etc/passwd
+/*********************************************************************/
+root::0:0:root:/root:/bin/sh
+/*********************************************************************/
 cd dev
 sudo mknod -m 666 tty1 c 4 1
 sudo mknod -m 666 tty2 c 4 2
@@ -317,5 +348,32 @@ qemu-system-arm \
     -kernel ./arch/arm/boot/zImage \
     -initrd ../rootfs.img.gz \
     -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0"
+```
+
+## 6、使用交叉工具链及linux源码编译驱动ko
+
+```c
+/* Makefile: */
+obj-m += test_char.o
+
+KERNEL = ~/code/linux/linux-4.15
+PWD = $(shell pwd)
+
+modules:
+	make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- M=${PWD} -C ${KERNEL}  modules
+	rm -rf modules.order Module.symvers .cache.mk .tmp_versions
+	rm -rf .*.ko.cmd .*.o.cmd *.o *.mod.c
+
+.PHONEY: clean
+clean:
+	rm -f *.o *.ko
+
+/**************************************************************************/
+/* 从host获取文件： */
+ftpget -u username -p passwd 192.168.0.100 test_char.ko
+/* 加载驱动： */
+insmod test_char.ko
+/* 卸载驱动： */
+rmmod test_char.ko
 ```
 
