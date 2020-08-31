@@ -1,0 +1,31 @@
+{
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "workbench.activityBar.visible": true,
+    "editor.minimap.enabled": false,
+    "markdown.links.openLocation": "beside",
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": false,
+    "editor.fontSize": 16,
+    "editor.rulers": [80], /* 列宽竖线 */
+    "workbench.colorTheme": "Monokai", /* 颜色主题 */
+    "editor.tokenColorCustomizations": {
+        "functions": "#66D9EF", /* 函数 */
+        "keywords": "#F92672", /* 关键字 */
+        "textMateRules": [
+            {
+                "scope": "keyword.operator", /* 运算符 */
+                "settings": {
+                    "foreground": "#E6DB74",
+                    "fontStyle": "",
+                }
+            },
+            {
+                "scope":"entity.name.type", /* 结构名 */
+                "settings": {
+                    "foreground": "#A5E22E",
+                    "fontStyle": "",
+                }
+            },
+        ],
+    },
+}
