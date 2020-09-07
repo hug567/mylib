@@ -7,6 +7,19 @@
 
 #define MAX_VEX 100
 
+/* 链式队列节点 */
+struct QueueNode {
+    int val;
+    struct QueueNode *next;
+};
+
+struct Queue {
+    struct QueueNode *head; /* 出队头结点 */
+    struct QueueNode *tail; /* 入队尾结点 */
+    int num; /* 节点数量 */
+};
+
+
 struct ArcNode {
     int adjIndex; /* 弧的邻接点在顶点数组中的下标 */
     int weight;
@@ -23,6 +36,59 @@ struct Graph {
     int numVex;
     int numArc;
 };
+
+void InitQueue(struct Queue *q)
+{
+    q->head = NULL;
+    q->tail = NULL;
+    q->num = 0;
+}
+
+void EnQueue(struct Queue *q, int val)
+{
+    struct QueueNode *qn = NULL;
+
+    qn = (struct QueueNode *)malloc(sizeof(struct QueueNode));
+    qn->val = val;
+    qn->next = NULL;
+
+    if (q->num <= 0) {
+        q->head = qn;
+        q->tail = qn;
+    } else {
+        q->tail->next = qn;
+        q->tail = qn;
+    }
+    q->num++;
+}
+
+int DeQueue(struct Queue *q)
+{
+    int val;
+    struct QueueNode *qn = NULL;
+
+    if (q == NULL || q->num <= 0) {
+        printf("queue is empty\n");
+        return -1;
+    }
+    qn = q->head;
+    q->head = q->head->next;
+    q->num--;
+    val = qn->val;
+    free(qn);
+    return val;
+}
+
+void PrintQueue(struct Queue *q)
+{
+    struct QueueNode *qn = q->head;
+    printf("queue: ");
+    while (qn != NULL) {
+        printf("%d ", qn->val);
+        qn = qn->next;
+    }
+    printf("\n");
+}
 
 void InitGraph(struct Graph *g)
 {
@@ -94,15 +160,31 @@ void PrintGraph(struct Graph *g)
     }
 }
 
+/* DFS */
+
+
+/* BFS：需要使用队列 */
+
 int main(void)
 {
+    int i;
     int arr[][3] = {{1, 0, 9}, {1, 2, 3}, {2, 0, 2}, {2, 3, 5}, {3, 4, 1}, {0, 4, 6}};
     int size = sizeof(arr) / 12;
     struct Graph g;
+    struct Queue q;
 
     InitGraph(&g);
     CreateGraphByArray(&g, (int **)arr, size);
     PrintGraph(&g);
+
+    /* 队列测试： */
+    InitQueue(&q);
+    for (i = 0; i < 10; i++) {
+        EnQueue(&q, i);
+    }
+    PrintQueue(&q);
+    DeQueue(&q);
+    PrintQueue(&q);
 
     return 0;
 }
