@@ -160,10 +160,70 @@ void PrintGraph(struct Graph *g)
     }
 }
 
+int g_visited[MAX_VEX] = {0};
 /* DFS */
+void DFS(struct Graph *g, int i)
+{
+    struct ArcNode *arc = NULL;
 
+    g_visited[i] = 1;
+    printf("%d ", g->vexs[i].val);
+    arc = g->vexs[i].first;
+    while (arc != NULL) {
+        if (!g_visited[arc->adjIndex]) {
+            DFS(g, arc->adjIndex);
+        }
+        arc = arc->next;
+    }
+}
+
+void DFSTraverse(struct Graph *g)
+{
+    int i;
+
+    for (i = 0; i < g->numVex; i++) {
+        g_visited[i] = 0;
+    }
+    for (i = 0; i < g->numVex; i++) {
+        if (!g_visited[i]) {
+            DFS(g, i);
+        }
+    }
+}
 
 /* BFS：需要使用队列 */
+void BFSTraverse(struct Graph *g)
+{
+    int i;
+    int index;
+    struct ArcNode *arc = NULL;
+    struct Queue q;
+
+    InitQueue(&q);
+    for (i = 0; i < g->numVex; i++) {
+        g_visited[i] = 0;
+    }
+    for (i = 0; i < g->numVex; i++) {
+        if (g_visited[i]) {
+            continue;
+        }
+        g_visited[i] = 1;
+        printf("%d ", g->vexs[i].val);
+        EnQueue(&q, i);
+        while (q.num > 0) {
+            index = DeQueue(&q);
+            arc = g->vexs[index].first;
+            while (arc != NULL) {
+                if (!g_visited[arc->adjIndex]) {
+                    g_visited[arc->adjIndex] = 1;
+                    printf("%d ", g->vexs[arc->adjIndex].val);
+                    EnQueue(&q, arc->adjIndex);
+                }
+                arc = arc->next;
+            }
+        }
+    }
+}
 
 int main(void)
 {
@@ -185,6 +245,16 @@ int main(void)
     PrintQueue(&q);
     DeQueue(&q);
     PrintQueue(&q);
+
+    /* DFS */
+    printf("dfs: ");
+    DFSTraverse(&g);
+    printf("\n");
+
+    /* BFS */
+    printf("bfs: ");
+    BFSTraverse(&g);
+    printf("\n");
 
     return 0;
 }

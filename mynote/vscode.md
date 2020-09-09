@@ -101,6 +101,7 @@ Ctrl + C                        //不选中时，复制当前行
 Ctrl + V                        //粘贴至光标上一行
 Ctrl + Up                       //视图上移
 Ctrl + Down                     //视图下移
+Ctrl + L                        //选中当前行
 
 /* 自定义快捷键 */
 Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
