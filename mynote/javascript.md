@@ -4,7 +4,7 @@
 
 下载LTS版本安装包并安装：https://nodejs.org/en/ 
 
-<img src="pictures/javascript/01.png" style="zoom:80%" align=center />
+<img src="pictures/javascript/01.png" style="zoom:80%" div align=center />
 
 打开cmd测试是否安装成功：
 
@@ -58,7 +58,7 @@ F:\Program Files\nodejs\node_data\node_modules
 
 在\<script> ...\</script>中编写JavaScript指令，然后使用浏览器打开index.html。
 
-![avatar](pictures/javascript/02.png)
+<span><div style="text-align: center">![Picture](pictures/javascript/02.png)</div></span>
 
 #### 2.2、在html中执行JavaScript脚本：
 
@@ -85,7 +85,7 @@ F:\Program Files\nodejs\node_data\node_modules
 document.write("current code is in helloworld.js" + "<br/>");
 ```
 
-![avatar](pictures/javascript/03.png)
+<span><div style="text-align: center">![Picture](pictures/javascript/03.png)</div></span>
 
 
 
