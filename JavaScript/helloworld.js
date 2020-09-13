@@ -1,0 +1,1 @@
+document.write("current code is in helloworld.js" + "<br/>");

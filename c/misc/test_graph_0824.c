@@ -37,14 +37,14 @@ struct Graph {
     int numArc;
 };
 
-void InitQueue(struct Queue *q)
+static void InitQueue(struct Queue *q)
 {
     q->head = NULL;
     q->tail = NULL;
     q->num = 0;
 }
 
-void EnQueue(struct Queue *q, int val)
+static void EnQueue(struct Queue *q, int val)
 {
     struct QueueNode *qn = NULL;
 
@@ -62,7 +62,7 @@ void EnQueue(struct Queue *q, int val)
     q->num++;
 }
 
-int DeQueue(struct Queue *q)
+static int DeQueue(struct Queue *q)
 {
     int val;
     struct QueueNode *qn = NULL;
@@ -79,7 +79,7 @@ int DeQueue(struct Queue *q)
     return val;
 }
 
-void PrintQueue(struct Queue *q)
+static void PrintQueue(struct Queue *q)
 {
     struct QueueNode *qn = q->head;
     printf("queue: ");
@@ -90,7 +90,7 @@ void PrintQueue(struct Queue *q)
     printf("\n");
 }
 
-void InitGraph(struct Graph *g)
+static void InitGraph(struct Graph *g)
 {
     int i;
 
@@ -102,7 +102,7 @@ void InitGraph(struct Graph *g)
     g->numArc = 0;
 }
 
-int VexIndex(struct Graph *g, int vex)
+static int VexIndex(struct Graph *g, int vex)
 {
     int i;
 
@@ -111,12 +111,32 @@ int VexIndex(struct Graph *g, int vex)
             return i;
         }
     }
-    g->vexs[i].val = vex;
-    g->numVex++;
-    return i;
+    return -1;
 }
 
-void CreateGraphByArray(struct Graph *g, int **arr_t, int size)
+static int AddVex(struct Graph *g, int vex)
+{
+    int index = g->numVex;
+    if (g->numVex >= MAX_VEX) {
+        return -1;
+    }
+    g->vexs[index].val = vex;
+    g->numVex++;
+    return index;
+}
+
+static int GetVexIndex(struct Graph *g, int vex)
+{
+    int index;
+
+    index = VexIndex(g, vex);
+    if (index < 0) {
+        return AddVex(g, vex);
+    }
+    return index;
+}
+
+static void CreateGraphByArray(struct Graph *g, int **arr_t, int size)
 {
     int i;
     int m, n;
@@ -125,8 +145,8 @@ void CreateGraphByArray(struct Graph *g, int **arr_t, int size)
     struct ArcNode *temp = NULL;
 
     for (i = 0; i < size; i++) {
-        m = VexIndex(g, arr[i][0]);
-        n = VexIndex(g, arr[i][1]);
+        m = GetVexIndex(g, arr[i][0]);
+        n = GetVexIndex(g, arr[i][1]);
         arc = (struct ArcNode *)malloc(sizeof(struct ArcNode));
         arc->adjIndex = n;
         arc->weight = arr[i][2];
@@ -144,7 +164,21 @@ void CreateGraphByArray(struct Graph *g, int **arr_t, int size)
     }
 }
 
-void PrintGraph(struct Graph *g)
+static void DeleteArc(struct Graph *g, int start, int end)
+{
+    int m, n;
+
+    m = VexIndex(g, start); /* 起点在顶点数组中的下标 */
+    n = VexIndex(g, end); /* 终点在顶点数组中的下标 */
+    if (m < 0 || n < 0 || m == n) {
+        return;
+    }
+}
+
+static void DeleteVex(struct Graph *g, int vex)
+{}
+
+static void PrintGraph(struct Graph *g)
 {
     int i;
     struct ArcNode *arc = NULL;
@@ -160,9 +194,9 @@ void PrintGraph(struct Graph *g)
     }
 }
 
-int g_visited[MAX_VEX] = {0};
+static int g_visited[MAX_VEX] = {0};
 /* DFS */
-void DFS(struct Graph *g, int i)
+static void DFS(struct Graph *g, int i)
 {
     struct ArcNode *arc = NULL;
 
@@ -177,7 +211,7 @@ void DFS(struct Graph *g, int i)
     }
 }
 
-void DFSTraverse(struct Graph *g)
+static void DFSTraverse(struct Graph *g)
 {
     int i;
 
@@ -192,7 +226,7 @@ void DFSTraverse(struct Graph *g)
 }
 
 /* BFS：需要使用队列 */
-void BFSTraverse(struct Graph *g)
+static void BFSTraverse(struct Graph *g)
 {
     int i;
     int index;
@@ -224,6 +258,13 @@ void BFSTraverse(struct Graph *g)
         }
     }
 }
+
+/*
+ * 判断有向图是否有环：
+ * 1、计算图中所有点的入度，删除所有入度为0的定点；
+ * 2、持续第一步直至图为空或无入度为0的定点；
+ * 3、若图不为空，则表示有环；图为空，表示无环；
+ */
 
 int main(void)
 {
