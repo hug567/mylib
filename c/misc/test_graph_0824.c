@@ -102,6 +102,7 @@ static void InitGraph(struct Graph *g)
     g->numArc = 0;
 }
 
+/* 查找顶点是否存在，存在则返回在顶点数组中的下标，不存在则返回-1 */
 static int VexIndex(struct Graph *g, int vex)
 {
     int i;
@@ -114,6 +115,7 @@ static int VexIndex(struct Graph *g, int vex)
     return -1;
 }
 
+/* 添加新的顶点到顶点数组中 */
 static int AddVex(struct Graph *g, int vex)
 {
     int index = g->numVex;
@@ -125,6 +127,11 @@ static int AddVex(struct Graph *g, int vex)
     return index;
 }
 
+/*
+ * 获取顶点下标
+ * 1）、若顶点已存在，返回在顶点数组中的下标
+ * 2）、若顶点不存在，插入顶点并返回在顶点数组中的下标
+ */
 static int GetVexIndex(struct Graph *g, int vex)
 {
     int index;

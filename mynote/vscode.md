@@ -107,3 +107,16 @@ Ctrl + L                        //选中当前行
 Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
 Ctrl + Alt + ]                  //聚焦至终端 (workbenck.panel.terminal.focus)
 ```
+
+## 4、vscode连接linux主机：
+
+vscode安装插件：remote-ssh
+
+```c
+
+
+
+
+
+
+```
