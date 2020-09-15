@@ -19,7 +19,6 @@ struct Queue {
     int num; /* 节点数量 */
 };
 
-
 struct ArcNode {
     int adjIndex; /* 弧的邻接点在顶点数组中的下标 */
     int weight;
@@ -268,15 +267,65 @@ static void BFSTraverse(struct Graph *g)
 
 /*
  * 判断有向图是否有环：
+ * 方法一：拓扑排序
  * 1、计算图中所有点的入度，删除所有入度为0的定点；
  * 2、持续第一步直至图为空或无入度为0的定点；
  * 3、若图不为空，则表示有环；图为空，表示无环；
  */
+int HasCircleTopo(struct Graph *g)
+{
+    int i;
+}
+
+/*
+ * 判断有向图是否有环：
+ * 方法二：DFS
+ * visited标志含义：
+ *   0: 节点未被访问过
+ *   -1: 后代节点都已被访问过
+ *   1: 后代节点正在被访问，又访问到该节点，表示有环
+ */
+static int g_hasCircleDFSFlag = 0;
+static void CircleDFS(struct Graph *g, int i)
+{
+    struct ArcNode *arc = NULL;
+
+    g_visited[i] = 1;
+    arc = g->vexs[i].first;
+    while (arc != NULL) {
+        /* 弧的邻接点未被访问过 */
+        if (g_visited[arc->adjIndex] == 0) {
+            CircleDFS(g, arc->adjIndex);
+        /* 后代节点正在被访问，又访问到该节点，表示有环 */
+        } else if (g_visited[arc->adjIndex] == 1) {
+            g_hasCircleDFSFlag = 1;
+        }
+        arc = arc->next;
+    }
+    /* 后代节点被访问完 */
+    g_visited[i] = -1;
+}
+
+int HasCircleDFS(struct Graph *g)
+{
+    int i;
+
+    for (i = 0; i < g->numVex; i++) {
+        g_visited[i] = 0;
+    }
+    for (i = 0; i < g->numVex; i++) {
+        if (g_visited[i] == 0) {
+            CircleDFS(g, i);
+        }
+    }
+
+    return g_hasCircleDFSFlag;
+}
 
 int main(void)
 {
     int i;
-    int arr[][3] = {{1, 0, 9}, {1, 2, 3}, {2, 0, 2}, {2, 3, 5}, {3, 4, 1}, {0, 4, 6}};
+    int arr[][3] = {{0, 1, 9}, {1, 2, 3}, {2, 0, 2}, {2, 3, 5}, {3, 4, 1}, {0, 4, 6}};
     int size = sizeof(arr) / 12;
     struct Graph g;
     struct Queue q;
@@ -296,6 +345,7 @@ int main(void)
 
     /* DFS */
     printf("dfs: ");
+
     DFSTraverse(&g);
     printf("\n");
 
@@ -303,6 +353,9 @@ int main(void)
     printf("bfs: ");
     BFSTraverse(&g);
     printf("\n");
+
+    /* DFS检测是否有环 */
+    printf("graph has circle: %d\n", HasCircleDFS(&g));
 
     return 0;
 }
