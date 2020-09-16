@@ -1,4 +1,4 @@
-## 1、初始化设置
+### 1、初始化设置
 
 - **离线安装插件：**
   ```c
@@ -24,75 +24,77 @@
   c/c++
   code runer
   vim
+  remote-ssh
+  clang-format
   ```
-## 2、编译调试：
+### 2、编译调试：
 
 - **编译调试C语言**
-  ```c
-  调试 -> 添加配置 -> C++(GDB/LLDB)
-       -> gcc.exe build and debug active file          //添加launch.json
-  /* 修改miDebuggerPath为： */
-  "miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdb.exe",
-  ```
-  launch.json
-  ```c
-  {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "gcc.exe build and debug active file",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "为 gdb 启用整齐打印",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "gcc.exe build active file"
-        }
-    ]
-  }
-  ```
-  task.json
-  ```c
-  {
-    "tasks": [
-        {
-            "type": "shell",
-            "label": "gcc.exe build active file",
-            "command": "F:\\Program Files\\mingw64\\bin\\gcc.exe",
-            "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
-            ],
-            "options": {
-                "cwd": "F:\\Program Files\\mingw64\\bin"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": "build"
-        }
-    ],
-  }
-  ```
+```c
+调试 -> 添加配置 -> C++(GDB/LLDB)
+     -> gcc.exe build and debug active file          //添加launch.json
+/* 修改miDebuggerPath为： */
+"miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdbexe",
+```
+launch.json
+```c
+{
+  // 使用 IntelliSense 了解相关属性。 
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "gcc.exe build and debug active file",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+          "args": [],
+          "stopAtEntry": false,
+          "cwd": "${workspaceFolder}",
+          "environment": [],
+          "externalConsole": false,
+          "MIMode": "gdb",
+          "miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdb.exe",
+          "setupCommands": [
+              {
+                  "description": "为 gdb 启用整齐打印",
+                  "text": "-enable-pretty-printing",
+                  "ignoreFailures": true
+              }
+          ],
+          "preLaunchTask": "gcc.exe build active file"
+      }
+  ]
+}
+```
+task.json
+```c
+{
+  "tasks": [
+      {
+          "type": "shell",
+          "label": "gcc.exe build active file",
+          "command": "F:\\Program Files\\mingw64\\bin\\gcc.exe",
+          "args": [
+              "-g",
+              "${file}",
+              "-o",
+              "${fileDirname}\\${fileBasenameNoExtension}.exe"
+          ],
+          "options": {
+              "cwd": "F:\\Program Files\\mingw64\\bin"
+          },
+          "problemMatcher": [
+              "$gcc"
+          ],
+          "group": "build"
+      }
+  ],
+}
+```
 
-## 3、常用快捷键：
+### 3、常用操作：
 ```c
 Ctrl + Enter                    //在光标下一行插入新行
 Shift + Alt + Up                //复制当前行至光标上一行
@@ -102,21 +104,33 @@ Ctrl + V                        //粘贴至光标上一行
 Ctrl + Up                       //视图上移
 Ctrl + Down                     //视图下移
 Ctrl + L                        //选中当前行
+Shift + Alt + 鼠标左键           //按列选中
 
 /* 自定义快捷键 */
 Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
 Ctrl + Alt + ]                  //聚焦至终端 (workbenck.panel.terminal.focus)
 ```
 
-## 4、vscode连接linux主机：
+### 4、vscode连接linux主机：
 
 vscode安装插件：remote-ssh
 
+windows免密码登录linux主机，在cmd中执行：
+
 ```c
-
-
-
-
-
-
+ssh-keygen -t rsa
 ```
+
+复制文件中C:\Users\Administrator\.ssh\id_rsa.pub的内容在linux机器中的 ~/.ssh/authorized_keys 文件中。
+
+### 5、常用代码风格设置：
+
+1）、设置tab：
+
+```c
+使用空格缩进：Ctrl+Shift+p -> Indent Using Spaces -> 4
+使用tab缩进：Ctrl+Shift+p -> Indent Using Tabs -> 4
+```
+
+### 6、格式化代码：
+
