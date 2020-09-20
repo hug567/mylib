@@ -25,6 +25,17 @@ struct Stack {
     int len;
 };
 
+struct QueueNode {
+    int val;
+    struct QueuNode *next;
+};
+
+struct Queue {
+    struct QueueNode *head;
+    struct QueueNode *tail;
+    int len;
+};
+
 void InitStack(struct Stack *s)
 {
     s->top = NULL;
@@ -60,6 +71,46 @@ int Pop(struct Stack *s)
     s->top = s->top->next;
     s->len--;
     free(sn);
+    return val;
+}
+
+void InitQueue(struct Queue *q)
+{
+    q->head = NULL;
+    q->tail = NULL;
+    q->len = 0;
+}
+
+void EnQueue(struct Queue *q, int val)
+{
+    struct QueueNode *qn = NULL;
+
+    qn = (struct QueueNode *)malloc(sizeof(struct QueueNode));
+    qn->val = val;
+    qn->next = NULL;
+    if (q->len <= 0) {
+        q->head = qn;
+        q->tail = qn;
+    } else {
+        q->tail->next = qn;
+        q->tail = qn;
+    }
+    q->len++;
+}
+
+int DeQueue(struct Queue *q)
+{
+    int val;
+    struct QueueNode *qn = NULL;
+
+    if (q->len <= 0) {
+        return MININT;
+    }
+    qn = q->head;
+    val = qn->val;
+    q->head = q->head->next;
+    q->len--;
+    free(qn);
     return val;
 }
 

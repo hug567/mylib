@@ -3,6 +3,7 @@
 
 obj-m += test_char.o
 obj-m += test_char2.o
+obj-m += virt_net_driver.o
 
 KERNEL = ~/code/linux/linux-4.15
 #KERNEL = /lib/modules/`uname -r`/build
