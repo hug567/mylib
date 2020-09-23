@@ -26,8 +26,8 @@ struct Stack {
 };
 
 struct QueueNode {
-    int val;
-    struct QueuNode *next;
+    struct TreeNode *val;
+    struct QueueNode *next;
 };
 
 struct Queue {
@@ -81,7 +81,7 @@ void InitQueue(struct Queue *q)
     q->len = 0;
 }
 
-void EnQueue(struct Queue *q, int val)
+void EnQueue(struct Queue *q, struct TreeNode *val)
 {
     struct QueueNode *qn = NULL;
 
@@ -98,13 +98,13 @@ void EnQueue(struct Queue *q, int val)
     q->len++;
 }
 
-int DeQueue(struct Queue *q)
+struct TreeNode *DeQueue(struct Queue *q)
 {
-    int val;
+    struct TreeNode *val = NULL;
     struct QueueNode *qn = NULL;
 
     if (q->len <= 0) {
-        return MININT;
+        return NULL;
     }
     qn = q->head;
     val = qn->val;
@@ -163,6 +163,63 @@ void PostOrder(const struct TreeNode *t)
     printf("%d ", t->val);
 }
 
+void PrintOnePath(struct Stack *s)
+{
+    struct StackNode *sn = NULL;
+    struct Stack temp;
+
+    InitStack(&temp);
+    sn = s->top;
+    while (sn != NULL) {
+        Push(&temp, sn->val);
+        sn = sn->next;
+    }
+    printf("Path: ");
+    while (temp.len > 0) {
+        printf("%d ", Pop(&temp));
+    }
+    printf("\n");
+}
+
+static struct Stack g_s;
+void PrintAllPath(struct TreeNode *t)
+{
+    if (t == NULL) {
+        return;
+    }
+    Push(&g_s, t->val);
+    if (t->left == NULL && t->right == NULL) {
+        PrintOnePath(&g_s);
+        Pop(&g_s);
+    } else {
+        PrintAllPath(t->left);
+        PrintAllPath(t->right);
+        Pop(&g_s);
+    }
+}
+
+/* 二叉树的层次遍历 */
+void LevelOrder(struct TreeNode *t)
+{
+    struct Queue q;
+    struct TreeNode *tn = NULL;
+
+    InitQueue(&q);
+    EnQueue(&q, t);
+    printf("level order: ");
+    while (q.len > 0) {
+        tn = DeQueue(&q);
+        printf("%d ", tn->val);
+        if (tn->left != NULL) {
+            EnQueue(&q, tn->left);
+        }
+        if (tn->right != NULL) {
+            EnQueue(&q, tn->right);
+        }
+    }
+    printf("\n");
+}
+
 int main(void)
 {
     int arr[] = {5, 4, 11, 7, -1, -1, 2, -1, -1, -1, 8, 13, -1, -1, 4, 5, -1,
@@ -187,6 +244,11 @@ int main(void)
     printf("int min = %d\n", MININT);
     printf("long max = %ld\n", (long)((~0UL) >> 1));
     printf("long min = %ld\n", (long)(1UL << (8 * sizeof(long) - 1)));
+
+    InitStack(&g_s);
+    PrintAllPath(t);
+
+    LevelOrder(t);
 
     return 0;
 }
