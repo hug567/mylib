@@ -142,6 +142,16 @@ void LevelOrder(struct TreeNode *t)
     free(q);
 }
 
+int TreeDepth(struct TreeNode *t)
+{
+    if (t == NULL) {
+        return 0;
+    }
+    int ld = TreeDepth(t->left);
+    int rd = TreeDepth(t->right);
+    return (ld > rd ? ld : rd) + 1;
+}
+
 int main(void)
 {
     int i;
@@ -170,6 +180,8 @@ int main(void)
     printf("tree level order: ");
     LevelOrder(t);
     printf("\n");
+
+    printf("tree depth is: %d\n", TreeDepth(t));
 
     return 0;
 }
