@@ -81,6 +81,16 @@ git push --delete origin <branch>                        //删除远端分支
 git push --delete origin <branch>                        //删除远端分支
 git branch -m <newname>                                  //重命名本地分支
 git push origin HEAD:<newname>                           //提送至远端分支
+/* -------- 远端仓库管理 ------------------------------------------------- */
+git remote -v                                            //查看远程仓库地址
+/* 设置添加远程仓库地址： */
+git remote set-url origin https://gitee.com/hug567/mylib.git
+git remote add github https://github.com/hug567/mylib.git
+/* 验证连接远程仓库地址： */
+ssh -T git@github.com
+/* 推动至远端： */
+git push origin HEAD:master                              //推送至origin(gitee)
+git push github HEAD:master                              //推送至github
 ```
 
 ### 2.4、commit操作

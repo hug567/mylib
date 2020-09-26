@@ -3,19 +3,22 @@
     "workbench.activityBar.visible": true,
     "editor.minimap.enabled": false,
     "markdown.links.openLocation": "beside",
-    "editor.renderWhitespace": "all",
+    "editor.renderWhitespace": "all",  /* 显示空格 */
     "editor.renderControlCharacters": false,
-    "editor.fontSize": 16,
+    "editor.fontSize": 16, /* 编辑区字体大小 */
+    "terminal.integrated.fontSize": 16, /* 终端字体大小 */
     "editor.rulers": [80], /* 列宽竖线 */
     "workbench.colorTheme": "Monokai", /* 颜色主题 */
     "editor.tokenColorCustomizations": {
-        "functions": "#66D9EF", /* 函数 */
+        "functions": "#5FD7FF", /* 函数、宏 */
         "keywords": "#F92672", /* 关键字 */
+        "strings": "#FFD700", /* 字符串 */
+        "variables": "#86B42B", /* 变量 */
         "textMateRules": [
             {
                 "scope": "keyword.operator", /* 运算符 */
                 "settings": {
-                    "foreground": "#E6DB74",
+                    "foreground": "#FFEB3B",
                     "fontStyle": "",
                 }
             },
@@ -26,6 +29,23 @@
                     "fontStyle": "",
                 }
             },
+            {
+                "scope":"variable.parameter", /* 函数参数 */
+                "settings": {
+                    "foreground": "#86B42B",
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope":"constant.character", /* \n等 */
+                "settings": {
+                    "foreground": "#F92672",
+                    "fontStyle": ""
+                }
+            },
         ],
+    },
+    "remote.SSH.remotePlatform": {
+        "122.51.39.216": "linux"
     },
 }
