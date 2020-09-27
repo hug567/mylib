@@ -6,12 +6,13 @@
   ```
 
 - **设置中文：**
+  
   ```c
   Ctrl+Shift+P -> Configure Display Language -> Install additioal languages
   Chinese (Simplified) Language -> Install
   Ctrl+Shift+P -> zh-ch -> Restart
-  ```
-
+```
+  
 - **使用bash：**
   ```c
   /* 安装git bash -> 将安装路径添加至系统变量PATH */
@@ -125,11 +126,18 @@ ssh-keygen -t rsa
 
 ### 5、常用代码风格设置：
 
-1）、设置tab：
+#### 1）、设置tab：
 
 ```c
 使用空格缩进：Ctrl+Shift+p -> Indent Using Spaces -> 4
 使用tab缩进：Ctrl+Shift+p -> Indent Using Tabs -> 4
+```
+
+#### 2）、设置空格、tab颜色：
+
+```c
+F:\Program Files\Microsoft VS Code\resources\app\extensions\theme-monokai\themes\monokai-color-theme.json
+"editorWhitespace.foreground":"#464741",          //#808080（灰色）
 ```
 
 ### 6、格式化代码：

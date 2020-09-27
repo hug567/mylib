@@ -318,7 +318,7 @@ git submodule update --init --recursive                //
 
 ```c
 背景色(灰色)：RGB(39,40,34), HTML(#272822)
-关键字(红色)：RGB(249,39,60), HTML(#F9273C)
+关键字(红色)：RGB(249,39,60), HTML(#F9273C)git
 宏定义(红色)：RGB(249,39,60), HTML(#F9273C)
 字符串(黄色)：RGB(255,215,0), HTML(#FFD700)      //字符串、运算符
 函数名(蓝色)：RGB(95,215,255), HTML(#5FD7FF)
