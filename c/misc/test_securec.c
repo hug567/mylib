@@ -19,6 +19,7 @@ static void TestSprintfs(void)
     (void)printf("%s", buf);
 }
 
+#define MAX_SRC_IP_NUM 100
 #define BIN_IP_SIZE 33
 #define BYTE_SIZE 8
 #define MAX_STR_IP_LEN 18
@@ -63,12 +64,12 @@ void HandleStrIp(char *new, const char *old)
     new[len + 1] = '0';
 }
 
-static void IpToBinary(const char *_str)
+static void IpToBinary(const char *_str, char *bin)
 {
 #define TEMP_SIZE 4
     int i, j = 0, k = 0;
     int ip;
-    char bin[BIN_IP_SIZE] = {0};
+    //char bin[BIN_IP_SIZE] = {0};
     char temp[TEMP_SIZE] = {0};
     char str[MAX_STR_IP_LEN + 1] = {0};
 
@@ -88,15 +89,41 @@ static void IpToBinary(const char *_str)
     PrintBinartIp(str, bin);
 }
 
+/*
+ * -1: 不匹配
+ * 正整数：匹配的长度
+ */
 int MatchLength(char *str1, char *str2)
-{}
+{
+    int i;
+
+    for (i = 0; i < str2[BIN_IP_SIZE - 1]; i++) {
+        if (str1[i] != str2[i]) {
+            return -1;
+        }
+    }
+    return str2[BIN_IP_SIZE - 1];
+}
 
 int main(void)
 {
+    int i;
+    char *dstStrIp = "192.168.0.1";
+    char *srcStrIp[] = {
+        "192.168.0.2/23", "192.168.8.13/20", "10.156.21.38/24",
+        "0.0.0.0/0",
+    };
+    int srcStrIpNum = 4;
+
+    char dstBinaryIp[BIN_IP_SIZE] = {0};
+    char srcBinaryIp[MAX_STR_IP_LEN][BIN_IP_SIZE] = {0};
+
     TestSprintfs();
-    IpToBinary("192.168.0.1");
-    IpToBinary("192.168.0.123/23");
-    IpToBinary("192.168.8.13/23");
-    IpToBinary("10.156.21.38/24");
+
+    IpToBinary(dstStrIp, dstBinaryIp);
+    for (i = 0; i < srcStrIpNum; i++) {
+        IpToBinary(srcStrIp[i], srcBinaryIp[i]);
+        printf("match len: %d\n", MatchLength(dstBinaryIp, srcBinaryIp[i]));
+    }
     return 0;
 }
