@@ -1,12 +1,12 @@
 ## 1、编译运行Linux内核
 
-### 1.1、下载arm-none-linux-gnueabi-gcc：
+### 1.1、下载linaro arm-linux-gnueabi-gcc：
 
 ```c
-/* 下载arm-none-linux-gnueabi-gcc并解压： */
-wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-aarch64-linux.tar.bz2
+/* 下载arm-linux-gnueabi-gcc并解压： */
+https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabi/
 /* 在~/.bashr和~/.zshrc中添加： */
-export PATH="$HOME/tools/arm-2014.05/bin:$PATH"
+export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"
 source ~/.bashrc                                           //更新bash配置
 source ~/.zshrc                                            //更新zsh配置
 arm-none-linux-gnueabi-gcc --version                       //查看版本，验证路径设置正确
@@ -188,8 +188,10 @@ qemu-system-arm \
 arm-none-linux-gnueabi-gdb vmlinux
 (gdb) target remote:1234
 ```
+### 1.8、主机创建虚拟网卡设备：
+```c
 
-
+```
 
 ## 2、各版本gcc区别：
 
@@ -226,7 +228,6 @@ ip a                                                        //查看配置是否
 
 ```c
 /* 主机创建tun/tap设备： */
-sudo ip tuntap add name tap0 mode tap                    //创建tap设备
 sudo ip tuntap add dev tap0 mode tap                     //创建tap设备
 sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0   //配置ip
 ip a                                                     //查看tap设备
