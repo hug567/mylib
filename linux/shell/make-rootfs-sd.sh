@@ -1,8 +1,9 @@
 #!/bin/bash
 
-BASE_DIR="${HOME}/code/linux"
-BUSYBOX_DIR="${BASE_DIR}/busybox-1.27.2"
-MYLIB="${HOME}/code/mylib"
+BASE_DIR=${HOME}/code/linux
+MYLIB=${HOME}/code/mylib
+BUSYBOX_DIR=${BASE_DIR}/busybox-1.27.2
+CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
 
 cd ${BASE_DIR}
 if [ -d rootfs ]; then
@@ -40,6 +41,8 @@ sudo mknod -m 666 console c 5 1
 sudo mknod -m 666 null c 1 3
 cd ..
 
+sudo cp -r ${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib/* lib
+
 echo "[INFO]: copy test elf file to rootfs"
 TEST_FILE="${MYLIB}/c/test-libc/obj/test-libc.elf "
 TEST_FILE+="${MYLIB}/linux/linux-test/obj/linux-test.elf "
@@ -54,11 +57,11 @@ sudo cp -r ${MODULE_KO_FILE} lib/modules
 
 echo "[INFO]: make rootfs.sd file"
 cd ..
-dd if=/dev/zero of=rootfs.sd bs=1M count=32
+dd if=/dev/zero of=rootfs.sd bs=1M count=200
 mkfs.ext3 rootfs.sd
 sudo mount -t ext3 rootfs.sd /mnt -o loop
 sudo cp -r rootfs/* /mnt
 sudo umount /mnt
 
 echo "[INFO]: delete temp file"
-#sudo rm -rf rootfs
+sudo rm -rf rootfs
