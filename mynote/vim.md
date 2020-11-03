@@ -248,6 +248,15 @@ Ctrl + ]                         //(vim中)跳转至定义
 Ctrl + T                         //(vim中)返回
 ```
 
+### 7）AutoComplPop：自动补全
+```c
+git clone https://gitee.com/tsingyixy/AutoComplPop.git
+cd AutoComplPop
+cp autoload/acp.vim ~/.vim/autoload/
+cp plugin/acp.vim ~/.vim/plugin/
+cp doc/* ~/.vim/doc/
+```
+
 ## 5、下载配色主题：
 
 ```C
