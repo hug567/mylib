@@ -251,6 +251,8 @@ cp doc/* ~/.vim/doc/
 
 ### 7）LeaderF：文件跳转
 ```c
+git clone https://github.com/Yggdroot/LeaderF
+cp -r LeaderF ~/.vim/bundle
 ```
 
 ## 5、下载配色主题：
