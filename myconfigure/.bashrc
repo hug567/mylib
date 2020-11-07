@@ -134,5 +134,6 @@ export PS1='\[\e]0;\w\a\]\n\[\e[32m\][\u@\h]:\[\e[35m\]$MSYSTEM\[\e[0m\] \
 \[\e[33m\]\w\[\e[0m\]\n'"${_ps1_symbol}"' \[\e[31m\]$\[\e[0m\] '
 
 # 设置环境变量PATH
-export PATH="$HOME/tools/arm-2014.05/bin:$PATH"
+export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"
+export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin:$PATH"
 ################################# 自定义配置 #################################
