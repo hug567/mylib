@@ -221,15 +221,7 @@ cp taglist.txt ~/.vim/doc                               //复制taglist.txt
 cp taglist.vim ~/.vim/pugin                             //复制taglist.vim
 ```
 
-### 4）supertab：自动补全
-
-```C
-//下载：https://github.com/ervandew/supertab
-cd ~/.vim/bundle	                                //进入目录
-git clone git@github.com:ervandew/supertab.git          //下载supertab
-```
-
-### 5）astyle：格式化代码
+### 4）astyle：格式化代码
 
 ```C
 sudo apt install astyle          //安装astyle
@@ -238,7 +230,7 @@ astyle --version                 //查看astyle版本
 :1,40!astyle --style=kr          //格式化指定区域
 ```
 
-### 6）ctags：函数跳转
+### 5）ctags：函数跳转
 
 ```C
 sudo apt install ctags           //安装ctags
@@ -248,13 +240,17 @@ Ctrl + ]                         //(vim中)跳转至定义
 Ctrl + T                         //(vim中)返回
 ```
 
-### 7）AutoComplPop：自动补全
+### 6）AutoComplPop：自动补全
 ```c
 git clone https://gitee.com/tsingyixy/AutoComplPop.git
 cd AutoComplPop
 cp autoload/acp.vim ~/.vim/autoload/
 cp plugin/acp.vim ~/.vim/plugin/
 cp doc/* ~/.vim/doc/
+```
+
+### 7）LeaderF：文件跳转
+```c
 ```
 
 ## 5、下载配色主题：
