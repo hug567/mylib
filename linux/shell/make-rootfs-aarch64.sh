@@ -3,7 +3,8 @@
 BASE_DIR=${HOME}/code/linux
 MYLIB=${HOME}/code/mylib
 BUSYBOX_DIR=${BASE_DIR}/busybox-1.27.2
-CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
+#CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
+ROOTFS=rootfs.aarch64
 
 cd ${BASE_DIR}
 if [ -d rootfs ]; then
@@ -41,27 +42,25 @@ sudo mknod -m 666 console c 5 1
 sudo mknod -m 666 null c 1 3
 cd ..
 
-sudo cp -r ${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib/* lib
+#sudo cp -r ${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib/* lib
+#
+#echo "[INFO]: copy test elf file to rootfs"
+#TEST_FILE="${MYLIB}/c/test-libc/obj/test-libc.elf "
+#TEST_FILE+="${MYLIB}/linux/linux-test/obj/linux-test.elf "
+#sudo cp -r ${TEST_FILE} tmp
+#
+#echo "[INFO]: copy module ko file to rootfs"
+#MODULE_KO_FILE="${BASE_DIR}/linux-4.15/drivers/mytest/mytest.ko "
+#MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char.ko "
+#MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char2.ko "
+#MODULE_KO_FILE+="${MYLIB}/linux/driver/virt_net_driver.ko "
+#sudo cp -r ${MODULE_KO_FILE} lib/modules
 
-echo "[INFO]: copy test elf file to rootfs"
-TEST_FILE="${MYLIB}/c/test-libc/obj/test-libc.elf "
-TEST_FILE+="${MYLIB}/linux/linux-test/obj/linux-test.elf "
-sudo cp -r ${TEST_FILE} tmp
-
-echo "[INFO]: copy module ko file to rootfs"
-MODULE_KO_FILE="${BASE_DIR}/linux-4.15/drivers/mytest/mytest.ko "
-MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char.ko "
-MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char2.ko "
-MODULE_KO_FILE+="${MYLIB}/linux/driver/virt_net_driver.ko "
-sudo cp -r ${MODULE_KO_FILE} lib/modules
-
-echo "[INFO]: make rootfs.sd file"
+echo "[INFO]: make rootfs file"
+find . | cpio -o --format=newc > ../rootfs.unzip
 cd ..
-dd if=/dev/zero of=rootfs.sd bs=1M count=200
-mkfs.ext3 rootfs.sd
-sudo mount -t ext3 rootfs.sd /mnt -o loop
-sudo cp -r rootfs/* /mnt
-sudo umount /mnt
+gzip -c rootfs.unzip > rootfs.aarch64
 
 echo "[INFO]: delete temp file"
 sudo rm -rf rootfs
+sudo rm -rf rootfs.unzip

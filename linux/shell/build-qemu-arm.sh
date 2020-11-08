@@ -9,6 +9,8 @@ SKYBLUE="\033[36m"
 WHITE="\033[37m"
 RESET="\033[0m"
 
+CPU_THREAD_NUM=`cat /proc/cpuinfo |grep "processor"|wc -l`
+
 # 清空屏幕
 clear; clear
 
@@ -24,16 +26,16 @@ fi
 #make mrproper
 
 # 生成.config配置文件
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_defconfig
 
 # 编译内核
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j${CPU_THREAD_NUM}
 
 # 编译内核模块(.ko)
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules -j${CPU_THREAD_NUM}
 
 # 编译dts文件(生成dtb文件)
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- dtbs -j${CPU_THREAD_NUM}
 
 # qemu启动命令
-echo -e "\n${GREEN}Run kernel: ${RESET}~/code/mylib/shell/qemu/qemu-run.sh"
+echo -e "\n${GREEN}Run kernel: ${RESET}~/code/mylib/linux/shell/qemu-run-arm-zImage.sh"
