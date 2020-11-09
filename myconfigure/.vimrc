@@ -127,25 +127,27 @@ let Tlist_Ctags_Cmd="/usr/bin/ctags"
 let Tlist_Use_Right_Window =1
 " Taglist窗口宽度
 let Tlist_WinWidth = 40
+" Taglist折叠列颜色
+hi FoldColumn ctermbg=NONE
 " Taglist开启、关闭快捷键
 map <F6> :TlistOpen<CR>
 map <F7> :TlistClose<CR>
 "-----------------------------------------------"
-" 新建文件自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py,*.java exec ":call SetTitle()"
-" 定义函数SetTitle，自动插入文件头
-func SetTitle()
-    if &filetype == 'c'
-        call setline(1,"/*")
-        call append(line(".")," * Description: xxx")
-        call append(line(".")+1, " * Author: huangxing567@163.com")
-        call append(line(".")+2, " * Create: ".strftime("%Y-%m-%d %H:%M:%S"))
-        call append(line(".")+3, " */")
-        call append(line(".")+4, "")
-    endif
-endfunc
-" 新建文件后，自动定位到末尾
-autocmd BufNewFile * normal G
+"" 新建文件自动插入文件头
+"autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py,*.java exec ":call SetTitle()"
+"" 定义函数SetTitle，自动插入文件头
+"func SetTitle()
+"    if &filetype == 'c'
+"        call setline(1,"/*")
+"        call append(line(".")," * Description: xxx")
+"        call append(line(".")+1, " * Author: huangxing567@163.com")
+"        call append(line(".")+2, " * Create: ".strftime("%Y-%m-%d %H:%M:%S"))
+"        call append(line(".")+3, " */")
+"        call append(line(".")+4, "")
+"    endif
+"endfunc
+"" 新建文件后，自动定位到末尾
+"autocmd BufNewFile * normal G
 "-----------------------------------------------"
 " 根据文件后缀加载配置文件
 autocmd BufNewFile,BufRead *.c source ~/.vim/scripts/myc.vim
@@ -153,3 +155,4 @@ autocmd BufNewFile,BufRead *.h source ~/.vim/scripts/myc.vim
 autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
 autocmd BufNewFile,BufRead *.html source ~/.vim/scripts/myhtml.vim
 "-----------------------------------------------"
+map <F10> :LeaderfFile<CR>

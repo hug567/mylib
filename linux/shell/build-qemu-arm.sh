@@ -38,4 +38,4 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules -j${CPU_THREAD_NUM}
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- dtbs -j${CPU_THREAD_NUM}
 
 # qemu启动命令
-echo -e "\n${GREEN}Run kernel: ${RESET}~/code/mylib/linux/shell/qemu-run-arm-zImage.sh"
+echo -e "\n${BLUE}Run kernel: ${GREEN}~/code/mylib/linux/shell/qemu-run-arm-zImage.sh${RESET}"
