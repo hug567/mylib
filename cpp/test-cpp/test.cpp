@@ -5,3 +5,9 @@
  */
 
 #include "test.h"
+
+void CLog:info(const char *fmt, ...)
+{
+	printf();
+}
+
