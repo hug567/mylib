@@ -154,5 +154,14 @@ autocmd BufNewFile,BufRead *.c source ~/.vim/scripts/myc.vim
 autocmd BufNewFile,BufRead *.h source ~/.vim/scripts/myc.vim
 autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
 autocmd BufNewFile,BufRead *.html source ~/.vim/scripts/myhtml.vim
+autocmd BufNewFile,BufRead *.cpp source ~/.vim/scripts/mycpp.vim
 "-----------------------------------------------"
 map <F10> :LeaderfFile<CR>
+"-----------------------------------------------"
+" 自动补全成对括号
+inoremap ( ()<LEFT>
+inoremap [ []<LEFT>
+inoremap { {}<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+inoremap < <><LEFT>
