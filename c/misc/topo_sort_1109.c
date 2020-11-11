@@ -39,13 +39,72 @@ void InitGraph(struct Graph *g)
     g->numVex = 0;
 }
 
+int GetVexIndex(struct Graph *g, int val)
+{
+    int i;
+
+    for (i = 0; i < g->numVex; i++) {
+        if (g->vexs[i].val == val) {
+            return i; /* 顶点已存在 */
+        }
+    }
+    if (i < MAX_VEX) {
+        g->vexs[i].val = val;
+        g->numVex++; /* 新增顶点 */
+        return i;
+    } else {
+        printf("too many vex\n");
+        return -1;
+    }
+}
+
+void AddArch(struct Graph *g, int start, int end)
+{
+    int startIndex = GetVexIndex(g, start);
+    struct ArcNode *first = g->vexs[startIndex].first;
+    struct ArcNode *arc = (struct ArcNode *)malloc(sizeof(struct ArcNode));
+    arc->adjIndex = end;
+    arc->next = NULL;
+    if (first == NULL) {
+        g->vexs[startIndex].first = arc;
+    } else {
+        while (first->next != NULL) {
+            first = first->next;
+        }
+        first->next = arc;
+    }
+    g->numArc++;
+}
+
 void CreateGraphByArray(struct Graph *g, int **__arr, int size)
 {
+    int i;
     int (*arr)[2] = (int(*)[2])__arr;
+
+    for (i = 0; i < size; i++) {
+        AddArch(g, arr[i][0], arr[i][1]);
+    }
+}
+
+void PrintGraph(struct Graph *g)
+{
+    int i;
+    struct ArcNode *arc = NULL;
+
+    for (i = 0; i < g->numVex; i++) {
+        printf("%d: ", g->vexs[i].val);
+        arc = g->vexs[i].first;
+        while (arc != NULL) {
+            printf("%d ", arc->adjIndex);
+            arc = arc->next;
+        }
+        printf("\n");
+    }
 }
 
 int main(void)
 {
+    struct Graph g;
     int arr[][2] = {
         { 1 , 2 },
         { 1 , 3 },
@@ -58,5 +117,10 @@ int main(void)
     int row = sizeof(arr) / sizeof(arr[0]);
     int col = sizeof(arr[0]) / sizeof(arr[0][0]);
     printf("row = %d, col = %d\n", row, col);
+
+    InitGraph(&g);
+    CreateGraphByArray(&g, (int **)arr, size);
+    PrintGraph(&g);
+
     return 0;
 }
