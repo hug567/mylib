@@ -5,16 +5,21 @@ obj-m += test_char.o
 obj-m += test_char2.o
 obj-m += virt_net_driver.o
 
-KERNEL = ~/code/linux/linux-4.15
+BUILD_DIR=mybuild
+KERNEL = ~/code/linux/linux-4.18
 #KERNEL = /lib/modules/`uname -r`/build
-PWD = $(shell pwd)
+PWD = $(shell pwd)/${BUILD_DIR}
+
+prepare:
+	rm -rf ${BUILD_DIR}
+	mkdir ${BUILD_DIR}
+	cp `ls | grep -v ${BUILD_DIR}` ${BUILD_DIR}
+	cd ${BUILD_DIR}
+	make modules
 
 modules:
-	#make M=${PWD} -C ${KERNEL} modules
 	make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- M=${PWD} -C ${KERNEL} modules
-	rm -rf modules.order Module.symvers .cache.mk .tmp_versions
-	rm -rf .*.ko.cmd .*.o.cmd *.o *.mod.c
 
 .PHONEY: clean
 clean:
-	rm -f *.o *.ko
+	rm -rf ${BUILD_DIR}
