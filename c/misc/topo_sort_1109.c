@@ -22,80 +22,32 @@ struct VexNode {
 struct Graph {
     struct VexNode vexs[MAX_VEX];
     int numVex;
-    int numArc;
 };
 
-void InitGraph(struct Graph *g)
+/***** 调测S代码 ****************************************************************/
+/* 打印链表 */
+void PrintList(const struct ArcNode *first)
 {
-    int i;
-    if (g == NULL) {
-        return;
+    printf("list: ");
+    while (first != NULL) {
+        printf("%d ", first->adjIndex);
+        first = first->next;
     }
-    for (i = 0; i < MAX_VEX; i++) {
-        g->vexs[i].val = 0;
-        g->vexs[i].first = NULL;
-    }
-    g->numArc = 0;
-    g->numVex = 0;
+    printf("\n");
 }
 
-int GetVexIndex(struct Graph *g, int val)
-{
-    int i;
-
-    for (i = 0; i < g->numVex; i++) {
-        if (g->vexs[i].val == val) {
-            return i; /* 顶点已存在 */
-        }
-    }
-    if (i < MAX_VEX) {
-        g->vexs[i].val = val;
-        g->numVex++; /* 新增顶点 */
-        return i;
-    } else {
-        printf("too many vex\n");
-        return -1;
-    }
-}
-
-void AddArch(struct Graph *g, int start, int end)
-{
-    int startIndex = GetVexIndex(g, start);
-    struct ArcNode *first = g->vexs[startIndex].first;
-    struct ArcNode *arc = (struct ArcNode *)malloc(sizeof(struct ArcNode));
-    arc->adjIndex = end;
-    arc->next = NULL;
-    if (first == NULL) {
-        g->vexs[startIndex].first = arc;
-    } else {
-        while (first->next != NULL) {
-            first = first->next;
-        }
-        first->next = arc;
-    }
-    g->numArc++;
-}
-
-void CreateGraphByArray(struct Graph *g, int **__arr, int size)
-{
-    int i;
-    int (*arr)[2] = (int(*)[2])__arr;
-
-    for (i = 0; i < size; i++) {
-        AddArch(g, arr[i][0], arr[i][1]);
-    }
-}
-
+/* 打印图 */
 void PrintGraph(struct Graph *g)
 {
     int i;
     struct ArcNode *arc = NULL;
 
+    printf("graph: \n");
     for (i = 0; i < g->numVex; i++) {
-        printf("%d: ", g->vexs[i].val);
+        printf("%d(%d): ", g->vexs[i].val, i);
         arc = g->vexs[i].first;
         while (arc != NULL) {
-            printf("%d ", arc->adjIndex);
+            printf("%d(%d) ", g->vexs[arc->adjIndex].val, arc->adjIndex);
             arc = arc->next;
         }
         printf("\n");
@@ -142,6 +94,127 @@ void PrintOutDegree(struct Graph *g)
     }
 }
 
+/******************************************************************************/
+
+struct ArcNode *InsertArcNode(struct ArcNode *first, int adjIndex)
+{
+    struct ArcNode *tail = NULL;
+    struct ArcNode *node = NULL;
+
+    node = (struct ArcNode *)malloc(sizeof(struct ArcNode));
+    node->adjIndex = adjIndex;
+    node->next = NULL;
+    if (first == NULL) {
+        return node;
+    }
+    tail = first;
+    while (tail->next != NULL) {
+        tail = tail->next;
+    }
+    tail->next = node;
+    return first;
+}
+
+struct ArcNode *DeleteArcNode(struct ArcNode *first, int adjIndex)
+{
+    struct ArcNode *head = NULL;
+    struct ArcNode *pre = NULL;
+    struct ArcNode *cur = NULL;
+    struct ArcNode *tmp = NULL;
+
+    head = (struct ArcNode *)malloc(sizeof(struct ArcNode));
+    head->next = first;
+    pre = head;
+    cur = pre->next;
+    while (cur != NULL) {
+        if (cur->adjIndex == adjIndex) {
+            tmp = cur;
+            cur = cur->next;
+            pre->next = cur;
+            free(tmp);
+            if (pre == head) {
+                head->next = cur;
+            }
+        } else {
+            pre = cur;
+            cur = cur->next;
+        }
+    }
+    first = head->next;
+    free(head);
+    return first;
+}
+
+void DestroyArcList(struct ArcNode *first)
+{
+    struct ArcNode *tmp = NULL;
+
+    while (first != NULL) {
+        tmp = first;
+        first = first->next;
+        free(tmp);
+    }
+}
+
+void InitGraph(struct Graph *g)
+{
+    int i;
+    if (g == NULL) {
+        return;
+    }
+    for (i = 0; i < MAX_VEX; i++) {
+        g->vexs[i].val = 0;
+        g->vexs[i].first = NULL;
+    }
+    g->numVex = 0;
+}
+
+int GetVexIndex(struct Graph *g, int val)
+{
+    int i;
+
+    for (i = 0; i < g->numVex; i++) {
+        if (g->vexs[i].val == val) {
+            return i; /* 顶点已存在 */
+        }
+    }
+    if (i >= MAX_VEX) {
+        printf("too many vex\n");
+        return -1;
+    }
+    g->vexs[i].val = val; /* 新增顶点 */
+    g->numVex++;
+    return i;
+}
+
+/*
+void AddArch(struct Graph *g, int start, int end)
+{
+    int startIndex = GetVexIndex(g, start);
+    int endIndex = GetVexIndex(g, end);
+
+    g->vexs[startIndex].first = InsertArcNode(g->vexs[startIndex].first, endIndex);
+    g->numArc++;
+}
+*/
+
+void CreateGraphByArray(struct Graph *g, int **__arr, int size)
+{
+    int i;
+    int startIndex;
+    int endIndex;
+    int (*arr)[2] = (int(*)[2])__arr;
+
+    for (i = 0; i < size; i++) {
+        //AddArch(g, arr[i][0], arr[i][1]);
+        startIndex = GetVexIndex(g, arr[i][0]);
+        endIndex = GetVexIndex(g, arr[i][1]);
+        g->vexs[startIndex].first =
+            InsertArcNode(g->vexs[startIndex].first, endIndex);
+        g->numVex++;
+    }
+}
+
 /*
  * 从图中找到一个入度为0的点，返回其在顶点数组中的下标
  * 若没有，则返回-1
@@ -168,6 +241,20 @@ int NoInDegree(struct Graph *g)
 }
 
 /*
+int GraphHasCycle(struct Graph *g)
+{
+    int noInDegreeIndex;
+    while ((noInDegreeIndex = NoInDegree(g)) >= 0) {
+        DeleteVexNode(g, noInDegreeIndex);
+    }
+    if (g->numVex > 0) {
+        return 0;
+    }
+    return 1;
+}
+*/
+
+/*
  * 删除图中一个顶点，及与之相关的边
  */
 int DeleteVex(struct Graph *g, int vexIndex)
@@ -188,7 +275,6 @@ int DeleteVex(struct Graph *g, int vexIndex)
     while (arc != NULL) {
         arcNext = arc->next;
         free(arc);
-        g->numArc--;
         arc = arcNext;
     }
     g->vexs[index].first = NULL;
@@ -200,6 +286,37 @@ int DeleteVex(struct Graph *g, int vexIndex)
             arc = arc->next;
         }
     }
+}
+
+void TestList(void)
+{
+    int i;
+    struct ArcNode *arc = NULL;
+
+    for (i = 0; i < 10; i++) {
+        arc = InsertArcNode(arc, i);
+    }
+    PrintList(arc);
+
+    /* 删除首节点 */
+    arc = DeleteArcNode(arc, 0);
+    PrintList(arc);
+
+    /* 删除尾节点 */
+    arc = DeleteArcNode(arc, 9);
+    PrintList(arc);
+
+    /* 删除中间节点 */
+    arc = DeleteArcNode(arc, 5);
+    PrintList(arc);
+
+    arc = InsertArcNode(arc, 8);
+    arc = InsertArcNode(arc, 9);
+    arc = InsertArcNode(arc, 10);
+    PrintList(arc);
+    /* 删除多个节点 */
+    arc = DeleteArcNode(arc, 8);
+    PrintList(arc);
 }
 
 int main(void)
@@ -217,6 +334,8 @@ int main(void)
     int row = sizeof(arr) / sizeof(arr[0]);
     int col = sizeof(arr[0]) / sizeof(arr[0][0]);
     printf("row = %d, col = %d\n", row, col);
+
+    TestList();
 
     InitGraph(&g);
     CreateGraphByArray(&g, (int **)arr, size);
