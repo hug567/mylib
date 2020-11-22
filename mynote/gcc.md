@@ -25,3 +25,11 @@ delete breakpoints  //删除所有断点
 disable n  //暂停第n个断点
 enable n  //开启第n个断点
 ```
+
+### 3、TUI界面：
+
+```c
+/* 进入tui界面： */
+gdb --tui a.out
+```
+
