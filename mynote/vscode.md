@@ -11,6 +11,7 @@
   Ctrl+Shift+P -> Configure Display Language -> Install additioal languages
   Chinese (Simplified) Language -> Install
   Ctrl+Shift+P -> zh-ch -> Restart
+  ```
 ```
   
 - **使用bash：**
@@ -18,7 +19,7 @@
   /* 安装git bash -> 将安装路径添加至系统变量PATH */
   bash --version                                       //在cmd中验证设置是否成功
   /* 在vscode的任意shell中执行：bash */
-  ```
+```
 
 - **常用插件：**
   ```c
@@ -32,10 +33,10 @@
 
 - **编译调试C语言**
 ```c
-调试 -> 添加配置 -> C++(GDB/LLDB)
+运行(C) -> 添加配置 -> C++(GDB/LLDB)
      -> gcc.exe build and debug active file          //添加launch.json
 /* 修改miDebuggerPath为： */
-"miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdbexe",
+"miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdb.exe",
 ```
 launch.json
 ```c

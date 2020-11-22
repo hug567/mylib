@@ -7,6 +7,7 @@
 #include <string.h>
 
 #define MAX_VEX 100
+#define log_info(fmt, ...) printf("[%s:%d] " fmt, __func__, __LINE__, __VA_ARGS__)
 
 /* 无权重 */
 struct ArcNode {
@@ -25,6 +26,18 @@ struct Graph {
 };
 
 /***** 调测S代码 ****************************************************************/
+/* 打印二维数组 */
+void PrintArray(int **__arr, int size)
+{
+    int i;
+    int (*arr)[2] = (int(*)[2])__arr;
+    
+    printf("array: szie = %d\n", size);
+    for (i = 0; i < size; i++) {
+        printf("%d %d\n", arr[i][0], arr[i][1]);
+    }
+}
+
 /* 打印链表 */
 void PrintList(const struct ArcNode *first)
 {
@@ -52,6 +65,18 @@ void PrintGraph(struct Graph *g)
         }
         printf("\n");
     }
+}
+
+/* 打印图的所有顶点 */
+void PrintGraphVexs(struct Graph *g)
+{
+    int i;
+
+    printf("graph vexs: ");
+    for (i = 0; i < g->numVex; i++) {
+        printf("%d ", g->vexs[i].val);
+    }
+    printf("\n");
 }
 
 /* 打印每个顶点的入度 */
@@ -173,8 +198,12 @@ int GetVexIndex(struct Graph *g, int val)
 {
     int i;
 
+    //printf("vex num: %d\n", g->numVex);
+    log_info("val = %d\n", val);
+    PrintGraphVexs(g);
     for (i = 0; i < g->numVex; i++) {
         if (g->vexs[i].val == val) {
+            printf("vex alread exist: %d(%d)\n", val, i);
             return i; /* 顶点已存在 */
         }
     }
@@ -184,6 +213,7 @@ int GetVexIndex(struct Graph *g, int val)
     }
     g->vexs[i].val = val; /* 新增顶点 */
     g->numVex++;
+    //printf("vex num: %d(%d)\n", g->numVex, i);
     return i;
 }
 
@@ -205,6 +235,8 @@ void CreateGraphByArray(struct Graph *g, int **__arr, int size)
     int endIndex;
     int (*arr)[2] = (int(*)[2])__arr;
 
+    log_info("size = %d\n", size);
+    PrintArray((int **)arr, size);
     for (i = 0; i < size; i++) {
         //AddArch(g, arr[i][0], arr[i][1]);
         startIndex = GetVexIndex(g, arr[i][0]);
@@ -331,9 +363,10 @@ int main(void)
         { 5 , 4 },
     };
     int size = sizeof(arr) / sizeof(arr[0]);
-    int row = sizeof(arr) / sizeof(arr[0]);
-    int col = sizeof(arr[0]) / sizeof(arr[0][0]);
-    printf("row = %d, col = %d\n", row, col);
+    //int row = sizeof(arr) / sizeof(arr[0]);
+    //int col = sizeof(arr[0]) / sizeof(arr[0][0]);
+    //printf("row = %d, col = %d\n", row, col);
+    //PrintArray((int **)arr, size);
 
     TestList();
 
