@@ -31,7 +31,7 @@ void PrintArray(int **__arr, int size)
 {
     int i;
     int (*arr)[2] = (int(*)[2])__arr;
-    
+
     printf("array: szie = %d\n", size);
     for (i = 0; i < size; i++) {
         printf("%d %d\n", arr[i][0], arr[i][1]);
@@ -243,7 +243,7 @@ void CreateGraphByArray(struct Graph *g, int **__arr, int size)
         endIndex = GetVexIndex(g, arr[i][1]);
         g->vexs[startIndex].first =
             InsertArcNode(g->vexs[startIndex].first, endIndex);
-        g->numVex++;
+        //g->numVex++;
     }
 }
 
@@ -296,7 +296,7 @@ int DeleteVex(struct Graph *g, int vexIndex)
     struct ArcNode *arcNext = NULL;
 
     if (g == NULL || vexIndex < 0) {
-        return;
+        return -1;
     }
     index = NoInDegree(g);
     if (index < 0) {
