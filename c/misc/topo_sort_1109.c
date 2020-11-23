@@ -55,7 +55,7 @@ void PrintGraph(struct Graph *g)
     int i;
     struct ArcNode *arc = NULL;
 
-    printf("graph: \n");
+    printf("graph: --------------------\n");
     for (i = 0; i < g->numVex; i++) {
         printf("%d(%d): ", g->vexs[i].val, i);
         arc = g->vexs[i].first;
@@ -117,6 +117,37 @@ void PrintOutDegree(struct Graph *g)
         }
         printf("%d\n", num);
     }
+}
+
+void TestList(void)
+{
+    int i;
+    struct ArcNode *arc = NULL;
+
+    for (i = 0; i < 10; i++) {
+        arc = InsertArcNode(arc, i);
+    }
+    PrintList(arc);
+
+    /* 删除首节点 */
+    arc = DeleteArcNode(arc, 0);
+    PrintList(arc);
+
+    /* 删除尾节点 */
+    arc = DeleteArcNode(arc, 9);
+    PrintList(arc);
+
+    /* 删除中间节点 */
+    arc = DeleteArcNode(arc, 5);
+    PrintList(arc);
+
+    arc = InsertArcNode(arc, 8);
+    arc = InsertArcNode(arc, 9);
+    arc = InsertArcNode(arc, 10);
+    PrintList(arc);
+    /* 删除多个节点 */
+    arc = DeleteArcNode(arc, 8);
+    PrintList(arc);
 }
 
 /******************************************************************************/
@@ -194,16 +225,16 @@ void InitGraph(struct Graph *g)
     g->numVex = 0;
 }
 
+/*
+ * 若顶点在图中已存在，则返回该顶点下标
+ * 若顶点不存在，则存储该顶点，并返回分配的顶点下标
+ */
 int GetVexIndex(struct Graph *g, int val)
 {
     int i;
 
-    //printf("vex num: %d\n", g->numVex);
-    log_info("val = %d\n", val);
-    PrintGraphVexs(g);
     for (i = 0; i < g->numVex; i++) {
         if (g->vexs[i].val == val) {
-            printf("vex alread exist: %d(%d)\n", val, i);
             return i; /* 顶点已存在 */
         }
     }
@@ -213,20 +244,8 @@ int GetVexIndex(struct Graph *g, int val)
     }
     g->vexs[i].val = val; /* 新增顶点 */
     g->numVex++;
-    //printf("vex num: %d(%d)\n", g->numVex, i);
     return i;
 }
-
-/*
-void AddArch(struct Graph *g, int start, int end)
-{
-    int startIndex = GetVexIndex(g, start);
-    int endIndex = GetVexIndex(g, end);
-
-    g->vexs[startIndex].first = InsertArcNode(g->vexs[startIndex].first, endIndex);
-    g->numArc++;
-}
-*/
 
 void CreateGraphByArray(struct Graph *g, int **__arr, int size)
 {
@@ -235,15 +254,11 @@ void CreateGraphByArray(struct Graph *g, int **__arr, int size)
     int endIndex;
     int (*arr)[2] = (int(*)[2])__arr;
 
-    log_info("size = %d\n", size);
-    PrintArray((int **)arr, size);
     for (i = 0; i < size; i++) {
-        //AddArch(g, arr[i][0], arr[i][1]);
         startIndex = GetVexIndex(g, arr[i][0]);
         endIndex = GetVexIndex(g, arr[i][1]);
         g->vexs[startIndex].first =
             InsertArcNode(g->vexs[startIndex].first, endIndex);
-        //g->numVex++;
     }
 }
 
@@ -272,89 +287,68 @@ int NoInDegree(struct Graph *g)
     return -1;
 }
 
-/*
-int GraphHasCycle(struct Graph *g)
+void UpdateVexIndex(struct Graph *g, int oldIndex)
 {
-    int noInDegreeIndex;
-    while ((noInDegreeIndex = NoInDegree(g)) >= 0) {
-        DeleteVexNode(g, noInDegreeIndex);
-    }
-    if (g->numVex > 0) {
-        return 0;
-    }
-    return 1;
-}
-*/
-
-/*
- * 删除图中一个顶点，及与之相关的边
- */
-int DeleteVex(struct Graph *g, int vexIndex)
-{
-    int i, index;
+    int i;
     struct ArcNode *arc = NULL;
-    struct ArcNode *arcNext = NULL;
 
-    if (g == NULL || vexIndex < 0) {
-        return -1;
-    }
-    index = NoInDegree(g);
-    if (index < 0) {
-        return -1;
-    }
-    /* 删除入度为零的点的所有出边 */
-    arc = g->vexs[index].first;
-    while (arc != NULL) {
-        arcNext = arc->next;
-        free(arc);
-        arc = arcNext;
-    }
-    g->vexs[index].first = NULL;
-    /* 删除入度为零的点的所有入边 */
+    /* 挪动一个顶点位置后更新图，需更新图中所有顶点边的领节点下标 */
     for (i = 0; i < g->numVex; i++) {
         arc = g->vexs[i].first;
         while (arc != NULL) {
-            if (arc->adjIndex == vexIndex) {}
+            if (arc->adjIndex == oldIndex) {
+                arc->adjIndex = oldIndex - 1;
+            }
             arc = arc->next;
         }
     }
 }
 
-void TestList(void)
+/* 判断有向图是否有环 */
+int GraphHasCycle(struct Graph *g)//, int vexIndex)
 {
-    int i;
-    struct ArcNode *arc = NULL;
+    int i, index;
 
-    for (i = 0; i < 10; i++) {
-        arc = InsertArcNode(arc, i);
+    while ((index = NoInDegree(g)) >= 0) {
+        DestroyArcList(g->vexs[index].first);
+        g->vexs[index].first = NULL;
+        for (i = 0; i < g->numVex; i++) {
+            g->vexs[i].first = DeleteArcNode(g->vexs[i].first, index);
+        }
+        /* 删除一个顶点后更新图中顶点位置及下标 */
+        for (i = index; i < g->numVex - 1; i++) {
+            g->vexs[i].val = g->vexs[i + 1].val;
+            g->vexs[i].first = g->vexs[i + 1].first;
+            g->vexs[i + 1].first = NULL;
+            UpdateVexIndex(g, i + 1);
+        }
+        g->numVex--;
     }
-    PrintList(arc);
-
-    /* 删除首节点 */
-    arc = DeleteArcNode(arc, 0);
-    PrintList(arc);
-
-    /* 删除尾节点 */
-    arc = DeleteArcNode(arc, 9);
-    PrintList(arc);
-
-    /* 删除中间节点 */
-    arc = DeleteArcNode(arc, 5);
-    PrintList(arc);
-
-    arc = InsertArcNode(arc, 8);
-    arc = InsertArcNode(arc, 9);
-    arc = InsertArcNode(arc, 10);
-    PrintList(arc);
-    /* 删除多个节点 */
-    arc = DeleteArcNode(arc, 8);
-    PrintList(arc);
+    if (g->numVex > 0) {
+        return 1; /* 删除所有入度为0的点后，图不为空，表示有环 */
+    } else {
+        return 0; /* 图为空，表示无环 */
+    }
 }
 
 int main(void)
 {
     struct Graph g;
-    int arr[][2] = {
+    int arr[][2] = { /* 有环 */
+        { 1 , 2 },
+        { 2 , 3 },
+        { 3 , 8 },
+        { 8 , 2 },
+    };
+    int arr1[][2] = { /* 有环 */
+        { 1 , 2 },
+        { 1 , 3 },
+        { 3 , 2 },
+        { 2 , 4 },
+        { 4 , 5 },
+        { 5 , 3 },
+    };
+    int arr2[][2] = { /* 无环 */
         { 1 , 2 },
         { 1 , 3 },
         { 3 , 2 },
@@ -368,15 +362,17 @@ int main(void)
     //printf("row = %d, col = %d\n", row, col);
     //PrintArray((int **)arr, size);
 
-    TestList();
+    //TestList();
 
     InitGraph(&g);
     CreateGraphByArray(&g, (int **)arr, size);
     PrintGraph(&g);
     PrintInDegree(&g);
-    PrintOutDegree(&g);
+    //PrintOutDegree(&g);
 
-    printf("no in degree vex index: %d\n", NoInDegree(&g));
+    //printf("no in degree vex index: %d\n", NoInDegree(&g));
+    printf("graph has cycle: %d\n", GraphHasCycle(&g));
+    PrintGraph(&g);
 
     return 0;
 }
