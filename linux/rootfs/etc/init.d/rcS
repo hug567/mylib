@@ -1,0 +1,20 @@
+#!/bin/sh
+# huangxing
+
+mount -t proc proc /proc
+
+mount -t sysfs sysfs /sys
+
+mount -t tmpfs tmpfs /dev
+
+mount -t devpts devpts /dev/pts
+
+/sbin/mdev -s
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+telnetd
+
+ifconfig eth0 192.168.0.101 netmask 255.255.255.0
+
+cd root

@@ -1,0 +1,3 @@
+# ash configuration file
+alias lsa='ls -a'
+export PS1='\n\[\e[32m\][linux]:\[\e[35m\]\[\e[33m\]\w\[\e[0m\]\n\[\e[31m\]$\[\e[0m\] '
