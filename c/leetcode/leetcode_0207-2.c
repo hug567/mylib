@@ -1,45 +1,86 @@
 /*
  * leetcode 207: 课程表 [中等]
  * 技巧：转换为有向图，判断是否有环
- * 超时
+ * 顶点与边均用链表连接，顶点链表为单向双链表，有入边出边两个边链表
+ * 边链表为单链表
  */
+/*****本地调试代码**************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_VEX 100000 /* 图中存储的最大顶点数 */
+#define LOCAL_DEBUG
 
-struct ArcNode {
-    int adjIndex; /* 弧的邻接点在顶点数组中的下标 */
-    struct ArcNode *next;
-};
-
-struct VexNode {
-    int val;
-    struct ArcNode *first;
-};
-
-struct Graph {
-    struct VexNode vexs[MAX_VEX];
-    int numVex;
-};
-
-/***** 本地调试 ****************************************************************/
+#ifdef LOCAL_DEBUG
 #define bool int
 #define true 1
 #define false 0
-#define LOCAL_DEBUG
-#define MAX_COURSE 100
+#define MAX_COURSE 100000
 #define log_info(fmt, ...) printf("[%s:%d] " fmt, __func__, __LINE__, __VA_ARGS__)
+#endif
+/******************************************************************************/
+
+struct VexNode;
+
+struct ArcNode {
+    struct VexNode *adjVex;
+    struct ArcNode *next;
+};
+
+/* 单向双链表连接自身，同时有入边和出边两个边链表 */
+struct VexNode {
+    int val;
+    struct ArcNode *inArc;
+    struct ArcNode *outArc;
+    struct VexNode *pre;
+    struct VexNode *next;
+};
+
+struct Graph {
+    struct VexNode *first;
+    int numVex;
+};
+
+/*****本地调试代码**************************************************************/
+#ifdef LOCAL_DEBUG
 
 void PrintArray(int **__arr, int size)
 {
     int i;
-    int (*arr)[2] = (int (*)[2])__arr;
+    #ifdef LOCAL_DEBUG
+    int (*arr)[2]= (int(*)[2])__arr;
+#else
+    int **arr = __arr;
+#endif
 
-    printf("array: \n");
     for (i = 0; i < size; i++) {
         printf("%d %d\n", arr[i][0], arr[i][1]);
+    }
+}
+
+void PrintGraph(const struct Graph *g)
+{
+    struct VexNode *vex = NULL;
+    struct ArcNode *arc = NULL;
+
+    vex = g->first;
+    printf("graph: \n");
+    while (vex != NULL) {
+        printf("%d -> ", vex->val);
+        arc = vex->outArc;
+        while (arc != NULL) {
+            printf("%d ", arc->adjVex->val);
+            arc = arc->next;
+        }
+        printf("\n");
+        printf("  <- ");
+        arc = vex->inArc;
+        while (arc != NULL) {
+            printf("%d ", arc->adjVex->val);
+            arc = arc->next;
+        }
+        printf("\n");
+        vex = vex->next;
     }
 }
 
@@ -69,45 +110,30 @@ int NumCourses(int **__arr, int size)
     }
     return num;
 }
-
-void PrintGraph(struct Graph *g)
-{
-    int i;
-    struct ArcNode *arc = NULL;
-
-    printf("graph: \n");
-    for (i = 0; i < g->numVex; i++) {
-        printf("%d(%d): ", g->vexs[i].val, i);
-        arc = g->vexs[i].first;
-        while (arc != NULL) {
-            printf("%d(%d) ", g->vexs[arc->adjIndex].val, arc->adjIndex);
-            arc = arc->next;
-        }
-        printf("\n");
-    }
-}
+#endif
 /******************************************************************************/
 
-struct ArcNode *InsertArcNode(struct ArcNode *first, int adjIndex)
+struct ArcNode *InsertArcNode(struct ArcNode *first, struct VexNode *adjVex)
 {
     struct ArcNode *arc = NULL;
     struct ArcNode *tail = NULL;
 
     arc = (struct ArcNode *)malloc(sizeof(struct ArcNode));
-    arc->adjIndex = adjIndex;
+    arc->adjVex = adjVex;
     arc->next = NULL;
     if (first == NULL) {
-        return arc;
+        first = arc;
+    } else {
+        tail = first;
+        while (tail->next != NULL) {
+            tail = tail->next;
+        }
+        tail->next = arc;
     }
-    tail = first;
-    while (tail->next != NULL) {
-        tail = tail->next;
-    }
-    tail->next = arc;
     return first;
 }
 
-struct ArcNode *DeleteArcNode(struct ArcNode *first, int adjIndex)
+struct ArcNode *DeleteArcNode(struct ArcNode *first, const struct VexNode *adjVex)
 {
     struct ArcNode *head = NULL;
     struct ArcNode *pre = NULL;
@@ -119,7 +145,7 @@ struct ArcNode *DeleteArcNode(struct ArcNode *first, int adjIndex)
     pre = head;
     cur = pre->next;
     while (cur != NULL) {
-        if (cur->adjIndex = adjIndex) {
+        if (cur->adjVex == adjVex) {
             tmp = cur;
             cur = cur->next;
             pre->next = cur;
@@ -128,8 +154,8 @@ struct ArcNode *DeleteArcNode(struct ArcNode *first, int adjIndex)
                 head->next = cur;
             }
         } else {
+            pre = cur;
             cur = cur->next;
-            pre->next = cur;
         }
     }
     first = head->next;
@@ -137,117 +163,133 @@ struct ArcNode *DeleteArcNode(struct ArcNode *first, int adjIndex)
     return first;
 }
 
-void DestroyArcList(struct ArcNode *arc)
+void DestroyArcList(struct ArcNode *first)
 {
     struct ArcNode *tmp = NULL;
-    while (arc != NULL) {
-        tmp = arc;
-        arc = arc->next;
+
+    while (first != NULL) {
+        tmp = first;
+        first = first->next;
         free(tmp);
     }
 }
 
 void InitGraph(struct Graph *g)
 {
-    int i;
-
-    for (i = 0; i < MAX_VEX; i++) {
-        g->vexs[i].first = NULL;
-    }
+    g->first = NULL;
     g->numVex = 0;
 }
 
-int GetVexIndex(struct Graph *g, int vex)
+struct VexNode *GetVexNode(struct Graph *g, int val)
 {
     int i;
+    struct VexNode *vex = g->first;
+    struct VexNode *tail = NULL;
+    struct VexNode *newVex = NULL;
 
-    for (i = 0; i < g->numVex; i++) {
-        if (g->vexs[i].val == vex) {
-            return i;
+    while (vex != NULL) {
+        if (vex->val == val) {
+            return vex;
         }
+        if (vex->next == NULL) {
+            tail = vex;
+        }
+        vex = vex->next;
     }
-    g->vexs[i].val = vex;
+    newVex = (struct VexNode *)malloc(sizeof(struct VexNode));
+    newVex->val = val;
+    newVex->inArc = NULL;
+    newVex->outArc = NULL;
+    newVex->pre = NULL;
+    newVex->next = NULL;
+    if (g->numVex <= 0) {
+        g->first = newVex;
+    } else {
+        tail->next = newVex;
+        newVex->pre = tail;
+    }
     g->numVex++;
-    return i;
+    return newVex;
 }
 
 void CreateGraphByArray(struct Graph *g, int **__arr, int size)
 {
     int i;
-    int startIndex, endIndex;
 #ifdef LOCAL_DEBUG
-    int (*arr)[2]= (int(*)[2])__arr;
+    int (*arr)[2] = (int(*)[2])__arr;
 #else
     int **arr = __arr;
 #endif
+    struct VexNode *startVex = NULL;
+    struct VexNode *endVex = NULL;
 
     for (i = 0; i < size; i++) {
-        startIndex = GetVexIndex(g, arr[i][0]);
-        endIndex = GetVexIndex(g, arr[i][1]);
-        g->vexs[startIndex].first = InsertArcNode(g->vexs[startIndex].first, endIndex);
+        startVex = GetVexNode(g, arr[i][0]);
+        endVex = GetVexNode(g, arr[i][1]);
+        startVex->outArc = InsertArcNode(startVex->outArc, endVex);
+        endVex->inArc = InsertArcNode(endVex->inArc, startVex);
     }
 }
 
-int NoInDegreeIndex(const struct Graph *g)
+struct VexNode *NoInDegree(struct Graph *g)
 {
-    int i;
-    int inDegree[MAX_VEX] = {0};
+    struct VexNode *vex = g->first;
+
+    while (vex != NULL) {
+        if (vex->inArc == NULL) {
+            return vex;
+        }
+        vex = vex->next;
+    }
+    return NULL;
+}
+
+void DeleteVexNode(struct Graph *g, struct VexNode *vex)
+{
+    struct VexNode *temp = NULL;
     struct ArcNode *arc = NULL;
 
-    for (i = 0; i < g->numVex; i++) {
-        arc = g->vexs[i].first;
-        while (arc != NULL) {
-            inDegree[arc->adjIndex]++;
-            arc = arc->next;
-        }
+    DestroyArcList(vex->outArc);
+    vex->outArc = NULL;
+    DestroyArcList(vex->inArc);
+    vex->inArc = NULL;
+
+    temp = g->first;
+    while (temp != NULL) {
+        temp->outArc = DeleteArcNode(temp->outArc, vex);
+        temp->inArc = DeleteArcNode(temp->inArc, vex);
+        temp = temp->next;
     }
-    for (i = 0; i < g->numVex; i++) {
-        if (inDegree[i] == 0) {
-            return i;
+
+    if (vex->pre == NULL) { /* vex是头顶点 */
+        g->first = vex->next;
+        if (g->first != NULL) { /* 不是最后一个顶点 */
+            g->first->pre = NULL;
         }
+    } else if (vex->next == NULL) { /* vex是尾顶点 */
+        vex->pre->next = NULL;
+    } else { /* vex是中间顶点 */
+        vex->pre->next = vex->next;
+        vex->next->pre = vex->pre;
     }
-    return -1;
+    free(vex);
+    g->numVex--;
 }
 
-void UpdateGraph(struct Graph *g, int oldIndex)
+int GraphHasCycle(struct Graph *g)
 {
-    int i;
-    struct ArcNode *arc = NULL;
+    struct VexNode *vex = NULL;
 
-    for (i = 0; i < g->numVex; i++) {
-        arc = g->vexs[i].first;
-        while (arc != NULL) {
-            if (arc->adjIndex == oldIndex) {
-                arc->adjIndex = oldIndex - 1;
-            }
-            arc = arc->next;
-        }
-    }
-}
-
-int HasCycle(struct Graph *g)
-{
-    int i;
-    int noIndegreeIndex;
-
-    while ((noIndegreeIndex = NoInDegreeIndex(g)) >= 0) {
-        DestroyArcList(g->vexs[noIndegreeIndex].first);
-        g->vexs[noIndegreeIndex].first = NULL;
-        for (i = noIndegreeIndex; i < g->numVex - 1; i++) {
-            g->vexs[i].val = g->vexs[i + 1].val;
-            g->vexs[i].first = g->vexs[i + 1].first;
-            g->vexs[i + 1].first = NULL;
-            UpdateGraph(g, i + 1);
-        }
-        g->numVex--;
+    while ((vex = NoInDegree(g)) != NULL) {
+        DeleteVexNode(g, vex);
     }
 
-    if (g->numVex > 0) {
-        return 1;
-    } else {
+    if (g->numVex <= 0) {
         return 0;
+    } else {
+        return 1;
     }
-} 
+}
 
 bool canFinish(int numCourses, int** __prerequisites, int prerequisitesSize,
                int* prerequisitesColSize)
@@ -258,12 +300,10 @@ bool canFinish(int numCourses, int** __prerequisites, int prerequisitesSize,
 #else
     int **prerequisites = __prerequisites;
 #endif
-
     InitGraph(&g);
     CreateGraphByArray(&g, __prerequisites, prerequisitesSize);
-PrintGraph(&g);
 
-    if (HasCycle(&g)) {
+    if (GraphHasCycle(&g)) {
         return 0;
     } else {
         return 1;
@@ -276,7 +316,7 @@ int main(void)
     int prerequisites1[][2] = { /* 无环 */
         {0, 1},
     };
-    int prerequisites2[][2] = { /* 有环 */
+    int prerequisites[][2] = { /* 有环 */
         {1, 0},
         {0, 1},
     };
@@ -286,7 +326,7 @@ int main(void)
         { 3, 8 },
         { 8, 2 },
     };
-    int prerequisites[][2] = { /* 无环 */
+    int prerequisites4[][2] = { /* 无环 */
         {867,339},{741,322},{467,399},{836,393},{923,753},{374,63},{728,656},
         {184,108},{556,36},{802,257},{548,140},{686,532},{524,111},{796,351},
         {767,621},{846,701},{573,479},{608,462},{485,70},{675,669},{705,675},

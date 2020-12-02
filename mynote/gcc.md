@@ -32,4 +32,3 @@ enable n  //开启第n个断点
 /* 进入tui界面： */
 gdb --tui a.out
 ```
-
