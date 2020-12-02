@@ -159,9 +159,9 @@ autocmd BufNewFile,BufRead *.cpp source ~/.vim/scripts/mycpp.vim
 map <F10> :LeaderfFile<CR>
 "-----------------------------------------------"
 " 自动补全成对括号
-inoremap ( ()<LEFT>
-inoremap [ []<LEFT>
-inoremap { {}<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-" inoremap < <><LEFT>
+"inoremap ( ()<LEFT>
+"inoremap [ []<LEFT>
+"inoremap { {}<LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
+"inoremap < <><LEFT>

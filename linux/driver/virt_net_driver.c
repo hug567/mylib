@@ -76,3 +76,6 @@ static void vnet_exit(void)
 
 module_init(vnet_init);
 module_exit(vnet_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Huang Xing");

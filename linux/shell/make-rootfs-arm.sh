@@ -43,10 +43,10 @@ TEST_FILE+="${MYLIB}/linux/linux-test/obj/linux-test.elf "
 sudo cp -r ${TEST_FILE} tmp
 
 echo "[INFO]: copy module ko file to rootfs"
-MODULE_KO_FILE="${BASE_DIR}/linux-4.15/drivers/mytest/mytest.ko "
-MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char.ko "
-MODULE_KO_FILE+="${MYLIB}/linux/driver/test_char2.ko "
-MODULE_KO_FILE+="${MYLIB}/linux/driver/virt_net_driver.ko "
+#MODULE_KO_FILE="${BASE_DIR}/linux-4.15/drivers/mytest/mytest.ko "
+MODULE_KO_FILE+="${MYLIB}/linux/driver/mybuild/test_char.ko "
+MODULE_KO_FILE+="${MYLIB}/linux/driver/mybuild/mychar2.ko "
+MODULE_KO_FILE+="${MYLIB}/linux/driver/mybuild/virt_net_driver.ko "
 sudo cp -r ${MODULE_KO_FILE} lib/modules
 
 echo "[INFO]: make rootfs file"

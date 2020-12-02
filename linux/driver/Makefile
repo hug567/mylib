@@ -2,7 +2,7 @@
 # obj-m: 编译成ko模块
 
 obj-m += test_char.o
-obj-m += test_char2.o
+obj-m += mychar2.o
 obj-m += virt_net_driver.o
 
 BUILD_DIR=mybuild
