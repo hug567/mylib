@@ -29,17 +29,24 @@
   remote-ssh
   clang-format
   ```
-### 2、编译调试：
-
-- **编译调试C语言**
+### 2、编译调试C语言：
 ```c
-运行(C) -> 添加配置 -> C++(GDB/LLDB)
-     -> gcc.exe build and debug active file          //添加launch.json
+task.json                                  //编译配置文件
+launch.json                                //调试配置文件
+```
+
+#### 1）、自动创建launch.json和task.json：
+
+```c
+运行(C) -> 添加配置 -> C++(GDB/LLDB) -> gcc.exe build and debug active file
+```
+
+#### 2）、配置launch.json：
+
+```c
 /* 修改miDebuggerPath为： */
 "miDebuggerPath": "F:\\Program Files\\mingw64\\bin\\gdb.exe",
-```
-launch.json
-```c
+/**********************************************************************/
 {
   // 使用 IntelliSense 了解相关属性。 
   // 悬停以查看现有属性的描述。
@@ -70,7 +77,9 @@ launch.json
   ]
 }
 ```
-task.json
+
+#### 3）、配置task.json：
+
 ```c
 {
   "tasks": [
@@ -94,6 +103,11 @@ task.json
       }
   ],
 }
+```
+
+#### 4）、创建c_cpp_properties.json：
+```c
+xxxxx 
 ```
 
 ### 3、常用操作：
