@@ -6,10 +6,10 @@ graph TB
   A[register_chrdev]-->C[class_create<br>device_create]
   B[register_chrdev_region<br>alloc_chedev_region<br>cdev_init<br>cdev_add]-->C
 ```
-* 1.1)、注册字符设备：
-1）、当major不为0时，注册并返回0；
-2）、当major为0时，动态申请主设备号，并返回major；
-3）、失败时返回错误码。
+* 1.1)、注册字符设备： <br>
+1）、当major不为0时，注册并返回0； <br>
+2）、当major为0时，动态申请主设备号，并返回major； <br>
+3）、失败时返回错误码。 <br>
 ```c
 int register_chrdev(unsigned int major,const char* name,struct file_operations *fops)
 ```
