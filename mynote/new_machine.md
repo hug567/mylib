@@ -79,4 +79,17 @@ rm -rf Sogou* sogou*                                     //删除搜狗配置文
 Settings -> Power -> Blank screen -> Never               //取消锁屏
 ```
 
+### 7、Ubuntu 18.04源码安装qemu 4.0.0
 
+```c
+sudo apt remove qemu
+sudo apt autoremove
+sudo apt install pkg-config libglib2.0-dev libpixman-1-dev bison flex
+wget 
+tar -xvf 
+cd 
+./configure
+make -j4
+sudo make install
+qemu-img --version
+```

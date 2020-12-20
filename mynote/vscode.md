@@ -123,7 +123,7 @@ Ctrl + L                        //选中当前行
 Shift + Alt + 鼠标左键           //按列选中
 
 /* 自定义快捷键： */
-Ctrl + Shift + p -> Preferences: Open Keyboard Shortcuts ->
+Ctrl + Shift + p -> Preferences: Open Keyboard Shortcuts
 
 Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
 Ctrl + Alt + ]                  //聚焦至终端 (workbenck.panel.terminal.focus)
