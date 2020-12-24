@@ -23,6 +23,19 @@ public:
     void printInfo(void);
 };
 
+/* 公有继承父类 */
+class CStudent : public CPersion
+{
+private:
+    int _class;
+public:
+    CStudent(); /* 构造函数 */
+    ~CStudent(); /* 析构函数 */
+    void setClass(int _class);
+    int getClass(void);
+    void printInfo(void); /* 子类重载父类方法 */
+};
+
 /* 构造函数 */
 CPersion::CPersion()
 {
@@ -65,19 +78,6 @@ void CPersion::printInfo(void)
     cout << "name: " << name << endl; 
     cout << "age: " << age << endl; 
 }
-
-/* 公有继承父类 */
-class CStudent : public CPersion
-{
-private:
-    int _class;
-public:
-    CStudent(); /* 构造函数 */
-    ~CStudent(); /* 析构函数 */
-    void setClass(int _class);
-    int getClass(void);
-    void printInfo(void); /* 子类重载父类方法 */
-};
 
 /* 子类构造函数，创建对象时默认先调用父类无参构造函数 */
 CStudent::CStudent()

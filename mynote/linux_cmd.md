@@ -65,3 +65,10 @@ ip a                                                     //查看虚拟卡ip
 /* 主机win10中gitbash: */
 ssh hx@192.168.40.128                                    //连接虚拟机中Linux
 ```
+
+## 7、网络相关：
+
+```c
+sudo dhclient -r                                        //释放ip
+sudo dhclient                                           //自动获取ip
+```
