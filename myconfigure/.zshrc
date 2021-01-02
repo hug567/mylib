@@ -104,6 +104,7 @@ bindkey "\E[3~" delete-char
 # 打开颜色模式
 autoload -U colors && colors
 export GIT_SSL_NO_VERIFY=1
+export MYLIB=$HOME/code/mylib
 
 # 设置环境变量PATH
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"

@@ -1,5 +1,5 @@
 # cmake最低版本要求
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.10.2)
 
 # cmake工程名称
 project(cmake_practice)

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# 环境准备：
+# 创建tun网卡设备：sudo ip tuntap add dev tap0 mode tap
+# 配置ip：sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0
+
 ROOTFS=rootfs.sd
 
 # 清空屏幕

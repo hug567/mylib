@@ -7,6 +7,8 @@ mount -t sysfs sysfs /sys
 
 mount -t tmpfs tmpfs /dev
 
+mkdir -p /dev/pts
+
 mount -t devpts devpts /dev/pts
 
 /sbin/mdev -s

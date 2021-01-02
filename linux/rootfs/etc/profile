@@ -6,4 +6,4 @@ RESET="\[\e[0m\]"
 
 alias lsa='ls -a'
 #export PS1='\n${GREEN}[qemu@linux]: ${YELLOW}\w ${RED}$ ${RESET}'
-export PS1='\n[qemu@linux]: \w $ '
+export PS1='[qemu@linux]: \w $ '

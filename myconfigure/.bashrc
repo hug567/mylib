@@ -129,6 +129,7 @@ alias tmux="tmux -2"
 
 export TERM=xterm-256color
 export GIT_SSL_NO_VERIFY=1
+export MYLIB=$HOME/code/mylib
 
 export PS1='\[\e]0;\w\a\]\n\[\e[32m\][\u@\h]:\[\e[35m\]$MSYSTEM\[\e[0m\] \
 \[\e[33m\]\w\[\e[0m\]\n'"${_ps1_symbol}"' \[\e[31m\]$\[\e[0m\] '
