@@ -1,32 +1,52 @@
 cmake_minimum_required(VERSION 3.10.2)
 project(test-each)
 
-set(MYLIB $ENV{MYLIB} CACHE STRING "mylib")
-include(${MYLIB}/cmake/script/common.cmake)
-#log_info("[${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE}] MYLIB = ${MYLIB}")
+if(${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
+	message(FATAL_ERROR "Do not compile in the source directory")
+endif()
 
-function(compile_single_file files)
-    log_info_var(ARGC)
-    log_info_var(ARGN)
-    log_info_var(files)
+# 使用说明
+function(usage)
+	log_info("Usage:")
+	log_info("  cmake -DARCH=host     make host machine test file")
+	log_info("  cmake -DARCH=arm      make arm plat test file")
+	log_info("  cmake -DARCH=arm64    make arm64 plat test file")
+endfunction(usage)
+
+function(compile_single_file)
+	set(i 0)
+	while(i LESS ${ARGC})
+		set(test_file ${ARGV${i}})
+		string(REGEX MATCH "[A-Za-z0-9_]+\.c$" test_file ${test_file})
+		string(REGEX MATCH "^[A-Za-z0-9_]+" test_file_bin ${test_file})
+		log_info("After make, will compile [${test_file}] to [${test_file_bin}]")
+		add_executable(${test_file_bin} ${test_file})
+		math(EXPR i "${i} + 1")
+	endwhile()
 endfunction(compile_single_file)
 
+set(MYLIB $ENV{MYLIB} CACHE STRING "mylib")
+include(${MYLIB}/cmake/script/common.cmake)
 
-string(REGEX MATCH "([a-z_]+)\.c$" TEST_FILE mylib/linuxux/test_get_time.c)
-string(REGEX MATCH "(^[a-z_]+)" TEST_FILE_BIN ${TEST_FILE})
-log_info_var(TEST_FILE)
-log_info_var(TEST_FILE_BIN)
+if(NOT ARCH)
+	usage()
+	message(FATAL_ERROR "Does not define ARCH")
+endif()
 
-add_executable(test_get_time
-    test_get_time.c
-)
+if(${ARCH} STREQUAL "host")
+	set(CMAKE_C_COMPILER gcc)
+elseif(${ARCH} STREQUAL "arm")
+	set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc)
+elseif(${ARCH} STREQUAL "arm64")
+	set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+else()
+	usage()
+	message(FATAL_ERROR "Does not support ARCH: ${ARCH}")
+endif()
 
-set(single_test_file)
+log_info("CMAKE_C_COMPILER = ${CMAKE_C_COMPILER}")
 
+# 编译单个文件的测试用例
 compile_single_file(
-    test01.c
-    test02.c
-    test03.c
-    test04.c
-    test05.c
+	test_get_time.c
 )
