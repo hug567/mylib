@@ -8,6 +8,7 @@
 [http]
 	postBuffer = 104857600
 [alias]
+	br = branch
 	co = checkout
 	st = status
 	cm = commit
