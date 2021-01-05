@@ -48,6 +48,12 @@ Prefix + { / }                           //窗格切换位置
 Prefix + PageUp / PageDown               //上下翻页
 q                                        //退出翻页
 Prefix, Alt + 方向键                     //缩放窗格
+
+/*----- ~/.tmux.conf -----*/
+bind ` send-prefix                       //按两次prefix输入`键
+bind u display-pane                      //自定义命令显示pane窗格编号 (Prefix + u)
+
+tmux swap-pane -s 2 -t 1                 //交换窗格
 ```
 
 ## 5、文本复制粘贴：

@@ -7,6 +7,8 @@ git config --global user.name "Huang Xing"               //设置用户名
 git config --global user.email huangxing567@163.com      //设置邮箱
 ssh-keygen -t rsa -C "huangxing567@163.com"              //配置SSH Key
 cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
+
+git config --global credential.helper store    //长期缓存账号密码
 ```
 
 ## 2、常用操作：
@@ -65,9 +67,9 @@ git stash pop                                            //取出暂存
 git stash drop stash@{0}                                 //删除stash第一个队列
 git stash clear                                          //清空stash所有内容
 
-git remote prune origin                        //删除远端已删除本地仍存在的分支
-git gc                                         //清理不必要的文件并优化本地存储库
-git prune                                      //从对象数据库中删除所有不可访问的对象
+git remote prune origin                                  //删除远端已删除本地仍存在的分支
+git gc                                                   //清理不必要的文件并优化本地存储库
+git prune                                                //从对象数据库中删除所有不可访问的对象
 ```
 
 ### 2.3、远端分支管理
@@ -77,10 +79,12 @@ git push origin HEAD:master                              //推送本地分支至
 git push origin HEAD:master -f                           //强制推送本地分支至远端
 git branch -r                                            //查看所有远端分支
 git push --delete origin <branch>                        //删除远端分支
+
 //----------重命名远端分支-------------------------------------------------//
 git push --delete origin <branch>                        //删除远端分支
 git branch -m <newname>                                  //重命名本地分支
 git push origin HEAD:<newname>                           //提送至远端分支
+
 /* -------- 远端仓库管理 ------------------------------------------------- */
 git remote -v                                            //查看远程仓库地址
 /* 设置添加远程仓库地址： */
@@ -135,9 +139,11 @@ git reset HEAD                                 //撤销所有文件add
 git reset HEAD <file>                          //撤销指定文件的add
 git checkout .                                 //删除所有未add更改
 git chechoout <file>                           //删除指定文件未add更改
-//----------删除commit---------------------------------------------------//
+
+//----------删除指定commit-----------------------------------------------//
 git rebase -i <ID>^                            //定位至需要删除的commit
 /* 将需删除的commit的pick改为d，:wq */
+
 //----------删除未追踪文件-------------------------------------------------//
 git clean -nf                                  //查看将被删除未追踪的文件
 git clean -nfd                                 //查看将被删除未追踪的文件及目录
@@ -145,6 +151,11 @@ git clean -nfdx                                //查看将被删除未追踪与.
 git clean -f                                   //删除未追踪的文件
 git clean -fd                                  //删除未追踪的文件及目录
 git clean -fdx                                 //删除未追踪与.gitignore忽略的文件及目录
+
+//----------回退至指定commit-----------------------------------------------//
+git log --before="2019-7-1"                    //查看指定日期前的提交
+git log --before "2020-05-04" --oneline --pretty="%h %ad %s %cr" --date=format:"[%Y-%m-%d %H:%M:%S]"
+git reset --hard <commit id>                   //回退至指定commit（该commit保留）
 ```
 
 ### 2.6、设置忽略
@@ -152,4 +163,16 @@ git clean -fdx                                 //删除未追踪与.gitignore忽
 ```c
 .gitignore                                     //会被提交至git仓库
 .git/info/exclude                              //本地设置，不会被提交至git仓库
+```
+
+### 2.7、stash暂存
+
+```c
+git stash save "title"                         //自定义stash标题
+git stash -h                                   //查看stash帮助
+git stash -u                                   //暂存未追踪的文件
+git stash list                                 //查看stash列表
+git stash show                                 //查看最新stash差异
+git stash show -p                              //查看最新stash详细修改
+git stash show <id> -p                         //查看指定id的stash详细修改
 ```
