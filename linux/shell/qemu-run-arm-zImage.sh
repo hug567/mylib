@@ -4,13 +4,17 @@
 # 创建tun网卡设备：sudo ip tuntap add dev tap0 mode tap
 # 配置ip：sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0
 
+source $MYLIB/linux/shell/common.sh
+
 ROOTFS=rootfs.sd
+WORK_DIR=$HOME/code/linux
+LINUX_DIR=$WORK_DIR/linux-4.18
 
 # 清空屏幕
 clear; clear
 
-if [ ! -f arch/arm/boot/zImage ]; then
-    echo -e "${RED}Error: ${RESET}You are not in linux src root dir....."
+if [ ! -f ${LINUX_DIR}/arch/arm/boot/zImage ]; then
+    log_error "${LINUX_DIR}/arch/arm/boot/zImage does not exist"
     exit
 fi
 
@@ -30,9 +34,9 @@ fi
 #    -chardev serial,id=s9,path=tty1 \
 qemu-system-arm \
     -M vexpress-a9 -m 512M -nographic \
-    -kernel arch/arm/boot/zImage \
-    -dtb arch/arm/boot/dts/vexpress-v2p-ca9.dtb \
-    -sd ~/code/linux/${ROOTFS} \
+    -kernel ${LINUX_DIR}/arch/arm/boot/zImage \
+    -dtb ${LINUX_DIR}/arch/arm/boot/dts/vexpress-v2p-ca9.dtb \
+    -sd ${WORK_DIR}/${ROOTFS} \
     -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
     -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,\
 gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,guest_ufo=off \
