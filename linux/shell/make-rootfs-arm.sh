@@ -3,16 +3,13 @@
 source $MYLIB/linux/shell/common.sh
 
 BASE_DIR=${HOME}/code/linux
-#MYLIB=${HOME}/code/mylib
 BUSYBOX_DIR=${BASE_DIR}/busybox-1.27.2
 CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
 LIB_ROOTFS_DIR=${MYLIB}/linux/rootfs
-ROOTFS=rootfs.sd
+ROOTFS=rootfs.img
 
 cd ${BASE_DIR}
-if [ -d rootfs ]; then
-    sudo rm -rf rootfs
-fi
+rm -rf mnt rootfs roofs.qcow2 ${ROOTFS}
 mkdir rootfs
 cd rootfs
 
@@ -26,18 +23,7 @@ cp ${LIB_ROOTFS_DIR}/etc/init.d/rcS etc/init.d/
 cp ${LIB_ROOTFS_DIR}/etc/profile etc/
 chmod a+x etc/init.d/rcS
 chmod a+x etc/profile
-
 cp ${LIB_ROOTFS_DIR}/etc/passwd etc/
-
-log_info "mknod tty device"
-cd dev
-sudo mknod -m 666 tty1 c 4 1
-sudo mknod -m 666 tty2 c 4 2
-sudo mknod -m 666 tty3 c 4 3
-sudo mknod -m 666 tty4 c 4 4
-sudo mknod -m 666 console c 5 1
-sudo mknod -m 666 null c 1 3
-cd ..
 
 log_info "copy lib files [lib]"
 cp -r ${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib/* lib
@@ -56,9 +42,11 @@ log_info "make rootfs file"
 cd ..
 dd if=/dev/zero of=${ROOTFS} bs=1M count=200
 mkfs.ext3 ${ROOTFS}
-sudo mount -t ext3 ${ROOTFS} /mnt -o loop
-sudo cp -r rootfs/* /mnt
-sudo umount /mnt
+mkdir mnt
+sudo mount -t ext3 ${ROOTFS} mnt -o loop
+sudo cp -rP rootfs/* mnt
+sudo umount mnt
+qemu-img convert -f raw -O qcow2 ${ROOTFS} rootfs.qcow2
 
 log_info "delete temp file"
-sudo rm -rf rootfs
+sudo rm -rf mnt rootfs ${ROOTFS}

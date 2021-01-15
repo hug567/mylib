@@ -6,7 +6,7 @@
 
 source $MYLIB/linux/shell/common.sh
 
-ROOTFS=rootfs.sd
+ROOTFS=rootfs.qcow2
 WORK_DIR=$HOME/code/linux
 LINUX_DIR=$WORK_DIR/linux-4.18
 

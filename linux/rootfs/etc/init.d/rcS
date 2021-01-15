@@ -1,5 +1,13 @@
 #!/bin/sh
-# huangxing
+
+cd /dev
+mknod -m 666 tty1 c 4 1
+mknod -m 666 tty2 c 4 2
+mknod -m 666 tty3 c 4 3
+mknod -m 666 tty4 c 4 4
+mknod -m 666 console c 5 1
+mknod -m 666 null c 1 3
+cd /
 
 mount -t proc proc /proc
 
@@ -18,5 +26,3 @@ echo /sbin/mdev > /proc/sys/kernel/hotplug
 telnetd
 
 ifconfig eth0 192.168.0.101 netmask 255.255.255.0
-
-cd root
