@@ -7,6 +7,44 @@ usage()
     echo "  $0 <fg> <bg>      show example width <fg><bg>"
 }
 
+for i in $(seq $1 $2)
+do
+    $MYLIB/myconfigure/show-256-color.sh $i default
+done
+
+exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # (index, r, g, b) with hex
 g_color256=(
     '  0 00 00 00'

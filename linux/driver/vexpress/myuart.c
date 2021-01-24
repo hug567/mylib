@@ -81,7 +81,7 @@ static int __init myuart_init(void)
 
 	device_create(myuart->class, NULL, myuart->devno, NULL, DEV_NAME);
 
-	log_info("finish %s, will crate char dev %s\n", __func__, DEV_NAME);
+	log_info("finish %s, will crate /dev/%s\n", __func__, DEV_NAME);
 
 	return 0;
 }
