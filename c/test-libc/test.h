@@ -7,6 +7,8 @@
 #define __TEST_H__
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct test_struct {
 	int fd; /* log file's fd */
@@ -24,11 +26,18 @@ struct test_module {
 	struct test_module *next;
 };
 
-#define mt_debug(fmt, ...) printf("[DEBUG][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
-#define mt_info(fmt, ...)  printf("[INFO][%s@%d]: "  fmt, __func__, __LINE__, ##__VA_ARGS__)
-#define mt_error(fmt, ...) printf("[ERROR][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
-#define mt_succ(fmt, ...)  printf("[SUCC][%s@%d]: "  fmt, __func__, __LINE__, ##__VA_ARGS__)
-#define mt_fail(fmt, ...)  printf("[FAIL][%s@%d]: "  fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define mt_log(level, fmt, ...) printf(level "[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define mt_debug(fmt, ...) mt_log("[DEBUG]", fmt, ##__VA_ARGS__)
+#define mt_info(fmt, ...)  mt_log("[INFO ]", fmt, ##__VA_ARGS__)
+#define mt_error(fmt, ...) mt_log("[ERROR]", fmt, ##__VA_ARGS__)
+#define mt_succ(fmt, ...)  mt_log("[SUCC ]", fmt, ##__VA_ARGS__)
+#define mt_fail(fmt, ...)  mt_log("[FAIL ]", fmt, ##__VA_ARGS__)
+
+//#define mt_debug(fmt, ...) printf("[DEBUG][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+//#define mt_info(fmt, ...)  printf("[INFO ][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+//#define mt_error(fmt, ...) printf("[ERROR][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+//#define mt_succ(fmt, ...)  printf("[SUCC ][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+//#define mt_fail(fmt, ...)  printf("[FAIL ][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
 
 FILE *__fp;
 #define write_to_file(path, fmt, ...) \

@@ -32,6 +32,7 @@ fi
 #    -serial /dev/ttyS0 \
 #    -serial stdio \
 #    -chardev serial,id=s9,path=tty1 \
+#    -serial vc:800x600 \
 qemu-system-arm \
     -M vexpress-a9 -m 512M -nographic \
     -kernel ${LINUX_DIR}/arch/arm/boot/zImage \

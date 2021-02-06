@@ -25,14 +25,15 @@ chmod a+x etc/init.d/rcS
 chmod a+x etc/profile
 cp ${LIB_ROOTFS_DIR}/etc/passwd etc/
 
-log_info "copy lib files [lib]"
+log_info "copy lib files to [lib]"
 cp -r ${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib/* lib
 
+TEST_DRIVER_DIR=${MYLIB}/linux/driver/mybuild
 copy_file_to_tmp ${MYLIB}/c/test-libc/obj/test-libc.elf
 copy_file_to_tmp ${MYLIB}/linux/linux-test/obj/linux-test.elf
 copy_file_to_tmp ${MYLIB}/linux/driver/test.sh
+copy_file_to_tmp ${TEST_DRIVER_DIR}/test_myuart
 
-TEST_DRIVER_DIR=${MYLIB}/linux/driver/mybuild
 copy_file_to_lib_modules ${TEST_DRIVER_DIR}/test_char.ko
 copy_file_to_lib_modules ${TEST_DRIVER_DIR}/mychar2.ko
 copy_file_to_lib_modules ${TEST_DRIVER_DIR}/virt_net_driver.ko

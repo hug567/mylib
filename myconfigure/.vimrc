@@ -22,6 +22,8 @@ set listchars=tab:>-,trail:-
 "set mouse=a
 "set selection=exclusive
 "set selectmode=mouse,key
+" 搜索不区分大小写
+set ignorecase
 " 设置光标样式
 let &t_SI.="\e[2 q" "INSERT模式，2:方块
 let &t_SR.="\e[2 q" "REPLACE模式, 2:方块

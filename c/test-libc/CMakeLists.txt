@@ -4,6 +4,13 @@ cmake_minimum_required(VERSION 2.6)
 # cmake工程名称
 project(test-libc)
 
+# 设置C编译器
+set(CMAKE_C_COMPILER /usr/bin/gcc)
+
+# 添加头文件路径
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+# 编译可执行文件
 add_executable(test-libc.elf
     main.c
     test.c
@@ -20,6 +27,7 @@ add_executable(test-libc.elf
     # stdio
     stdio/stdio_main.c
     stdio/test_sizeof.c
+    stdio/test_printf.c
 
     # stdlib
     stdlib/stdlib_main.c

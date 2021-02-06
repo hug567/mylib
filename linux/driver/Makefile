@@ -11,6 +11,10 @@ KERNEL = ${HOME}/code/linux/linux-4.18
 #KERNEL = /lib/modules/`uname -r`/build
 PWD = $(shell pwd)/${BUILD_DIR}
 
+CROSS_COMPILE=arm-linux-gnueabi-
+T_CC=${CROSS_COMPILE}gcc
+T_CFLAGS="-Wall"
+
 prepare:
 	rm -rf ${BUILD_DIR}
 	mkdir ${BUILD_DIR}
@@ -18,8 +22,11 @@ prepare:
 	cd ${BUILD_DIR}
 	make modules
 
-modules:
+modules: tests
 	make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- M=${PWD} -C ${KERNEL} modules
+
+tests:
+	${T_CC} ${T_CFLAGS} ${PWD}/vexpress/test_myuart.c -o ${PWD}/test_myuart
 
 .PHONEY: clean
 clean:
