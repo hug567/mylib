@@ -34,10 +34,10 @@ static struct dts_info {
 	unsigned int size;
 	unsigned int irq;
 } g_dts_info[] = {
-	{ 0x1000c000, 0x1000, 5 },
-	{ 0x1000b000, 0x1000, 6 },
-	{ 0x1000d000, 0x1000, 7 },
-	{ 0x1000e000, 0x1000, 8 },
+	{ 0x10009000, 0x1000, 38 },
+	{ 0x1000a000, 0x1000, 39 },
+	{ 0x1000b000, 0x1000, 40 },
+	{ 0x1000c000, 0x1000, 41 },
 };
 
 static struct myuart {
