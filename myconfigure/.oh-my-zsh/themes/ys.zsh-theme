@@ -65,4 +65,4 @@ PROMPT="
 ${hg_info}\
 ${git_info}%{$terminfo[bold]$fg[yellow]%} %* $exit_code\
 
-%{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
+%{$terminfo[bold]$fg[red]%} $ %{$reset_color%}"
