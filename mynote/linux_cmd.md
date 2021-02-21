@@ -71,4 +71,10 @@ ssh hx@192.168.40.128                                    //连接虚拟机中Lin
 ```c
 sudo dhclient -r                                        //释放ip
 sudo dhclient                                           //自动获取ip
+
+/* Ubuntu局域网设置固定ip： */
+Address: 192.168.1.27                //需在路由器DHCP范围之外
+Netmask: 255.255.255.0               //与自动获取时相同
+Gateway: 192.168.1.1                 //与自动获取时相同
+DNS: 192.168.1.1                     //与自动获取时相同
 ```
