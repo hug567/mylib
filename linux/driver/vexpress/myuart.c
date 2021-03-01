@@ -33,7 +33,7 @@ static struct dts_info {
 	unsigned int paddr;
 	unsigned int size;
 	unsigned int irq;
-} g_dts_info[] = {
+} g_dts_info[] = { /* vexpress uart info */
 	{ 0x10009000, 0x1000, 38 },
 	{ 0x1000a000, 0x1000, 39 },
 	{ 0x1000b000, 0x1000, 40 },
@@ -97,7 +97,6 @@ static int myuart_release(struct inode *inode, struct file *file)
 
 static void write_char(struct myuart *myuart, char ch)
 {
-	//log_info("ch = %c, vaddr = %p\n", ch, myuart->vaddr);
 	wait_until_txfifo_nfull(myuart);
 	writel_relaxed(ch, myuart->vaddr + UART_DR);
 }
