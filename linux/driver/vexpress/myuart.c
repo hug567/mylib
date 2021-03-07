@@ -1,6 +1,7 @@
 /*
  * vexpress开发板串口驱动程序
  * 串口类型：pl011
+ * qemu重定向串口到pty: -serial pty
  * 2021-01-05
  */
 #include <linux/fs.h>
