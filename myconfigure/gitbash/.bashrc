@@ -77,4 +77,5 @@ export TERM=xterm-256color
 export GIT_SSL_NO_VERIFY=1
 export PATH="/f/Program Files/MinGW/bin:$PATH"
 export MYLIB=/g/MyProgram/Git/mylib
+cd $MYLIB
 ################################# 自定义配置 #################################
