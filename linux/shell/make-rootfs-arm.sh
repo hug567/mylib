@@ -25,8 +25,11 @@ chmod a+x etc/init.d/rcS
 chmod a+x etc/profile
 cp ${LIB_ROOTFS_DIR}/etc/passwd etc/
 
-log_info "copy lib files to [lib]"
-cp -r ${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib/* lib
+LIB_DIR=${CROCESS_COMPILER_DIR}/arm-linux-gnueabi/libc/lib
+copy_file_to_lib ${LIB_DIR}/ld-2.25.so
+copy_file_to_lib ${LIB_DIR}/ld-linux.so.3
+copy_file_to_lib ${LIB_DIR}/libc.so.6
+copy_file_to_lib ${LIB_DIR}/libc-2.25.so
 
 TEST_DRIVER_DIR=${MYLIB}/linux/driver/mybuild
 copy_file_to_tmp ${MYLIB}/c/test-libc/obj/test-libc.elf

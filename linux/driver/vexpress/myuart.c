@@ -134,7 +134,7 @@ static struct file_operations g_myuart_fops = {
 
 static int myuart_info_init(struct myuart *myuart)
 {
-	struct dts_info *info = &g_dts_info[0];
+	struct dts_info *info = &g_dts_info[1];
 
 	myuart->vaddr = ioremap(info->paddr, info->size);
 	if (myuart->vaddr == NULL) {

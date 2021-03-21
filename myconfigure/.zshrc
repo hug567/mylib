@@ -87,6 +87,7 @@ source $ZSH/oh-my-zsh.sh
 
 ################################# 自定义配置 #################################
 alias lsa="ls -a"
+alias lh="ls -lh"
 alias cls="clear"
 alias tmux="tmux -2"
 alias typora='$HOME/tools/Typora-linux-x64/Typora'

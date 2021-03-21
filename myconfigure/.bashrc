@@ -118,6 +118,7 @@ fi
 
 ################################# 自定义配置 #################################
 alias lsa="ls -a"
+alias lh="ls -lh"
 alias cls="clear"
 alias tmux="tmux -2"
 

@@ -21,7 +21,7 @@ copy_file_if_exist() {
     dst_dir=$2
     if [[ -f $src_file && -d $dst_dir ]]; then
         log_info "copy [$src_file] to [$dst_dir]"
-        cp $src_file $dst_dir
+        cp -rd $src_file $dst_dir
     fi
 }
 
@@ -29,6 +29,26 @@ copy_file_to_tmp() {
     copy_file_if_exist $1 tmp
 }
 
+copy_file_to_lib() {
+    copy_file_if_exist $1 lib
+}
+
 copy_file_to_lib_modules() {
     copy_file_if_exist $1 lib/modules
+}
+
+check_file_exist() {
+    file=$1
+    if [ ! -f $file ]; then
+        log_error "$file does not exist"
+        exit
+    fi
+}
+
+check_dif_exist() {
+    dir=$1
+    if [ ! -d $dir ]; then
+        log_error "$dir does not exist"
+        exit
+    fi
 }

@@ -3,6 +3,7 @@
 # 环境准备：
 # 创建tun网卡设备：sudo ip tuntap add dev tap0 mode tap
 # 配置ip：sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0
+# 删除tun网卡设备: sudo ip tuntap del dev tap0 mode tap
 
 source $MYLIB/linux/shell/common.sh
 
@@ -13,9 +14,14 @@ LINUX_DIR=$WORK_DIR/linux-4.18
 # 清空屏幕
 clear; clear
 
-if [ ! -f ${LINUX_DIR}/arch/arm/boot/zImage ]; then
-    log_error "${LINUX_DIR}/arch/arm/boot/zImage does not exist"
-    exit
+check_file_exist ${LINUX_DIR}/arch/arm/boot/zImage
+
+# 创建虚拟网卡
+VIR_TAP=$(ifconfig -a | grep tap)
+if [ "x$VIR_TAP" = "x" ]; then
+    log_info "Will create tap0 with ip 192.168.0.100"
+    sudo ip tuntap add dev tap0 mode tap
+    sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0
 fi
 
 # 串口重定向到标准输入输出
@@ -33,6 +39,7 @@ fi
 #    -serial stdio \
 #    -chardev serial,id=s9,path=tty1 \
 #    -serial vc:800x600 \
+#    -semihosting \
 qemu-system-arm \
     -M vexpress-a9 -m 512M -nographic \
     -kernel ${LINUX_DIR}/arch/arm/boot/zImage \
