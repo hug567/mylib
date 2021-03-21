@@ -188,9 +188,34 @@ qemu-system-arm \
 arm-none-linux-gnueabi-gdb vmlinux
 (gdb) target remote:1234
 ```
-### 1.8、主机创建虚拟网卡设备：
-```c
 
+### 1.8、虚拟机挂载主机共享目录：
+
+```shell
+# 主机：
+sudo apt install nfs-kernel-server             # 主机安装NFS Server
+sudo vim /etc/exports                          # 设置共享目录
+/home/hx/share *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+sudo exportfs -arv                             # 更新export配置
+sudo  /etc/init.d/n                            # 重启NFS服务
+
+# 虚拟机：
+mkdir share
+# 挂载主机目录：
+mount -t nfs -o nolock,vers=4 192.168.0.100:/home/hx/share /share
+
+# 内核开启NFS功能支持(vexpress_defconfig)：
+File systems  --->
+[*] Network File Systems  --->                                               CONFIG_NETWORK_FILESYSTEMS    已开
+<*>   NFS client support                                                     CONFIG_NFS_FS                 已开
+[*]         NFS client support for NFS version 3                             CONFIG_NFS_V3                 已开
+[*]               NFS client support for the NFSv3 ACL protocol extension    CONFIG_NFS_V3_ACL             未开
+[*]         NFS client support for NFS version 4 (EXPERIMENTAL)              CONFIG_NFS_V4                 未开
+[*]               NFS client support for NFSv4.1 (DEVELOPER ONLY)            CONFIG_NFS_V4_1               未开
+[*]         Root file system on NFS                                          CONFIG_ROOT_NFS               已开
+[*] Networking support  --->                                                 CONFIG_NET                    已开
+Networking options  --->
+[*]   IP: kernel level autoconfiguration                                     CONFIG_IP_PNP                 已开
 ```
 
 ## 2、各版本gcc区别：

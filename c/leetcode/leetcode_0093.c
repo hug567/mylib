@@ -54,7 +54,7 @@ char *CreateIpStr(char *s, int *pointPos, int pointNum)
             k++;
         }
     }
-debug_log("ip str: %s\n", str);
+//debug_log("ip str: %s\n", str);
     return str;
 }
 
@@ -67,7 +67,7 @@ int IsIpNum(char *start, int len)
 
 //debug_log("len = %d\n", len);
     if (len == 1) {/* 单个数字一定是合格的ip地址 */
-debug_log("str = %c\n", *start);
+//debug_log("str = %c\n", *start);
         return 1;
     } else if (len < 1 || len > 3) { /* 长度为0或大于3的一定是不合格的ip地址 */
         return 0;
@@ -79,21 +79,31 @@ debug_log("str = %c\n", *start);
     num = atoi(str);
     /* 值小于等于255且首字符不为0，是合格ip */
     if (num <= 255 && start[0] != '0') {
-debug_log("str = %s\n", str);
+//debug_log("str = %s\n", str);
         isIpNum = 1;
     }
     free(str);
     return isIpNum;
 }
 
+void SaveIpStr(const char *str)
+{
+    int len = strlen(str);
+    char *ipStr = (char *)malloc(len + 1);
+    memset(ipStr, 0, len + 1);
+    memcpy(ipStr, str, len);
+    g_ipStr[g_count] = ipStr;
+    g_count++;
+}
+
 void Dfs(char *s, int cur, int *pointPos, int pointNum)
 {
     int i;
     //char *start = NULL;
-    //int len;
+    int len = strlen(s);
 
 //debug_log("cur = %d, pointNum = %d\n", cur, pointNum);
-PrintArray(pointPos, pointNum);
+//PrintArray(pointPos, pointNum);
     if (pointNum > 0 && pointPos[pointNum - 1] >= strlen(s)) {
         return;
     }
@@ -111,7 +121,7 @@ PrintArray(pointPos, pointNum);
     if (cur >= strlen(s) - 1) {
         return;
     }
-    for (i = cur; i < cur + 3; i++) {
+    for (i = cur; i < cur + 3 && i < len; i++) {
         if (IsIpNum(s + cur, i - cur + 1)) {
             pointPos[pointNum] = i + 1;
             pointNum++;
@@ -120,14 +130,21 @@ PrintArray(pointPos, pointNum);
     }
 }
 
+void Dfs2(const char *s, int start, char *ipStr, int pointNum)
+{}
+
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
 char ** restoreIpAddresses(char * s, int* returnSize){
 //debug_log("s = %s\n", s);
+    int len = strlen(s);
     char **ipStr = (char **)malloc(MAX_NUM * sizeof(char *));
+    char *ipStr = (char *)malloc(len + 4);
+    memset(ipStr, 0, len + 4);
     g_ipStr = ipStr;
-    Dfs(s, 0, g_pointPos, 0); /* 从第0个字符开始搜索 */
+    //Dfs(s, 0, g_pointPos, 0); /* 从第0个字符开始搜索 */
+    Dfs2(s, 0, ipStr, 0);
     *returnSize = g_count;
     return ipStr;
 }
