@@ -23,15 +23,11 @@ void PrintArray(int *arr, int size)
 }
 
 /***** 提交代码 ****************************************************************/
-#define MAX_NUM 100
+#define MAX_NUM 20 /* 实测最多20个可能组合 */
 
-int g_pos[3] = {0}; /* 3个分割点可放置的位置 */
-char **g_ipStr = NULL;
-int g_count = 0;
-char g_tmpStr[3] = {0};
-int g_tmpStrIndx = 0;
-int g_pointPos[3] = {0};
-int g_pointNum;
+char **g_ipStr = NULL; /* 所有合格的ip地址数组 */
+int g_count = 0; /* 合格的ip地址数量 */
+int g_pointPos[3] = {0}; /* 记录3个点的位置，值i表示在第(i-1)个数字后放置点 */
 
 /* 根据给的原始字符串和3个点的坐标，生成ip */
 char *CreateIpStr(char *s, int *pointPos, int pointNum)
@@ -40,113 +36,84 @@ char *CreateIpStr(char *s, int *pointPos, int pointNum)
     int len = strlen(s);
     char *str = (char *)malloc(len + 4);
 
-//PrintArray(pointPos, pointNum);
     memset(str, 0, len + 4);
     j = 0; /* ip字符串当前放置字符位置 */
     k = 0; /* 点位置当前遍历到的下标 */
     for (i = 0; i < len; i++) {
-//debug_log("i = %d, str = %s\n", i, str);
         str[j] = s[i];
         j++;
-        if (i == (pointPos[k] - 1) && k < 3) {
+        if (k < 3 && i == (pointPos[k] - 1)) {
             str[j] = '.';
             j++;
             k++;
         }
     }
-//debug_log("ip str: %s\n", str);
     return str;
 }
 
 /* 判断给定的字符串是否是合格的iP地址(0~255) */
 int IsIpNum(char *start, int len)
 {
-    int num;
+    int i;
+    int num = 0;
     int isIpNum = 0;
-    char *str = NULL;
 
-//debug_log("len = %d\n", len);
     if (len == 1) {/* 单个数字一定是合格的ip地址 */
-//debug_log("str = %c\n", *start);
         return 1;
     } else if (len < 1 || len > 3) { /* 长度为0或大于3的一定是不合格的ip地址 */
         return 0;
     }
     /* 长度为2或3 */
-    str = (char *)malloc(len + 1);
-    memset(str, 0, len + 1);
-    memcpy(str, start, len);
-    num = atoi(str);
+    for (i = 0; i < len; i++) {
+        num = num * 10 + start[i] - '0';
+    }
     /* 值小于等于255且首字符不为0，是合格ip */
     if (num <= 255 && start[0] != '0') {
-//debug_log("str = %s\n", str);
         isIpNum = 1;
     }
-    free(str);
     return isIpNum;
-}
-
-void SaveIpStr(const char *str)
-{
-    int len = strlen(str);
-    char *ipStr = (char *)malloc(len + 1);
-    memset(ipStr, 0, len + 1);
-    memcpy(ipStr, str, len);
-    g_ipStr[g_count] = ipStr;
-    g_count++;
 }
 
 void Dfs(char *s, int cur, int *pointPos, int pointNum)
 {
     int i;
-    //char *start = NULL;
     int len = strlen(s);
 
-//debug_log("cur = %d, pointNum = %d\n", cur, pointNum);
-//PrintArray(pointPos, pointNum);
-    if (pointNum > 0 && pointPos[pointNum - 1] >= strlen(s)) {
+    if (pointNum > 0 && pointNum < 3 && pointPos[pointNum - 1] >= len) {
         return;
     }
     if (pointNum == 3) {
-        if (pointPos[pointNum - 1] >= strlen(s)) {
+        if (pointPos[pointNum - 1] >= len) {
             return;
         }
-        if (IsIpNum(s + cur, strlen(s) - cur)) {
+        if (IsIpNum(s + cur, len - cur)) {
             g_ipStr[g_count] = CreateIpStr(s, pointPos, pointNum);
-            //return;
             g_count++;
         }
         return;
     }
-    if (cur >= strlen(s) - 1) {
+    if (cur >= len - 1) {
         return;
     }
+    /* 从当前点开始搜索，最多搜索3个数字 */
     for (i = cur; i < cur + 3 && i < len; i++) {
         if (IsIpNum(s + cur, i - cur + 1)) {
             pointPos[pointNum] = i + 1;
-            pointNum++;
-            Dfs(s, i + 1, pointPos, pointNum);
+            /* 起点当当前点的数字是合格的ip地址，开始搜索下一个点的位置 */
+            Dfs(s, i + 1, pointPos, pointNum + 1);
         }
     }
 }
-
-void Dfs2(const char *s, int start, char *ipStr, int pointNum)
-{}
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
 char ** restoreIpAddresses(char * s, int* returnSize){
-//debug_log("s = %s\n", s);
-    int len = strlen(s);
-    char **ipStr = (char **)malloc(MAX_NUM * sizeof(char *));
-    char *ipStr = (char *)malloc(len + 4);
-    memset(ipStr, 0, len + 4);
-    g_ipStr = ipStr;
-    //Dfs(s, 0, g_pointPos, 0); /* 从第0个字符开始搜索 */
-    Dfs2(s, 0, ipStr, 0);
+    g_ipStr = (char **)malloc(MAX_NUM * sizeof(char *));
+    g_count = 0; /* leetcode全局变量需在运行时初始化 */
+    Dfs(s, 0, g_pointPos, 0); /* 从第0个字符开始搜索 */
     *returnSize = g_count;
-    return ipStr;
+    return g_ipStr;
 }
 
 /***** 本地调试代码 ************************************************************/
@@ -165,7 +132,6 @@ int main(void)
     int returnSize;
     char **ipStr = NULL;
 
-    //s = "25525511135";
     s = "012111";
     g_count = 0;
     printf("s = %s\n", s);
@@ -173,6 +139,30 @@ int main(void)
     PrintAllIpStr((const char **)ipStr, returnSize);
 
     s = "0000";
+    g_count = 0;
+    printf("\ns = %s\n", s);
+    ipStr = restoreIpAddresses(s, &returnSize);
+    PrintAllIpStr((const char **)ipStr, returnSize);
+
+    s = "25525511135";
+    g_count = 0;
+    printf("s = %s\n", s);
+    ipStr = restoreIpAddresses(s, &returnSize);
+    PrintAllIpStr((const char **)ipStr, returnSize);
+
+    s = "1111";
+    g_count = 0;
+    printf("\ns = %s\n", s);
+    ipStr = restoreIpAddresses(s, &returnSize);
+    PrintAllIpStr((const char **)ipStr, returnSize);
+
+    s = "010010";
+    g_count = 0;
+    printf("\ns = %s\n", s);
+    ipStr = restoreIpAddresses(s, &returnSize);
+    PrintAllIpStr((const char **)ipStr, returnSize);
+
+    s = "101023";
     g_count = 0;
     printf("\ns = %s\n", s);
     ipStr = restoreIpAddresses(s, &returnSize);
