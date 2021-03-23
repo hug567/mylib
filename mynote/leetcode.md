@@ -17,3 +17,9 @@ void func(int **_arr)
 int row = sizeof(arr) / sizeof(arr[0]);
 int col = sizeof(arr[0]) / sizeof(arr[0][0]);
 ```
+
+### 3、注意事项：
+
+```c
+1、leetcode中全局变量需在运行代码中初始化；
+```
