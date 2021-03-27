@@ -22,6 +22,11 @@ void PrintArray(int *arr, int size)
     printf("\n");
 }
 /***** 提交代码 ****************************************************************/
+#define MAX_SIZE 100
+int **g_combs = NULL;
+int g_count = 0;
+int *g_colSize = NULL;
+
 void Dfs(int targetLeft)
 {}
 
@@ -33,9 +38,15 @@ void Dfs(int targetLeft)
 int** combinationSum(int* candidates, int candidatesSize, int target,
                      int* returnSize, int** returnColumnSizes)
 {
-    *returnSize = 0;
-    return NULL;
+    g_count = 0; /* leetcode 全局变量需在代码中再次初始化 */
+    g_combs = (int **)malloc(MAX_SIZE * sizeof(int *));
+    *returnColumnSizes = (int *)malloc(MAX_SIZE * sizeof(int));
+    g_colSize = *returnColumnSizes;
+
+    *returnSize = g_count;
+    return g_combs;
 }
+
 /***** 本地调试代码 ************************************************************/
 int main(void)
 {
