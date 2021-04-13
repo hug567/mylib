@@ -34,24 +34,12 @@ void Dfs(int *cand, int candSize, int candIdx, int *comb, int combCurIdx, int ta
 
     for (i = candIdx; i < candSize; i++) {
         comb[combCurIdx] = cand[i];
-        Dfs(cand, candSize, i, comb, combCurIdx + 1, targetLeft - cand[i]);
+        Dfs(cand, candSize, i + 1, comb, combCurIdx + 1, targetLeft - cand[i]);
+        /* 去重 */
+        while ((i + 1) != candSize && cand[i] == cand[i + 1]) {
+            i++;
+        }
     }
-
-#if 0
-    //Dfs(cand, candSize, candIdx + 1, comb, combCurIdx, targetLeft);
-//PrintArray(comb, combCurIdx);
-    if (cand[candIdx] <= targetLeft) { /* 当前值可以放入组合 */
-        comb[combCurIdx] = cand[candIdx];
-        /* 遍历下一个 */
-        Dfs(cand, candSize, candIdx + 1, comb, combCurIdx + 1, targetLeft - cand[candIdx]);
-    } else {
-    /* 当前值不能放入组合，回溯一个已放入组合的值，继续遍历当前值 */
-    //if (combCurIdx > 0) {
-        //combCurIdx--;
-        Dfs(cand, candSize, candIdx, comb, combCurIdx - 1, targetLeft + comb[combCurIdx - 1]);
-        //Dfs(cand, candSize, candIdx, comb, combCurIdx, targetLeft);
-    }
-#endif
 }
 
 int Compare(const void *a, const void *b)
