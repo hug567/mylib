@@ -42,13 +42,15 @@ int main(void)
 	test_info("open %s success\n", DEV_NAME);
 
 	test_info("will write char to %s by ioctl\n", DEV_NAME);
-	for (i = 0; i < 100; i++) {
+	for (i = 0; i < 10; i++) {
 		ret = write_char(fd, 'A');
 		if (ret < 0) {
 			close(fd);
 			return ret;
 		}
 	}
+	write_char(fd, '\r');
+	write_char(fd, '\n');
 
 	test_info("will close %s\n", DEV_NAME);
 	close(fd);

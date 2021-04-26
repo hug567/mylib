@@ -12,6 +12,7 @@
 #include <linux/kdev_t.h>
 #include <linux/module.h>
 #include <linux/printk.h>
+#include <linux/interrupt.h>
 #include "myuart.h"
 
 #define log_info(fmt, ...)  printk("[INFO ][%s@%d]: " fmt, __func__, __LINE__, ##__VA_ARGS__)
@@ -19,13 +20,15 @@
 
 #define DEV_NAME "myuart"
 
-#define UART_DR			0x0 /* data register */
-#define UART_FR			0x18 /* flag register */
-#define UART_FR_TXFE		0x80 /* transmit fifo empty */
-#define UART_FR_TXFF		0x20 /* transmit fifo full */
+#define UART_DR			0x0  /* Data Register */
+#define UART_FR			0x18 /* Flag Register */
+#define UART_FR_TXFE		0x80 /* Transmit Fifo Empty */
+#define UART_FR_TXFF		0x20 /* Transmit Fifo Full */
 #define UART_LCR_H		0x2C
-#define UART_CR			0x30
-#define UART_IMSC		0x38
+#define UART_CR			0x30 /* Control Register */
+#define UART_CR_UARTEN		0x01 /* UART Enable */
+#define UART_IMSC		0x38 /* Interrupt Mask Set/Clear Register */
+#define UART_IMSC_RXIM		0x10 /* Receive Interrupt Mask */
 #define UART_RIS		0x3C
 #define UART_MIS		0x40
 #define UART_ICR		0x44
@@ -132,8 +135,26 @@ static struct file_operations g_myuart_fops = {
 	.unlocked_ioctl		= myuart_ioctl,
 };
 
+static irqreturn_t myuart_interrupt(int irq, void *ctx)
+{
+	log_info("Enter %s\n", __func__);
+	return IRQ_HANDLED;
+}
+
+static void myuart_enable_irq(struct myuart *myuart)
+{
+	unsigned int imsc;
+	void *base_addr = myuart->vaddr;
+
+	imsc = readl(base_addr + UART_IMSC);
+	imsc |= UART_IMSC_RXIM;
+log_info("imsc = 0x%x\n", imsc);
+	writel(imsc, base_addr + UART_IMSC_RXIM);
+}
+
 static int myuart_info_init(struct myuart *myuart)
 {
+	int ret;
 	struct dts_info *info = &g_dts_info[1];
 
 	myuart->vaddr = ioremap(info->paddr, info->size);
@@ -143,7 +164,27 @@ static int myuart_info_init(struct myuart *myuart)
 	}
 	log_info("ioremap [0x%x:0x%x] to [0x%p:0x%x] success\n",
 		 info->paddr, info->size, myuart->vaddr, info->size);
+
+	ret = request_irq(info->irq, myuart_interrupt, 0, "myuart", NULL);
+	if (ret < 0) {
+		log_error("request_irq failed\n");
+		iounmap(myuart->vaddr);
+		return ret;
+	}
+
+	myuart_enable_irq(myuart);
+
 	return 0;
+}
+
+static void myuart_info_exit(struct myuart *myuart)
+{
+	struct dts_info *info = &g_dts_info[1];
+
+	if (myuart != NULL && myuart->vaddr != NULL) {
+		iounmap(myuart->vaddr);
+	}
+	free_irq(info->irq, NULL);
 }
 
 static int __init myuart_init(void)
@@ -196,6 +237,8 @@ static void __exit myuart_exit(void)
 	struct myuart *myuart = &g_myuart;
 
 	log_info("Enter %s\n", __func__);
+
+	myuart_info_exit(myuart);
 
 	device_destroy(myuart->class, myuart->devno);
 	class_destroy(myuart->class);

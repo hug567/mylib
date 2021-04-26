@@ -9,11 +9,11 @@ obj-m += vexpress/myuart.o
 BUILD_DIR=mybuild
 KERNEL = ${HOME}/code/linux/linux-4.18
 #KERNEL = /lib/modules/`uname -r`/build
-PWD = $(shell pwd)/${BUILD_DIR}
+CUR_DIR = $(shell pwd)/${BUILD_DIR}
 
 CROSS_COMPILE=arm-linux-gnueabi-
 T_CC=${CROSS_COMPILE}gcc
-T_CFLAGS="-Wall"
+T_CFLAGS=-Wall
 
 prepare:
 	rm -rf ${BUILD_DIR}
@@ -23,10 +23,10 @@ prepare:
 	make modules
 
 modules: tests
-	make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- M=${PWD} -C ${KERNEL} modules
+	make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- M=${CUR_DIR} -C ${KERNEL} modules
 
 tests:
-	${T_CC} ${T_CFLAGS} ${PWD}/vexpress/test_myuart.c -o ${PWD}/test_myuart
+	${T_CC} ${T_CFLAGS} ${CUR_DIR}/vexpress/test_myuart.c -o ${CUR_DIR}/test_myuart
 
 .PHONEY: clean
 clean:
