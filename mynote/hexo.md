@@ -43,25 +43,26 @@ sudo npm install hexo-renderer-stylus --save             //安装hexo插件
 sudo npm install hexo-server                             //安装hexo插件
 hexo -v                                                  //查看hexo版本
 ```
+## 3、创建hexo博客：
 
+```shell
+mkdir hexo                                               # 创建目录
+cd hexo                                                  # 进入目录
+hexo init                                                # hexo初始化
+hexo g / generate                                        # 生成静态文件
+hexo s / server                                          # 在本地服务器运行
+hexo d / deploy                                          # 部署博客
+hexo clean                                               # 清除缓存
+hexo new article                                         # 新建文章(source/_posts/artical.md)
+cp -r public/* ~/nginx                                   # 拷贝文件到网页目录
 
-```C
-mkdir nginx                                              //创建目录
-cd nginx                                                 //进入目录
-sudo hexo init                                           //hexo初始化
 sudo npm install
-hexo g / generate                                        //生成静态文件
-hexo s / server                                          //在本地服务器运行
-hexo d / deploy                                          //部署博客
-hexo clean                                               //清除缓存
-hexo new article                                         //新建文章(source/_posts/artical.md)
 
 /* 下载主题并复制至theme目录： */
 https://hexo.io/themes/
 /* 配置博客主题： */
 vim _config.yml
 theme: syefe
-
 ```
 
 ## 附录：常见报错

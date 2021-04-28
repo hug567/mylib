@@ -8,7 +8,7 @@ git config --global user.email huangxing567@163.com      //设置邮箱
 ssh-keygen -t rsa -C "huangxing567@163.com"              //配置SSH Key
 cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
 
-git config --global credential.helper store    //长期缓存账号密码
+git config --global credential.helper store              //长期缓存账号密码
 ```
 
 ## 2、常用操作：
@@ -137,6 +137,11 @@ git reset --soft HEAD                          //撤销最近一条commit，不�
 git reset --hard HEAD~1                        //删除最近一条commit
 git reset HEAD                                 //撤销所有文件add
 git reset HEAD <file>                          //撤销指定文件的add
+/* 回退至指定commit： */
+git log --before="2019-7-1"                    //查看指定日期前的提交
+git log --before "2020-05-04" --oneline --pretty="%h %ad %s %cr" --date=format:"[%Y-%m-%d %H:%M:%S]"
+git reset --hard <commit id>                   //回退至指定commit（该commit保留）
+
 git checkout .                                 //删除所有未add更改
 git chechoout <file>                           //删除指定文件未add更改
 
@@ -151,11 +156,6 @@ git clean -nfdx                                //查看将被删除未追踪与.
 git clean -f                                   //删除未追踪的文件
 git clean -fd                                  //删除未追踪的文件及目录
 git clean -fdx                                 //删除未追踪与.gitignore忽略的文件及目录
-
-//----------回退至指定commit-----------------------------------------------//
-git log --before="2019-7-1"                    //查看指定日期前的提交
-git log --before "2020-05-04" --oneline --pretty="%h %ad %s %cr" --date=format:"[%Y-%m-%d %H:%M:%S]"
-git reset --hard <commit id>                   //回退至指定commit（该commit保留）
 ```
 
 ### 2.6、设置忽略
@@ -176,3 +176,28 @@ git stash show                                 //查看最新stash差异
 git stash show -p                              //查看最新stash详细修改
 git stash show <id> -p                         //查看指定id的stash详细修改
 ```
+
+### 2.8、制作patch
+
+```shell
+# 制作patch
+git format-patch -1 <ID>                         # 指定commit生成patch
+git format-patch <ID>                            # 生成指定commit以来的patch (不包含该patch)
+git format-patch <ID1>...<ID2>                   # 生成两个commit之间的patch (包含两个commit)
+
+# 应用patch
+git apply --chech <patch>                        # 检查patch是否有冲突
+git am <patch>                                   # 应用patch
+git am --abort                                   # 撤销应用patch
+```
+
+## 3、安装gitbook：
+
+```shell
+sudo apt install nodejs npm
+npm config set registry http://mirrors.tools.huawei.com/npm/
+npm cache clean --force
+npm install -g gitbook-cli
+gitbook -V
+```
+
