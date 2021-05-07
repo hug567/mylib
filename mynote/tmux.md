@@ -18,7 +18,7 @@ tmux a                                   //恢复默认会话
 tmux a -t <name>                         //恢复指定会话
 Prefix + s                               //切换会话
 Prefix + d                               //断开会话
-Prefix、Shift + $                        //重命名会话
+Prefix、Shift + $                        //修改会话名
 ```
 
 ## 3、窗口操作(window)：
@@ -29,7 +29,7 @@ Prefix + n                               //跳转至第n个窗口
 Prefix + q                               //自定义退出窗口(默认：Prefix + &)
 Prefix + w                               //列出所有窗口
 Prefix + f                               //搜索窗口
-Prefix + ,                               //重命名当前窗口
+Prefix + ,                               //修改窗口名
 tmux swap-window -s 3 -t 1               //交换3号和1号窗口
 tmux swap-window -t 1                    //交换当前和1号窗口
 tmux move-window -t 1                    //移动当前窗口至1号

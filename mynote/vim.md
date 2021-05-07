@@ -91,38 +91,39 @@ v                                    //进入VISUAL模式，方向键选中
 ### 6）、搜索替换：
 
 ```C
-/word                            //向光标之下搜索
-?word                            //向光标之上搜索
-/word\c                          //大小写不敏感
-n/N                              //向下/上查找匹配
-:n1,n2s/word1/word2/g            //在n1至n2行间将word1替换为word2
-:n1,n2s/word1/word2/gc           //替换前需确认
-:%s/word1/word2/gc               //全局搜索替换
-shift + *                        //搜索单词
-.*\[]^$                          //需转移字符
-:%s/^M//gc                       //搜索替换dos换行符，^M使用 Ctrl+V+Enter 输入
-:%s/;.\+$//gc                    //搜索指定字符至行尾
+/word                                //向光标之下搜索
+?word                                //向光标之上搜索
+/word\c                              //大小写不敏感
+n/N                                  //向下/上查找匹配
+:n1,n2s/word1/word2/g                //在n1至n2行间将word1替换为word2
+:n1,n2s/word1/word2/gc               //替换前需确认
+:%s/word1/word2/gc                   //全局搜索替换
+shift + *                            //搜索单词
+.*\[]^$                              //需转移字符
+:%s/^M//gc                           //搜索替换dos换行符，^M使用 Ctrl+V+Enter 输入
+:%s/;.\+$//gc                        //搜索指定字符至行尾
+:%s/字符串//ng                        //统计字符串在当前文件中的个数
 ```
 
 ### 7）、显示比较：
 
 ```C
-:set nu                          //显示行号
-:set nonu                        //隐藏行号
-:set list                        //显示tab
-:set nolist                      //隐藏tab
-:noh                             //退出搜索高亮
-:source ~/.vimrc                 //更新配置文件
-:hi / :highlight                 //查看当前颜色配置
-:f / Ctrl + G                    //查看文件名
-:pwd                             //查看父目录
-:diffthis                        //比较文件，在打开的两个文件中分别执行
-:diffupdate                      //比较更新
-zo                               //折叠打开
-zc                               //折叠关闭
-:set fileencoding                //查看文件编码格式
-:set fileencoding=uft-8          //转换文件编码格式为utf-8
-:set fileformat=unix             //设置文件格式为unix
+:set nu                              //显示行号
+:set nonu                            //隐藏行号
+:set list                            //显示tab
+:set nolist                          //隐藏tab
+:noh                                 //退出搜索高亮
+:source ~/.vimrc                     //更新配置文件
+:hi / :highlight                     //查看当前颜色配置
+:f / Ctrl + G                        //查看文件名
+:pwd                                 //查看父目录
+:diffthis                            //比较文件，在打开的两个文件中分别执行
+:diffupdate                          //比较更新
+zo                                   //折叠打开
+zc                                   //折叠关闭
+:set fileencoding                    //查看文件编码格式
+:set fileencoding=uft-8              //转换文件编码格式为utf-8
+:set fileformat=unix                 //设置文件格式为unix
 ```
 
 ### 8）、多行注释：

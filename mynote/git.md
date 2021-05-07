@@ -201,3 +201,34 @@ npm install -g gitbook-cli
 gitbook -V
 ```
 
+## 4、tig：
+
+```c
+sudo apt install tig                         //安装tig
+
+Enter                                        //右侧展开commit详情视图
+
+Up / Down                                    //左侧选中不同commit
+J / K                                        //左侧选中不同commit
+j / k                                        //右侧commit详情中上下移动光标
+PageUp / PageDown                            //右侧commit详情上下翻页
+d                                            //全屏显示commit详情
+
+q                                            //后退一个视图
+m                                            //回到主视图
+l                                            //查看log，同：git log --name-status
+h                                            //显示帮助
+
+/* 配置文件：~/.tigrc */
+# 颜色设置：color area fgcolor bgcolor [attributes]
+
+# 中间分隔线颜色
+color title-blur blue default
+
+# 底部聚焦栏颜色 (237:灰)
+color title-focus blue 237
+
+# 当前行颜色 (235:黑, 228:黄)
+color cursor 235 228
+```
+
