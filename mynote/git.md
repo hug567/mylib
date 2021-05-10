@@ -186,7 +186,7 @@ git format-patch <ID>                            # 生成指定commit以来的pa
 git format-patch <ID1>...<ID2>                   # 生成两个commit之间的patch (包含两个commit)
 
 # 应用patch
-git apply --chech <patch>                        # 检查patch是否有冲突
+git apply --check <patch>                        # 检查patch是否有冲突
 git am <patch>                                   # 应用patch
 git am --abort                                   # 撤销应用patch
 ```

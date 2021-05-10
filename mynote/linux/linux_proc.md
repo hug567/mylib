@@ -10,7 +10,9 @@
  *   输出：
  *     struct proc_dir_entry *: 
  */
-struct proc_dir_entry *proc_create(const char *name, umode_t mode, struct proc_dir_entry *parent, const struct file_operations *proc_fops);
+struct proc_dir_entry *proc_create(const char *name, umode_t mode,
+                                   struct proc_dir_entry *parent,
+                                   const struct file_operations *proc_fops);
 
 /*
  * 删除proc文件：linux/proc_fs.h
