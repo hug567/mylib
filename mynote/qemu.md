@@ -55,3 +55,25 @@ tftp>q                                                  //推出连接
 
 /* 创建虚拟网口： */
 ```
+
+## 4、编译qemu：
+
+```shell
+# 下载源码
+git clone https://gitee.com/mirrors/qemu.git
+git clone https://gitlab.com/qemu-project/qemu.git
+
+# 环境准备
+sudo apt install ninja-build
+# 查看glibc版本
+ldd --version
+ls -l /lib/x86_64-linux-gnu/libc*  # /lib/x86_64-linux-gnu/libc.so.6 -> libc-2.27.so
+
+# 编译
+mkdir build
+cd build
+../configure
+make
+
+```
+

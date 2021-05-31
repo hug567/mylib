@@ -42,7 +42,7 @@ static inline void DisableDebugLog(void)
     int __size = size; \
     DebugLog("array: "); \
     for (__i = 0; __i < __size; __i++) { \
-        printf("%d ", __arr[i]); \
+        printf("%d ", __arr[__i]); \
     } \
     printf("\n"); \
 }) \
