@@ -29,10 +29,15 @@
 #define UART_CR_UARTEN		0x01 /* UART Enable */
 #define UART_IMSC		0x38 /* Interrupt Mask Set/Clear Register */
 #define UART_IMSC_RXIM		0x10 /* Receive Interrupt Mask */
-#define UART_RIS		0x3C
+#define UART_RIS		0x3C /* 原始中断状态寄存器 */
+#define UART_RIS_RXRIS		0x10 /* 接收中断状态 */
 #define UART_MIS		0x40
-#define UART_ICR		0x44
+#define UART_ICR		0x44 /* 中断清除寄存器 */
+#define UART_ICR_RXIC		0x10 /* 清除接收中断 */
 
+/*
+ * 获取UART1中断号：cat /proc/interrupts
+ */
 static struct dts_info {
 	unsigned int paddr;
 	unsigned int size;
@@ -99,10 +104,15 @@ static int myuart_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
-static void write_char(struct myuart *myuart, char ch)
+static void myuart_write_char(struct myuart *myuart, char ch)
 {
+	void *base_addr = myuart->vaddr;
+
 	wait_until_txfifo_nfull(myuart);
-	writel_relaxed(ch, myuart->vaddr + UART_DR);
+	writel_relaxed(ch, base_addr + UART_DR);
+	if (ch == '\r') {
+		writel_relaxed('\n', base_addr + UART_DR);
+	}
 }
 
 static long myuart_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
@@ -118,7 +128,7 @@ static long myuart_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 
 	switch (cmd) {
 	case CMD_WRITE_CHAR: {
-		write_char(myuart, (char)arg);
+		myuart_write_char(myuart, (char)arg);
 	}
 		break;
 	default:
@@ -135,9 +145,31 @@ static struct file_operations g_myuart_fops = {
 	.unlocked_ioctl		= myuart_ioctl,
 };
 
+static char myuart_read_char(struct myuart *myuart)
+{
+	unsigned int reg_dr;
+	void *base_addr = g_myuart.vaddr;
+
+	reg_dr = readl(base_addr + UART_DR);
+	return (reg_dr & 0xFF);
+}
+
 static irqreturn_t myuart_interrupt(int irq, void *ctx)
 {
-	log_info("Enter %s\n", __func__);
+	char ch;
+	unsigned int reg_ris;
+	unsigned int reg_icr;
+	struct myuart *myuart = (struct myuart *)ctx;
+	void *base_addr = myuart->vaddr;
+
+	reg_ris = readl(base_addr + UART_RIS);
+	reg_icr = readl(base_addr + UART_ICR);
+	if (reg_ris & UART_RIS_RXRIS) {
+		ch = myuart_read_char(myuart);
+		myuart_write_char(myuart, ch);
+		reg_icr |= UART_ICR_RXIC; /* 清除接收中断 */
+		writel(reg_icr, base_addr + UART_ICR);
+	}
 	return IRQ_HANDLED;
 }
 
@@ -147,9 +179,8 @@ static void myuart_enable_irq(struct myuart *myuart)
 	void *base_addr = myuart->vaddr;
 
 	imsc = readl(base_addr + UART_IMSC);
-	imsc |= UART_IMSC_RXIM;
-log_info("imsc = 0x%x\n", imsc);
-	writel(imsc, base_addr + UART_IMSC_RXIM);
+	imsc |= UART_IMSC_RXIM; /* 使能接收中断 */
+	writel(imsc, base_addr + UART_IMSC);
 }
 
 static int myuart_info_init(struct myuart *myuart)
@@ -165,7 +196,7 @@ static int myuart_info_init(struct myuart *myuart)
 	log_info("ioremap [0x%x:0x%x] to [0x%p:0x%x] success\n",
 		 info->paddr, info->size, myuart->vaddr, info->size);
 
-	ret = request_irq(info->irq, myuart_interrupt, 0, "myuart", NULL);
+	ret = request_irq(info->irq, myuart_interrupt, 0, "myuart", myuart);
 	if (ret < 0) {
 		log_error("request_irq failed\n");
 		iounmap(myuart->vaddr);
