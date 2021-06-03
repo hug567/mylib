@@ -37,8 +37,41 @@ void MaxHeapInsertNode(int *heap, int val)
 }
 
 /* 最大堆删除顶点元素 */
-void MaxHeapDeleteTopNode(int *heap)
-{}
+int MaxHeapDeleteTopNode(int *heap)
+{
+    int i, top, max_pos, tmp;
+
+    if (heap[0] <= 0) {
+        return -1;
+    }
+    top = heap[1];
+    heap[1] = heap[heap[0]];
+    heap[0]--;
+    i = 1;
+    while (1) {
+        /* 寻找父子节点中最大值的位置索引 */
+        max_pos = i;
+        /* 若父节点小于左子节点 */
+        if (2 * i <= heap[0] && heap[max_pos] < heap[2 * i]) {
+            max_pos = 2 * i;
+        }
+        /* 若右子节点为最大值 */
+        if (2 * i + 1 <= heap[0] && heap[max_pos] < heap[2 * i + 1]) {
+            max_pos = 2 * i + 1;
+        }
+        /* 父节点均比子节点大 */
+        if(max_pos == i) {
+            break; /* 结束遍历 */
+        }
+        /* 有子节点值比父节点大 */
+        tmp = heap[i];
+        heap[i] = heap[max_pos];
+        heap[max_pos] = tmp;
+        /* 继续遍历 */
+        i = max_pos;
+    }
+    return top;
+}
 
 /* 按二叉树的前序遍历打印堆 */
 void __PrintHeapPreOrder(const int *heap, int idx)
@@ -67,5 +100,8 @@ int main(void)
         MaxHeapInsertNode(heap, i);
     }
     PrintHeapPreOrder(heap);
+    DebugLog("heap top: %d\n", MaxHeapDeleteTopNode(heap));
+    PrintHeapPreOrder(heap);
+
     return 0;
 }
