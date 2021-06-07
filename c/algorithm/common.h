@@ -9,6 +9,9 @@
 
 #define LOCAL_DEBUG
 
+#define INT_MAX ((int)(~0U >> 1))
+#define INT_MIN ((int)(1U << 31))
+
 static int g_enableLog = 1;
 
 static inline void EnableDebugLog(void)
