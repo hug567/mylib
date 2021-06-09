@@ -12,11 +12,11 @@
 static int g_enableLog = 1;
 
 #define DebugLog(fmt, ...) \
-({ \
+do { \
     if (g_enableLog) { \
         printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__); \
     } \
-})
+} while (0)
 
 #define __printf(fmt, ...) \
 ({ \
@@ -36,7 +36,7 @@ static inline void DisableDebugLog(void)
 }
 
 #define PrintArray(arr, size) \
-({ \
+do { \
     int __i; \
     int *__arr = arr; \
     int __size = size; \
@@ -45,6 +45,6 @@ static inline void DisableDebugLog(void)
         printf("%d ", __arr[i]); \
     } \
     printf("\n"); \
-}) \
+} whlile (0)
 
 #endif /* __COMMON_H__ */
