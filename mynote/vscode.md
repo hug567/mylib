@@ -148,7 +148,7 @@ Ctrl + F4                       //关闭编辑器窗口
 /* 自定义快捷键： */
 Ctrl + Shift + p -> Preferences: Open Keyboard Shortcuts
 Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
-Ctrl + Alt + ]                  //聚焦至终端 (terminal.focus)
+Ctrl + Alt + ]                  //聚焦至终端 (workbench.action.terminal.focus)
 ```
 
 ## 4、vscode连接linux主机：

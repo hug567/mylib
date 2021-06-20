@@ -211,6 +211,16 @@ R                                //刷新目录树
 I                                //切换显示隐藏节点
 U                                //将根节点设为上级目录
 C                                //将根节点设为当前节点
+
+//书签操作
+B                                //打开书签 (Shift + B)
+:Bookmark <name>                 //将当前文件添加到书签，并命名为name ,name 可改成其他
+:ClearBookmarks <name>           //清除指定书签
+:ClearBookmarks                  //清除所有书签
+:ClearAllBookmarks               //清除所有书签
+
+:NERDTreeFind               //跳转至当前打开的文件所在路径下的目录
+:NERDTreeCWD                //跳转至当前vim当前工作路径(:pwd)下的目录
 ```
 
 ### 3）、Taglist：显示函数列表（需ctags支持）

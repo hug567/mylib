@@ -35,6 +35,8 @@ git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" main.c | tail -1
 git log --pretty=format:"%cd" --date=format:"%Y" -1 main.c
 /* 指定文件倒序提交时间 */
 git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" --reverse main.c
+
+git log --stat                                           //查看commit修改行数
 ```
 
 ### 2.2、本地分支管理
