@@ -4,6 +4,17 @@
  */
 #include "common.h"
 
+#define SHORT_OPTION ":dth"
+
+struct ascii_str {
+	char val;
+	const char *str;
+};
+
+static bool g_dump_detail_flag = false;
+static int g_fd = 0;
+static struct termios g_tio;
+
 static tcflag_t g_baud[][2] = {
 	{ B0      , 0       },
 	{ B50     , 50      },
@@ -37,6 +48,20 @@ static tcflag_t g_baud[][2] = {
 	{ B3500000, 3500000 },
 	{ B4000000, 4000000 },
 };
+
+static struct ascii_str g_ascii_str[] = {
+	{0x03, "Ctrl-C"},
+};
+
+static void usage(const char *name)
+{
+	log_info("Usage:\n");
+	log_info("%s                  dump current console termios\n", name);
+	log_info("%s -t               dump current console termios with detail flag\n", name);
+	log_info("%s -d /dev/tty*     dump /dev/tty* termios\n", name);
+	log_info("%s -d /dev/tty* -t  dump /dev/tty* termios with detail flag\n", name);
+	log_info("%s -h               print helpp info\n", name);
+}
 
 /* 无符号整形的最低有效位, 从0开始 */
 static int least_valid_bit(unsigned int val)
@@ -114,32 +139,38 @@ static void parse_c_lflag(tcflag_t c_lflag)
 static void parse_c_cc(const cc_t *c_cc)
 {
 	log_info("===================== c_cc ======================\n");
-	log_info("c_cc[VINTR   ] = %d\n", c_cc[VINTR   ]);
-	log_info("c_cc[VQUIT   ] = %d\n", c_cc[VQUIT   ]);
-	log_info("c_cc[VERASE  ] = %d\n", c_cc[VERASE  ]);
-	log_info("c_cc[VKILL   ] = %d\n", c_cc[VKILL   ]);
-	log_info("c_cc[VEOF    ] = %d\n", c_cc[VEOF    ]);
-	log_info("c_cc[VTIME   ] = %d\n", c_cc[VTIME   ]);
-	log_info("c_cc[VMIN    ] = %d\n", c_cc[VMIN    ]);
-	log_info("c_cc[VSWTC   ] = %d\n", c_cc[VSWTC   ]);
-	log_info("c_cc[VSTART  ] = %d\n", c_cc[VSTART  ]);
-	log_info("c_cc[VSTOP   ] = %d\n", c_cc[VSTOP   ]);
-	log_info("c_cc[VSUSP   ] = %d\n", c_cc[VSUSP   ]);
-	log_info("c_cc[VEOL    ] = %d\n", c_cc[VEOL    ]);
-	log_info("c_cc[VREPRINT] = %d\n", c_cc[VREPRINT]);
-	log_info("c_cc[VDISCARD] = %d\n", c_cc[VDISCARD]);
-	log_info("c_cc[VWERASE ] = %d\n", c_cc[VWERASE ]);
-	log_info("c_cc[VLNEXT  ] = %d\n", c_cc[VLNEXT  ]);
-	log_info("c_cc[VEOL2   ] = %d\n", c_cc[VEOL2   ]);
+	log_info("c_cc[VINTR   ] = 0x%02x\n", c_cc[VINTR   ]);
+	log_info("c_cc[VQUIT   ] = 0x%02x\n", c_cc[VQUIT   ]);
+	log_info("c_cc[VERASE  ] = 0x%02x\n", c_cc[VERASE  ]);
+	log_info("c_cc[VKILL   ] = 0x%02x\n", c_cc[VKILL   ]);
+	log_info("c_cc[VEOF    ] = 0x%02x\n", c_cc[VEOF    ]);
+	log_info("c_cc[VTIME   ] = 0x%02x\n", c_cc[VTIME   ]);
+	log_info("c_cc[VMIN    ] = 0x%02x\n", c_cc[VMIN    ]);
+	log_info("c_cc[VSWTC   ] = 0x%02x\n", c_cc[VSWTC   ]);
+	log_info("c_cc[VSTART  ] = 0x%02x\n", c_cc[VSTART  ]);
+	log_info("c_cc[VSTOP   ] = 0x%02x\n", c_cc[VSTOP   ]);
+	log_info("c_cc[VSUSP   ] = 0x%02x\n", c_cc[VSUSP   ]);
+	log_info("c_cc[VEOL    ] = 0x%02x\n", c_cc[VEOL    ]);
+	log_info("c_cc[VREPRINT] = 0x%02x\n", c_cc[VREPRINT]);
+	log_info("c_cc[VDISCARD] = 0x%02x\n", c_cc[VDISCARD]);
+	log_info("c_cc[VWERASE ] = 0x%02x\n", c_cc[VWERASE ]);
+	log_info("c_cc[VLNEXT  ] = 0x%02x\n", c_cc[VLNEXT  ]);
+	log_info("c_cc[VEOL2   ] = 0x%02x\n", c_cc[VEOL2   ]);
 }
 
-int print_termios(const struct termios *tio)
+static void dump_termios_detail(const struct termios *tio)
+{
+	parse_c_iflag(tio->c_iflag);
+	parse_c_oflag(tio->c_oflag);
+	parse_c_cflag(tio->c_cflag);
+	parse_c_lflag(tio->c_lflag);
+	parse_c_cc(tio->c_cc);
+}
+
+static void dump_termios(const struct termios *tio)
 {
 	int i;
 
-	if (tio == NULL) {
-		return -EINVAL;
-	}
 	log_info("==================== termios ====================\n");
 	log_info("c_iflag = 0x%x\n", tio->c_iflag);
 	log_info("c_oflag = 0x%x\n", tio->c_oflag);
@@ -147,20 +178,12 @@ int print_termios(const struct termios *tio)
 	log_info("c_lflag = 0x%x\n", tio->c_lflag);
 	log_info("c_cc: ");
 	for (i = 0; i < NCCS; i++) {
-		printf("%d ", tio->c_cc[i]);
+		printf("%02x ", tio->c_cc[i]);
 	}
 	printf("\n");
-
-	parse_c_iflag(tio->c_iflag);
-	parse_c_oflag(tio->c_oflag);
-	parse_c_cflag(tio->c_cflag);
-	parse_c_lflag(tio->c_lflag);
-	parse_c_cc(tio->c_cc);
-
-	return 0;
 }
 
-int get_termios(int fd, struct termios *tio)
+static int get_termios(int fd, struct termios *tio)
 {
 	int ret;
 
@@ -176,25 +199,54 @@ int get_termios(int fd, struct termios *tio)
 	return 0;
 }
 
-int dump_termios(int fd)
+static int update_fd(const char *tty_name)
+{
+	g_fd = open(tty_name, O_RDWR);
+	if (g_fd < 0) {
+		log_error("open %s failed\n", tty_name);
+		return -1;
+	}
+
+	if (!isatty(g_fd)) {
+		log_error("%s is not a tty device\n", tty_name);
+		return -1;
+	}
+
+	return 0;
+}
+
+int main(int argc, char *argv[])
 {
 	int ret;
-	struct termios tio;
+	int opt;
 
-	if (fd < 0) {
-		return -EINVAL;
+	while ((opt = getopt(argc, argv, SHORT_OPTION)) != -1) {
+		switch (opt) {
+		case 'd' :
+			ret = update_fd(argv[optind]);
+			if (ret < 0) {
+				return ret;
+			}
+			break;
+		case 't' :
+			g_dump_detail_flag = true;
+			break;
+		default:
+			usage(argv[0]);
+			return -1;
+		}
 	}
 
-	ret = get_termios(fd, &tio);
+	log_info("tty name: %s\n", ttyname(g_fd));
+
+	ret = get_termios(g_fd, &g_tio);
 	if (ret < 0) {
-		log_error("get termios failed\n");
 		return ret;
 	}
 
-	ret = print_termios(&tio);
-	if (ret < 0) {
-		log_error("print termios failed\n");
-		return ret;
+	dump_termios(&g_tio);
+	if (g_dump_detail_flag) {
+		dump_termios_detail(&g_tio);
 	}
 
 	return 0;

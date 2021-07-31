@@ -9,3 +9,7 @@ include(common.cmake)
 
 log_info_var(CMAKE_CURRENT_SOURCE_DIR)
 log_info_var(CMAKE_CURRENT_BINARY_DIR)
+
+compile_single_file(
+    tty_dump_termios.c
+)
