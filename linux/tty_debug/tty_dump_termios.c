@@ -60,7 +60,7 @@ static void usage(const char *name)
 	log_info("%s -t               dump current console termios with detail flag\n", name);
 	log_info("%s -d /dev/tty*     dump /dev/tty* termios\n", name);
 	log_info("%s -d /dev/tty* -t  dump /dev/tty* termios with detail flag\n", name);
-	log_info("%s -h               print helpp info\n", name);
+	log_info("%s -h               print help info\n", name);
 }
 
 /* 无符号整形的最低有效位, 从0开始 */
@@ -100,62 +100,91 @@ static int get_baud_value(tcflag_t baud)
 
 static void parse_c_iflag(tcflag_t c_iflag)
 {
+#define PRINT_C_IFLAG(flag) log_info(#flag " = %d\n", mask_value(c_iflag, flag))
 	log_info("==================== c_iflag ====================\n");
+	PRINT_C_IFLAG(IGNBRK);
+	PRINT_C_IFLAG(BRKINT);
+	PRINT_C_IFLAG(IGNPAR);
+	PRINT_C_IFLAG(PARMRK);
+	PRINT_C_IFLAG(INPCK);
+	PRINT_C_IFLAG(ISTRIP);
+	PRINT_C_IFLAG(INLCR);
+	PRINT_C_IFLAG(IGNCR);
+	PRINT_C_IFLAG(ICRNL);
+	PRINT_C_IFLAG(IUCLC);
+	PRINT_C_IFLAG(IXON);
+	PRINT_C_IFLAG(IXANY);
+	PRINT_C_IFLAG(IXOFF);
+	PRINT_C_IFLAG(IMAXBEL);
+	PRINT_C_IFLAG(IUTF8);
 }
 
 static void parse_c_oflag(tcflag_t c_oflag)
 {
+#define PRINT_C_OFLAG(flag) log_info(#flag " = %d\n", mask_value(c_oflag, flag))
 	log_info("==================== c_oflag ====================\n");
+	PRINT_C_OFLAG(OPOST);
+	PRINT_C_OFLAG(OLCUC);
+	PRINT_C_OFLAG(ONLCR);
+	PRINT_C_OFLAG(OCRNL);
+	PRINT_C_OFLAG(ONOCR);
+	PRINT_C_OFLAG(ONLRET);
+	PRINT_C_OFLAG(OFILL);
+	PRINT_C_OFLAG(OFDEL);
 }
 
 static void parse_c_cflag(tcflag_t c_cflag)
 {
+#define PRINT_C_CFLAG(flag) log_info(#flag " = %d\n", mask_value(c_cflag, flag))
 	log_info("==================== c_cflag ====================\n");
 	log_info("CBAUD = %d\n", get_baud_value(c_cflag & CBAUD));
 	log_info("CSIZE = %d\n", mask_value(c_cflag, CSIZE) + 5);
-	log_info("CSTOPB = %d\n", mask_value(c_cflag, CSTOPB));
-	log_info("CREAD = %d\n", mask_value(c_cflag, CREAD));
-	log_info("PARENB = %d\n", mask_value(c_cflag, PARENB));
+	PRINT_C_CFLAG(CSTOPB);
+	PRINT_C_CFLAG(CREAD);
+	PRINT_C_CFLAG(PARENB);
 	if (c_cflag & PARENB) {
-		log_info("PARODD = %d (0: even, 1: odd)\n", mask_value(c_cflag, PARODD));
+		PRINT_C_CFLAG(PARODD);
 	}
-	log_info("HUPCL = %d\n", mask_value(c_cflag, HUPCL));
-	log_info("CLOCAL = %d\n", mask_value(c_cflag, CLOCAL));
+	PRINT_C_CFLAG(HUPCL);
+	PRINT_C_CFLAG(CLOCAL);
 }
 
 static void parse_c_lflag(tcflag_t c_lflag)
 {
+#define PRINT_C_LFLAG(flag) log_info(#flag " = %d\n", mask_value(c_lflag, flag))
 	log_info("==================== c_lflag ====================\n");
-	log_info("ISIG = %d\n", mask_value(c_lflag, ISIG));
-	log_info("ICANON = %d\n", mask_value(c_lflag, ICANON));
-	log_info("ECHO = %d\n", mask_value(c_lflag, ECHO));
-	log_info("ECHOE = %d\n", mask_value(c_lflag, ECHOE));
-	log_info("ECHOK = %d\n", mask_value(c_lflag, ECHOK));
-	log_info("ECHONL = %d\n", mask_value(c_lflag, ECHONL));
-	log_info("NOFLSH = %d\n", mask_value(c_lflag, NOFLSH));
-	log_info("TOSTOP = %d\n", mask_value(c_lflag, TOSTOP));
+	PRINT_C_LFLAG(ISIG);
+	PRINT_C_LFLAG(ICANON);
+	PRINT_C_LFLAG(ECHO);
+	PRINT_C_LFLAG(ECHOE);
+	PRINT_C_LFLAG(ECHOK);
+	PRINT_C_LFLAG(ECHONL);
+	PRINT_C_LFLAG(NOFLSH);
+	PRINT_C_LFLAG(TOSTOP);
+	PRINT_C_LFLAG(IEXTEN);
 }
 
 static void parse_c_cc(const cc_t *c_cc)
 {
+#define PRINT_C_CC(flag) log_info("c_cc[" #flag "]\t = 0x%02x\n", c_cc[flag])
 	log_info("===================== c_cc ======================\n");
-	log_info("c_cc[VINTR   ] = 0x%02x\n", c_cc[VINTR   ]);
-	log_info("c_cc[VQUIT   ] = 0x%02x\n", c_cc[VQUIT   ]);
-	log_info("c_cc[VERASE  ] = 0x%02x\n", c_cc[VERASE  ]);
-	log_info("c_cc[VKILL   ] = 0x%02x\n", c_cc[VKILL   ]);
-	log_info("c_cc[VEOF    ] = 0x%02x\n", c_cc[VEOF    ]);
-	log_info("c_cc[VTIME   ] = 0x%02x\n", c_cc[VTIME   ]);
-	log_info("c_cc[VMIN    ] = 0x%02x\n", c_cc[VMIN    ]);
-	log_info("c_cc[VSWTC   ] = 0x%02x\n", c_cc[VSWTC   ]);
-	log_info("c_cc[VSTART  ] = 0x%02x\n", c_cc[VSTART  ]);
-	log_info("c_cc[VSTOP   ] = 0x%02x\n", c_cc[VSTOP   ]);
-	log_info("c_cc[VSUSP   ] = 0x%02x\n", c_cc[VSUSP   ]);
-	log_info("c_cc[VEOL    ] = 0x%02x\n", c_cc[VEOL    ]);
-	log_info("c_cc[VREPRINT] = 0x%02x\n", c_cc[VREPRINT]);
-	log_info("c_cc[VDISCARD] = 0x%02x\n", c_cc[VDISCARD]);
-	log_info("c_cc[VWERASE ] = 0x%02x\n", c_cc[VWERASE ]);
-	log_info("c_cc[VLNEXT  ] = 0x%02x\n", c_cc[VLNEXT  ]);
-	log_info("c_cc[VEOL2   ] = 0x%02x\n", c_cc[VEOL2   ]);
+	PRINT_C_CC(VINTR);
+	PRINT_C_CC(VQUIT);
+	PRINT_C_CC(VERASE);
+	PRINT_C_CC(VKILL);
+	PRINT_C_CC(VEOF);
+	PRINT_C_CC(VTIME);
+	PRINT_C_CC(VMIN);
+	PRINT_C_CC(VSWTC);
+	PRINT_C_CC(VSTART);
+	PRINT_C_CC(VSTOP);
+	PRINT_C_CC(VSUSP);
+	PRINT_C_CC(VEOL);
+	PRINT_C_CC(VREPRINT);
+	PRINT_C_CC(VDISCARD);
+	PRINT_C_CC(VWERASE);
+	PRINT_C_CC(VLNEXT);
+	PRINT_C_CC(VEOL2);
 }
 
 static void dump_termios_detail(const struct termios *tio)
