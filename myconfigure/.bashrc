@@ -132,8 +132,10 @@ export TERM=xterm-256color
 export GIT_SSL_NO_VERIFY=1
 export MYLIB=$HOME/code/mylib
 
-export PS1='\[\e]0;\w\a\]\n\[\e[32m\][\u@\h]:\[\e[35m\]$MSYSTEM\[\e[0m\] \
-\[\e[33m\]\w\[\e[0m\]\n'"${_ps1_symbol}"' \[\e[31m\]$\[\e[0m\] '
+parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/ <\1>/p'
+}
+export PS1='\n\[\e[34m\][\u@\h]: \[\e[33m\]\w\[\e[34m\]$(parse_git_branch) \[\e[33m\]$(date "+%H:%M:%S")\n\[\e[31m\] $ \[\e[0m\]'
 
 # 设置环境变量PATH
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"
