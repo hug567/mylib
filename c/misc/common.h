@@ -12,7 +12,8 @@
 
 #define LOCAL_DEBUG
 
-#define DebugLog(fmg, ...) printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define DebugLog(fmt, ...) printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
 void PrintArray(const int *arr, int size)
 {
