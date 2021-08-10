@@ -40,12 +40,12 @@ fi
 #    -chardev serial,id=s9,path=tty1 \
 #    -serial vc:800x600 \
 #    -semihosting \
+#    -serial pty -serial pty -serial pty -serial pty\
 qemu-system-arm \
     -M vexpress-a9 -m 512M -nographic \
     -kernel ${LINUX_DIR}/arch/arm/boot/zImage \
     -dtb ${LINUX_DIR}/arch/arm/boot/dts/vexpress-v2p-ca9.dtb \
     -sd ${WORK_DIR}/${ROOTFS} \
-    -serial pty -serial pty -serial pty -serial pty\
     -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
     -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,\
 gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,guest_ufo=off \

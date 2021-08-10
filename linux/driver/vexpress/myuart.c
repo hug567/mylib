@@ -12,6 +12,7 @@
 #include <linux/kdev_t.h>
 #include <linux/module.h>
 #include <linux/printk.h>
+#include <linux/proc_fs.h>
 #include <linux/interrupt.h>
 #include "myuart.h"
 
@@ -56,6 +57,39 @@ static struct myuart {
 	void *vaddr;
 	unsigned int size;
 } g_myuart;
+
+static int myuart_sysfs_init(void)
+{
+	return 0;
+}
+
+ssize_t myuart_proc_read(struct file *file, char __user *buf, size_t count, loff_t *offset)
+{
+	return 0;
+}
+
+ssize_t myuart_proc_write(struct file *file, const char __user *buf, size_t count, loff_t *offset)
+{
+	return count;
+}
+
+static struct file_operations myuart_proc_fops = {
+	.read = myuart_proc_read,
+	.write = myuart_proc_write,
+};
+
+static int myuart_procfs_init(void)
+{
+	struct proc_dir_entry *entry = NULL;
+
+	entry = proc_create("myuart", 644, NULL, &myuart_proc_fops);
+	if (entry == NULL) {
+		log_error("proc_create failed\n");
+		return -1;
+	}
+
+	return 0;
+}
 
 #define print_reg(vaddr, reg) log_info(#reg " = 0x%x\n", readl((vaddr) + (reg)))
 static void dfx_print_all_register(struct myuart *myuart)
@@ -257,6 +291,9 @@ static int __init myuart_init(void)
 		log_error("myuart_info_init failed\n");
 		return ret;
 	}
+
+	myuart_procfs_init();
+	myuart_sysfs_init();
 
 	log_info("finish %s, will crate /dev/%s\n", __func__, DEV_NAME);
 
