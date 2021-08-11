@@ -63,9 +63,23 @@ static int myuart_sysfs_init(void)
 	return 0;
 }
 
+static int g_idx = 32;
+static int g_count = 0;
 ssize_t myuart_proc_read(struct file *file, char __user *buf, size_t count, loff_t *offset)
 {
-	return 0;
+	/* ascii visible char: 32 ~ 126, total 95 */
+	if (g_idx > 126) {
+		/* 第一次返回0后，cat会再读一次，第二次返回0后，cat结束 */
+		g_count++;
+		if (g_count == 2) {
+			g_idx = 32;
+			g_count = 0;
+		}
+		return 0;
+	}
+	buf[0] = g_idx;
+	g_idx++;
+	return 1;
 }
 
 ssize_t myuart_proc_write(struct file *file, const char __user *buf, size_t count, loff_t *offset)
@@ -82,7 +96,7 @@ static int myuart_procfs_init(void)
 {
 	struct proc_dir_entry *entry = NULL;
 
-	entry = proc_create("myuart", 644, NULL, &myuart_proc_fops);
+	entry = proc_create("myuart", 0644, NULL, &myuart_proc_fops);
 	if (entry == NULL) {
 		log_error("proc_create failed\n");
 		return -1;
