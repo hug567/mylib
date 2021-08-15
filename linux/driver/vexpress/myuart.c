@@ -12,6 +12,7 @@
 #include <linux/kdev_t.h>
 #include <linux/module.h>
 #include <linux/printk.h>
+#include <linux/uaccess.h>
 #include <linux/proc_fs.h>
 #include <linux/interrupt.h>
 #include "myuart.h"
@@ -77,14 +78,26 @@ ssize_t myuart_proc_read(struct file *file, char __user *buf, size_t count, loff
 		}
 		return 0;
 	}
-	buf[0] = g_idx;
+	buf[0] = g_idx; //sprintf(buf, fmt, ...)
 	g_idx++;
 	return 1;
 }
 
+#define TMP_BUF_SIZE 10
 ssize_t myuart_proc_write(struct file *file, const char __user *buf, size_t count, loff_t *offset)
 {
-	return count;
+	int already_rx = 0;
+	char tmp_buf[TMP_BUF_SIZE + 1] = {0};
+
+	while (already_rx < count) {
+		int cur_rx = min(count - already_rx, TMP_BUF_SIZE);
+		memset(tmp_buf, 0, TMP_BUF_SIZE + 1);
+		copy_from_user(tmp_buf, buf + already_rx, cur_rx);
+		already_rx += cur_rx;
+		printk("%s", tmp_buf);
+	}
+
+	return already_rx;
 }
 
 static struct file_operations myuart_proc_fops = {
@@ -92,17 +105,22 @@ static struct file_operations myuart_proc_fops = {
 	.write = myuart_proc_write,
 };
 
+static struct proc_dir_entry *myuart_proc_entry = NULL;
 static int myuart_procfs_init(void)
 {
-	struct proc_dir_entry *entry = NULL;
-
-	entry = proc_create("myuart", 0644, NULL, &myuart_proc_fops);
-	if (entry == NULL) {
+	myuart_proc_entry = proc_create("myuart", 0644, NULL, &myuart_proc_fops);
+	if (myuart_proc_entry == NULL) {
 		log_error("proc_create failed\n");
 		return -1;
 	}
+	log_info("will create: /proc/uart\n");
 
 	return 0;
+}
+
+static void myuart_procfs_exit(void)
+{
+	proc_remove(myuart_proc_entry);
 }
 
 #define print_reg(vaddr, reg) log_info(#reg " = 0x%x\n", readl((vaddr) + (reg)))
@@ -320,6 +338,7 @@ static void __exit myuart_exit(void)
 
 	log_info("Enter %s\n", __func__);
 
+	myuart_procfs_exit();
 	myuart_info_exit(myuart);
 
 	device_destroy(myuart->class, myuart->devno);

@@ -7,14 +7,19 @@
 
 source $MYLIB/linux/shell/common.sh
 
-ROOTFS=rootfs.qcow2
-WORK_DIR=$HOME/code/linux
-LINUX_DIR=$WORK_DIR/linux-4.18
+#ROOTFS=rootfs.qcow2
+#WORK_DIR=$HOME/code/linux
+#LINUX_DIR=$WORK_DIR/linux-4.18
+
+IMAGE=${CUR_DIR}/arch/arm/boot/zImage
+ROOTFS=${HOME}/code/linux/rootfs.qcow2
+DTB=${CUR_DIR}/arch/arm/boot/dts/vexpress-v2p-ca9.dtb
 
 # 清空屏幕
-clear; clear
+clear
 
-check_file_exist ${LINUX_DIR}/arch/arm/boot/zImage
+#check_file_exist ${LINUX_DIR}/arch/arm/boot/zImage
+check_files_exist ${IMAGE} ${ROOTFS} ${DTB}
 
 # 创建虚拟网卡
 VIR_TAP=$(ifconfig -a | grep tap)
@@ -43,9 +48,9 @@ fi
 #    -serial pty -serial pty -serial pty -serial pty\
 qemu-system-arm \
     -M vexpress-a9 -m 512M -nographic \
-    -kernel ${LINUX_DIR}/arch/arm/boot/zImage \
-    -dtb ${LINUX_DIR}/arch/arm/boot/dts/vexpress-v2p-ca9.dtb \
-    -sd ${WORK_DIR}/${ROOTFS} \
+    -kernel ${IMAGE} \
+    -dtb ${DTB} \
+    -sd ${ROOTFS} \
     -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
     -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,\
 gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,guest_ufo=off \

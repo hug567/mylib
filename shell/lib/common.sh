@@ -10,12 +10,54 @@ SKYBLUE="\033[36m"
 WHITE="\033[37m"
 RESET="\033[0m"
 
-CPU_THREAD_NUM=`cat /proc/cpuinfo | grep "processor" | wc -l`
+CUR_DIR=$(pwd)
+CPU_THREAD_NUM=$(cat /proc/cpuinfo | grep "processor" | wc -l)
 
-log_info() {
+log_info()
+{
     echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][INFO ] $1"
 }
 
-log_error() {
+log_error()
+{
     echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][ERROR] $1"
+}
+
+# eg: check_files_exist file1 file2 ...
+check_files_exist()
+{
+    for file in $*
+    do
+        if [ ! -f $file ]; then
+            log_error "file $file does not exist"
+            exit -1
+        fi
+    done
+}
+
+# eg: check_dirs_exist dir1 dir2 ...
+check_dirs_exist()
+{
+    for dir in $*
+    do
+        if [ ! -d $dir ]; then
+            log_error "dir $dir does not exist"
+            exit -1
+        fi
+    done
+}
+
+# eg:
+#   START_TIME=$(date +%s)
+#   END_TIME=$(date +%s)
+#   time_diff $END_TIME $START_TIME
+time_diff()
+{
+    end_time=$1
+    start_time=$2
+    diff_s=$(( $end_time - $start_time ))
+    hour=$(( $diff_s / 3600 ))
+    min=$(( ($diff_s - $hour * 3600) / 60 ))
+    second=$(( $diff_s - ($hour * 3600) - ($min * 60) ))
+    printf "%02d:%02d:%02d" $hour $min $second
 }
