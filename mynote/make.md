@@ -72,7 +72,7 @@ strip           //$(strip TEXT) 去除TEXT头尾空字符，并将中间多个�
 call            //$(call VARIABLE,PARAM1,PARAM2,...) 调用自定义函数
 shell           //$(shell cmd) 执行shell命令
 if              //$(if CONDITION,THEN-PART[,ELSE-PART]) CONDITION非空执行THEN，否则执行ELSE
-forrach         //$(foreach <var>,<list>,<text>) 把参数<list>中的项逐一取出放到参数<var>所指定的变量中，然后再执行<text>所包含的表达式
+foreach         //$(foreach <var>,<list>,<text>) 把参数<list>中的项逐一取出放到参数<var>所指定的变量中，然后再执行<text>所包含的表达式
 wildcard        //$(wildcard PATTERN...) 扩展通配符，被展开为已经存在的、使用空格分开的、匹配此模式的所有文件列表
 ```
 
