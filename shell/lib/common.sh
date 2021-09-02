@@ -35,6 +35,11 @@ check_files_exist()
     done
 }
 
+check_file_exist()
+{
+    check_files_exist $*
+}
+
 # eg: check_dirs_exist dir1 dir2 ...
 check_dirs_exist()
 {
@@ -45,6 +50,11 @@ check_dirs_exist()
             exit -1
         fi
     done
+}
+
+check_dir_exist()
+{
+    check_dirs_exist $*
 }
 
 # eg:

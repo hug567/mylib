@@ -2,6 +2,7 @@
 
 source $MYLIB/linux/shell/common.sh
 
+SDK_PATH="${HOME}/code/linux/sdk/vexpress-a9"
 BASE_DIR=${HOME}/code/linux
 BUSYBOX_DIR=${BASE_DIR}/busybox-1.27.2
 CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
@@ -15,7 +16,7 @@ cd rootfs
 
 log_info "copy busybox file to rootfs"
 # bin  linuxrc  sbin  usr
-cp -rf ${BUSYBOX_DIR}/_install/* ./
+cp -rf ${SDK_PATH}/busybox/* ./
 
 log_info "copy configure file to rootfs"
 mkdir -p proc sys tmp root dev/pts etc/init.d usr/bin lib/modules

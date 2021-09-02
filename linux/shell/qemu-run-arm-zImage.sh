@@ -7,18 +7,10 @@
 
 source $MYLIB/linux/shell/common.sh
 
-#ROOTFS=rootfs.qcow2
-#WORK_DIR=$HOME/code/linux
-#LINUX_DIR=$WORK_DIR/linux-4.18
-
 IMAGE=${CUR_DIR}/arch/arm/boot/zImage
 ROOTFS=${HOME}/code/linux/rootfs.qcow2
 DTB=${CUR_DIR}/arch/arm/boot/dts/vexpress-v2p-ca9.dtb
 
-# 清空屏幕
-clear
-
-#check_file_exist ${LINUX_DIR}/arch/arm/boot/zImage
 check_files_exist ${IMAGE} ${ROOTFS} ${DTB}
 
 # 创建虚拟网卡
@@ -30,7 +22,7 @@ if [ "x$VIR_TAP" = "x" ]; then
 fi
 
 # 串口重定向到标准输入输出
-#    -serial stdio \
+#    -serial mon:stdio \
 
 # 串口重定向到telnet
 # 连接方式：telnet localhost 4321
@@ -39,17 +31,12 @@ fi
 # 将qemu流量发送至主机串口设备
 #    -chardev serial,id=s9,path=/dev/ttyS0 \
 
-#    -serial pty \
-#    -serial /dev/ttyS0 \
-#    -serial stdio \
-#    -chardev serial,id=s9,path=tty1 \
-#    -serial vc:800x600 \
-#    -semihosting \
-#    -serial pty -serial pty -serial pty -serial pty\
 qemu-system-arm \
     -M vexpress-a9 -m 512M -nographic \
     -kernel ${IMAGE} \
     -dtb ${DTB} \
+    -serial mon:stdio \
+    -serial pty \
     -sd ${ROOTFS} \
     -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
     -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,\

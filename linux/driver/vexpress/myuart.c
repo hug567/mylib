@@ -66,6 +66,7 @@ static int myuart_sysfs_init(void)
 
 static int g_idx = 32;
 static int g_count = 0;
+static char ascii_visible[] = {0};
 ssize_t myuart_proc_read(struct file *file, char __user *buf, size_t count, loff_t *offset)
 {
 	/* ascii visible char: 32 ~ 126, total 95 */
@@ -101,6 +102,7 @@ ssize_t myuart_proc_write(struct file *file, const char __user *buf, size_t coun
 }
 
 static struct file_operations myuart_proc_fops = {
+	.open = myuart_proc_open,
 	.read = myuart_proc_read,
 	.write = myuart_proc_write,
 };

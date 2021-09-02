@@ -36,19 +36,3 @@ copy_file_to_lib() {
 copy_file_to_lib_modules() {
     copy_file_if_exist $1 lib/modules
 }
-
-check_file_exist() {
-    file=$1
-    if [ ! -f $file ]; then
-        log_error "$file does not exist"
-        exit
-    fi
-}
-
-check_dif_exist() {
-    dir=$1
-    if [ ! -d $dir ]; then
-        log_error "$dir does not exist"
-        exit
-    fi
-}

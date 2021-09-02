@@ -4,9 +4,6 @@ START_TIME=$(date +%s)
 
 source ${MYLIB}/linux/shell/common.sh
 
-# 清空屏幕
-clear
-
 check_files_exist ../include/linux/kernel.h
 
 # 删除编译生成文件
