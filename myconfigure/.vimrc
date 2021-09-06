@@ -46,6 +46,8 @@ hi MatchParen ctermfg=208 ctermbg=240
 hi Search ctermbg=220
 " 列宽提示宽度及背景色
 let &colorcolumn="80"
+" 高亮多个列
+"let &colorcolumn="80,120"
 hi ColorColumn ctermbg=237
 " 高亮行尾空白符
 hi ExtraWhitespace ctermbg=red
@@ -167,3 +169,11 @@ map <F10> :LeaderfFile<CR>
 "inoremap " ""<LEFT>
 "inoremap ' ''<LEFT>
 "inoremap < <><LEFT>
+"-----------------------------------------------"
+" 在命令行输出寄存器'0'的内容
+func! MyPrintReg0Contents()
+    let lines = getreg("0")
+    echo lines
+endfunc
+map <F8> :call MyPrintReg0Contents()<CR>
+"-----------------------------------------------"
