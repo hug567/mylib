@@ -33,20 +33,27 @@ sudo systemctl start docker                                 # 启动docker
 sudo systemctl daemon-reload                                # 重启docker守护进程
 sudo systemctl restart docker.service                       # 重启docker服务
 
+```
+
+## 2、docker常用命令：
+
+```shell
 docker search opensuse                                      # 搜索镜像
 docker pull opensuse                                        # 拉取镜像
 docker images                                               # 查看镜像
 docker run -it opensuse:latest /bin/bash                    # 启动容器
-exit                                                        # 推出容器
+exit                                                        # 退出容器
 docker ps -a                                                # 查看容器
 docker rm <CONTAINER ID>                                    # 删除指定容器
 docker rm $(docker ps -aq)                                  # 删除所有容器
+
+docker run -it centos:latest /bin/bash                      # docker启动centos
 
 # docker使用容器制作Image：
 sudo docker commit <CONTAINER ID> huangxing/myopensuse:latest
 ```
 
-## 2、openSUSE入门：
+## 3、openSUSE入门：
 
 ```shell
 zypper lr --detail                                          # 列出软件源
@@ -81,3 +88,40 @@ zh_CN.UTF-8 UTF-8
 mkdir -p /usr/lib/locale                                    # 创建保存生成文件目录
 locale-gen                                                  # 根据配置文件生成locale
 ```
+
+## 4、centos配置：
+
+```shell
+yum makecache
+yum -y install vim
+
+4.常用的YUM命令
+4.1.仓库相关命令
+　　1.启用与禁用仓库
+
+　　启用仓库:yum-config-manager --enable "repo id"
+　　禁用仓库:yum-config-manager --disable "repo id "
+
+　　2.显示仓库列表
+
+　　yum repolist
+
+　　3.显示仓库中所有的软件列表
+
+　　yum list
+
+4.2.软件的安装卸载与更新
+　　安装：yum -y install <package> 加上参数y后，所有的依赖均自动安装
+　　重新安装：yum reinstall <package>
+　　卸载：yum remove <package>
+　　更新：yum update <package>
+　　查找是否已安装某个软件包：yum search <package>
+　　降级：yum downgrage <package>
+　　检查可用的更新：yum check-update
+　　查询软件包的依赖：yum deplist <package>
+
+4.3.缓存命令
+　　清除缓存：yum clean all
+　　构建缓存：yum makecache
+```
+
