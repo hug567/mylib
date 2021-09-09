@@ -42,7 +42,10 @@ docker search opensuse                                      # 搜索镜像
 docker pull opensuse                                        # 拉取镜像
 docker images                                               # 查看镜像
 docker run -it opensuse:latest /bin/bash                    # 启动容器
-exit                                                        # 退出容器
+exit                                                        # 退出并停止容器
+Ctrl-P + Ctrl-Q                                             # 退出容器(不停止)
+docker start <CONTAINER ID>                                 # 启动容器
+docker attach <CONTAINER ID>                                # 进入容器
 docker ps -a                                                # 查看容器
 docker rm <CONTAINER ID>                                    # 删除指定容器
 docker rm $(docker ps -aq)                                  # 删除所有容器
@@ -51,6 +54,9 @@ docker run -it centos:latest /bin/bash                      # docker启动centos
 
 # docker使用容器制作Image：
 sudo docker commit <CONTAINER ID> huangxing/myopensuse:latest
+
+# docker宿主机拷贝容器中的文件
+docker cp <CONTAINER ID>:/root/.bashrc ./
 ```
 
 ## 3、openSUSE入门：
@@ -89,39 +95,35 @@ mkdir -p /usr/lib/locale                                    # 创建保存生成
 locale-gen                                                  # 根据配置文件生成locale
 ```
 
-## 4、centos配置：
+## 4、Centos配置：
 
 ```shell
-yum makecache
-yum -y install vim
+yum makecache                            # 缓存软件包信息
+yum clean all                            # 清除缓存
+yum -y install vim                       # 安装软件
+yum-config-manager --enable "repo id"    # 启用仓库
+yum-config-manager --disable "repo id "  # 禁用仓库
+yum repolist                             # 列举软件包仓库
+yum list                                 # 列举所有软件
+yum reinstall <package>                  # 重新安装软件包
+yum remove <package>                     # 卸载软件包
+yum update <package>                     # 更新软件包
+yum search <package>                     # 查找是否已安装某个软件包
+yum downgrage <package>                  # 降级软件包
+yum check-update                         # 检查可用的更新
+yum deplist <package>                    # 查询软件包的依赖
 
-4.常用的YUM命令
-4.1.仓库相关命令
-　　1.启用与禁用仓库
+# 备份软件源：
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 
-　　启用仓库:yum-config-manager --enable "repo id"
-　　禁用仓库:yum-config-manager --disable "repo id "
+# 更新软件源：
+# 查看Centos版本：
+cat /etc/redhat-release
+# Centos 7:
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+# Centos 8:
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
 
-　　2.显示仓库列表
 
-　　yum repolist
-
-　　3.显示仓库中所有的软件列表
-
-　　yum list
-
-4.2.软件的安装卸载与更新
-　　安装：yum -y install <package> 加上参数y后，所有的依赖均自动安装
-　　重新安装：yum reinstall <package>
-　　卸载：yum remove <package>
-　　更新：yum update <package>
-　　查找是否已安装某个软件包：yum search <package>
-　　降级：yum downgrage <package>
-　　检查可用的更新：yum check-update
-　　查询软件包的依赖：yum deplist <package>
-
-4.3.缓存命令
-　　清除缓存：yum clean all
-　　构建缓存：yum makecache
 ```
 
