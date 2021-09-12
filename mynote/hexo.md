@@ -7,17 +7,19 @@ sudo apt install nginx                                   //安装软件
 nginx -v                                                 //查看nginx版本
 sudo nginx -t                                            //验证nginx安装
 /* 浏览器打开服务器ip： */
-http://192.168.1.27/
+http://192.168.1.27/he
 
 /* 修改网站根目录： */
 sudo vim /etc/nginx/sites-enabled/default                //打开配置文件
-root /home/hx/nginx;                    //设置网站根目录
+root /home/hx/nginx;                                     //设置网站根目录
 
 /* 重启nginx： */
 sudo service nginx start                                 //启动Ngnix
 sudo service nginx stop                                  //停止Ngnix
 sudo service nginx restart                               //重启Ngnix
 
+// 更新node：
+https://mirrors.cloud.tencent.com/nodejs-release/v16.9.0/
 ```
 
 ## 2、安装hexo：
@@ -26,11 +28,13 @@ sudo service nginx restart                               //重启Ngnix
 sudo apt install nodejs npm                              //安装nodejs和npm
 node -v                                                  //查看node版本
 npm -v                                                   //查看npm版本
-sudo npm install n -g                                    //安装更新版本工具N
+sudo npm install -g n                                    //安装更新版本工具
 sudo n stable                                            //更新nodejs版本
 npm ls --depth 0                                         //查看已安装的hexo插件
-sudo npm install -g hexo                                 //安装hexo
-sudo npm install -g hexo-cli                             //安装hexo插件
+sudo npm install -g hexo-cli                             //安装hexo
+hexo -v                                                  //查看hexo版本
+
+sudo npm install hexo                                    //局部安装hex包
 sudo npm install hexo --save                             //安装hexo插件
 sudo npm install hexo-deployer-git --save                //安装hexo插件
 sudo npm install hexo-generator-archive --save           //安装hexo插件
@@ -41,7 +45,6 @@ sudo npm install hexo-renderer-ejs --save                //安装hexo插件
 sudo npm install hexo-renderer-marked --save             //安装hexo插件
 sudo npm install hexo-renderer-stylus --save             //安装hexo插件
 sudo npm install hexo-server                             //安装hexo插件
-hexo -v                                                  //查看hexo版本
 ```
 ## 3、创建hexo博客：
 
