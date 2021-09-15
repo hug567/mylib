@@ -1,12 +1,18 @@
-Private Sub LogInfo(log)
+Private Function LogInfo(log)
     Debug.Print ("[" & Now() & "][Info ]: " & log)
-End Sub
+End Function
 
-Private Sub LogError(log)
+Private Function LogError(log)
     Debug.Print ("[" & Now() & "][Error]: " & log)
+End Function
+
+Private Sub PrintControlInfo(ByVal ctrl As Object)
+    LogInfo ("id: " & ctrl.Id & ", index: " & ctrl.Index)
+    LogInfo ("caption: " & ctrl.Caption & ", left: " & ctrl.Left & ", width: " & ctrl.Width & "，top: " & ctrl.Top & "， height: " & ctrl.Height)
 End Sub
 
 Private Sub MyAlignCommandBar()
+'    Dim ctrlId As Integer: ctrlId = 0
     Dim cbar As Object
     Dim newCommandBarName As String
 
@@ -23,23 +29,31 @@ Private Sub MyAlignCommandBar()
     Set newCommandBar = PowerPoint.Application.CommandBars.Add(Name:=newCommandBarName, Position:=msoBarFloating, Temporary:=True)
     newCommandBar.Visible = True
 
+    Dim newCtrl As Object
     ' 新建按钮
-    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton, Id:=1)
     With newCtrl
         .Visible = True
         .Caption = "左对齐"
         .Style = msoButtonCaption
         .OnAction = "MyAlignLeft"
+'        .Left = 1592
+        .Width = 4000
+'        .Top = -8
+        .Height = 23
     End With
+    Call PrintControlInfo(newCtrl)
+
 
     ' 新建按钮
-    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton, Id:=2)
     With newCtrl
         .Visible = True
         .Caption = "右对齐"
         .Style = msoButtonCaption
         .OnAction = "MyAlignRight"
     End With
+    Call PrintControlInfo(newCtrl)
 
     ' 新建按钮
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
@@ -49,6 +63,7 @@ Private Sub MyAlignCommandBar()
         .Style = msoButtonCaption
         .OnAction = "MyAlignTop"
     End With
+    Call PrintControlInfo(newCtrl)
 
     ' 新建按钮
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
@@ -58,6 +73,7 @@ Private Sub MyAlignCommandBar()
         .Style = msoButtonCaption
         .OnAction = "MyAlignBottom"
     End With
+    Call PrintControlInfo(newCtrl)
 
     ' 新建按钮
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
@@ -94,6 +110,12 @@ Private Sub MyAlignCommandBar()
         .Style = msoButtonCaption
         .OnAction = "MyAlignHorizonTouch"
     End With
+
+    LogInfo ("ctrl count: " & newCommandBar.Controls.Count)
+    LogInfo ("ctrl left: " & newCommandBar.Controls(1).Left)
+    LogInfo ("ctrl left: " & newCommandBar.Controls(2).Left)
+'    LogInfo ("ctrl top: " & newCommandBar.Controls(1).Top)
+'    LogInfo ("ctrl top: " & newCommandBar.Controls(2).Top)
 End Sub
 
 Public Sub MyAlignLeft()
@@ -163,7 +185,7 @@ Public Sub MyAlignTop()
     End If
 
     For i = 1 To sRange.Count
-        LogInfo ("shape[" & i & "].top: " & sRange(i).Top)
+        LogInfo ("shape[" & i & "].Top: " & sRange(i).Top)
     Next
     ' 所有形状与第一个形状顶端对齐: ti = t1
     For i = 2 To sRange.Count
@@ -238,11 +260,11 @@ Public Sub MyAlignHorizon()
     End If
 
     For i = 1 To sRange.Count
-        LogInfo ("shape[" & i & "].horizon: " & sRange(i).Top + sRange(i).Height / 2)
+'        LogInfo ("shape[" & i & "].horizon: " & sRange(i).Top + sRange(i).Height / 2)
     Next
     ' 所有形状与第一个形状水平居中: ti = t1 + h1 / 2 - hi / 2
     For i = 2 To sRange.Count
-        sRange(i).Top = sRange(1).Top + sRange(1).Height / 2 - sRange(i).Height / 2
+'        sRange(i).Top = sRange(1).Top + sRange(1).Height / 2 - sRange(i).Height / 2
     Next
 End Sub
 
@@ -263,11 +285,11 @@ Public Sub MyAlignVerticalTouch()
     End If
 
     For i = 1 To sRange.Count
-        LogInfo ("shape[" & i & "].top: " & sRange(i).Top & ", bottom: " & sRange(i).Top + sRange(i).Height)
+'        LogInfo ("shape[" & i & "].Top: " & sRange(i).Top & ", bottom: " & sRange(i).Top + sRange(i).Height)
     Next
     ' 所有形状竖直紧挨: ti = t(i-1) + h(i-1)
     For i = 2 To sRange.Count
-        sRange(i).Top = sRange(i - 1).Top + sRange(i - 1).Height
+'        sRange(i).Top = sRange(i - 1).Top + sRange(i - 1).Height
     Next
 End Sub
 
