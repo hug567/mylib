@@ -7,6 +7,10 @@
 #include <math.h>
 #include <assert.h>
 
+#define bool int
+#define true 1
+#define false 0
+
 #define LOCAL_DEBUG
 
 static int g_enableLog = 1;

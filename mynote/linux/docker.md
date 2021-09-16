@@ -55,8 +55,13 @@ docker run -it centos:latest /bin/bash                      # docker启动centos
 # docker使用容器制作Image：
 sudo docker commit <CONTAINER ID> huangxing/myopensuse:latest
 
-# docker宿主机拷贝容器中的文件
+# docker宿主机拷贝容器中的文件:
 docker cp <CONTAINER ID>:/root/.bashrc ./
+docker cp <CONTAINER NAME>:/root/.bashrc ./
+
+# docker宿主机拷贝文件进容器:
+docker cp ~/.tmux.conf <CONTAINER ID>:/root
+docker cp ~/.tmux.conf <CONTAINER NAME>:/root
 ```
 
 ## 3、openSUSE入门：
@@ -100,7 +105,6 @@ locale-gen                                                  # 根据配置文件
 ```shell
 yum makecache                            # 缓存软件包信息
 yum clean all                            # 清除缓存
-yum -y install vim                       # 安装软件
 yum-config-manager --enable "repo id"    # 启用仓库
 yum-config-manager --disable "repo id "  # 禁用仓库
 yum repolist                             # 列举软件包仓库
@@ -124,6 +128,13 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos
 # Centos 8:
 wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
 
+# 安装常用软件, 使用与Ubuntu相同的配置文件即可
+yum -y install vim                       # 安装vim
+yum -y install tmux                      # 安装tmux
+yum -y install zsh                       # 安装zsh
+
+# 问题1：
+Failed to set locale, defaulting to C.UTF-8
 
 ```
 
