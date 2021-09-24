@@ -46,9 +46,9 @@ do { \
     int __size = size; \
     DebugLog("array: "); \
     for (__i = 0; __i < __size; __i++) { \
-        printf("%d ", __arr[i]); \
+        printf("%d ", __arr[__i]); \
     } \
     printf("\n"); \
-} whlile (0)
+} while (0)
 
 #endif /* __COMMON_H__ */
