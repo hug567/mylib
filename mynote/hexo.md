@@ -71,13 +71,18 @@ theme: syefe
 ## 附录：常见报错
 
 ### 1）、hexo -v报错：
+
+* 问题：执行hexo -v查看版本报错：
+
 ```shell
 # 报错：
  $ hexo -v
 console.js:35
     throw new TypeError('Console expects a writable stream instance');
+```
+* 解决：升级node到hexo期望的最低版本，可到官网上查询期望的版本
+```shell
 
-# 解决：升级node到hexo期望的最低版本
 # hexo-cli: v4.2.0
 # node: >=v10.13.0
 wget https://npm.taobao.org/mirrors/node/v10.13.0/node-v10.13.0-linux-x64.tar.xz
@@ -87,4 +92,28 @@ sudo ln -s /home/hx/tools/node-v10.13.0-linux-x64/bin/node node
 node -v
 ```
 
+### 2）、缺少hexo包：
+
+* 问题：更换hexo主题后生成内容时报错未安装依赖包
+
+```shell
+INFO  === Checking package dependencies ===
+ERROR Package bulma-stylus is not installed.
+ERROR Package hexo-renderer-inferno is not installed.
+ERROR Package hexo-component-inferno is not installed.
+ERROR Package inferno is not installed.
+ERROR Package inferno-create-element is not installed.
+ERROR Please install the missing dependencies your Hexo site root directory:
+ERROR npm install --save bulma-stylus@0.8.0 hexo-renderer-inferno@^0.1.3 hexo-component-inferno@^0.10.5 inferno@^7.3.3 inferno-create-element@^7.3.3
+ERROR or:
+ERROR yarn add bulma-stylus@0.8.0 hexo-renderer-inferno@^0.1.3 hexo-component-inferno@^0.10.5 inferno@^7.3.3 inferno-create-element@^7.3.3
+```
+
+* 解决：安装提示安装依赖包
+
+```shell
+npm install --save bulma-stylus@0.8.0 hexo-renderer-inferno@^0.1.3 hexo-component-inferno@^0.10.5 inferno@^7.3.3 inferno-create-element@^7.3.3
+```
+
+  
 
