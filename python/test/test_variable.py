@@ -40,3 +40,19 @@ favorite = "python      "
 print("favorite: ", favorite, ".")
 print("favorite: ", favorite.rstrip(), ".")
 sys.stdout.write("favorite: %s.\n" % favorite.rstrip())
+
+# 整数加减乘除
+print("2 + 3 = ", 2 + 3)  # 5
+print("2 - 3 = ", 2 - 3)  # -1
+print("2 * 3 = ", 2 * 3)  # 6
+print("2 / 3 = ", 2 / 3)  # 0.666666...
+print("2 ** 3 = ", 2 ** 3)  # 2^3 = 8
+
+# 浮点数加减乘除
+print("0.1 + 0.2 = ", 0.1 + 0.2)  # 0.30000000000000004
+print("0.1 - 0.2 = ", 0.1 - 0.2)  # -0.1
+print("0.1 * 0.2 = ", 0.1 * 0.2)  # 0.020000000000000004
+print("0.1 / 0.2 = ", 0.1 / 0.2)  # 0.5
+
+# 数组转字符串
+print("str(1234) = " + str(1234))
