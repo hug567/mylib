@@ -1,20 +1,24 @@
 #!/bin/bash
 
+source ${MYLIB}/linux/shell/common.sh
+
 BASE_DIR=${HOME}/code/linux
 MYLIB=${HOME}/code/mylib
-BUSYBOX_DIR=${BASE_DIR}/busybox-1.27.2
+BUSYBOX_DIR=${BASE_DIR}/sdk/virt-aarch64/busybox
 #CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
 ROOTFS=rootfs.aarch64
 
-cd ${BASE_DIR}
+check_in_build_dir
+check_dirs_exist ${BUSYBOX_DIR}
+
 if [ -d rootfs ]; then
     sudo rm -rf rootfs
 fi
 mkdir rootfs
 cd rootfs
 
-echo "[INFO]: copy busybox file to rootfs"
-sudo cp -rf ${BUSYBOX_DIR}/_install/* ./
+log_info "copy busybox file to rootfs"
+sudo cp -rf ${BUSYBOX_DIR}/* ./
 sudo mkdir -p proc sys tmp root dev etc/init.d usr/bin lib/modules
 sudo touch etc/init.d/rcS
 sudo chmod a+x etc/init.d/rcS
@@ -32,7 +36,7 @@ sudo sh -c 'echo "ifconfig eth0 192.168.0.101 netmask 255.255.255.0" >> etc/init
 sudo touch etc/passwd
 sudo sh -c 'echo "root::0:0:root:/root:/bin/sh" > etc/passwd'
 
-echo "[INFO]: mknod tty device"
+log_info "mknod tty device"
 cd dev
 sudo mknod -m 666 tty1 c 4 1
 sudo mknod -m 666 tty2 c 4 2
@@ -56,11 +60,9 @@ cd ..
 #MODULE_KO_FILE+="${MYLIB}/linux/driver/virt_net_driver.ko "
 #sudo cp -r ${MODULE_KO_FILE} lib/modules
 
-echo "[INFO]: make rootfs file"
-find . | cpio -o --format=newc > ../rootfs.unzip
+log_info "make rootfs file"
+find . | cpio -o --format=newc > ../rootfs.cpio
 cd ..
-gzip -c rootfs.unzip > rootfs.aarch64
+gzip -c rootfs.cpio > rootfs.gzip
 
-echo "[INFO]: delete temp file"
-sudo rm -rf rootfs
-sudo rm -rf rootfs.unzip
+ls -lh rootfs.gzip

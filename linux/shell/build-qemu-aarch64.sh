@@ -4,7 +4,7 @@ START_TIME=$(date +%s)
 
 source ${MYLIB}/linux/shell/common.sh
 
-check_files_exist ../include/linux/kernel.h
+check_in_build_dir
 
 # 删除编译生成文件
 #make clean

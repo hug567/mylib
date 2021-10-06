@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# 清空屏幕
-#clear; clear
+source ${MYLIB}/linux/shell/common.sh
 
-if [ ! -f arch/arm64/boot/Image ]; then
-    echo -e "${RED}Error: ${RESET}You are not in linux src root dir....."
-    exit
-fi
+IMAGE="arch/arm64/boot/Image"
+ROOTFS="rootfs.gzip"
+DTB=""
+
+check_files_exist
 
 #qemu-system-aarch64 \
 #    -M virt -m 512M -nographic \
@@ -18,6 +18,6 @@ fi
 #    -append "root=/dev/mmcblk0 rw console=ttyAMA0"
 qemu-system-aarch64 \
     -M virt -cpu cortex-a57 -smp 1 -m 256 -nographic \
-    -initrd ~/code/linux/rootfs.aarch64 \
+    -initrd rootfs.gzip \
     -kernel arch/arm64/boot/Image  \
     --append "console=ttyAMA0 rdinit=/linuxrc"

@@ -36,3 +36,16 @@ copy_file_to_lib() {
 copy_file_to_lib_modules() {
     copy_file_if_exist $1 lib/modules
 }
+
+check_in_build_dir()
+{
+    build_dir=$(expr substr $(echo $PWD | sed "s/\// /g" | awk 'NR=1{print $NF}') 1 6)
+    if [[ "$build_dir" != "build-" ]]; then
+        log_error "Currently not in build dir"
+        exit
+    fi
+    if [ ! -f ${PWD}/../include/linux/kernel.h ]; then
+        log_error "Currently not in linux kernel build dir"
+        exit
+    fi
+}
