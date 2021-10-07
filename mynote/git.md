@@ -18,9 +18,11 @@ git config --global credential.helper store              //长期缓存账号密
 ```C
 git log                                                  //查看提交日志
 git log --name-status                                    //log显示修改文件列表
+git log --stat                                           //查看commit修改行数
 git show                                                 //查看最新commit详细修改
 git show <commitID>                                      //查看指定commit详细修改
 git show <commitID> <filename>                           //查看指定commit中某个文件详细修改
+git tag                                                  //查看所有tag
 /* 统计提交代码 */
 git log --author="Huang Xing" --pretty=tformat: --numstat | gawk \
 '{ add += $1: subs += $2: loc += $1 - $2} END \
@@ -35,8 +37,6 @@ git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" main.c | tail -1
 git log --pretty=format:"%cd" --date=format:"%Y" -1 main.c
 /* 指定文件倒序提交时间 */
 git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" --reverse main.c
-
-git log --stat                                           //查看commit修改行数
 ```
 
 ### 2.2、本地分支管理
