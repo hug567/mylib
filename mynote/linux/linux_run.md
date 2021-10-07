@@ -228,92 +228,7 @@ Networking options  --->
 	ARM architecture, no vendor, creates binaries that run on the Linux operating system, and uses the GNU EABI，主要用于编译ARM架构的u-boot、Linux内核、Linux应用等，实用glibc库；
 ```
 
-## 3、编译u-boot：
-
-```c
-https://ftp.denx.de/pub/u-boot/                             //u-boot下载地址
-wget https://ftp.denx.de/pub/u-boot/u-boot-2014.01.tar.bz2  //下载u-boot
-tar -xjvf u-boot-2014.01.tar.bz2                            //解压u-boot
-cd u-boot-2014.01                                           //进入目录
-/* 配置与编译： */
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_ca9x4_config
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
-/* 启动验证u-boot： */
-qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic
-
-sudo apt install uml-utilities bridge-utils                 //安装依赖
-sudo vim /etc/network/interfaces
-
-/* ubuntu添加虚拟网卡： */
-sudo apt install uml-utilities bridge-utils                 //安装依赖
-sudo ip tuntap add name virt mode tap                       //添加虚拟网卡virt
-sudo ifconfig virt 192.168.1.100 netmask 255.255.255.0      //配置虚拟网卡ip
-ip a                                                        //查看配置是否生效
-```
-
-```c
-/* 主机创建tun/tap设备： */
-sudo ip tuntap add dev tap0 mode tap                     //创建tap设备
-sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0   //配置ip
-ip a                                                     //查看tap设备
-sudo ip tuntap del dev tap0 mode tap                     //删除tap设备
-/* 主机安装TFTP工具： */
-sudo apt install tftp-hpa tftpd-hpa xinetd               //安装依赖
-vim /etc/default/tftpd-hpa                               //查看配置文件
-/var/lib/tftpboot                                        //拉取uImage目录
-sudo /etc/init.d/tftpd-hpa restart                       //重启TFTP服务
-/* tftp测试： */
-tftp localhost / 192.168.0.100                           //连接至本地
-get <file>                                               //获取文件
-status                                                   //查看状态
-quit                                                     //推出tftp服务
-
-ifconfig eth0 192.168.0.101 netmask 255.255.255.0 dstaddr 192.168.0.100
-ifconfig eth0 up
-ifconfig
-
-sudo apt install u-boot-tools    //安装mkimage工具
-/* 编译内核通过u-boot引导： */
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR=0x60003000 uImage
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules    //编译内核模块
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs       //编译dts文件
-
-/* 主机安装TFTP： */
-sudo apt install tftp-hpa tftpd-hpa xinetd
-sudo vim /etc/default/tftpd-hpa    //tftp配置文件
-sudo /etc/init.d/tftpd-hpa restart    //更改tptp配置后重启服务
-
-sudo cp uImage /var/lib/tftproot
-sudo cp u-boot /var/lib/tftproot
-sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
-```
-
-#### u-boot手动启动linux内核：
-```c
-qemu-system-arm -M vexpress-a9 \
-    -kernel u-boot \
-    -nographic \
-    -initrd ~/code/linux/rootfs.img.gz \
-    -net nic -net tap,ifname=tap0 \
-    -m 512M
-
-/* 手动启动uImage */
-setenv etnaddr 11:22:33:44:55:66                         //设置板子的mac地址
-setenv ipaddr 192.168.0.101                              //设置板子的IP地址
-setenv serverip 192.168.0.100                            //设置提供内核下载的服务器IP地址
-setenv gatewayip 192.168.0.1                             //设置网关
-setenv netmask 255.255.255.0                             //设置子网掩码
-setenv bootargs "root=/dev/mtdblock0 console=ttyAMA0"    //设置启动参数
-saveenv                                                  //保存环境变量
-tftp 60003000 uImage                                     //下载Image
-tftp 60500000 vexpress-v2p-ca9.dtb                       //下载dtb
-bootm 0x60003000 - 0x60500000                            //启动内核
-
-setenv bootargs "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
-```
-
-## 4、Linaro aarch64工具链编译linux内核:
+## 3、Linaro aarch64工具链编译linux内核:
 ```c
 /* 下载工具链： */
 https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
@@ -356,7 +271,7 @@ qemu-system-aarch64 \
     --append "console=ttyAMA0 rdinit=/linuxrc"
 ```
 
-## 5、Linaro arm工具链编译linux内核：
+## 4、Linaro arm工具链编译linux内核：
 
 ```c
 /* 下载工具链： */
@@ -376,7 +291,7 @@ qemu-system-arm \
     -append "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0"
 ```
 
-## 6、使用交叉工具链及linux源码编译驱动ko
+## 5、使用交叉工具链及linux源码编译驱动ko
 
 ```c
 /* Makefile: */
