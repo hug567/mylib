@@ -9,7 +9,9 @@ CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnu
 LIB_ROOTFS_DIR=${MYLIB}/linux/rootfs
 ROOTFS=rootfs.img
 
-cd ${BASE_DIR}
+check_in_build_dir
+
+#cd ${BASE_DIR}
 rm -rf mnt rootfs roofs.qcow2 ${ROOTFS}
 mkdir rootfs
 cd rootfs
