@@ -318,3 +318,27 @@ insmod test_char.ko
 rmmod test_char.ko
 ```
 
+## 6、Linux调试积累：
+
+### 1）、head.S中向串口写字符：
+
+```c
+//qemu运行arm32：
+mov r6, #'A'
+ldr r7, =0x10009000
+str r6, [r7]
+
+//汇编宏：put_char 'A'
+.macro put_char, ch
+mov r6, #\ch
+ldr r7, =0x10009000
+str r6, [r7]
+mov r6, #'\n'
+ldr r7, =0x10009000
+str r6, [r7]
+mov r6, #'\r'
+ldr r7, =0x10009000
+str r6, [r7]
+.endm
+```
+

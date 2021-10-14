@@ -40,6 +40,8 @@ git clone https://gitee.com/mirrors/u-boot.git
 arm-linux-gnueabi-gcc --version  // gcc 7.3.1 2018.05
 git checkout -b v2018.05
 
+make clean; make mrproper; make distclean    //清除编译临时文件
+
 mkdir build-vexpress_a9
 cd build-vexpress_a9
     
