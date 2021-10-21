@@ -249,6 +249,8 @@ ctags --version                  //查看ctags版本
 ctags -R *                       //递归生产tags文件
 Ctrl + ]                         //(vim中)跳转至定义
 Ctrl + T                         //(vim中)返回
+    --languages=c                //指定语言为C语言
+    --exclude=file.c             //排除文件或目录
 ```
 
 ### 6）AutoComplPop：自动补全

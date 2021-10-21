@@ -74,40 +74,32 @@ printenv                    //打印环境变量
 ```c
 sudo apt install u-boot-tools    //安装mkimage工具
 
-/* 编译内核通过u-boot引导： */
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- vexpress_defconfig
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- LOADADDR=0x60003000 uImage
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules    //编译内核模块
-make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- dtbs       //编译dts文件
+/* 制作linux uImage: */
+mkimage -A arm -O linux -T kernel -C none -a 0x60003000 -e 0x60003040 -d arch/arm/boot/zImage uImage
 
+/* 拷贝镜像至tftp目录: */
 sudo cp uImage /var/lib/tftproot
-sudo cp u-boot /var/lib/tftproot
 sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
 ```
 
 #### u-boot手动启动linux内核：
 
 ```c
-qemu-system-arm -M vexpress-a9 \
-    -kernel u-boot \
-    -nographic \
-    -initrd ~/code/linux/rootfs.img.gz \
-    -net nic -net tap,ifname=tap0 \
-    -m 512M
+/* 启动u-boot: */
+qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
 
-/* 手动启动uImage */
-setenv etnaddr 11:22:33:44:55:66                         //设置板子的mac地址
-setenv ipaddr 192.168.0.101                              //设置板子的IP地址
-setenv serverip 192.168.0.100                            //设置提供内核下载的服务器IP地址
-setenv gatewayip 192.168.0.1                             //设置网关
-setenv netmask 255.255.255.0                             //设置子网掩码
-setenv bootargs "root=/dev/mtdblock0 console=ttyAMA0"    //设置启动参数
-saveenv                                                  //保存环境变量
-tftp 60003000 uImage                                     //下载Image
-tftp 60500000 vexpress-v2p-ca9.dtb                       //下载dtb
-bootm 0x60003000 - 0x60500000                            //启动内核
+/* u-boot配置参数： */
+setenv ipaddr 192.168.0.101
+setenv serverip 192.168.0.100
+setenv gatewayip 192.168.0.1
+setenv netmask 255.255.255.0
+setenv bootargs "root=/dev/mmcblk0 rw console=ttyAMA0"
+saveenv
 
-setenv bootargs "root=/dev/mtdblock0 rdinit=sbin/init console=ttyAMA0 noapic"
+/* 下载并启动镜像： */
+tftp 0x60003000 uImage
+tftp 0x60500000 vexpress-v2p-ca9.dtb
+bootm 0x60003000 - 0x60500000
 ```
 
 ## 3、常见错误：
