@@ -31,7 +31,9 @@ fi
 # 将qemu流量发送至主机串口设备
 #    -chardev serial,id=s9,path=/dev/ttyS0 \
 
-qemu-system-arm \
+QEMU="/home/hx/code/qemu/build-arm/arm-softmmu/qemu-system-arm"
+#QEMU="qemu-system-arm"
+${QEMU} \
     -M vexpress-a9 -m 512M -nographic \
     -kernel ${IMAGE} \
     -dtb ${DTB} \
