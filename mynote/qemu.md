@@ -64,15 +64,15 @@ git clone https://gitee.com/mirrors/qemu.git
 git clone https://gitlab.com/qemu-project/qemu.git
 
 # 环境准备
-sudo apt install ninja-build
+sudo apt install ninja-build libglib2.0-dev libpixman-1-dev
 # 查看glibc版本
 ldd --version
 ls -l /lib/x86_64-linux-gnu/libc*  # /lib/x86_64-linux-gnu/libc.so.6 -> libc-2.27.so
 
 # 编译
-mkdir build
-cd build
-../configure
+mkdir build-arm
+cd build-arm
+../configure  --target-list=arm-softmmu    #qemu-system-arm
 make
 
 ```

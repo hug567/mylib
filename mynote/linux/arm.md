@@ -25,10 +25,14 @@ PAGE_OFFSET：内核虚拟地址空间起始地址，默认0xC0000000
 __create_page_tables:
 	/*
 	 * r8 = PHYS_OFFSET, 内存起始物理地址
-	 * r4 = r8 + TEXT_OFFSET - PG_DIR_SIZE, 临时页表起始物理地址
+	 * TEXT_OFFSET：内核镜像起始地址相对内存起始地址的偏移
+	 * PG_DIR_SIZE：L1页表大小（16K）
+	 * r4 = r8 + TEXT_OFFSET - PG_DIR_SIZE, 临时页表起始物理地址，内核镜像前16K空间
 	 */
     pgtbl   r4, r8	//@ page table address
-
+	/*
+	 * 后续代码为将临时页表项清零
+	 */
 
 
 
@@ -46,9 +50,9 @@ __create_page_tables:
 
 PHYS_OFFSET：内存起始地址
 
-TEXT_OFFSET：内核镜像起始地址相对内存起始地址的偏移
 
-PG_DIR_SIZE：页表大小（16K）
+
+
 
 开启MMU后，将内核虚拟地址0xC0000000映射到phys_offset
 
