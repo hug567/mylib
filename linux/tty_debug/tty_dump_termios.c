@@ -244,6 +244,7 @@ static int update_fd(const char *tty_name)
 	return 0;
 }
 
+#if 0
 int main(int argc, char *argv[])
 {
 	int ret;
@@ -280,3 +281,4 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+#endif

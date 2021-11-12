@@ -4,10 +4,16 @@
  */
 #include "common.h"
 
-void usage(const char *name)
+static int g_fd;
+
+static void usage(const char *name)
 {
 	printf("Usage:\n");
-	printf("%s -d                  dump termios info\n", name);
+	printf("%s                  dump current terminal termios info\n", name);
+	printf("%s -t               dump current terminal detail termios info\n", name);
+	printf("%s -d /dev/xxx      dump /dev/xxx termios info\n", name);
+	printf("%s -d /dev/xxx -t   dump /dev/xxx detail termios info\n", name);
+	printf("%s -h               print help info\n", name);
 }
 
 int main(void)
@@ -23,8 +29,9 @@ int main(void)
 		log_error("open %s failed\n", name);
 		return -1;
 	}
+	log_info("open %s success\n", name);
 
-	dump_termios(fd);
+	//dump_termios(fd);
 
 	close(fd);
 	return 0;
