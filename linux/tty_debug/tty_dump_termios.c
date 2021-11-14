@@ -2,18 +2,12 @@
  * 获取termios信息
  * 2020-12-06
  */
-#include "common.h"
-
-#define SHORT_OPTION ":dth"
+#include "tty_debug.h"
 
 struct ascii_str {
 	char val;
 	const char *str;
 };
-
-static bool g_dump_detail_flag = false;
-static int g_fd = 0;
-static struct termios g_tio;
 
 static tcflag_t g_baud[][2] = {
 	{ B0      , 0       },
@@ -52,16 +46,6 @@ static tcflag_t g_baud[][2] = {
 static struct ascii_str g_ascii_str[] = {
 	{0x03, "Ctrl-C"},
 };
-
-static void usage(const char *name)
-{
-	log_info("Usage:\n");
-	log_info("%s                  dump current console termios\n", name);
-	log_info("%s -t               dump current console termios with detail flag\n", name);
-	log_info("%s -d /dev/tty*     dump /dev/tty* termios\n", name);
-	log_info("%s -d /dev/tty* -t  dump /dev/tty* termios with detail flag\n", name);
-	log_info("%s -h               print help info\n", name);
-}
 
 /* 无符号整形的最低有效位, 从0开始 */
 static int least_valid_bit(unsigned int val)
@@ -196,11 +180,10 @@ static void dump_termios_detail(const struct termios *tio)
 	parse_c_cc(tio->c_cc);
 }
 
-static void dump_termios(const struct termios *tio)
+static void __dump_termios(const struct termios *tio)
 {
 	int i;
 
-	log_info("==================== termios ====================\n");
 	log_info("c_iflag = 0x%x\n", tio->c_iflag);
 	log_info("c_oflag = 0x%x\n", tio->c_oflag);
 	log_info("c_cflag = 0x%x\n", tio->c_cflag);
@@ -219,6 +202,13 @@ static int get_termios(int fd, struct termios *tio)
 	if (fd < 0 || tio == NULL) {
 		return -EINVAL;
 	}
+
+	if (!isatty(fd)) {
+		log_error("%d is not a tty device\n", fd);
+		return -1;
+	}
+	log_info("termios: %s\n", ttyname(fd));
+
 	ret = tcgetattr(fd, tio);
 	if (ret < 0) {
 		log_error("tcgetattr failed\n");
@@ -228,6 +218,23 @@ static int get_termios(int fd, struct termios *tio)
 	return 0;
 }
 
+int dump_termios(int fd)
+{
+	int ret;
+	struct termios tio;
+
+	ret = get_termios(fd, &tio);
+	if (ret < 0) {
+		log_error("tcgetattr failed\n");
+		return ret;
+	}
+
+	__dump_termios(&tio);
+
+	return 0;
+}
+
+#if 0
 static int update_fd(const char *tty_name)
 {
 	g_fd = open(tty_name, O_RDWR);
@@ -244,7 +251,6 @@ static int update_fd(const char *tty_name)
 	return 0;
 }
 
-#if 0
 int main(int argc, char *argv[])
 {
 	int ret;

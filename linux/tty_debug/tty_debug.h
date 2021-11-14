@@ -16,4 +16,4 @@
 
 //int print_termios(const struct termios *tio);
 //int get_termios(int fd, struct termios *tio);
-//int dump_termios(int fd);
+int dump_termios(int fd);
