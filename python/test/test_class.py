@@ -25,6 +25,12 @@ class Book(): # 类名使用驼峰命名法
     def set_price(self, price):
         self.price = price
 
+    def all_info(self):
+        print("book info:")
+        print("  name: ", self.name, sep='')
+        print("  price: ", self.price, sep='')
+        print("  pages: ", self.pages, sep='')
+
 # 创建类的实例
 book1 = Book('math', 100)
 # 访问属性
@@ -33,7 +39,7 @@ print("book price: ", book1.price, sep='')
 print("book pages: ", book1.pages, sep='')
 # 直接修改属性值
 book1.pages = 120
-print("book pages: ", book1.pages, sep='')
+book1.all_info()
 # 调用方法
 book1.set_name('english')
 book1.set_price(200)
@@ -47,6 +53,7 @@ class ElectricBook(Book):
         super().__init__(name, price) # 必须先调用父类构造函数
         self.size = size # 子类定义的属性
 
+    # 重写父类方法
     def all_info(self):
         print('ebook info: ', sep='') # 访问父类成员
         print('  name: ', self.name, sep='') # 访问父类成员

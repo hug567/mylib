@@ -1,0 +1,3 @@
+python file operate test file
+this is a normal text file
+you can read or write this file
