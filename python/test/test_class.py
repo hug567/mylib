@@ -44,5 +44,15 @@ print("book price: ", book1.get_price(), sep='')
 class ElectricBook(Book):
 
     def __init__(self, name, price, size):
-        supre().__init__(name, price) # 调用父类构造函数
-        self.size = size
+        super().__init__(name, price) # 必须先调用父类构造函数
+        self.size = size # 子类定义的属性
+
+    def all_info(self):
+        print('ebook info: ', sep='') # 访问父类成员
+        print('  name: ', self.name, sep='') # 访问父类成员
+        print('  price: ', self.price, sep='') # 访问父类成员
+        print('  pages: ', self.pages, sep='') # 访问父类成员
+        print('  size: ', self.size, sep='') # 访问子类成员
+
+ebook = ElectricBook("physics", 45, 115)
+ebook.all_info()
