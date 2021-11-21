@@ -23,6 +23,7 @@ git show                                                 //查看最新commit详
 git show <commitID>                                      //查看指定commit详细修改
 git show <commitID> <filename>                           //查看指定commit中某个文件详细修改
 git tag                                                  //查看所有tag
+git diff --stat                                          //查看diff的修改行数
 /* 统计提交代码 */
 git log --author="Huang Xing" --pretty=tformat: --numstat | gawk \
 '{ add += $1: subs += $2: loc += $1 - $2} END \
@@ -61,7 +62,7 @@ git fetch origin master                                  //取回远端master分
 git log -p FETCH_HEAD                                    //查看取回的更新信息
 git diff master origin/master                            //比较本地分支与远端分支
 git rebase master                                        //线性合并取回的远端分支至当前分支
-//----------不commit切换分支-------------------------------------------------//
+//----------不提交commit切换分支---------------------------------------------//
 git stash                                                //暂存未add更改
 git stash list                                           //查看暂存列表
 git chechout <branch2>                                   //切换分支
@@ -176,7 +177,14 @@ git stash -u                                   //暂存未追踪的文件
 git stash list                                 //查看stash列表
 git stash show                                 //查看最新stash差异
 git stash show -p                              //查看最新stash详细修改
-git stash show <id> -p                         //查看指定id的stash详细修改
+git stash show -p <id>                         //查看指定id的stash详细修改
+git stash pop stash@{1}                        //恢复指定暂存
+git stash drop stash@{1}                       //删除指定暂存
+git stash push <file>...                       //暂存指定文件
+git stash push -m "message" <file>...          //暂存指定文件并自定义message
+//修改指定暂存名称：先删除指定暂存，再添加
+git stash drop stash@{1}
+git stash store -m "New message" af8fdeee49a03d1b4609f294635e7f0d622e03db
 ```
 
 ### 2.8、制作patch
