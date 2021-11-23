@@ -12,6 +12,9 @@
 #define false 0
 
 #define LOCAL_DEBUG
+/*
+ * int (*arr)[COL_SIZE] = (int (*)[COL_SIZE])_arr
+ */
 
 static int g_enableLog = 1;
 
