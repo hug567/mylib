@@ -28,6 +28,8 @@ set ignorecase
 let &t_SI.="\e[2 q" "INSERT模式，2:方块
 let &t_SR.="\e[2 q" "REPLACE模式, 2:方块
 let &t_EI.="\e[2 q" "NORMAL模式, 2:方块
+" 使能系统剪切板+ (vim需支持+clipboard)
+set clipboard^=unnamed,unnamedplus
 "-----------------------------------------------"
 " 主窗口背景色
 hi Normal ctermbg=NONE
@@ -178,4 +180,19 @@ func! MyPrintReg0Contents()
     echo lines
 endfunc
 map <F8> :call MyPrintReg0Contents()<CR>
+"-----------------------------------------------"
+" vim中调用：:call SaveToTmpFile()
+func! SaveToTmpFile()
+    let lines = getreg("0")
+    let lines = substitute(lines, '[\ua]', '\r', 'g')
+    let lines = substitute(lines, '\r', '\r', 'g')
+    let list = [lines]
+    call writefile(list, "/tmp/vim_tmp.txt")
+endfunc()
+
+" vim中调用：:call LoardFromTmpFile()
+func! LoardFromTmpFile()
+    let list = readfile("/tmp/vim_tmp.txt")
+    call setreg("\"", list)
+endfunc()
 "-----------------------------------------------"
