@@ -184,15 +184,17 @@ map <F8> :call MyPrintReg0Contents()<CR>
 " vim中调用：:call SaveToTmpFile()
 func! SaveToTmpFile()
     let lines = getreg("0")
-    let lines = substitute(lines, '[\ua]', '\r', 'g')
-    let lines = substitute(lines, '\r', '\r', 'g')
+    let lines = substitute(lines, '[\ua]', '\n', 'g')
     let list = [lines]
-    call writefile(list, "/tmp/vim_tmp.txt")
+    call writefile(list, "/tmp/vim_clipboard.txt")
 endfunc()
+:command SaveToTmpFile call SaveToTmpFile()
 
 " vim中调用：:call LoardFromTmpFile()
 func! LoardFromTmpFile()
-    let list = readfile("/tmp/vim_tmp.txt")
+    let list = readfile("/tmp/vim_clipboard.txt")
     call setreg("\"", list)
+    call setreg("0", list)
 endfunc()
+:command LoardFromTmpFile call LoardFromTmpFile()
 "-----------------------------------------------"
