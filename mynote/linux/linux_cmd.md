@@ -15,7 +15,7 @@ ln
 apt
     apt-cache search <package>                           //搜索软件
     sudo apt install <package>                           //安装软件
-    sudo apt remove <package>                            //删除软件及
+    sudo apt remove <package>                            //删除软件
     sudo apt --purge remove <package>                    //删除软件及其配置文件
 dpkg
     dpkg -l                                              //查看所有已安装软件

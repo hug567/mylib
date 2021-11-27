@@ -266,6 +266,16 @@ cp doc/* ~/.vim/doc/
 ```c
 git clone https://github.com/Yggdroot/LeaderF
 cp -r LeaderF ~/.vim/bundle
+
+<leader>键：\
+
+// 搜索当前目录下文件：
+<leaser> f
+// 进入/退出文件选择：
+Tab
+
+// 搜索当前Buffer：
+<leader> b
 ```
 
 ## 5、下载配色主题：
@@ -338,7 +348,7 @@ git submodule update --init --recursive                //
 
 ```c
 背景色(灰色)：RGB(39,40,34), HTML(#272822)
-关键字(红色)：RGB(249,39,60), HTML(#F9273C)git
+关键字(红色)：RGB(249,39,60), HTML(#F9273C)
 宏定义(红色)：RGB(249,39,60), HTML(#F9273C)
 字符串(黄色)：RGB(255,215,0), HTML(#FFD700)      //字符串、运算符
 函数名(蓝色)：RGB(95,215,255), HTML(#5FD7FF)
