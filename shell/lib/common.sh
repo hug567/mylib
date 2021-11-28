@@ -23,6 +23,12 @@ log_error()
     echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][ERROR] $1"
 }
 
+# eg: log_info_var SHELL
+log_info_var()
+{
+    log_info "$1 = $(eval echo '$'"$1")"
+}
+
 # eg: check_files_exist file1 file2 ...
 check_files_exist()
 {
