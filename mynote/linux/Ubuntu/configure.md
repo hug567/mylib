@@ -1,7 +1,7 @@
 ## 1、配置IP：
 
 ```shell
-# ip命令配置临时ip:
+# 使用iproute2工具配置临时ip:
 ip a                                                     # 显示网卡
 sudo ip link set dev ens33 up                            # 启动网卡
 sudo ip addr add dev ens33 192.168.1.29/24               # 配置ip
@@ -11,6 +11,8 @@ sudo vi /etc/resolv.conf
 #--------------------------------------------------------------------#
 nameserver 192.168.1.1
 #--------------------------------------------------------------------#
+
+# 使用ifconfig配置ip：
 
 # Ubuntu 18.04 Desktop命令行配置ip:
 sudo apt install netplan.io network-manager
@@ -23,6 +25,17 @@ network:
     ens33:
       dhcp4: no
       addresses: [192.168.1.28/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [192.168.1.1]
+#--------------------------------------------------------------------#
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens33:
+      dhcp4: false
+      addresses: [192.168.1.30/24]
       gateway4: 192.168.1.1
       nameservers:
         addresses: [192.168.1.1]
@@ -51,6 +64,8 @@ sudo systemctl start systemd-networkd           # 启动
 sudo systemctl stop systemd-networkd            # 停止
 sudo systemctl enable systemd-networkd          # 设置开机启动
 sudo systemctl disable systemd-networkd         # 禁止开机自启动
+
+ps aux | grep systemd-networkd                  # 查看是否启动了服务
 
 # nmcli:
 nmcli d                                         # 显示网卡设备
