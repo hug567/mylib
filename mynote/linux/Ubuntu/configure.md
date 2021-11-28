@@ -1,10 +1,19 @@
-## 1、配置源镜像：
+## 1、配置IP：
 
 ```shell
-sudo vi /etc/apt/sources.list
+# ip命令配置临时ip:
+ip a                                                     # 显示网卡
+sudo ip link set dev ens33 up                            # 启动网卡
+sudo ip addr add dev ens33 192.168.1.29/24               # 配置ip
+sudo ip route add default dev ens33 via 192.168.1.1      # 配置路由
+# 配置dns:
+sudo vi /etc/resolv.conf
+#--------------------------------------------------------------------#
+nameserver 192.168.1.1
+#--------------------------------------------------------------------#
 
 # Ubuntu 18.04 Desktop命令行配置ip:
-sudo apt install netplan.io
+sudo apt install netplan.io network-manager
 sudo vim /etc/netplan/01-network-manager-all.yaml
 #--------------------------------------------------------------------#
 network:
@@ -35,14 +44,23 @@ service NetworkManager stop                     # 关闭NetworkManager
 chkconfig NetworkManager on                     # 开机启动
 chkconfig NetworkManager off                    # 禁用开机启动
 
+ps aux | grep NetworkManager                    # 查看是否启动了服务
+
 # 2）、Systemd-networkd
+sudo systemctl start systemd-networkd           # 启动
+sudo systemctl stop systemd-networkd            # 停止
 sudo systemctl enable systemd-networkd          # 设置开机启动
+sudo systemctl disable systemd-networkd         # 禁止开机自启动
 
 # nmcli:
 nmcli d                                         # 显示网卡设备
 nmcli c                                         # 显示网络连接
 nmcli -s                                        # 显示网卡信息
 nmcli device show                               # 显示网卡设备配置信息
+
+# 配置源镜像：
+sudo vi /etc/apt/sources.list
+sudo apt update
 ```
 
 ## 2、安装常用软件：
