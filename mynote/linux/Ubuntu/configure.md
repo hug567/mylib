@@ -23,7 +23,7 @@ network:
   renderer: NetworkManager
   ethernets:
     ens33:
-      dhcp4: no
+      dhcp4: false
       addresses: [192.168.1.28/24]
       gateway4: 192.168.1.1
       nameservers:
