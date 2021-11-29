@@ -89,3 +89,21 @@ DNS：域名系统
 
 NAT(网络地址转换 )：
 ```
+
+## 8、系统管理：
+
+```shell
+# systemd:
+systemd --help                               # 查看帮助
+
+# systemctl:
+systemctl --help                             # 查看帮助
+systemctl -a                                 # 查看所有unit
+sudo systemctl start unit                    # 启动unit
+sudo systemctl stop unit                     # 关闭unit
+sudo systemctl restart unit                  # 重启unit
+sudo systemctl enable unit                   # 开机自启动unit
+sudo systemctl disable unit                  # 禁止开机自启动unit
+systemctl status unit                        # 查看unit状态
+```
+
