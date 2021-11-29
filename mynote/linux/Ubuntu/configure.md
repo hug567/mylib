@@ -1,7 +1,9 @@
 ## 1、配置IP：
 
+### 1）、配置静态ip：
+
 ```shell
-# 使用iproute2工具配置临时ip:
+# 使用iproute2配置ip:
 ip a                                                     # 显示网卡
 sudo ip link set dev ens33 up                            # 启动网卡
 sudo ip addr add dev ens33 192.168.1.29/24               # 配置ip
@@ -12,12 +14,24 @@ sudo vi /etc/resolv.conf
 nameserver 192.168.1.1
 #--------------------------------------------------------------------#
 
-# 使用ifconfig配置ip：
+# 使用net-tools配置ip：
+ifconfig -a                                              # 查看所有网卡信息
+sudo ifconfig ens33 up                                   # 启动网卡
+sudo ifconfig ens33 192.168.1.30 netmask 255.255.255.0   # 配置ip
+sudo route add default gw 192.168.1.1                    # 配置路由
+sudo ifconfig ens33 hw ether 11:22:33:44:55:66           # 配置MAC地址
 
-# Ubuntu 18.04 Desktop命令行配置ip:
+# 查看是否安装网络管理工具：
+which netplan
+ps aux | grep NetworkManager                             # 查看是否启动了服务
+ps aux | grep systemd-networkd                           # 查看是否启动了服务
+
+# 安装网络管理工具：
 sudo apt install netplan.io network-manager
+
+# 配置静态ip:
 sudo vim /etc/netplan/01-network-manager-all.yaml
-#--------------------------------------------------------------------#
+#----- NetworkManger: -----------------------------------------------#
 network:
   version: 2
   renderer: NetworkManager
@@ -28,7 +42,7 @@ network:
       gateway4: 192.168.1.1
       nameservers:
         addresses: [192.168.1.1]
-#--------------------------------------------------------------------#
+#----- systemd-networkd: --------------------------------------------#
 network:
   version: 2
   renderer: networkd
@@ -46,26 +60,20 @@ sudo netplan generate                           # 生成网络守护程序配置
 
 # netplan后端网络管理工具(renderer):
 # 1)、NetworkManager
-sudo systemctl start NetworkManager             # 启动NetworkManager
-sudo systemctl stop NetworkManager              # 停止NetworkManager
-sudo systemctl enable NetworkManger             # 开启自启动
-sudo systemctl disable NetworkManager           # 禁用开机自启动
+sudo systemctl start NetworkManager             # 启动
+sudo systemctl stop NetworkManager              # 关闭
+sudo systemctl enable NetworkManger             # 使能开启自启动
+sudo systemctl disable NetworkManager           # 禁止开机自启动
 
-service NetworkManager status                   # 查看NetworkManager状态
-service NetworkManager start                    # 启动NetworkManager
-service NetworkManager stop                     # 关闭NetworkManager
-chkconfig NetworkManager on                     # 开机启动
-chkconfig NetworkManager off                    # 禁用开机启动
-
-ps aux | grep NetworkManager                    # 查看是否启动了服务
+service NetworkManager status                   # 查看状态
+service NetworkManager start                    # 启动
+service NetworkManager stop                     # 关闭
 
 # 2）、Systemd-networkd
 sudo systemctl start systemd-networkd           # 启动
 sudo systemctl stop systemd-networkd            # 停止
-sudo systemctl enable systemd-networkd          # 设置开机启动
+sudo systemctl enable systemd-networkd          # 使能开机自启动
 sudo systemctl disable systemd-networkd         # 禁止开机自启动
-
-ps aux | grep systemd-networkd                  # 查看是否启动了服务
 
 # nmcli:
 nmcli d                                         # 显示网卡设备
@@ -77,6 +85,29 @@ nmcli device show                               # 显示网卡设备配置信息
 sudo vi /etc/apt/sources.list
 sudo apt update
 ```
+
+### 2）、iproute2常见用法：
+
+```shell
+# 列出路由
+ip route
+ip route show
+ip route list
+ip route show table all
+
+ip link help                                                # 查看命令帮助
+sudo ip link set dev ens33 address 11:22:33:44:55:66        # 设置MAC地址
+sudo ip link set dev ens33 broadcast 11:22:33:44:55:66      # 设置广播地址
+sudo ip link set dev ens33 mtu 1500                   q      # 设置MTU
+```
+
+### 3）、net-tools常见用法：
+
+```shell
+
+```
+
+
 
 ## 2、安装常用软件：
 
