@@ -19,15 +19,13 @@ sudo vim /etc/docker/daemon.json
 {
   "registry-mirrors": [
         "https://docker.mirrors.ustc.edu.cn/",
-        "https://hub-mirror.c.163.com",
-        "https://registry.docker-cn.com",
-        "https://dockerhub.azk8s.cn",
-        "https://reg-mirror.qiniu.com",
-        "https://registry.docker-cn.com"
+        "https://hub-mirror.c.163.com/",
+        "https://cr.console.aliyun.com/"
   ]
 }
 # 重启docker
 sudo systemctl restart docker
+sudo docker info                                            # 查看镜像源
 
 sudo systemctl start docker                                 # 启动docker
 sudo systemctl daemon-reload                                # 重启docker守护进程
@@ -49,6 +47,13 @@ docker attach <CONTAINER ID>                                # 进入容器
 docker ps -a                                                # 查看容器
 docker rm <CONTAINER ID>                                    # 删除指定容器
 docker rm $(docker ps -aq)                                  # 删除所有容器
+
+# 镜像操作
+docker images -h                                            # 查看image命令帮助
+docker images                                               # 查看本地docker镜像
+docker images -a                                            # 查到所有镜像
+docker images -q                                            # 只显示IMAGE ID
+docker rmi abozanich/kail:latest                            # 删除镜像
 
 docker run -it centos:latest /bin/bash                      # docker启动centos
 
