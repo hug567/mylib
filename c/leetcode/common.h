@@ -25,6 +25,8 @@ do { \
     } \
 } while (0)
 
+#define Log(...) DebugLog(__VA_ARGS__)
+
 #define __printf(fmt, ...) \
 ({ \
     if (g_enableLog) { \
@@ -53,5 +55,7 @@ do { \
     } \
     printf("\n"); \
 } while (0)
+
+#define ArraySize(arr) (sizeof(arr) / sizeof(arr[0]))
 
 #endif /* __COMMON_H__ */
