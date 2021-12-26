@@ -1,3 +1,5 @@
+#ifndef __COMMON_H__
+#define __COMMON_H__
 /*
  * 公共头文件
  * 2021-04-14
@@ -13,6 +15,7 @@
 #define LOCAL_DEBUG
 
 #define DebugLog(fmt, ...) printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define Log(...) DebugLog(__VA_ARGS__)
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
 void PrintArray(const int *arr, int size)
@@ -39,3 +42,5 @@ void PrintArray2(int **_arr, int row, int col)
         printf("\n");
     }
 }
+
+#endif
