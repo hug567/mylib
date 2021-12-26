@@ -57,5 +57,6 @@ do { \
 } while (0)
 
 #define ArraySize(arr) (sizeof(arr) / sizeof(arr[0]))
+#define ARRAY_SIZE(arr) ArraySize(arr)
 
 #endif /* __COMMON_H__ */
