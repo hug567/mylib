@@ -54,13 +54,13 @@ void CreateTreeByLevelArray(struct TreeNode **t, int *arr, int size, int i)
 /*
  * 二叉树的深度
  */
-int TreeDepth(struct TreeNode *t)
+int __TreeDepth(struct TreeNode *t)
 {
     if (t == NULL) {
         return 0;
     }
-    int l = TreeDepth(t->left);
-    int r = TreeDepth(t->right);
+    int l = __TreeDepth(t->left);
+    int r = __TreeDepth(t->right);
     return (l > r ? l : r) + 1;
 }
 
@@ -148,7 +148,7 @@ void __LevelOrder(struct TreeNode *root)
 void PrintTreeInfo(struct TreeNode *t)
 {
     Log("----- tree info -----\n");
-    Log("tree depth: %d\n", TreeDepth(t));
+    Log("tree depth: %d\n", __TreeDepth(t));
     Log("pre order: ");
     __PreOrder(t);
     printf("\n");
