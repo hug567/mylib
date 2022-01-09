@@ -56,6 +56,36 @@ do { \
     printf("\n"); \
 } while (0)
 
+#define PrintArray2(__array, __row_, __col_) \
+do { \
+    int __i, __j; \
+    int __row = (__row_); \
+    int __col = (__col_); \
+    int (*__arr)[__col] = (int (*)[__col])__array; \
+    Log("array:\n"); \
+    for (__i = 0; __i < __row; __i++) { \
+        for (__j = 0; __j < __col; __j++) { \
+            printf("%d ", __arr[__i][__j]); \
+        } \
+        printf("\n"); \
+    } \
+} while (0)
+
+#define PrintCharArray2(__array, __row_, __col_) \
+do { \
+    int __i, __j; \
+    int __row = (__row_); \
+    int __col = (__col_); \
+    char (*__arr)[__col] = (char (*)[__col])__array; \
+    Log("array:\n"); \
+    for (__i = 0; __i < __row; __i++) { \
+        for (__j = 0; __j < __col; __j++) { \
+            printf("%c ", __arr[__i][__j]); \
+        } \
+        printf("\n"); \
+    } \
+} while (0)
+
 #define ArraySize(arr) (sizeof(arr) / sizeof(arr[0]))
 #define ARRAY_SIZE(arr) ArraySize(arr)
 
