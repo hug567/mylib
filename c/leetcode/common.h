@@ -49,9 +49,9 @@ do { \
     int __i; \
     int *__arr = arr; \
     int __size = size; \
-    DebugLog("array: "); \
+    printf("array: "); \
     for (__i = 0; __i < __size; __i++) { \
-        printf("%d ", __arr[__i]); \
+        printf("%8d ", __arr[__i]); \
     } \
     printf("\n"); \
 } while (0)
