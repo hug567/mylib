@@ -44,47 +44,49 @@ static inline void DisableDebugLog(void)
     g_enableLog = 0;
 }
 
-#define PrintArray(arr, size) \
-do { \
-    int __i; \
-    int *__arr = arr; \
-    int __size = size; \
-    printf("array: "); \
-    for (__i = 0; __i < __size; __i++) { \
-        printf("%8d ", __arr[__i]); \
-    } \
-    printf("\n"); \
-} while (0)
+static inline void DoPrintArray(const char *func, int line, int *arr, int size)
+{
+    int i;
+    printf("[%s:%d] array: ", func, line);
+    for (i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+#define PrintArray(arr, size) DoPrintArray(__func__, __LINE__, arr, size)
 
-#define PrintArray2(__array, __row_, __col_) \
-do { \
-    int __i, __j; \
-    int __row = (__row_); \
-    int __col = (__col_); \
-    int (*__arr)[__col] = (int (*)[__col])__array; \
-    Log("array:\n"); \
-    for (__i = 0; __i < __row; __i++) { \
-        for (__j = 0; __j < __col; __j++) { \
-            printf("%d ", __arr[__i][__j]); \
-        } \
-        printf("\n"); \
-    } \
-} while (0)
+static inline void DoPrintArray2(const char *func, int line, int **array,
+                               int row, int col)
+{
+    int i, j;
+    int (*arr)[col] = (int (*)[col])array;
+    printf("[%s:%d] two dimensional array:\n", func, line);
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < col; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+#define PrintArray2(arr, row, col) \
+        DoPrintArray2(__func__, __LINE__, arr, row, col)
 
-#define PrintCharArray2(__array, __row_, __col_) \
-do { \
-    int __i, __j; \
-    int __row = (__row_); \
-    int __col = (__col_); \
-    char (*__arr)[__col] = (char (*)[__col])__array; \
-    Log("array:\n"); \
-    for (__i = 0; __i < __row; __i++) { \
-        for (__j = 0; __j < __col; __j++) { \
-            printf("%c ", __arr[__i][__j]); \
-        } \
-        printf("\n"); \
-    } \
-} while (0)
+
+static inline void DoPrintCharArray2(const char *func, int line, char **array,
+                                     int row, int col)
+{
+    int i, j;
+    char (*arr)[col] = (char (*)[col])array;
+    printf("[%s:%d] two dimensional array:\n", func, line);
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < col; j++) {
+            printf("%c ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+#define PrintCharArray2(arr, row, col) \
+        DoPrintCharArray2(__func__, __LINE__, arr, row, col)
 
 #define ArraySize(arr) (sizeof(arr) / sizeof(arr[0]))
 #define ARRAY_SIZE(arr) ArraySize(arr)
