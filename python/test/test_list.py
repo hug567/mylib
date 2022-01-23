@@ -59,9 +59,16 @@ print(subjects)
 subjects.reverse()
 print(subjects)
 
-# 遍历链表
+# 遍历列表
 for sub in subjects:
     print("subject: " + sub)
+
+# 列表元素个数
+print("subject length: ", len(subjects), sep='')
+
+# 遍历列表
+for i in range(0, len(subjects)):
+    print("subjects[", i, "] = ", subjects[i], sep='')
 
 # range函数
 for value in range(1, 6):
