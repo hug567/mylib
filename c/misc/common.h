@@ -1,9 +1,10 @@
-#ifndef __COMMON_H__
-#define __COMMON_H__
 /*
  * 公共头文件
  * 2021-04-14
  */
+#ifndef __MISC_COMMON_H__
+#define __MISC_COMMON_H__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,27 +15,36 @@
 
 #define LOCAL_DEBUG
 
-#define DebugLog(fmt, ...) printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define DebugLog(fmt, ...) \
+        printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+
 #define Log(...) DebugLog(__VA_ARGS__)
+
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
-void PrintArray(const int *arr, int size)
+#define mem_zero_s(s) memset(&(s), 0, sizeof(s))
+#define mem_zero_a(a) memset(a, 0, sizeof(a))
+
+static inline void DoPrintArray(const char *func, int line,
+                                const int *arr, int size)
 {
     int i;
 
-    printf("arr: ");
+    printf("[%s:%d] arr: ", func, line);
     for (i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
 }
+#define PrintArray(__func__, __LINE__, arr, size)
 
-void PrintArray2(int **_arr, int row, int col)
+static inline void DoPrintArray2(const char *func, int line,
+                                 int **_arr, int row, int col)
 {
     int i, j;
     int (*arr)[col] = (int(*)[col])_arr;
 
-    printf("arr2: \n");
+    printf("[%s:%d] arr2: \n", func, line);
     for (i = 0; i < row; i++) {
         for (j = 0; j < col; j++) {
             printf("%d ", arr[i][j]);
@@ -42,5 +52,7 @@ void PrintArray2(int **_arr, int row, int col)
         printf("\n");
     }
 }
+#define PrintArray2(arr, row, col) \
+        DoPrintArray2(__func__, __LINE__, (int **)(arr), row, col)
 
 #endif
