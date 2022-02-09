@@ -105,6 +105,20 @@ void ListInsertDescend(struct ListNode *head, struct ListNode *new)
     post->pre = new;
 }
 
+int ListDeleteNode(struct ListNode *head, int val)
+{
+    struct ListNode *cur = head->next;
+
+    while (cur != head) {
+        if (cur->val == val) {
+            cur->pre->next = cur->next;
+            cur->next->pre = cur->pre;
+            free(cur)
+            break;
+        }
+    }
+}
+
 void ListPrint(struct ListNode *head)
 {
     struct ListNode *cur = head->next;
