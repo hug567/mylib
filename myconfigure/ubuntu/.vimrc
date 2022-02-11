@@ -198,3 +198,5 @@ func! LoardFromTmpFile()
 endfunc()
 :command LoardFromTmpFile call LoardFromTmpFile()
 "-----------------------------------------------"
+cs add cscope.out
+nmap <C-]> :cs find g <C-R>=expand("<cword>")<CR><CR>
