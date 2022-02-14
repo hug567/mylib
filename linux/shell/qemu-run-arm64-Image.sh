@@ -18,6 +18,6 @@ check_files_exist
 #    -append "root=/dev/mmcblk0 rw console=ttyAMA0"
 qemu-system-aarch64 \
     -M virt -cpu cortex-a57 -smp 1 -m 256 -nographic \
-    -initrd rootfs.gzip \
-    -kernel arch/arm64/boot/Image  \
+    -kernel ${IMAGE} \
+    -initrd ${ROOTFS} \
     --append "console=ttyAMA0 rdinit=/linuxrc"

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+START_TIME=$(date +%s)
 source $MYLIB/linux/shell/common.sh
 
 SDK_PATH="${HOME}/code/linux/sdk/vexpress-a9"
@@ -55,5 +56,5 @@ sudo cp -rP rootfs/* mnt
 sudo umount mnt
 qemu-img convert -f raw -O qcow2 ${ROOTFS} rootfs.qcow2
 
-log_info "delete temp file"
-sudo rm -rf mnt rootfs ${ROOTFS}
+END_TIME=$(date +%s)
+log_info "time spend: $(time_diff ${END_TIME} ${START_TIME})"

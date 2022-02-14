@@ -1,8 +1,8 @@
 #!/bin/bash
 
 START_TIME=$(date +%s)
-
-source ${MYLIB}/linux/shell/common.sh
+CUR_SCRIPT_DIR=$(cd $(dirname $0); pwd)
+source ${CUR_SCRIPT_DIR}/common.sh
 
 check_in_build_dir
 
@@ -16,13 +16,15 @@ check_in_build_dir
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 
 # 编译内核
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j${CPU_THREAD_NUM}
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j3
 
 # 编译内核模块(.ko)
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j${CPU_THREAD_NUM}
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j3
 
 # 编译dts文件(生成dtb文件)
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j${CPU_THREAD_NUM}
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j3
 
 # qemu启动命令
+END_TIME=$(data +%s)
 log_info "Run kernel: ~/code/mylib/linux/shell/qemu-run-aarch64.sh"
+log_info "time spend: $(time_diff ${END_TIME} ${START_TIME})"
