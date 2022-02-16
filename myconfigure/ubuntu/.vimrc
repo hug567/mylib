@@ -3,6 +3,7 @@
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
+
 "------------------------------------------------------------------------------"
 " 显示行号
 set number
@@ -30,6 +31,7 @@ let &t_SR.="\e[2 q" "REPLACE模式, 2:方块
 let &t_EI.="\e[2 q" "NORMAL模式, 2:方块
 " 使能系统剪切板+ (vim需支持+clipboard)
 "set clipboard^=unnamed,unnamedplus
+
 "------------------------------------------------------------------------------"
 " 主窗口背景色
 hi Normal ctermbg=NONE
@@ -63,6 +65,7 @@ hi VertSplit ctermfg=245 ctermbg=NONE
 map <F12> :noh<CR>
 " 加载~/.vimrc快捷键
 map <S-F12> :source ~/.vimrc<CR>
+
 "------------------------------------------------------------------------------"
 " 注释
 hi Comment ctermfg=245
@@ -102,6 +105,7 @@ hi Statement cterm=NONE ctermfg=198
 hi Constant cterm=NONE ctermfg=141
 " sizeof等
 hi Operator ctermfg=198
+
 "------------------------------------------------------------------------------"
 " 打开NERDTree快捷键
 map <F9> :NERDTreeToggle<CR>
@@ -124,6 +128,7 @@ hi NERDTreeExecFile ctermfg=119
 hi NERDTreeCWD ctermfg=198
 " 忽略指定文件
 let NERDTreeIgnore=['\.o$', '\.elf', '\.swp$', '\.out$']
+
 "------------------------------------------------------------------------------"
 " 只显示当前文件tag
 let Tlist_Show_One_File=1
@@ -140,6 +145,7 @@ hi FoldColumn ctermbg=NONE
 " Taglist开启、关闭快捷键
 map <F6> :TlistOpen<CR>
 map <F7> :TlistClose<CR>
+
 "------------------------------------------------------------------------------"
 "" 新建文件自动插入文件头
 "autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py,*.java exec ":call SetTitle()"
@@ -156,6 +162,7 @@ map <F7> :TlistClose<CR>
 "endfunc
 "" 新建文件后，自动定位到末尾
 "autocmd BufNewFile * normal G
+
 "------------------------------------------------------------------------------"
 " 根据文件后缀加载配置文件
 autocmd BufNewFile,BufRead *.c source ~/.vim/scripts/myc.vim
@@ -163,8 +170,10 @@ autocmd BufNewFile,BufRead *.h source ~/.vim/scripts/myc.vim
 autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
 autocmd BufNewFile,BufRead *.html source ~/.vim/scripts/myhtml.vim
 autocmd BufNewFile,BufRead *.cpp source ~/.vim/scripts/mycpp.vim
+
 "------------------------------------------------------------------------------"
 map <F10> :LeaderfFile<CR>
+
 "------------------------------------------------------------------------------"
 " 自动补全成对括号
 "inoremap ( ()<LEFT>
@@ -173,6 +182,7 @@ map <F10> :LeaderfFile<CR>
 "inoremap " ""<LEFT>
 "inoremap ' ''<LEFT>
 "inoremap < <><LEFT>
+
 "------------------------------------------------------------------------------"
 " 在命令行输出寄存器'0'的内容
 func! MyPrintReg0Contents()
@@ -180,6 +190,7 @@ func! MyPrintReg0Contents()
     echo lines
 endfunc
 map <F8> :call MyPrintReg0Contents()<CR>
+
 "------------------------------------------------------------------------------"
 " 保存寄存器0中的内容到临时文件中
 func! SaveToTmpFile()
@@ -204,20 +215,24 @@ func! SaveToTmpFile()
         echo line_num . " lines yanked, and save to tmp file /tmp/vim_tmp.txt"
     endif
 endfunc
-":delcommand SaveToTmpFile
-:command SaveToTmpFile call SaveToTmpFile()
+"delcommand SaveToTmpFile
+command SaveToTmpFile call SaveToTmpFile()
 " y命令复制时自动写入临时文件
-:autocmd TextYankPost * :call SaveToTmpFile()
+autocmd TextYankPost * :call SaveToTmpFile()
 
 " 读取临时文件到寄存器0中
 func! LoadFromTmpFile()
     let list = readfile("/tmp/vim_tmp.txt")
     call setreg("\"", list)
     call setreg("0", list)
+    silent execute "put"
     echo "read tmp file /tmp/vim_tmp.txt to reg[0]"
 endfunc
-":delcommand LoadFromTmpFile
-:command LoadFromTmpFile call LoadFromTmpFile()
+"delcommand LoadFromTmpFile
+command LoadFromTmpFile call LoadFromTmpFile()
+" Ctrl-P实现读取临时文件中内容并粘贴
+map <C-p> :call LoadFromTmpFile()<CR>
+
 "------------------------------------------------------------------------------"
 " 加载cscope文件
 cs add cscope.out
