@@ -94,6 +94,7 @@ v                                    //进入VISUAL模式，方向键选中
 /word                                //向光标之下搜索
 ?word                                //向光标之上搜索
 /word\c                              //大小写不敏感
+/[\ux]                               //搜索ASCII值，x为十六进制数
 n/N                                  //向下/上查找匹配
 :n1,n2s/word1/word2/g                //在n1至n2行间将word1替换为word2
 :n1,n2s/word1/word2/gc               //替换前需确认
@@ -150,6 +151,19 @@ ESC                              //退出
 :set ff=unix                     //设置文件格式为unix
 :set fileformat                  //查看文件格式(dos/unix)
 :set fileformat=unix             //设置文件格式为unix
+:w new_file.txt                  //vim中另存为文件
+```
+
+### 10）、vim控制字符：
+
+```c
+显示样式    ASCII值    字符名称
+  ^@        0x0         NUL
+  ^H        0x8         退格(Backspace)
+  ^I        0x9         水平制表符
+  ^J        0xa         换行(\n, LN)
+  ^@        0xa         换行(\n, LN)
+  ^M        0xd         回车(\r, CR, Enter)
 ```
 
 ## 2、vim中使用正则表达式：
