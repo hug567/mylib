@@ -36,7 +36,8 @@ static inline void DoPrintArray(const char *func, int line,
     }
     printf("\n");
 }
-#define PrintArray(__func__, __LINE__, arr, size)
+#define PrintArray(arr, size) \
+        DoPrintArray(__func__, __LINE__, (int *)(arr), (int)(size))
 
 static inline void DoPrintArray2(const char *func, int line,
                                  int **_arr, int row, int col)
