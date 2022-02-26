@@ -4,12 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <math.h>
 #include <assert.h>
-
-#define bool int
-#define true 1
-#define false 0
 
 #define LOCAL_DEBUG
 /*
@@ -70,7 +67,6 @@ static inline void DoPrintArray2(const char *func, int line, int **array,
 }
 #define PrintArray2(arr, row, col) \
         DoPrintArray2(__func__, __LINE__, arr, row, col)
-
 
 static inline void DoPrintCharArray2(const char *func, int line, char **array,
                                      int row, int col)
