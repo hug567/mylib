@@ -17,6 +17,11 @@ Files -> Settings -> Editor -> Color Style -> Hard wrap at(80)
 对空白的编辑窗口背景截一个图，将次图片作为窗口背景
 File -> Setting -> Appearance & Behavior -> Appearance -> UI Options -> Background Images -> Image -> Oppacity(100)
 
+//设置行号颜色
+Files -> Settings -> Editor -> Color Scheme -> General -> Code -> Line Number -> Foreground
+默认：F8F8F2
+更暗：808080
+
 //关闭参数提示
 Files -> Settings -> Editor -> Inlay Hints -> C/C++ -> Show parameter hints
 ```
@@ -33,4 +38,23 @@ Files -> Settings -> Editor -> Color Scheme -> Console Colors -> Console -> Back
   
 ```
 
-  
+## 2、编译已有文件：
+
+```c
+New Project -> C Executable -> Location -> Create -> Yes
+
+左侧工程名上右键 -> New -> CMakeLists.txt
+cmake_minimum_required(VERSION 3.16)
+project(helloworld C)
+set(CMAKE_C_STANDARD 99)
+add_executable(helloworld main.c)
+
+左侧文件CMakeLists.txt上右键 -> Load CMake Project
+
+Run -> Run -> 0. Edit Configurations -> Add New Configuration -> CMake Application
+    -> Name/Target/Executable (helloworld) -> Apply -> Close
+
+Run -> Run 'helloworld'
+
+```
+
