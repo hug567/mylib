@@ -10,6 +10,11 @@ Files -> Settings -> Editor -> Color Scheme -> General -> Text -> Whitespaces
 默认：464741
 更亮：808080
 
+//设置选择背景色
+Files -> Settings -> Editor -> Color Scheme -> General -> Editor -> Selection background
+默认：575959
+更亮：909090
+
 //设置参考竖线
 Files -> Settings -> Editor -> Color Style -> Hard wrap at(80)
 
