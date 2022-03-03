@@ -63,3 +63,13 @@ Run -> Run 'helloworld'
 
 ```
 
+## 3、加载现有文件到工程：
+
+```c
+//方法一：手动更新
+修改CMakeLists.txt -> 在CMakeLists.txt上右击 -> Reload CMake Project
+    
+//方法二：自动更新
+File -> Settings -> Build,Execution,Deployment -> CMake -> Automatically reload CMake project on editing
+```
+

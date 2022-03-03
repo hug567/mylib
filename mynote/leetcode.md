@@ -63,3 +63,18 @@ void print_array(int **array, int row, int col)
 }
 ```
 
+### 5、交换两个值：
+
+```c
+//异或
+a = a ^ b
+b = a ^ b
+a = a ^ b
+
+//加减
+a = a + b
+b = a - b
+a = a - b
+
+```
+
