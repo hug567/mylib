@@ -73,3 +73,10 @@ Run -> Run 'helloworld'
 File -> Settings -> Build,Execution,Deployment -> CMake -> Automatically reload CMake project on editing
 ```
 
+## 4、常用调试方法：
+
+```c
+//1、debug查看指针一维数组
+*(int(*)[5])(arr)
+```
+
