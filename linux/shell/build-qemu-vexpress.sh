@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 编译arm vexpress
+# 已验证：linux-4.18
+
 START_TIME=$(date +%s)
 
 source ${MYLIB}/linux/shell/common.sh

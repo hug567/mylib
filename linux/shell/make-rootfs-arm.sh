@@ -17,11 +17,9 @@ rm -rf mnt rootfs roofs.qcow2 ${ROOTFS}
 mkdir rootfs
 cd rootfs
 
-log_info "copy busybox file to rootfs"
 # bin  linuxrc  sbin  usr
 cp -rf ${SDK_PATH}/busybox/* ./
 
-log_info "copy configure file to rootfs"
 mkdir -p proc sys tmp root dev/pts etc/init.d usr/bin lib/modules
 cp ${LIB_ROOTFS_DIR}/etc/init.d/rcS etc/init.d/
 cp ${LIB_ROOTFS_DIR}/etc/profile etc/
@@ -46,7 +44,6 @@ copy_file_to_lib_modules ${TEST_DRIVER_DIR}/mychar2.ko
 copy_file_to_lib_modules ${TEST_DRIVER_DIR}/virt_net_driver.ko
 copy_file_to_lib_modules ${TEST_DRIVER_DIR}/vexpress/myuart.ko
 
-log_info "make rootfs file"
 cd ..
 dd if=/dev/zero of=${ROOTFS} bs=1M count=200
 mkfs.ext3 ${ROOTFS}
