@@ -68,18 +68,29 @@ pid_t tcgetsid(int fd);
  * 功能：抢占控制终端，fd指向一个终端tty，执行成功返回0，失败返回-1并设置errno;
  * 限制：fd指向的控制终端不能是另一个session的控制终端，除非调用者是root;
  */
-ret = ioctl(fd, TIOCSCTTY, 1);
+int ret = ioctl(fd, TIOCSCTTY, 1);
+```
+
+* 放弃控制终端：
+
+```c
+/*
+ * 功能：放弃控制终端，fd指向一个终端tty，执行成功返回0，失败返回-1并设置errno;
+ * 限制：调用进程需持有fd指向的终端tty; 若果调用进程是session leader, 讲给前台进程组发送SIGHUP和
+ *      SIGCONT信号, 当前session中所有进程失去该控制终端；
+ */
+int ret = ioctl(fd, TIOCNOTTY, 1);
 ```
 
 ## 3、linux相关命令：
 
 ```shell
 # 查看进程相关ID
-ps xao pid,pgid,sid,pgid,comm
+ps xao pid,pgid,pgrp,sid,ppid,comm
 ```
 
 ## 4、shell进程关系：
 
 * 前台进程命令：
 
-  shell中执行前台命令时，调用setpgid创建新的进程组，shell调用wait等待该进程组执行结束；命令执行结束后，shell再调用tcsetpgrp，将自己重新设置为前台进程组，继续读输入命令。
+  shell中执行前台命令时，调用setpgid创建新的进程组，一个job中的所有进程在同一个新的进程组中，shell调用wait等待该进程组执行结束；命令执行结束后，shell再调用tcsetpgrp，将自己重新设置为前台进程组，继续读输入命令。
