@@ -10,6 +10,8 @@ find ./ \
     -name "*.h" \
   > cscope.file
 
+wc -l cscope.file
+
 cscope -Rbq -i cscope.file
 
 rm -rf cscope.file
