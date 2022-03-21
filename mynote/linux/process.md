@@ -14,7 +14,7 @@
 
 ## 2、相关函数：
 
-* 设置进程的进程组ID(修改所在进程组)：
+* 设置进程PGID(修改所在进程组)：
 
 ```c
 /*
@@ -91,6 +91,52 @@ ps xao pid,pgid,pgrp,sid,ppid,comm
 
 ## 4、shell进程关系：
 
-* 前台进程命令：
+* 执行普通命令：
 
   shell中执行前台命令时，调用setpgid创建新的进程组，一个job中的所有进程在同一个新的进程组中，shell调用wait等待该进程组执行结束；命令执行结束后，shell再调用tcsetpgrp，将自己重新设置为前台进程组，继续读输入命令。
+
+shell执行前台命令，一行中的多个命令在一个job中，shell进程会将job中的进程设置到新的进程组中，job中第一个进程为该进程组的首进程：
+
+```c
+static void
+forkparent(struct job *jp, union node *n, int mode, pid_t pid)
+{
+    ...
+        if (jp->nprocs == 0)
+                pgrp = pid;
+        else
+                pgrp = jp->ps[0].ps_pid;
+        /* This can fail because we are doing it in the child also */
+        setpgid(pid, pgrp);
+    ...
+}
+```
+
+job中的进程会将自己设置为前台进程组：
+
+```c
+static NOINLINE void
+forkchild(struct job *jp, union node *n, int mode)
+{
+    ...
+        setpgid(0, pgrp);
+        if (mode == FORK_FG)
+            xtcsetpgrp(ttyfd, pgrp);
+    ...
+}
+```
+
+job执行结束后，父进程shell会再将自己设置为前台进程组：
+
+```c
+static int
+waitforjob(struct job *jp)
+{
+    ...
+    if (jp->jobctl) {
+        xtcsetpgrp(ttyfd, rootpid);
+    }
+    ...
+}
+```
+
