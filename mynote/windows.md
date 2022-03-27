@@ -16,7 +16,7 @@ test-path $profile               # 测试配置文件是否存在
 id
 
 # 3. Linux挂载Windows目录:
-sudo mount -t cifs -o username=Administrator,password=0427,gid=1000,uid=1000 //192.168.1.26/share ~/share
+sudo mount -t cifs -o username=Administrator,password=****,gid=1000,uid=1000 //192.168.1.26/share ~/share
 
 # 4. 卸载目录:
 sudo umount ~/share
