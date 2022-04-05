@@ -234,6 +234,9 @@ Networking options  --->
 https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
 
 /* 编译linux-4.18： */
+vim arch/arm64/configs/defconfig
+    CONFIG_UEVENT_HELPER=y
+    //CONFIG_UEVENT_HELPER_PATH="/sbin/hotplug"
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 
