@@ -132,6 +132,19 @@ export TERM=xterm-256color
 export GIT_SSL_NO_VERIFY=1
 export MYLIB=$HOME/code/mylib
 
+#git_branch()
+#{
+#    branch=$(__git_ps1 '%s')
+#    if [ ! -z $branch ]; then
+#        echo " <$branch>"
+#    fi
+#}
+#
+#export PS1="
+#\[\e[34;1m\][\u\[\e[31;1m\]@\[\e[34;1m\]\h]:\
+# \[\e[32;1m\]\w\[\e[34;1m\]\$(git_branch) \[\e[32;1m\][\$(date +%H:%M:%S)]\
+# \[\e[31;1m\]\n $ \[\e[0m\]\
+
 parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/ <\1>/p'
 }
@@ -141,3 +154,5 @@ export PS1='\n\[\e[34m\][\u@\h]: \[\e[33m\]\w\[\e[34m\]$(parse_git_branch) \[\e[
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin:$PATH"
 ################################# 自定义配置 #################################
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
