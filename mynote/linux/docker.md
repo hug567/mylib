@@ -130,13 +130,16 @@ yum deplist <package>                    # 查询软件包的依赖
 # 备份软件源：
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 
-# 更新软件源：
 # 查看Centos版本：
 cat /etc/redhat-release
+
+# 设置阿里软件源：
 # Centos 7:
 wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
 # Centos 8:
 wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
+curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
 
 # 安装常用软件, 使用与Ubuntu相同的配置文件即可
 yum -y install vim                       # 安装vim

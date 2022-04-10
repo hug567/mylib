@@ -104,7 +104,11 @@ sudo ip link set dev ens33 mtu 1500                   q      # 设置MTU
 ### 3）、net-tools常见用法：
 
 ```shell
-
+ifconfig -a
+ifconfig eth0 up
+ifconfig eth0 192.168.1.27 netmask 255.255.255.0
+route add default gw 192.168.1.1
+ifconfig ens33 hw ether 11:22:33:44:55:66
 ```
 
 
