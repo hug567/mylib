@@ -55,6 +55,11 @@ docker images -a                                            # 查到所有镜像
 docker images -q                                            # 只显示IMAGE ID
 docker rmi abozanich/kail:latest                            # 删除镜像
 
+# 打包镜像
+docker save -o myopensuse.tar huangxing/myopensuse:latest
+# 加载镜像
+docker loader -i myopensuse.tar
+
 docker run -it centos:latest /bin/bash                      # docker启动centos
 
 # docker使用容器制作Image：

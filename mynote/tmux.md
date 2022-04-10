@@ -3,7 +3,7 @@
 ```c
 sudo apt install tmux                    //安装tmux
 tmux -V                                  //查看tmux版本
-Ctrl + B                                 //默认Prefix
+Ctrl + B                                 //默认Prefix键
 ```
 
 ## 2、会话操作(session)：
@@ -18,7 +18,7 @@ tmux a                                   //恢复默认会话
 tmux a -t <name>                         //恢复指定会话
 Prefix + s                               //切换会话
 Prefix + d                               //断开会话
-Prefix、Shift + $                        //修改会话名
+Prefix, Shift + $                        //修改会话名
 ```
 
 ## 3、窗口操作(window)：
@@ -47,11 +47,12 @@ Prefix + !                               //当前窗格切换至新窗口
 Prefix + { / }                           //窗格切换位置
 Prefix + PageUp / PageDown               //上下翻页
 q                                        //退出翻页
-Prefix, Alt + 方向键                     //缩放窗格
+Prefix, Alt+方向键                        //缩放窗格
+Prefix, Alt+5                            //均匀分布窗格
 
 /*----- ~/.tmux.conf -----*/
 bind ` send-prefix                       //按两次prefix输入`键
-bind u display-pane                      //自定义命令显示pane窗格编号 (Prefix + u)
+bind u display-pane                      //自定义命令显示窗格编号 (Prefix + u)
 
 tmux swap-pane -s 2 -t 1                 //交换窗格
 ```
@@ -60,9 +61,9 @@ tmux swap-pane -s 2 -t 1                 //交换窗格
 
 ```C
 Prefix + [                               //进入复制模式
-空格键                                   //开始复制
-方向键                                   //选中文本
-Enter                                    //复制完成并退出
+  空格键                                    //开始复制
+  方向键                                    //选中文本
+  Enter                                    //复制完成并退出
 Prefix + ]                               //粘贴
 ^ / 0                                    //跳至行首
 $                                        //跳至行尾
@@ -80,8 +81,6 @@ l                                        //光标向右
 alias tmux='tmux -2'
 export TREM=xterm-256color
 //在~/.tmux.conf中添加以下配置
-
-
 ```
 
 ## 7、Windows下Git Bash安装tmux：

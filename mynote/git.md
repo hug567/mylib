@@ -129,6 +129,12 @@ git rebase -i <ID>^                                      //定位至最早需要
 //----------调整commit顺序------------------------------------------------//
 git rebase -i HEAD~<n>                                   //定位至最前一条commit
 /* 调整commit顺序后，:wq报错退出 */
+
+//cherry-pick另一个仓库的commit
+git remote add repo2 .../path/to/repo2                     //添加另一个本地仓库
+git remote add repo2 https://gitee.com/hug567/mylib.git    //添加另一个远端仓库
+git fetch repo2                                            //拉取仓库
+git cherry-pick <Commit ID>                                //pick另一仓库commit
 ```
 
 ### 2.5、撤销操作
@@ -209,6 +215,15 @@ npm config set registry http://mirrors.tools.huawei.com/npm/
 npm cache clean --force
 npm install -g gitbook-cli
 gitbook -V
+
+# 查看gitbook版本：
+gitbook --version
+
+# 空目录中创建gitbook
+gitbook init
+
+# 查看预览
+gitbook serve
 ```
 
 ## 4、tig：
