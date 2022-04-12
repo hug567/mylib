@@ -24,7 +24,20 @@ int BinarySearch(int *nums, int size, int target)
     return -1;
 }
 
-int search(int* nums, int numsSize, int target)
+/* 方案一 */
+int Compare(const void *a, const void *b)
+{
+    return *(int *)a - *(int *)b;
+}
+
+bool search(int* nums, int numsSize, int target)
+{
+    qsort(nums, numsSize, sizeof(int), Compare);
+    return BinarySearch(nums, numsSize, target) >= 0;
+}
+
+#if 0 /* 方案二 */
+bool search(int* nums, int numsSize, int target)
 {
     int i, idx, second = 0;
     int firstSize;
@@ -38,26 +51,30 @@ int search(int* nums, int numsSize, int target)
     firstSize = (second > 0) ? second : numsSize;
     idx = BinarySearch(nums, firstSize, target);
     if (idx >= 0) {
-        return idx;
+        return true;
     }
     if (second == 0) {
-        return -1;
+        return false;
     }
     idx = BinarySearch(nums + second, numsSize - second, target);
     if (idx >= 0) {
-        return idx + second;
+        return true;
     }
-    return -1;
+    return false;
 }
+#endif
 
 /***** 本地调试 ****************************************************************/
 void TestCase1(void)
 {
-    int nums[] = {};
+    int nums[] = {2,5,6,0,0,1,2};
     int size = ARRAY_SIZE(nums);
+    int target = 0;
+    Log("target exist: %d(1)\n", search(nums, size, target));
 }
 
 int main(void)
 {
+    TestCase1();
     return 0;
 }
