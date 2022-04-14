@@ -3,5 +3,5 @@ project(leetcode C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(leetcode leetcode_0081.c)
+add_executable(leetcode common.h leetcode_0153-2.c)
 target_compile_options(leetcode PRIVATE -Wall)
