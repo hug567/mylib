@@ -61,6 +61,7 @@ int DeleteTop(struct Heap *heap)
 	heap->data[1] = heap->data[heap->size];
 	heap->size--;
 	i = 1;
+	/* 错误：当两个子节点都比父节点大时，父节点应与较大的子节点交换 */
 	while (i <= heap->size) {
 		if (2 * i <= heap->size && heap->data[i] < heap->data[2 * i]) {
 			tmp = heap->data[i];
