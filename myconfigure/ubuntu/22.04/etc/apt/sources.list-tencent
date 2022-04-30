@@ -1,0 +1,11 @@
+# Ubuntu 22.04 - 2022.04.30
+deb https://mirrors.cloud.tencent.com/ubuntu jammy main restricted
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-updates main restricted
+deb https://mirrors.cloud.tencent.com/ubuntu jammy universe
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-updates universe
+deb https://mirrors.cloud.tencent.com/ubuntu jammy multiverse
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-updates multiverse
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-backports main restricted universe multiverse
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-security main restricted
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-security universe
+deb https://mirrors.cloud.tencent.com/ubuntu jammy-security multiverse
