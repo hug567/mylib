@@ -1,9 +1,0 @@
-# Ubuntu 18.04 - 2021.09.06
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic           main universe restricted multiverse
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic-security  main universe restricted multiverse
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic           main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main universe restricted multiverse

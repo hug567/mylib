@@ -1,9 +1,0 @@
-# Ubuntu 18.04 - 2021.09.05
-deb     https://mirrors.163.com/ubuntu/ bionic           main universe restricted multiverse
-deb     https://mirrors.163.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb     https://mirrors.163.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     https://mirrors.163.com/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src https://mirrors.163.com/ubuntu/ bionic           main universe restricted multiverse
-deb-src https://mirrors.163.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src https://mirrors.163.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src https://mirrors.163.com/ubuntu/ bionic-backports main universe restricted multiverse
