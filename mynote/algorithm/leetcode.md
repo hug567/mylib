@@ -58,6 +58,8 @@ int col = sizeof(arr[0]) / sizeof(arr[0][0]);      //arr[row][col]
             小写字母转大写字母：ch = ch - 'a' + 'A';
 
 4、定义字符串，用数组：char str[] = "abc"，不能用 char *str = "abc"，字符串常量不可修改；
+
+5、leetcode不识别关键字typeof；
 ```
 
 ## 4、交换两个值：
