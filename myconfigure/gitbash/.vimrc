@@ -4,6 +4,8 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 "-----------------------------------------------"
+" gitbash中vim使能显示中文
+set fencs=utf-8,gbk,utf-16,utf-32,ucs-bom
 " 显示行号
 set number
 " 搜索过程中高亮
