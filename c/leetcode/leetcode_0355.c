@@ -5,9 +5,6 @@
 #include "common.h"
 
 /***** 提交代码 ******************************************************************/
-#define MAX_FID 500
-#define MAX_TWEET 10000
-
 struct list_node {
     struct list_node *pre;
     struct list_node *next;
