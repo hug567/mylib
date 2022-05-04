@@ -45,37 +45,38 @@ Files -> Settings -> Editor -> Color Scheme -> Console Colors -> Console -> Back
   
 ```
 
-## 2、编译已有文件：
+## 2、CLion编译已有文件：
 
 ```c
 New Project -> C Executable -> Location -> Create -> Yes
 
-左侧工程名上右键 -> New -> CMakeLists.txt
+左侧工程名 -> 右键 -> New -> CMakeLists.txt
 cmake_minimum_required(VERSION 3.16)
 project(helloworld C)
 set(CMAKE_C_STANDARD 99)
 add_executable(helloworld main.c)
 
-左侧文件CMakeLists.txt上右键 -> Load CMake Project
+CMakeLists.txt -> 右键 -> Load CMake Project
 
 Run -> Run -> 0. Edit Configurations -> Add New Configuration -> CMake Application
     -> Name/Target/Executable (helloworld) -> Apply -> Close
 
-Run -> Run 'helloworld'
+CMakeLists.txt -> 右键 -> Reload CMake Project
 
+Run -> Run 'helloworld'
 ```
 
-## 3、加载现有文件到工程：
+## 3、CLion加载现有文件到工程：
 
 ```c
 //方法一：手动更新
-修改CMakeLists.txt -> 在CMakeLists.txt上右击 -> Reload CMake Project
+修改CMakeLists.txt -> 在CMakeLists.txt上右键 -> Reload CMake Project
     
 //方法二：自动更新
 File -> Settings -> Build,Execution,Deployment -> CMake -> Automatically reload CMake project on editing
 ```
 
-## 4、常用调试方法：
+## 4、CLion常用调试方法：
 
 ```c
 //1、debug查看指针一维数组

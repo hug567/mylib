@@ -96,6 +96,7 @@ int main(void)
     int i;
     int heap[MAX_SIZE] = {0};
 
+    printf("Enter %s\n", __func__);
     for (i = 0; i < 10; i++) {
         MaxHeapInsertNode(heap, i);
     }

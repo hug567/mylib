@@ -3,14 +3,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <math.h>
 #include <assert.h>
 
 #define LOCAL_DEBUG
 
-#define INT_MAX ((int)(~0U >> 1))
-#define INT_MIN ((int)(1U << 31))
+//#define INT_MAX ((int)(~0U >> 1))
+//#define INT_MIN ((int)(1U << 31))
 
 static int g_enableLog = 1;
 
@@ -35,6 +36,8 @@ do { \
 do { \
         __printf("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__); \
 } while (0)
+#define Log(...) DebugLog(__VA_ARGS__)
+#define LogEnter() Log("Enter %s\n", __func__)
 
 #define PrintArray(arr, size) \
 do { \
