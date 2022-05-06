@@ -93,3 +93,18 @@ make -j4
 sudo make install
 qemu-img --version
 ```
+
+### 8、安装Linux硬盘划分参考：
+
+```c
+磁盘大小：20G
+推荐划分：
+  grub    1M
+  swap    2G
+  /       18G
+默认划分：
+  grub    1M
+  /boot   1G
+  /       19G
+```
+

@@ -93,6 +93,7 @@ void PrintTreePath(int *path, int len)
     printf("\n");
 }
 
+/* DFS: 二叉树的前序遍历，结合堆栈 */
 int g_num[10];
 void Dfs(struct TreeNode *t, int depth)
 {
@@ -153,6 +154,7 @@ struct TreeNode *DeQueue(void)
     return head;
 }
 
+/* BFS：二叉树的层次遍历，结合队列 */
 void Bfs(struct TreeNode *t)
 {
     struct TreeNode *tmp = NULL;
