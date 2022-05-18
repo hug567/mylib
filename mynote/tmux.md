@@ -72,6 +72,9 @@ h                                        //光标向左
 j                                        //光标向下
 k                                        //光标向上
 l                                        //光标向右
+
+//保存窗格文本到文件
+tmux capture-pane -S -; tmux save-buffer output.log
 ```
 
 ## 6、tmux支持256色：

@@ -91,8 +91,10 @@ git push origin HEAD:<newname>                           //提送至远端分支
 /* -------- 远端仓库管理 ------------------------------------------------- */
 git remote -v                                            //查看远程仓库地址
 /* 设置添加远程仓库地址： */
-git remote set-url origin https://gitee.com/hug567/mylib.git
-git remote add github https://github.com/hug567/mylib.git
+git remote set-url <origin> <https://gitee.com/...>      //更新远端地址
+git remote add <github> <https://github.com/...>         //添加远端
+git remote remove <gitee>                                //删除远端
+git remote rename <gitee> <origin>                       //重命名远端
 /* 验证连接远程仓库地址： */
 ssh -T git@github.com
 /* 推动至远端： */
@@ -135,6 +137,22 @@ git remote add repo2 .../path/to/repo2                     //添加另一个本�
 git remote add repo2 https://gitee.com/hug567/mylib.git    //添加另一个远端仓库
 git fetch repo2                                            //拉取仓库
 git cherry-pick <Commit ID>                                //pick另一仓库commit
+
+//----------拆分commit---------------------------------------------------//
+//拆分第1个commit
+git reset --mixed HEAD~
+git add <files>
+git commit -s
+
+//拆分第2个commit
+git rebase -i HEAD~2
+  pick -> e
+git reset --mixed HEAD~
+git add <file1> ...
+git commit -s
+git add <file2> ...
+git commit -s
+git rebase --continue
 ```
 
 ### 2.5、撤销操作
@@ -165,6 +183,24 @@ git clean -nfdx                                //查看将被删除未追踪与.
 git clean -f                                   //删除未追踪的文件
 git clean -fd                                  //删除未追踪的文件及目录
 git clean -fdx                                 //删除未追踪与.gitignore忽略的文件及目录
+
+//撤销第1个commit中指定文件的修改
+git reset HEAD^ <files>
+git reset HEAD~1 <files>
+git commit --amend
+
+//撤销第2个commit中指定文件的修改
+git reset HEAD~2 <files>
+git reset <commit ID>~ <files>
+git checkout <files>
+git stash
+git rebase HEAD~2
+git rebase <commit ID>~
+pick -> e
+git stash pop
+git add <files>
+git commit --amend
+git rebase --continue
 ```
 
 ### 2.6、设置忽略
