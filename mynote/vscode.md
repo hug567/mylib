@@ -134,6 +134,7 @@ launch.json                                //调试配置文件
 
 ## 3、常用操作：
 ```c
+//编辑
 Ctrl + Enter                    //在光标下一行插入新行
 Shift + Alt + Up                //复制当前行至光标上一行
 Shift + Alt + Down              //复制当前行至光标下一行
@@ -144,6 +145,11 @@ Ctrl + Down                     //视图下移
 Ctrl + L                        //选中当前行
 Shift + Alt + 鼠标左键           //按列选中
 Ctrl + F4                       //关闭编辑器窗口
+
+//阅读
+Ctrl + P                        //搜索文件
+F12                             //跳转到定义
+Alt + Left                      //跳转到定义后回到原来位置
 
 /* 自定义快捷键： */
 Ctrl + Shift + p -> Preferences: Open Keyboard Shortcuts

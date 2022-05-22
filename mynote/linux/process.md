@@ -2,17 +2,27 @@
 
 ## 1、基本概念：
 
-进程：执行实体，PID为进程标识符；
+* 进程：执行实体，PID为进程标识符；
 
-进程组：一组相关的进程集合，PGID为进程组ID，等于进程组组长的PID；
+* 进程组：一组相关的进程集合，PGID为进程组ID，等于进程组组长的PID；
 
-前台进程组：可读终端输入，一个会话中只有一个前台进程组，终端输入的控制信号将被发送给前台进程组的所有进程；
+* 前台进程组：可读终端输入，一个会话中只有一个前台进程组，终端输入的控制信号将被发送给前台进程组的所有进程；
 
-后台进程组：不可读终端输入，一个会话中可有多个后台进程组；
+* 后台进程组：不可读终端输入，一个会话中可有多个后台进程组；
 
-会话：一个会话有一个前台进程组和多个后台进程组，有一个控制终端，可实现交互；
+* 会话：一个会话有一个前台进程组和多个后台进程组，有一个控制终端，可实现交互；
 
 ## 2、相关函数：
+
+* 创建新session：
+
+```c
+/*
+ * 功能：创建新session，sid为调用进程pid，同时创建新进程组，pgid为调用进程pid;
+ * 限制：调用进程不能是进程组首进程;
+ */
+pid_t setsid(void);
+```
 
 * 设置进程PGID(修改所在进程组)：
 
@@ -28,16 +38,6 @@
  *   4). 若在进程组间移动，pid进程需与目标pgid子进程在同一会话中；
  */
 int setpgid(pid_t pid, pid_t pgid);
-```
-
-* 创建新session：
-
-```c
-/*
- * 功能：创建新session，sid为调用进程pid，创建新进程组，pgid为调用进程pid;
- * 限制：调用进程不能是进程组首进程;
- */
-pid_t setsid(void);
 ```
 
 * 设置前台进程组：
@@ -95,7 +95,7 @@ ps xao pid,pgid,pgrp,sid,ppid,comm
 
   shell中执行前台命令时，调用setpgid创建新的进程组，一个job中的所有进程在同一个新的进程组中，shell调用wait等待该进程组执行结束；命令执行结束后，shell再调用tcsetpgrp，将自己重新设置为前台进程组，继续读输入命令。
 
-shell执行前台命令，一行中的多个命令在一个job中，shell进程会将job中的进程设置到新的进程组中，job中第一个进程为该进程组的首进程：
+* shell执行前台命令，一行中的多个命令在一个job中，shell进程会将job中的进程设置到新的进程组中，job中第一个进程为该进程组的首进程：
 
 ```c
 static void
@@ -112,7 +112,7 @@ forkparent(struct job *jp, union node *n, int mode, pid_t pid)
 }
 ```
 
-job中的进程会将自己设置为前台进程组：
+* job中的进程会将自己设置为前台进程组：
 
 ```c
 static NOINLINE void
@@ -126,7 +126,7 @@ forkchild(struct job *jp, union node *n, int mode)
 }
 ```
 
-job执行结束后，父进程shell会再将自己设置为前台进程组：
+* job执行结束后，父进程shell会再将自己设置为前台进程组：
 
 ```c
 static int
@@ -138,5 +138,26 @@ waitforjob(struct job *jp)
     }
     ...
 }
+```
+
+## 5、telnetd创建新session的主要过程：
+
+```c
+//telnetd:
+fd = open("/dev/ptmx");
+name = ptsname(fd);
+vfork();
+  //child:
+  getpid();
+  setsid();
+  open("/dev/pts/x");
+  dup2();
+  tcsetpgrg();
+  tcgetattr();
+  tcsetattr();
+  exec("login");
+
+//login:
+exec("shell");
 ```
 
