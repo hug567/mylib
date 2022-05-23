@@ -74,3 +74,14 @@ PasswordAuthentication no
 #       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
 Restart-Service sshd                                  # 重启sshd服务
 ```
+
+## 3、gitbash
+
+```c
+//显示中文乱码：
+Right Click -> Options... -> Text -> Locale:zh_CN -> Character set:UTF-8 -> Save
+git config --global core.quotepath false
+git config --global i18n.commitencoding utf-8
+git config --global i18n.logoutputencoding utf-8
+```
+

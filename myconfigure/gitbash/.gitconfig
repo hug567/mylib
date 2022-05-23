@@ -1,8 +1,11 @@
+# gitbase config:
+#   Right Click -> Options... -> Text -> Locale:zh_CN -> Character set:UTF-8 -> Save
 [user]
 	name = Huang Xing
 	email = huangxing567@163.com
 [core]
 	editor = vim
+	quotepath = false
 [credential]
 	helper = store
 [http]
@@ -17,3 +20,6 @@
 	pl = pull
 	ps = push
 	lg = "log --oneline --graph --pretty=format:\"%C(yellow)%h %Cred[%an]%Creset %Cblue[%ad]%Creset %s %Cgreen(%cr)%Cred%d\" --date=format:'%Y-%m-%d %H:%M:%S' -n 30"
+[i18n]
+	commitencoding = utf-8
+	logoutputencoding = utf-8
