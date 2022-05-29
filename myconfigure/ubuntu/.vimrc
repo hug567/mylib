@@ -192,9 +192,9 @@ endfunc
 map <F8> :call MyPrintReg0Contents()<CR>
 
 "------------------------------------------------------------------------------"
-" 保存寄存器1中的内容到临时文件中
+" 保存寄存器0中的内容到临时文件中
 func! SaveToTmpFile()
-    let lines = getreg("1")
+    let lines = getreg("0")
     let len = strlen(lines)
     let i = 0
     let list = []
