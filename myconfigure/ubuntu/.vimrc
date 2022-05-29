@@ -192,7 +192,7 @@ endfunc
 map <F8> :call MyPrintReg0Contents()<CR>
 
 "------------------------------------------------------------------------------"
-" 保存寄存器中的内容到临时文件中
+" 保存寄存器"中的内容到临时文件中
 func! SaveToTmpFile()
     let lines = getreg("\"")
     let len = strlen(lines)
@@ -200,9 +200,13 @@ func! SaveToTmpFile()
     let list = []
     let line_num = 0
     let substart = 0
+    let endidx = len - 1
     while i < len
-        if lines[i] == "\n"
+       if lines[i] == "\n" || i == endidx
             let sublen = i - substart
+            if i == endidx && lines[i] != "\n"
+                let sublen += 1
+            endif
             let substr = strpart(lines, substart, sublen)
             call add(list, substr)
             let substart = i + 1
