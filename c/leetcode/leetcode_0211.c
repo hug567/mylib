@@ -5,25 +5,77 @@
 #include "common.h"
 
 /***** 提交代码 ******************************************************************/
-typedef struct {
+struct TrieNode {
+    struct TrieNode *child[26];
+    bool isEnd;
+};
 
+typedef struct {
+    struct TrieNode *root;
 } WordDictionary;
 
 
 WordDictionary* wordDictionaryCreate() {
-
+    WordDictionary  *wd = malloc(sizeof(WordDictionary));
+    memset(wd, 0, sizeof(WordDictionary));
+    return wd;
 }
 
 void wordDictionaryAddWord(WordDictionary* obj, char * word) {
+    struct TrieNode *new = NULL;
+    struct TrieNode *parent = obj->root;
 
+    while (*word != '\0') {
+        new = malloc(sizeof(WordDictionary));
+        memset(new, 0, sizeof(WordDictionary));
+        if (*(word + 1) == '\0') {
+            new->isEnd = true;
+        } else {
+            new->isEnd = false;
+        }
+        parent->child[*word - 'a'] = tmp;
+        parent = new;
+        word++;
+    }
 }
 
-bool wordDictionarySearch(WordDictionary* obj, char * word) {
+bool wordDictionarySearch(WordDictionary* obj, char *word)
+{
+    struct TrieNode *node = obj->root;
 
+    while (*word != '\0') {
+        if (*word == '.') {
+
+        } else {
+            if (node->child[*word - 'a'] == NULL) {
+                return false;
+            }
+            node = node->child[*word - 'a'];
+            word++;
+        }
+    }
+    if (node != NULL && node->isEnd) {
+        return true;
+    }
+    return false;
+}
+
+void trieFree(struct TrieNode *root)
+{
+    int i;
+
+    if (root == NULL) {
+        return;
+    }
+    for (i = 0; i < 26; i++) {
+        trieFree(root->child[i]);
+    }
+    free(root);
 }
 
 void wordDictionaryFree(WordDictionary* obj) {
-
+    trieFree(obj->root);
+    free(obj);
 }
 
 /***** 本地调试 ******************************************************************/
