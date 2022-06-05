@@ -2,8 +2,7 @@
 
 ```c
 cd /etc/apt                                              //进入目录
-sudo mv sources.list sources.list-ubuntu                 //备份源镜像
-sudo gedit sources.list                                  //新建源镜像
+sudo vi sources.list                                     //新建源镜像
 deb http://mirrors.cloud.tencent.com/ubuntu/ bionic main universe restricted multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ bionic-security main universe restricted multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ bionic-updates main universe restricted multiverse
@@ -15,21 +14,11 @@ deb-src http://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe 
 sudo apt update                                          //更新源镜像
 sudo apt upgrade                                         //更新软件
 ```
-###  2、安装软件：
+###  2、安装常用软件：
 
 ```C
-sudo apt install vim vim-gnome git tmux zsh gcc g++ \
-     make cmake python python3 ctags                     //安装软件
-vim --version                                            //查看vim版本
-git --version                                            //查看git版本
-tmux -V                                                  //查看tmux版本
-zsh --version                                            //查看zsh版本
-gcc --version                                            //查看gcc版本
-g++ --version                                            //查看g++版本
-make --version                                           //查看make版本
-cmake --version                                          //查看cmake版本
-python --version                                         //查看python版本
-python3 --version                                        //查看python3版本
+sudo apt install openssh-server net-tools htop vim
+sudo apt install git tmux zsh gcc g++ make cmake python python3 ctags cscope
 ```
 ### 3、配置GitHub：
 
@@ -52,7 +41,6 @@ cp -a <...> ~                                            //复制配置文件
 //配置GitHub并下载mgconfigure仓库
 将gitbash/tmux/bin下所有文件复制到.../Program Files/Git/usr/bin下
 将gitbash/tmux/share下所有文件复制到.../Program Files/Git/use/share下
-
 ```
 
 ### 6、Ubuntu 18.04配置：

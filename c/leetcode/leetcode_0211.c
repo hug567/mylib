@@ -3,7 +3,7 @@
  * 2022-05-13
  */
 #include "common.h"
-
+#if 0
 /***** 提交代码 ******************************************************************/
 struct TrieNode {
     struct TrieNode *child[26];
@@ -86,5 +86,12 @@ void TestCase1(void)
 int main(void)
 {
     TestCase1();
+    return 0;
+}
+#endif
+
+int main(void)
+{
+    printf("Enter %s\n", __func__);
     return 0;
 }
