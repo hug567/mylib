@@ -21,7 +21,7 @@ sudo ifconfig ens33 192.168.1.30 netmask 255.255.255.0   # 配置ip
 sudo route add default gw 192.168.1.1                    # 配置路由
 sudo ifconfig ens33 hw ether 11:22:33:44:55:66           # 配置MAC地址
 
-# 查看是否安装网络管理工具：
+# 查看是否启动网络守护进程：
 which netplan
 ps aux | grep NetworkManager                             # 查看是否启动了服务
 ps aux | grep systemd-networkd                           # 查看是否启动了服务
@@ -65,11 +65,7 @@ sudo systemctl stop NetworkManager              # 关闭
 sudo systemctl enable NetworkManger             # 使能开启自启动
 sudo systemctl disable NetworkManager           # 禁止开机自启动
 
-service NetworkManager status                   # 查看状态
-service NetworkManager start                    # 启动
-service NetworkManager stop                     # 关闭
-
-# 2）、Systemd-networkd
+# 2）、systemd-networkd
 sudo systemctl start systemd-networkd           # 启动
 sudo systemctl stop systemd-networkd            # 停止
 sudo systemctl enable systemd-networkd          # 使能开机自启动
@@ -79,7 +75,10 @@ sudo systemctl disable systemd-networkd         # 禁止开机自启动
 nmcli d                                         # 显示网卡设备
 nmcli c                                         # 显示网络连接
 nmcli -s                                        # 显示网卡信息
-nmcli device show                               # 显示网卡设备配置信息
+nmcli device show                               # 显示已生效的网卡配置信息
+
+# DNS：
+systemd-resolve --status                        # 查看当前使用的dns
 
 # 配置源镜像：
 sudo vi /etc/apt/sources.list
