@@ -3,38 +3,27 @@
 ### 1）、配置静态ip：
 
 ```shell
-# 使用iproute2配置ip:
-ip a                                                     # 显示网卡
-sudo ip link set dev ens33 up                            # 启动网卡
-sudo ip addr add dev ens33 192.168.1.29/24               # 配置ip
-sudo ip route add default dev ens33 via 192.168.1.1      # 配置路由
 # 配置dns:
 sudo vi /etc/resolv.conf
 #--------------------------------------------------------------------#
 nameserver 192.168.1.1
 #--------------------------------------------------------------------#
 
-# 使用net-tools配置ip：
-ifconfig -a                                              # 查看所有网卡信息
-sudo ifconfig ens33 up                                   # 启动网卡
-sudo ifconfig ens33 192.168.1.30 netmask 255.255.255.0   # 配置ip
-sudo route add default gw 192.168.1.1                    # 配置路由
-sudo ifconfig ens33 hw ether 11:22:33:44:55:66           # 配置MAC地址
-
-# 查看是否启动网络守护进程：
+# 查看网络守护进程：
 which netplan
 ps aux | grep NetworkManager                             # 查看是否启动了服务
 ps aux | grep systemd-networkd                           # 查看是否启动了服务
 
 # 安装网络管理工具：
-sudo apt install netplan.io network-manager
+sudo apt install netplan.io network-manager net-tools
 
-# 配置静态ip:
+# netplan配置静态ip:
 sudo vim /etc/netplan/01-network-manager-all.yaml
 #----- NetworkManger: -----------------------------------------------#
 network:
   version: 2
-  renderer: NetworkManager
+  renderer: NetworkManager                    # NetworkManager
+  renderer: networkd                          # systemd-networkd
   ethernets:
     ens33:
       dhcp4: false
@@ -42,40 +31,10 @@ network:
       gateway4: 192.168.1.1
       nameservers:
         addresses: [192.168.1.1]
-#----- systemd-networkd: --------------------------------------------#
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    ens33:
-      dhcp4: false
-      addresses: [192.168.1.30/24]
-      gateway4: 192.168.1.1
-      nameservers:
-        addresses: [192.168.1.1]
 #--------------------------------------------------------------------#
 sudo netplan apply                              # 应用配置信息
 sudo netplan --debug apply                      # 打印调试信息
 sudo netplan generate                           # 生成网络守护程序配置信息
-
-# netplan后端网络管理工具(renderer):
-# 1)、NetworkManager
-sudo systemctl start NetworkManager             # 启动
-sudo systemctl stop NetworkManager              # 关闭
-sudo systemctl enable NetworkManger             # 使能开启自启动
-sudo systemctl disable NetworkManager           # 禁止开机自启动
-
-# 2）、systemd-networkd
-sudo systemctl start systemd-networkd           # 启动
-sudo systemctl stop systemd-networkd            # 停止
-sudo systemctl enable systemd-networkd          # 使能开机自启动
-sudo systemctl disable systemd-networkd         # 禁止开机自启动
-
-# nmcli:
-nmcli d                                         # 显示网卡设备
-nmcli c                                         # 显示网络连接
-nmcli -s                                        # 显示网卡信息
-nmcli device show                               # 显示已生效的网卡配置信息
 
 # DNS：
 systemd-resolve --status                        # 查看当前使用的dns
@@ -85,7 +44,7 @@ sudo vi /etc/apt/sources.list
 sudo apt update
 ```
 
-### 2）、iproute2常见用法：
+### 2）、iproute2配置ip：
 
 ```shell
 # 列出路由
@@ -97,20 +56,68 @@ ip route show table all
 ip link help                                                # 查看命令帮助
 sudo ip link set dev ens33 address 11:22:33:44:55:66        # 设置MAC地址
 sudo ip link set dev ens33 broadcast 11:22:33:44:55:66      # 设置广播地址
-sudo ip link set dev ens33 mtu 1500                   q      # 设置MTU
+sudo ip link set dev ens33 mtu 1500                         # 设置MTU
 ```
 
-### 3）、net-tools常见用法：
+### 3）、net-tools配置ip：
 
 ```shell
+sudo apt install net-tools                                  # 安装net-tools
+
 ifconfig -a
-ifconfig eth0 up
-ifconfig eth0 192.168.1.27 netmask 255.255.255.0
-route add default gw 192.168.1.1
-ifconfig ens33 hw ether 11:22:33:44:55:66
+ifconfig eth0 up                                            # 启动网卡
+ifconfig eth0 192.168.1.27 netmask 255.255.255.0            # 设置ip
+route add default gw 192.168.1.1                            # 设置网关
+ifconfig ens33 hw ether 11:22:33:44:55:66                   # 设置MAC地址
 ```
 
+### 4）、NetworkManager：
 
+```shell
+# 启动/停止NetworkManager
+sudo systemctl start NetworkManager             # 启动
+sudo systemctl stop NetworkManager              # 关闭
+sudo systemctl enable NetworkManger             # 使能开启自启动
+sudo systemctl disable NetworkManager           # 禁止开机自启动
+
+# nmcli:
+nmcli d                                         # 显示网卡设备
+nmcli c                                         # 显示网络连接
+nmcli -s                                        # 显示网卡信息
+nmcli device show                               # 显示已生效的网卡配置信息
+
+# 配置文件：
+/run/NetworkManager/system-connections/netplan-ens33
+```
+
+### 5）、systemd-networkd：
+
+```shell
+# 启动/停止systemd-networkd
+sudo systemctl start systemd-networkd             # 启动
+sudo systemctl stop systemd-networkd              # 停止
+sudo systemctl enable systemd-networkd            # 使能开机自启动
+sudo systemctl disable systemd-networkd           # 禁止开机自启动
+
+# 配置文件所在目录：
+/usr/lib/systemd/network                          # 最低优先级
+/run/systemd/network                              # 中等优先级
+/etc/systemd/network                              # 最高优先级
+
+# 配置文件：
+*.network                                         # 网络设备配置文件
+*.netdev                                          # 虚拟网络设备配置文件
+
+# 例：/run/systemd/network/10-netplan-ens33.network
+[Match]
+Name=ens33
+
+[Network]
+LinkLocalAddressing=ipv6
+Address=192.168.58.27/24
+Gateway=192.168.58.2
+DNS=192.168.58.2
+```
 
 ## 2、安装常用软件：
 
