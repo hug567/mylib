@@ -125,6 +125,8 @@ zc                                   //折叠关闭
 :set fileencoding                    //查看文件编码格式
 :set fileencoding=uft-8              //转换文件编码格式为utf-8
 :set fileformat=unix                 //设置文件格式为unix
+:set wrap                            //自动换行
+:set nowrap                          //不自动换行
 ```
 
 ### 8）、多行注释：

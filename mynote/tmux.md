@@ -73,8 +73,10 @@ j                                        //光标向下
 k                                        //光标向上
 l                                        //光标向右
 
-//保存窗格文本到文件
-tmux capture-pane -S -; tmux save-buffer output.log
+tmux capture-pane -S -                   //保存窗格中所有历史到buffer
+Prefix + PageUp                          //查看当前窗格行数，右上角现实的是当前行的倒数行数与总行数
+tmux capture-pane -S -351                //保存pane中倒数指定行到buffer
+tmux save-buffer output.log              //buffer内容保存到文件
 ```
 
 ## 6、tmux支持256色：
