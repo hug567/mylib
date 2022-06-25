@@ -9,61 +9,10 @@ deb-src https://mirrors.163.com/ubuntu/ bionic-updates   main universe restricte
 deb-src https://mirrors.163.com/ubuntu/ bionic-backports main universe restricted multiverse
 
 # Ubuntu 18.04 - 2021.09.05
-deb     https://mirrors.aliyun.com/ubuntu/ bionic           main universe restricted multiverse
-deb     https://mirrors.aliyun.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb     https://mirrors.aliyun.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     https://mirrors.aliyun.com/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ bionic           main universe restricted multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ bionic-backports main universe restricted multiverse
-
-# Ubuntu 18.04 - 2021.11.12 (huawei)
-deb     https://mirrors.huaweicloud.com/ubuntu/ bionic           main universe restricted multiverse
-deb     https://mirrors.huaweicloud.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb     https://mirrors.huaweicloud.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     https://mirrors.huaweicloud.com/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src https://mirrors.huaweicloud.com/ubuntu/ bionic           main universe restricted multiverse
-deb-src https://mirrors.huaweicloud.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src https://mirrors.huaweicloud.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src https://mirrors.huaweicloud.com/ubuntu/ bionic-backports main universe restricted multiverse
-
-# Ubuntu 18.04 - 2021.09.05 (huawei)
-deb     https://repo.huaweicloud.com/ubuntu/ bionic           main universe restricted multiverse
-deb     https://repo.huaweicloud.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb     https://repo.huaweicloud.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     https://repo.huaweicloud.com/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src https://repo.huaweicloud.com/ubuntu/ bionic           main universe restricted multiverse
-deb-src https://repo.huaweicloud.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src https://repo.huaweicloud.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src https://repo.huaweicloud.com/ubuntu/ bionic-backports main universe restricted multiverse
-
-# Ubuntu 18.04 - 2021.09.05 (tencent)
-deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic           main universe restricted multiverse
-deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic           main universe restricted multiverse
-deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe restricted multiverse
-
-# Ubuntu 18.04 - 2021.09.06 (tsinghua)
-deb     https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic           main universe restricted multiverse
-deb     https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security  main universe restricted multiverse
-deb     https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic           main universe restricted multiverse
-deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main universe restricted multiverse
-
-# Ubuntu 18.04 - 2021.09.06
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic           main universe restricted multiverse
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic-security  main universe restricted multiverse
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic-updates   main universe restricted multiverse
-deb     http://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic           main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic-security  main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic-updates   main universe restricted multiverse
-deb-src http://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main universe restricted multiverse
+https://mirrors.163.com/ubuntu/
+https://mirrors.aliyun.com/ubuntu/
+https://mirrors.huaweicloud.com/ubuntu/
+https://repo.huaweicloud.com/ubuntu/
+https://mirrors.cloud.tencent.com/ubuntu/
+https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+http://mirrors.ustc.edu.cn/ubuntu/

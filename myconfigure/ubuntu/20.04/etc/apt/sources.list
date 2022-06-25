@@ -1,0 +1,19 @@
+# Ubuntu 20.04 (2022.06.25)
+deb     http://mirrors.aliyun.com/ubuntu/ focal           main restricted universe multiverse
+deb     http://mirrors.aliyun.com/ubuntu/ focal-security  main restricted universe multiverse
+deb     http://mirrors.aliyun.com/ubuntu/ focal-updates   main restricted universe multiverse
+deb     http://mirrors.aliyun.com/ubuntu/ focal-proposed  main restricted universe multiverse
+deb     http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal           main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security  main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates   main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed  main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+
+# Ubuntu 20.04 (2022.06.25)
+http://mirrors.aliyun.com/ubuntu/
+http://mirrors.163.com/ubuntu/
+http://mirrors.huaweicloud.com/ubuntu/
+http://mirrors.cloud.tencent.com/ubuntu/
+http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+http://mirrors.ustc.edu.cn/ubuntu/
