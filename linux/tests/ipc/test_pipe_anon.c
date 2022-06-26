@@ -20,6 +20,7 @@ void child_process(int pipe_rd_fd)
 	int ret;
 	char buf[BUF_SIZE] = {0};
 
+	log_info("child pid: %d\n", getpid());
 	ret = read(pipe_rd_fd, buf, BUF_SIZE);
 	if (ret < 0) {
 		log_error("child read from pipe failed, errno: %d\n", errno);
@@ -33,6 +34,7 @@ void parent_process(int pipe_wr_fd)
 	int ret;
 	char buf[BUF_SIZE] = {"test anon pipe message"};
 
+	log_info("parent pid: %d\n", getpid());
 	ret = write(pipe_wr_fd, buf, strlen(buf));
 	if (ret < 0) {
 		log_error("parent write to pipe failed, errno: %d\n", errno);
