@@ -1,83 +1,32 @@
 # Ubuntu 22.04 - 2022.05.01 (163)
-deb https://mirrors.163.com/ubuntu jammy main restricted
-deb https://mirrors.163.com/ubuntu jammy-updates main restricted
-deb https://mirrors.163.com/ubuntu jammy universe
-deb https://mirrors.163.com/ubuntu jammy-updates universe
-deb https://mirrors.163.com/ubuntu jammy multiverse
-deb https://mirrors.163.com/ubuntu jammy-updates multiverse
-deb https://mirrors.163.com/ubuntu jammy-backports main restricted universe multiverse
-deb https://mirrors.163.com/ubuntu jammy-security main restricted
-deb https://mirrors.163.com/ubuntu jammy-security universe
-deb https://mirrors.163.com/ubuntu jammy-security multiverse
+deb https://mirrors.163.com/ubuntu/ jammy main restricted
+deb https://mirrors.163.com/ubuntu/ jammy-updates main restricted
+deb https://mirrors.163.com/ubuntu/ jammy universe
+deb https://mirrors.163.com/ubuntu/ jammy-updates universe
+deb https://mirrors.163.com/ubuntu/ jammy multiverse
+deb https://mirrors.163.com/ubuntu/ jammy-updates multiverse
+deb https://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.163.com/ubuntu/ jammy-security main restricted
+deb https://mirrors.163.com/ubuntu/ jammy-security universe
+deb https://mirrors.163.com/ubuntu/ jammy-security multiverse
 
-# Ubuntu 22.04 - 2022.05.01 (ali)
-deb https://mirrors.aliyun.com/ubuntu jammy main restricted
-deb https://mirrors.aliyun.com/ubuntu jammy-updates main restricted
-deb https://mirrors.aliyun.com/ubuntu jammy universe
-deb https://mirrors.aliyun.com/ubuntu jammy-updates universe
-deb https://mirrors.aliyun.com/ubuntu jammy multiverse
-deb https://mirrors.aliyun.com/ubuntu jammy-updates multiverse
-deb https://mirrors.aliyun.com/ubuntu jammy-backports main restricted universe multiverse
-deb https://mirrors.aliyun.com/ubuntu jammy-security main restricted
-deb https://mirrors.aliyun.com/ubuntu jammy-security universe
-deb https://mirrors.aliyun.com/ubuntu jammy-security multiverse
+# Ubuntu 22.04 - 2022.06.26
+deb     http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb     http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb     http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb     http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb     http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
 
-# Ubuntu 22.04 - 2022.05.01 (huawei)
-deb https://mirrors.huaweicloud.com/ubuntu jammy main restricted
-deb https://mirrors.huaweicloud.com/ubuntu jammy-updates main restricted
-deb https://mirrors.huaweicloud.com/ubuntu jammy universe
-deb https://mirrors.huaweicloud.com/ubuntu jammy-updates universe
-deb https://mirrors.huaweicloud.com/ubuntu jammy multiverse
-deb https://mirrors.huaweicloud.com/ubuntu jammy-updates multiverse
-deb https://mirrors.huaweicloud.com/ubuntu jammy-backports main restricted universe multiverse
-deb https://mirrors.huaweicloud.com/ubuntu jammy-security main restricted
-deb https://mirrors.huaweicloud.com/ubuntu jammy-security universe
-deb https://mirrors.huaweicloud.com/ubuntu jammy-security multiverse
-
-# Ubuntu 22.04 - 2022.05.01 (huawei)
-deb https://repo.huaweicloud.com/ubuntu jammy main restricted
-deb https://repo.huaweicloud.com/ubuntu jammy-updates main restricted
-deb https://repo.huaweicloud.com/ubuntu jammy universe
-deb https://repo.huaweicloud.com/ubuntu jammy-updates universe
-deb https://repo.huaweicloud.com/ubuntu jammy multiverse
-deb https://repo.huaweicloud.com/ubuntu jammy-updates multiverse
-deb https://repo.huaweicloud.com/ubuntu jammy-backports main restricted universe multiverse
-deb https://repo.huaweicloud.com/ubuntu jammy-security main restricted
-deb https://repo.huaweicloud.com/ubuntu jammy-security universe
-deb https://repo.huaweicloud.com/ubuntu jammy-security multiverse
-
-# Ubuntu 22.04 - 2022.04.30 (tencent)
-deb https://mirrors.cloud.tencent.com/ubuntu jammy main restricted
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-updates main restricted
-deb https://mirrors.cloud.tencent.com/ubuntu jammy universe
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-updates universe
-deb https://mirrors.cloud.tencent.com/ubuntu jammy multiverse
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-updates multiverse
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-backports main restricted universe multiverse
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-security main restricted
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-security universe
-deb https://mirrors.cloud.tencent.com/ubuntu jammy-security multiverse
-
-# Ubuntu 22.04 - 2022.05.01 (tsinghua)
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy main restricted
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-updates main restricted
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy universe
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-updates universe
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-updates multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-backports main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-security main restricted
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-security universe
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu jammy-security multiverse
-
-# Ubuntu 22.04 - 2022.05.01 (ustc)
-deb https://mirrors.ustc.edu.cn/ubuntu jammy main restricted
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-updates main restricted
-deb https://mirrors.ustc.edu.cn/ubuntu jammy universe
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-updates universe
-deb https://mirrors.ustc.edu.cn/ubuntu jammy multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-updates multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-backports main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-security main restricted
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-security universe
-deb https://mirrors.ustc.edu.cn/ubuntu jammy-security multiverse
+# Ubuntu 22.04 - 2022.05.01
+https://mirrors.163.com/ubuntu/
+https://mirrors.aliyun.com/ubuntu/
+https://mirrors.huaweicloud.com/ubuntu/
+https://repo.huaweicloud.com/ubuntu/
+https://mirrors.cloud.tencent.com/ubuntu/
+https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+https://mirrors.ustc.edu.cn/ubuntu/
