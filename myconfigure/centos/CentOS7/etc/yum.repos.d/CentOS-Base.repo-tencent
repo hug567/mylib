@@ -5,7 +5,7 @@
 # geographically close to the client.  You should use this for CentOS updates
 # unless you are manually picking other mirrors.
 #
-# If the mirrorlist= does not work for you, as a fall back you can try the 
+# If the mirrorlist= does not work for you, as a fall back you can try the
 # remarked out baseurl= line instead.
 #
 #
@@ -27,7 +27,7 @@ gpgkey=http://mirrors.cloud.tencent.com/centos/RPM-GPG-KEY-CentOS-7
 
 #additional packages that may be useful
 [extras]
-name=CentOS-$releasever - Extras 
+name=CentOS-$releasever - Extras
 failovermethod=priority
 baseurl=http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/
 gpgcheck=0

@@ -11,16 +11,16 @@ deb https://mirrors.163.com/ubuntu/ jammy-security universe
 deb https://mirrors.163.com/ubuntu/ jammy-security multiverse
 
 # Ubuntu 22.04 - 2022.06.26
-deb     http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
-deb     http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
-deb     http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb     http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
-deb     http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb     https://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb     https://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb     https://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb     https://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb     https://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src https://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src https://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
 
 # Ubuntu 22.04 - 2022.05.01
 https://mirrors.163.com/ubuntu/
