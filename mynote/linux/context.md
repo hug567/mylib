@@ -31,5 +31,19 @@
 SYM_CODE_START(vectors)
     ......
     kernel_ventry	0, sync				// Synchronous 64-bit EL0
+
+
+SYM_CODE_START_LOCAL_NOALIGN(el0_sync)
+    ......
+	bl	el0_sync_handler                // el0_sync 处理函数
+
+asmlinkage void noinstr el0_sync_handler(struct pt_regs *regs)
+{
+    ......
+    el0_svc(regs);
+}
+
+
+
 ```
 
