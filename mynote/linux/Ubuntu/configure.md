@@ -160,16 +160,17 @@ cd ~
 git clone https://hub.fastgit.org/junegunn/fzf.git
 mv fzf .fzf
 cd .fzf/bin
+# 最新版本可从install文件中获取：
 wget https://github.com/junegunn/fzf/releases/download/0.28.0/fzf-0.28.0-linux_amd64.tar.gz
 tar
 cd ..
 ./install
 
-# 搜索历史命令：
-Ctrl + R
-
-# 搜索当前目录下文件：
-fzf
+Ctrl + R                                     # 搜索历史命令
+fzf                                          # 搜索当前目录下文件
+vim $(fzf)                                   # vim配合fzf搜索并打开文件
+cd $(find * -type d | fzf)                   # cd配合fzf搜索打开目录
+git checkout $(git branch -r | fzf)          # git配合fzf切换分支
 ```
 
 ## 3、常用配置：
