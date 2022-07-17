@@ -63,8 +63,22 @@ Networking Utilities  --->
     [*] telnetd
     [*]   Support standalone telnetd (not inetd only)
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-             //编译
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install     //安装
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install     //安装, 不能只执行make install
 /* 所需内容在busybox-1.27.2/_install目录下 */
+
+//busybox 1.35.0 (linux 5.18 / qemu-7.0.0)
+Settings  --->
+	[*] Build static binary (no shared libs)
+Linux System Utilities  --->
+	[*] mdev (17 kb) (NEW)
+	[*]   Support /etc/mdev.conf (NEW)
+	[*]     Support subdirs/symlinks (NEW)
+	[*]       Support regular expressions substitutions when renaming device (NEW)
+	[*]     Support command execution at device addition/removal (NEW)
+	[*]   Support loading of firmware (NEW)
+	[*]   Support daemon mode (NEW) 
+[*] telnetd (12 kb) (NEW)
+    [*]   Support standalone telnetd (not inetd only) (NEW
 ```
 
 ### 1.4、制作文件系统：
