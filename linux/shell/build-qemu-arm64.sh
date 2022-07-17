@@ -1,8 +1,8 @@
 #!/bin/bash
 
 START_TIME=$(date +%s)
-CUR_SCRIPT_DIR=$(cd $(dirname $0); pwd)
-source ${CUR_SCRIPT_DIR}/common.sh
+CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+source ${CUR_SOURCE_DIR}/common.sh
 
 check_in_build_dir
 
@@ -25,6 +25,6 @@ make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j3
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j3
 
 # qemu启动命令
-END_TIME=$(data +%s)
-log_info "Run kernel: ~/code/mylib/linux/shell/qemu-run-aarch64.sh"
+END_TIME=$(date +%s)
 log_info "time spend: $(time_diff ${END_TIME} ${START_TIME})"
+log_info "Run kernel: ~/code/mylib/linux/shell/qemu-run-aarch64.sh"

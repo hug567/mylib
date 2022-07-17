@@ -2,11 +2,12 @@
 
 START_TIME=$(date +%s)
 CUR_SCRIPT_DIR=$(cd $(dirname $0); pwd)
-source ${CUR_SCRIPT_DIR}/common.sh
+CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+source ${CUR_SOURCE_DIR}/common.sh
 
 ROOTFS=rootfs.raw
-SDK_PATH=${HOME}/code/linux/sdk/virt-aarch64
-LIB_ROOTFS_DIR=${CUR_SCRIPT_DIR}/../rootfs
+SDK_PATH=${HOME}/code/linux/sdk/aarch64
+LIB_ROOTFS_DIR=$(cd ${CUR_SOURCE_DIR}/../rootfs; pwd)
 #CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
 
 check_in_build_dir

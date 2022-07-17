@@ -1,35 +1,27 @@
 #!/bin/bash
-BLACK="\033[30m"
-RED="\033[31m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-BLUE="\033[34m"
-PURPLE="\033[35m"
-SKYBLUE="\033[36m"
-WHITE="\033[37m"
-RESET="\033[0m"
+
+START_TIME=$(date +%s)
+CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+source ${CUR_SOURCE_DIR}/common.sh
 
 CPU_THREAD_NUM=`cat /proc/cpuinfo |grep "processor"|wc -l`
 
-# 清空屏幕
-clear; clear
+check_files_exist ../applets/busybox.mkll
 
-if [ ! -f applets/busybox.mkll ]; then
-    echo -e "${RED}Error: ${RESET}You are not in busybox root dir"
-    exit
-fi
-
-make clean; make mrproper
+#make clean; make mrproper
+log_info "You can run clean cmd: make clean; make mrproper"
 
 # 生成.config配置文件
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 sed -i "s/# CONFIG_STATIC is not set/CONFIG_STATIC=y/" .config
 
 # 编译busybox
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j${CPU_THREAD_NUM}
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j3
 
 # 安装
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install
 
 # 制作rootfs
-echo -e "\n${BLUE}Run kernel: ${GREEN}~/code/mylib/linux/shell/make-rootfs-aarch64.sh${RESET}"
+END_TIME=$(date +%s)
+log_info "time spend: $(time_diff ${END_TIME} ${START_TIME})"
+log_info "make rootfs: ~/code/mylib/linux/shell/make-rootfs-aarch64.sh"

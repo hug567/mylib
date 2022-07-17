@@ -5,7 +5,10 @@
 
 START_TIME=$(date +%s)
 
-source ${MYLIB}/linux/shell/common.sh
+CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+#source ${MYLIB}/linux/shell/common.sh
+source ${CUR_SOURCE_DIR}/common.sh
+exit
 
 check_files_exist ../include/linux/kernel.h
 
