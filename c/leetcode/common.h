@@ -70,11 +70,25 @@ static inline void DoPrintArray2(const char *func, int line, int **array,
 #define PrintArray2(arr, row, col) \
         DoPrintArray2(__func__, __LINE__, arr, row, col)
 
+static inline void DoPrintCharArray(const char *func, int line, char *arr, int size)
+{
+    int i;
+
+    printf("[%s:%d] char array: ", func, line);
+    for (i = 0; i < size; i++) {
+        printf("%c ", arr[i]);
+    }
+    printf("\n");
+}
+#define PrintCharArray(arr, size) \
+        DoPrintCharArray(__func__, __LINE__, arr, size)
+
 static inline void DoPrintCharArray2(const char *func, int line, char **array,
                                      int row, int col)
 {
     int i, j;
     char (*arr)[col] = (char (*)[col])array;
+
     __printf("[%s:%d] two dimensional array:\n", func, line);
     for (i = 0; i < row; i++) {
         for (j = 0; j < col; j++) {
