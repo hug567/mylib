@@ -63,7 +63,7 @@ C:\Program Files\OpenSSH                                      # 解压到安装�
 ssh user@101.45.92.102                                        # ssh连接Windows
 
 # ssh免密登录Windows：
-cat ~/.ssh/id_rsa.pub                                 # 拷贝登录机ssh公钥到Windows机器的 C:\Users\xxx\.ssh\authorized_keys
+cat ~/.ssh/id_rsa.pub                                         # 拷贝登录机ssh公钥到Windows机器的 C:\Users\xxx\.ssh\authorized_keys
 # 修改sshd配置文件：C:\ProgramData\ssh\sshd_config
 # 确保以下3条没有被注释
 PubkeyAuthentication yes
@@ -72,7 +72,7 @@ PasswordAuthentication no
 # 确保以下2条有注释掉
 #Match Group administrators
 #       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
-Restart-Service sshd                                  # 重启sshd服务
+Restart-Service sshd                                          # 重启sshd服务
 ```
 
 ## 3、gitbash
@@ -83,5 +83,14 @@ Right Click -> Options... -> Text -> Locale:zh_CN -> Character set:UTF-8 -> Save
 git config --global core.quotepath false
 git config --global i18n.commitencoding utf-8
 git config --global i18n.logoutputencoding utf-8
+```
+
+## 4、cmder
+
+```shell
+Ctrl+Tab                                              # 跳转到下一个窗口
+Ctrl+Shift+Tab                                        # 跳转到上一个窗口
+Ctrl+num                                              # 跳转到指定序号窗口
+Ctr+T                                                 # 新建创建
 ```
 

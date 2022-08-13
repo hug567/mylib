@@ -122,11 +122,12 @@ alias lh="ls -lh"
 alias cls="clear"
 alias tmux="tmux -2"
 
-# 修复Home、End不可用
-#if [[ -n "$TMUX" ]]; then
-#    bind '"\e[1~":"\eOH"'
-#    bind '"\e[4~":"\eOF"'
-#fi
+if [[ $- == *i* ]]; then
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+    bind '"\e[1~": beginning-of-line'
+    bind '"\e[4~": end-of-line'
+fi
 
 export TERM=xterm-256color
 export GIT_SSL_NO_VERIFY=1
@@ -153,6 +154,6 @@ export PS1='\n\[\e[34m\][\u@\h]: \[\e[33m\]\w\[\e[34m\]$(parse_git_branch) \[\e[
 # 设置环境变量PATH
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin:$PATH"
-################################# 自定义配置 #################################
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+################################# 自定义配置 #################################

@@ -39,3 +39,14 @@ sudo update-alternatives --display python
 sudo update-alternatives --config python
 ```
 
+## 4、pip：
+
+```shell
+# 升级pip
+python -m pip install --upgrade pip
+# 查看已安装的python包
+pip list
+# 安装python包
+pip install xxx
+```
+

@@ -21,7 +21,7 @@ inode分内存中的inode和磁盘中的inode；
 
 ## 4、file：
 
-file表示打开的文件描述符；
+file表示打开的文件描述符，每个打开的文件对应一个file，由内核在打开时创建，；
 
 ## 5、dentry：
 
