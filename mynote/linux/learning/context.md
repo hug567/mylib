@@ -45,8 +45,35 @@ asmlinkage void noinstr el0_sync_handler(struct pt_regs *regs)
     ......
     el0_svc(regs);
 }
-
-
-
 ```
 
+* EL0 -> EL1
+    1)、svc (系统调用)
+    2)、指令触发异常 (如：访存指令触发缺页异常)
+    3)、中断
+
+* 发生EL0->EL1特权级切换时：
+    1)、触发异常的指令(PC指向)保存在ELR_EL1；
+    2)、触发异常的原因保存在ESR_EL1；
+    3)、栈指针从SP_EL0切换到SP_EL1；
+    4)、CPU相关状态保存到SPSR_EL1，引发缺页异常的地址保存到FAR_EL1等；
+
+* 切换后：
+    CPU读取VBAR_EL1获取异常向量表；
+    根据ESR_EL1中保存的异常原因，调用异常处理函数；
+    异常处理函数先保存应用程序上下文，然后执行处理函数；
+      保存上下文：将寄存器信息按pt_regs结构体值顺序压入栈中，并将栈顶指针作为pt_regs参数传入后续处理函数
+    执行完后恢复应用程序上下文，然后调用eret指令；
+      恢复向下文：将栈中存储的寄存器信息恢复到各寄存器中；
+
+* 执行eret时：
+    恢复CPU自动保存的EL0状态(PC、SP等)，并切回EL0，继续执行应用程序；
+
+```c
+/* arch/arm64/kernel/entry.S */
+/* 定义中断向量表 */
+ENTRY(vectors)
+	kernel_ventry 0, sync
+	......
+END(vectors)
+```
