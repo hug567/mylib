@@ -20,13 +20,22 @@
 ### 3）、不同进程间切换 (context_switch)；
 
 * 切换地址空间(页表) (switch_mm)；
+
 * 切换寄存器和栈空间 (switch_to)；
 
-## 3、用户空间和内核空间切换：
+  ```c
+  extern struct task_struct *cpu_switch_to(struct task_struct *prev,
+                                           struct task_struct *next);
+  /* arch/arm64/kernel/entry.S */
+  SYM_FUNC_START(cpu_switch_to)
+      /* 将寄存器x19-x28, fp, sp, pc存储到prev的cpu_context结构体中 */
+      /* 将next的cpu_context结构体中的寄存器值恢复到x19-x28, fp, sp, pc中 */
+  SYM_FUNC_END(cpu_switch_to)
+  ```
 
+  
 
-
-## 4、ARM64系统调用：
+## 3、ARM64系统调用：
 
 将系统调用号写入x8寄存器，然后执行svc发起同步异常，中断向量表中同步异常处理入口为：
 
@@ -76,4 +85,17 @@ ENTRY(vectors)
 	kernel_ventry 0, sync
 	......
 END(vectors)
+
+/* EL0同步异常 */
+SYM_CODE_START_LOCAL_NOALIGN(el0_sync)
+    kernel_entry 0  /* 寄存器值等信息入栈，保存上下文 */
+    mov x0, sp  /* 栈顶作为handler函数参数struct pt_regs */
+    bl el0_sync_handler  /* 调用handler */
+    b ret_to_user  /* 返回用户态 */
+SYM_CODE_END(el0_sync)    
+
+/* 返回用户态 */
+SYM_CODE_START_LOCAL(ret_to_user)
+	kernel_exit 0  /* 恢复用户态寄存器等上下文 */
+SYM_CODE_END(ret_to_user)
 ```
