@@ -361,16 +361,23 @@ str r6, [r7]
 
 ### 2)、交叉编译elf：
 
-* 交叉编译elf到qemu中执行报错：
-
 ```shell
-# 报错日志：
+# 报错：交叉编译的elf打包到qemu中执行报：
 ./test.elf: line 1: syntax error: unexpected word (expecting ")")
-```
 
-* 原因：交叉编译目标arch的elf时，指定源文件不能加-c命令：
-
-```shell
-# 正确命令：
+# 解决：交叉编译目标arch的elf时，指定源文件不能加-c
 arm-linux-gnueabi-gcc test.c -o test.elf
 ```
+
+### 3）、启动无hotplug：
+
+```shell
+# 报错：kernel启动时报：
+can't create /proc/sys/kernel/hotplug: nonexistent directory
+
+# 解决：使能uevent的config：
+CONFIG_UEVENT_HELPER=y
+```
+
+
+
