@@ -6,7 +6,7 @@ CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
 source ${CUR_SOURCE_DIR}/common.sh
 
 ROOTFS=rootfs.raw
-SDK_PATH=${HOME}/code/linux/sdk/aarch64
+BUSYBOX_BIN=${HOME}/code/linux/sdk/busybox/1.35.0/aarch64
 LIB_ROOTFS_DIR=$(cd ${CUR_SOURCE_DIR}/../rootfs; pwd)
 #CROCESS_COMPILER_DIR=${HOME}/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi
 
@@ -18,7 +18,7 @@ fi
 mkdir rootfs
 cd rootfs
 
-cp -rf ${SDK_PATH}/busybox/* ./
+cp -rf ${BUSYBOX_BIN}/* ./
 
 mkdir -p proc sys tmp root dev/pts etc/init.d usr/bin lib/modules
 cp ${LIB_ROOTFS_DIR}/etc/init.d/rcS etc/init.d/
