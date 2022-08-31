@@ -71,7 +71,41 @@ CONFIG_ARM_PATCH_PHYS_VIRT
 
 
 
+## 2、Arm寄存器：
 
+ELR：
+	Exception Link Registers，当产生一个下陷到ELx的异常时，保存异常返回时的地址（eret指令跳转的地址）
+	ELR_EL1、ELR_EL2、ELR_EL3
+FAR：
+	FAR_ELx，产生异常的虚拟地址，Faulting virtual Address Register (P2484)
+	当产生以下异常时：
+		指令终止异常
+		数据终止异常
+		CP对齐错误异常
+		观察点异常
+ESR=1fe00000 (EC=0x7, IL=0x1, ISS=0xe00000)
+	ESR_ELx，Exception Syndrome Register (1,2,3)，异常综合寄存器
+	EC：bit[31:26]，异常类型
+		0x0
+		0x1
+		0x3
+		0x4
+		0x5
+		0x6
+		0x7：SVE访问、高级SIMD、浮点功能
+		0xa
+	IL：bit[25]，指令长度(0:16, 1:32)
+	ISS：bit[24:0]，异常综合域
+
+SVE：Scalable Vector Extension，可扩展矢量指令（单指令多数据）
+
+SP：栈底指针，保存当前栈位置
+FP：栈顶指针，函数跳转时，记录 跳转时栈的起始位置
+LR：连接寄存器，保存函数返回位置
+SPSR；SPSR_ELx(1,2,3)，Saved Program Status Register，保存的程序状态寄存器
+
+Arm运行模式：9种
+User用户模式、FIQ快速中断、IRQ普通中断、SVC超级管理模式、Data Abort数据终止、Instructure Abort指令终止、Sys系统模式、Mon监视模式、Hyp超级监视模式
 
 
 
