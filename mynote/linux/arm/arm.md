@@ -107,11 +107,15 @@ SPSR；SPSR_ELx(1,2,3)，Saved Program Status Register，保存的程序状态�
 Arm运行模式：9种
 User用户模式、FIQ快速中断、IRQ普通中断、SVC超级管理模式、Data Abort数据终止、Instructure Abort指令终止、Sys系统模式、Mon监视模式、Hyp超级监视模式
 
+TPIDR：软件线程ID寄存器
 
+​	TPIDR_EL0：EL0读写软件线程ID寄存器
 
+​	TPIDR_EL1：EL1软件线程ID寄存器
 
+​	TPIDR_EL2：EL2软件线程ID寄存器
 
-
+​	TPIDR_EL3：EL3软件线程ID寄存器
 
 
 
