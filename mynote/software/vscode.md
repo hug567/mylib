@@ -145,6 +145,8 @@ Ctrl + Down                     //视图下移
 Ctrl + L                        //选中当前行
 Shift + Alt + 鼠标左键           //按列选中
 Ctrl + F4                       //关闭编辑器窗口
+Ctrl + F                        //在当前文件中搜索
+Ctrl + Shift + F                //在当前工程中搜索
 
 //阅读
 Ctrl + P                        //搜索文件
@@ -152,9 +154,9 @@ F12                             //跳转到定义
 Alt + Left                      //跳转到定义后回到原来位置
 
 /* 自定义快捷键： */
-Ctrl + Shift + p -> Preferences: Open Keyboard Shortcuts
-Ctrl + Alt + [                  //聚焦至编辑器 (View: Focus First Editor Group)
-Ctrl + Alt + ]                  //聚焦至终端 (workbench.action.terminal.focus)
+Ctrl + Shift + P -> Preferences: Open Keyboard Shortcuts
+Ctrl + Alt + [                     //视图：聚焦于第一个编辑器组 (View: Focus First Editor Group)
+Ctrl + Alt + ], when: editorFocus  //终端：聚焦到终端 (workbench.action.terminal.focus)
 ```
 
 ## 4、vscode连接linux主机：
