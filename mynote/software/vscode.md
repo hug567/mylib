@@ -163,6 +163,10 @@ Ctrl + Alt + ], when: editorFocus  //终端：聚焦到终端 (workbench.action.
 
 vscode安装插件：remote-ssh
 
+```shell
+Ctrl + Shift + P -> Remote-SSH: Add New SSH Host...
+```
+
 windows免密码登录linux主机，在cmd中执行：
 
 ```c
@@ -176,8 +180,8 @@ ssh-keygen -t rsa
 #### 1）、设置tab：
 
 ```c
-使用空格缩进：Ctrl+Shift+p -> Indent Using Spaces -> 4
-使用tab缩进：Ctrl+Shift+p -> Indent Using Tabs -> 4
+使用空格缩进：Ctrl+Shift+P -> Indent Using Spaces -> 4
+使用tab缩进：Ctrl+Shift+P -> Indent Using Tabs -> 4
 ```
 
 #### 2）、设置空格、tab颜色：
