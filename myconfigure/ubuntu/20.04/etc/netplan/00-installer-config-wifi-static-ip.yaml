@@ -1,0 +1,16 @@
+# This is the network config written by 'subiquity'
+network:
+  version: 2
+  wifis:
+    wlx82771688de0a:
+      #dhcp4: true
+      dhcp4: false
+      access-points:
+        '274-3':
+          password: 'ABC13764001068'
+      addresses:
+      - 192.168.0.27/24
+      gateway4: 192.168.0.1
+      nameservers:
+        addresses:
+        - 192.168.0.1
