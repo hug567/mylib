@@ -16,14 +16,15 @@ bind C-b send-prefix                    //设置prefix键为Ctrl+b
 
 ```c
 tmux new                                 //新建会话
-tmux new -s <name>                       //制定名称新建会话
+tmux new -s <name>                       //指定名称新建会话
 tmux kill-session -t <name>              //删除指定会话
 tmux kill-server                         //删除所有会话
 tmux ls                                  //列出所有会话
-tmux a                                   //恢复默认会话
+tmux a                                   //恢复最新创建的会话
 tmux a -t <name>                         //恢复指定会话
 Prefix + s                               //切换会话
-Prefix + d                               //断开会话
+Prefix + d                               //脱离会话
+tmux detach-client                       //脱离会话
 Prefix, Shift + $                        //修改会话名
 ```
 
