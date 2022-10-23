@@ -106,47 +106,138 @@ SECTIONS
 		*(__idle_sched_class)
 		*(__fair_sched_class)
 		*(__rt_sched_class)
-		*(__dl_sched_class) *(__stop_sched_class) __end_sched_classes = .; . = ALIGN(8); __start_ro_after_init = .;
-		*(.data..ro_after_init) . = ALIGN(8); __start___jump_table = .; KEEP(*(__jump_table)) __stop___jump_table = .;
-		. = ALIGN(8); __start_static_call_sites = .; KEEP(*(.static_call_sites)) __stop_static_call_sites = .;
-		__end_ro_after_init = .; . = ALIGN(8); __start___tracepoints_ptrs = .; KEEP(*(__tracepoints_ptrs))
-		__stop___tracepoints_ptrs = .; *(__tracepoints_strings)
+		*(__dl_sched_class)
+		*(__stop_sched_class)
+		__end_sched_classes = .;
+		. = ALIGN(8);
+		__start_ro_after_init = .;
+		*(.data..ro_after_init)
+		. = ALIGN(8);
+		__start___jump_table = .;
+		KEEP(*(__jump_table))
+		__stop___jump_table = .;
+		. = ALIGN(8);
+		__start_static_call_sites = .;
+		KEEP(*(.static_call_sites))
+		__stop_static_call_sites = .;
+		__end_ro_after_init = .;
+		. = ALIGN(8);
+		__start___tracepoints_ptrs = .;
+		KEEP(*(__tracepoints_ptrs))
+		__stop___tracepoints_ptrs = .;
+		*(__tracepoints_strings)
 	}
 	.rodata1 : AT(ADDR(.rodata1) - 0) {
 		*(.rodata1)
 	}
 	.pci_fixup : AT(ADDR(.pci_fixup) - 0) {
-		__start_pci_fixups_early = .; KEEP(*(.pci_fixup_early)) __end_pci_fixups_early = .; __start_pci_fixups_header = .;
-		KEEP(*(.pci_fixup_header)) __end_pci_fixups_header = .; __start_pci_fixups_final = .; KEEP(*(.pci_fixup_final))
-		__end_pci_fixups_final = .; __start_pci_fixups_enable = .; KEEP(*(.pci_fixup_enable)) __end_pci_fixups_enable = .;
-		__start_pci_fixups_resume = .; KEEP(*(.pci_fixup_resume)) __end_pci_fixups_resume = .; __start_pci_fixups_resume_early = .;
-		KEEP(*(.pci_fixup_resume_early)) __end_pci_fixups_resume_early = .; __start_pci_fixups_suspend = .;
-		KEEP(*(.pci_fixup_suspend)) __end_pci_fixups_suspend = .; __start_pci_fixups_suspend_late = .;
-		KEEP(*(.pci_fixup_suspend_late)) __end_pci_fixups_suspend_late = .;
+		__start_pci_fixups_early = .;
+		KEEP(*(.pci_fixup_early))
+		__end_pci_fixups_early = .;
+		__start_pci_fixups_header = .;
+		KEEP(*(.pci_fixup_header))
+		__end_pci_fixups_header = .;
+		__start_pci_fixups_final = .;
+		KEEP(*(.pci_fixup_final))
+		__end_pci_fixups_final = .;
+		__start_pci_fixups_enable = .;
+		KEEP(*(.pci_fixup_enable))
+		__end_pci_fixups_enable = .;
+		__start_pci_fixups_resume = .;
+		KEEP(*(.pci_fixup_resume))
+		__end_pci_fixups_resume = .;
+		__start_pci_fixups_resume_early = .;
+		KEEP(*(.pci_fixup_resume_early))
+		__end_pci_fixups_resume_early = .;
+		__start_pci_fixups_suspend = .;
+		KEEP(*(.pci_fixup_suspend))
+		__end_pci_fixups_suspend = .;
+		__start_pci_fixups_suspend_late = .;
+		KEEP(*(.pci_fixup_suspend_late))
+		__end_pci_fixups_suspend_late = .;
 	}
 	.builtin_fw : AT(ADDR(.builtin_fw) - 0) {
 		__start_builtin_fw = .;
-		KEEP(*(.builtin_fw)) __end_builtin_fw = .;
+		KEEP(*(.builtin_fw))
+		__end_builtin_fw = .;
 	}
 	__ksymtab : AT(ADDR(__ksymtab) - 0) {
 		__start___ksymtab = .;
-		KEEP(*(SORT(___ksymtab+*))) __stop___ksymtab = .;
+		KEEP(*(SORT(___ksymtab+*)))
+		__stop___ksymtab = .;
 	}
 	__ksymtab_gpl : AT(ADDR(__ksymtab_gpl) - 0) {
 		__start___ksymtab_gpl = .;
-		KEEP(*(SORT(___ksymtab_gpl+*))) __stop___ksymtab_gpl = .;
+		KEEP(*(SORT(___ksymtab_gpl+*)))
+		__stop___ksymtab_gpl = .;
 	}
-	__ksymtab_unused : AT(ADDR(__ksymtab_unused) - 0) { __start___ksymtab_unused = .; KEEP(*(SORT(___ksymtab_unused+*))) __stop___ksymtab_unused = .; } __ksymtab_unused_gpl : AT(ADDR(__ksymtab_unused_gpl) - 0) { __start___ksymtab_unused_gpl = .; KEEP(*(SORT(___ksymtab_unused_gpl+*))) __stop___ksymtab_unused_gpl = .; } __ksymtab_gpl_future : AT(ADDR(__ksymtab_gpl_future) - 0) { __start___ksymtab_gpl_future = .; KEEP(*(SORT(___ksymtab_gpl_future+*))) __stop___ksymtab_gpl_future = .; }
-	__kcrctab : AT(ADDR(__kcrctab) - 0) { __start___kcrctab = .; KEEP(*(SORT(___kcrctab+*))) __stop___kcrctab = .; } __kcrctab_gpl : AT(ADDR(__kcrctab_gpl) - 0) { __start___kcrctab_gpl = .; KEEP(*(SORT(___kcrctab_gpl+*))) __stop___kcrctab_gpl = .; } __kcrctab_unused : AT(ADDR(__kcrctab_unused) - 0) { __start___kcrctab_unused = .; KEEP(*(SORT(___kcrctab_unused+*))) __stop___kcrctab_unused = .; }
-	__kcrctab_unused_gpl : AT(ADDR(__kcrctab_unused_gpl) - 0) { __start___kcrctab_unused_gpl = .; KEEP(*(SORT(___kcrctab_unused_gpl+*))) __stop___kcrctab_unused_gpl = .; }
-	__kcrctab_gpl_future : AT(ADDR(__kcrctab_gpl_future) - 0) { __start___kcrctab_gpl_future = .; KEEP(*(SORT(___kcrctab_gpl_future+*))) __stop___kcrctab_gpl_future = .; }
-	__ksymtab_strings : AT(ADDR(__ksymtab_strings) - 0) { *(__ksymtab_strings) }
-	__init_rodata : AT(ADDR(__init_rodata) - 0) { *(.ref.rodata) }
-	__param : AT(ADDR(__param) - 0) { __start___param = .; KEEP(*(__param)) __stop___param = .; }
-	__modver : AT(ADDR(__modver) - 0) { __start___modver = .; KEEP(*(__modver)) __stop___modver = .; }
+	__ksymtab_unused : AT(ADDR(__ksymtab_unused) - 0) {
+		__start___ksymtab_unused = .;
+		KEEP(*(SORT(___ksymtab_unused+*)))
+		__stop___ksymtab_unused = .;
+	}
+	__ksymtab_unused_gpl : AT(ADDR(__ksymtab_unused_gpl) - 0) {
+		__start___ksymtab_unused_gpl = .;
+		KEEP(*(SORT(___ksymtab_unused_gpl+*)))
+		__stop___ksymtab_unused_gpl = .;
+	}
+	__ksymtab_gpl_future : AT(ADDR(__ksymtab_gpl_future) - 0) {
+		__start___ksymtab_gpl_future = .;
+		KEEP(*(SORT(___ksymtab_gpl_future+*)))
+		__stop___ksymtab_gpl_future = .;
+	}
+	__kcrctab : AT(ADDR(__kcrctab) - 0) {
+		__start___kcrctab = .;
+		KEEP(*(SORT(___kcrctab+*)))
+		__stop___kcrctab = .;
+	}
+	__kcrctab_gpl : AT(ADDR(__kcrctab_gpl) - 0) {
+		__start___kcrctab_gpl = .;
+		KEEP(*(SORT(___kcrctab_gpl+*)))
+		__stop___kcrctab_gpl = .;
+	}
+	__kcrctab_unused : AT(ADDR(__kcrctab_unused) - 0) {
+		__start___kcrctab_unused = .;
+		KEEP(*(SORT(___kcrctab_unused+*)))
+		__stop___kcrctab_unused = .;
+	}
+	__kcrctab_unused_gpl : AT(ADDR(__kcrctab_unused_gpl) - 0) {
+		__start___kcrctab_unused_gpl = .;
+		KEEP(*(SORT(___kcrctab_unused_gpl+*)))
+		__stop___kcrctab_unused_gpl = .;
+	}
+	__kcrctab_gpl_future : AT(ADDR(__kcrctab_gpl_future) - 0) {
+		__start___kcrctab_gpl_future = .;
+		KEEP(*(SORT(___kcrctab_gpl_future+*)))
+		__stop___kcrctab_gpl_future = .;
+	}
+	__ksymtab_strings : AT(ADDR(__ksymtab_strings) - 0) {
+		*(__ksymtab_strings)
+	}
+	__init_rodata : AT(ADDR(__init_rodata) - 0) {
+		*(.ref.rodata)
+	}
+	__param : AT(ADDR(__param) - 0) {
+		__start___param = .;
+		KEEP(*(__param))
+		__stop___param = .;
+	}
+	__modver : AT(ADDR(__modver) - 0) {
+		__start___modver = .;
+		KEEP(*(__modver))
+		__stop___modver = .;
+	}
 	. = ALIGN(8);
-	__ex_table : AT(ADDR(__ex_table) - 0) { __start___ex_table = .; KEEP(*(__ex_table)) __stop___ex_table = .; }
-	.notes : AT(ADDR(.notes) - 0) { __start_notes = .; KEEP(*(.note.*)) __stop_notes = .; }
+	__ex_table : AT(ADDR(__ex_table) - 0) {
+		__start___ex_table = .;
+		KEEP(*(__ex_table))
+		__stop___ex_table = .;
+	}
+	.notes : AT(ADDR(.notes) - 0) {
+		__start_notes = .;
+		KEEP(*(.note.*))
+		__stop_notes = .;
+	}
 	. = ALIGN(((1 << 12)));
 	__end_rodata = .;
 	idmap_pg_dir = .;
@@ -295,11 +386,27 @@ SECTIONS
 		*(.memexit.data*)
 		*(.memexit.rodata*)
 	}
- . = ALIGN((1 << 12)); .data..percpu : AT(ADDR(.data..percpu) - 0) { __per_cpu_load = .; __per_cpu_start = .; *(.data..percpu..first) . = ALIGN((1 << 12)); *(.data..percpu..page_aligned) . = ALIGN((1 << (6))); *(.data..percpu..read_mostly) . = ALIGN((1 << (6))); *(.data..percpu) *(.data..percpu..shared_aligned) __per_cpu_end = .; }
- . = ALIGN((1 << 12)); .hyp.data..percpu : { *(.hyp.data..percpu) }
- .rela.dyn : ALIGN(8) {
-  *(.rela .rela*)
- }
+	. = ALIGN((1 << 12));
+	.data..percpu : AT(ADDR(.data..percpu) - 0) {
+		__per_cpu_load = .;
+		__per_cpu_start = .;
+		*(.data..percpu..first)
+		. = ALIGN((1 << 12));
+		*(.data..percpu..page_aligned)
+		. = ALIGN((1 << (6)));
+		*(.data..percpu..read_mostly)
+		. = ALIGN((1 << (6)));
+		*(.data..percpu)
+		*(.data..percpu..shared_aligned)
+		__per_cpu_end = .;
+	}
+	. = ALIGN((1 << 12));
+	.hyp.data..percpu : {
+		*(.hyp.data..percpu)
+	}
+	.rela.dyn : ALIGN(8) {
+		*(.rela .rela*)
+	}
 	__rela_offset = ABSOLUTE(ADDR(.rela.dyn) - (((((((-(((1)) << ((((48))) - 1))))) + (0x08000000))) + (0x08000000))));
 	__rela_size = SIZEOF(.rela.dyn);
 	. = ALIGN(0x00010000);
@@ -307,7 +414,51 @@ SECTIONS
 	__init_end = .;
 	_data = .;
 	_sdata = .;
- . = ALIGN((1 << 12)); .data : AT(ADDR(.data) - 0) { . = ALIGN((2 * (((1)) << (14 + 0)))); __start_init_task = .; init_thread_union = .; init_stack = .; KEEP(*(.data..init_task)) KEEP(*(.data..init_thread_info)) . = __start_init_task + (((1)) << (14 + 0)); __end_init_task = .; . = ALIGN((1 << 12)); __nosave_begin = .; *(.data..nosave) . = ALIGN((1 << 12)); __nosave_end = .; . = ALIGN((1 << 12)); *(.data..page_aligned) . = ALIGN((1 << 12)); . = ALIGN((1 << (6))); *(.data..cacheline_aligned) . = ALIGN((1 << (6))); *(.data..read_mostly) . = ALIGN((1 << (6))); *(.xiptext) *(.data) *(.ref.data) *(.data..shared_aligned) *(.data.unlikely) __start_once = .; *(.data.once) __end_once = .; . = ALIGN(32); *(__tracepoints) . = ALIGN(8); __start___dyndbg = .; KEEP(*(__dyndbg)) __stop___dyndbg = .; CONSTRUCTORS } . = ALIGN(8); __bug_table : AT(ADDR(__bug_table) - 0) { __start___bug_table = .; KEEP(*(__bug_table)) __stop___bug_table = .; }
+	. = ALIGN((1 << 12));
+	.data : AT(ADDR(.data) - 0) {
+		. = ALIGN((2 * (((1)) << (14 + 0))));
+		__start_init_task = .;
+		init_thread_union = .;
+		init_stack = .;
+		KEEP(*(.data..init_task))
+		KEEP(*(.data..init_thread_info))
+		. = __start_init_task + (((1)) << (14 + 0));
+		__end_init_task = .;
+		. = ALIGN((1 << 12));
+		__nosave_begin = .;
+		*(.data..nosave)
+		. = ALIGN((1 << 12));
+		__nosave_end = .;
+		. = ALIGN((1 << 12));
+		*(.data..page_aligned)
+		. = ALIGN((1 << 12));
+		. = ALIGN((1 << (6)));
+		*(.data..cacheline_aligned)
+		. = ALIGN((1 << (6)));
+		*(.data..read_mostly)
+		. = ALIGN((1 << (6)));
+		*(.xiptext)
+		*(.data)
+		*(.ref.data)
+		*(.data..shared_aligned)
+		*(.data.unlikely)
+		__start_once = .;
+		*(.data.once)
+		__end_once = .;
+		. = ALIGN(32);
+		*(__tracepoints)
+		. = ALIGN(8);
+		__start___dyndbg = .;
+		KEEP(*(__dyndbg))
+		__stop___dyndbg = .;
+		CONSTRUCTORS
+	}
+	. = ALIGN(8);
+	__bug_table : AT(ADDR(__bug_table) - 0) {
+		__start___bug_table = .;
+		KEEP(*(__bug_table))
+		__stop___bug_table = .;
+	}
 	.mmuoff.data.write : ALIGN(0x00000800) {
 		__mmuoff_data_start = .;
 		*(.mmuoff.data.write)
@@ -365,8 +516,14 @@ SECTIONS
 	.debug_types 0 : { *(.debug_types) }
 	.debug_macro 0 : { *(.debug_macro) }
 	.debug_addr 0 : { *(.debug_addr) }
- .comment 0 : { *(.comment) } .symtab 0 : { *(.symtab) } .strtab 0 : { *(.strtab) } .shstrtab 0 : { *(.shstrtab) }
-	_kernel_size_le_lo32 = (((_end - _text) & 0xffffffff) & 0xffffffff); _kernel_size_le_hi32 = (((_end - _text) >> 32) & 0xffffffff); _kernel_flags_le_lo32 = (((((0 << 0) | (((12 - 10) / 2) << (0 + 1)) | (1 << ((0 + 1) + 2)))) & 0xffffffff) & 0xffffffff); _kernel_flags_le_hi32 = (((((0 << 0) | (((12 - 10) / 2) << (0 + 1)) | (1 << ((0 + 1) + 2)))) >> 32) & 0xffffffff);
+	.comment 0 : {*(.comment) }
+	.symtab 0 : { *(.symtab) }
+	.strtab 0 : { *(.strtab) }
+	.shstrtab 0 : { *(.shstrtab) }
+	_kernel_size_le_lo32 = (((_end - _text) & 0xffffffff) & 0xffffffff);
+	_kernel_size_le_hi32 = (((_end - _text) >> 32) & 0xffffffff);
+	_kernel_flags_le_lo32 = (((((0 << 0) | (((12 - 10) / 2) << (0 + 1)) | (1 << ((0 + 1) + 2)))) & 0xffffffff) & 0xffffffff);
+	_kernel_flags_le_hi32 = (((((0 << 0) | (((12 - 10) / 2) << (0 + 1)) | (1 << ((0 + 1) + 2)))) >> 32) & 0xffffffff);
 	.plt : {
 		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
 	}
