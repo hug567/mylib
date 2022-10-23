@@ -30,5 +30,7 @@ ENTRY(symbol)                   /* 入口点，程序执行的第一条指令 */
 INCLUDE <file>                  /* 在命令处包含链接脚本file */
 KEEP(*(init))                   /* 即使没有符号也保留指定部分 */
 KEEP(*(SORT(___kentry+*)))
+.ALIGN(4)                       /* 当前位置4字节对齐 */
+__code_start = .                /* 用__code_start记录当前位置，可在代码中使用 */
 ```
 
