@@ -1,8 +1,9 @@
 #!/bin/bash
 
 START_TIME=$(date +%s)
-CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
-source ${CUR_SOURCE_DIR}/common.sh
+CUR_SCRIPT_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+export MYLIB=$(cd ${CUR_SCRIPT_DIR}/../../../; pwd)
+source ${MYLIB}/linux/shell/common.sh
 
 check_in_build_dir
 
@@ -19,7 +20,7 @@ make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j3
 
 # 编译内核模块(.ko)
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j3
+#make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j3
 
 # 编译dts文件(生成dtb文件)
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j3

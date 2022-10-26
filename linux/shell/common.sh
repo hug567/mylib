@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
-source ${CUR_SOURCE_DIR}/../../shell/lib/common.sh
+source ${MYLIB}/shell/lib/common.sh
 
 copy_file() {
     src_file=$1
