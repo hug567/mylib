@@ -15,8 +15,8 @@ arm-none-linux-gnueabi-gcc --version                       //查看版本，验�
 ### 1.2、编译内核：
 
 ```c
-sudo apt-get install gcc qemu libncurses5-dev openssl libssl-dev build-essential \
-pkg-config libc6-dev bison flex libelf-dev                 //安装依赖
+sudo apt install gcc qemu libncurses5-dev openssl libssl-dev build-essential \
+     pkg-config libc6-dev bison flex libelf-dev            //安装依赖
 qemu-img --version                                         //查看qemu版本
 
 cat /proc/version                                          //查看内核版本
@@ -36,7 +36,7 @@ General setup ---->
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-             //编译内核
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules     //编译内核模块
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- dtbs        //编译dts文件
-find ./ -name "*Image*"                                         //查看Image文件
+find ./ -name "*Image*"                                    //查看Image文件
 /* 无文件系统启动验证： */
 qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
     -kernel arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
@@ -48,7 +48,7 @@ qemu-system-arm -M virt -cpu cortex-a15 -m 256 \
 wget https://busybox.net/downloads/busybox-1.27.2.tar.bz2       //下载busybox
 tar -xjvf busybox-1.27.2.tar.bz2                                //解压busybox
 cd busybox-1.27.2                                               //进入目录
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig  //手动配置
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig       //手动配置
 /* 选中以下配置： */
 Busybox Settings  --->
     [*] Build BusyBox as a static binary (no shared libs)
@@ -62,8 +62,8 @@ Linux System Utilities ---->
 Networking Utilities  --->
     [*] telnetd
     [*]   Support standalone telnetd (not inetd only)
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-             //编译
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install     //安装, 不能只执行make install
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-                  //编译
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install          //安装, 不能只执行make install
 /* 所需内容在busybox-1.27.2/_install目录下 */
 
 //busybox 1.35.0 (linux 5.18 / qemu-7.0.0)
@@ -180,7 +180,7 @@ qemu命令：
 ```c
 wget https://download.qemu.org/qemu-4.0.1.tar.xz          //下载qemu 4.0
 sudo apt install python python3 zlib1g-dev libglib2.0-dev \
-    libtool autoconf libpixman-1-dev flex bison           //安装依赖
+     libtool autoconf libpixman-1-dev flex bison          //安装依赖
 ./configure                                               //配置
 make                                                      //编译
 sudo make install                                         //安装
