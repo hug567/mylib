@@ -173,7 +173,7 @@ cd $(find * -type d | fzf)                   # cd配合fzf搜索打开目录
 git checkout $(git branch -r | fzf)          # git配合fzf切换分支
 ```
 
-## 3、常用配置：
+## 3、设置时区：
 
 ```shell
 # 查看时区：
@@ -193,6 +193,11 @@ sudo apt install ntpdate
 sudo ntpdate cn.ntp.org.cn
 sudo ntpdate cn.pool.ntp.org
 sudo ntpdate ntp.aliyun.com
+
+# 设置为24小时制
+sudo vim /etc/default/locale
+# 末尾添加以下一行，然后重启
+LC_TIME=en_DK.UTF-8
 ```
 
 ## 4、crontab：定时任务
