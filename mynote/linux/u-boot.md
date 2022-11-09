@@ -4,7 +4,7 @@
 // 机创建tun/tap设备：
 sudo apt install uml-utilities bridge-utils              //安装依赖
 sudo ip tuntap add dev tap0 mode tap                     //创建tap设备
-sudo ifconfig tap0 192.168.0.10 netmask 255.255.255.0    //配置ip
+sudo ifconfig tap0 192.168.1.10 netmask 255.255.255.0    //配置ip
 sudo ip tuntap del dev tap0 mode tap                     //删除tap设备
 
 // 主机安装TFTP工具：
@@ -62,12 +62,13 @@ make CROSS_COMPILE=aarch64-linux-gnu- qemu_arm64_defconfig
 make CROSS_COMPILE=aarch64-linux-gnu- -j3
 qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1024M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
 
-# u-boot配置网络：
+# u-boot设置参数：
 setenv ipaddr 192.168.1.13
 setenv ethaddr 00:04:9f:04:d2:35
 setenv gatewayip 192.168.1.1
 setenv netmask 255.255.255.0
 setenv serverip 192.168.1.10
+setenv bootargs "root=/dev/mmcblk0 rw console=ttyAMA0"
 saveenv
 
 # u-boot验证网络：
@@ -98,14 +99,7 @@ sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
 ```c
 /* 启动u-boot: */
 qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
-
-/* u-boot配置参数： */
-setenv ipaddr 192.168.0.101
-setenv serverip 192.168.0.100
-setenv gatewayip 192.168.0.1
-setenv netmask 255.255.255.0
-setenv bootargs "root=/dev/mmcblk0 rw console=ttyAMA0"
-saveenv
+qemu-system-aarch64 -M virt -m 1024M -cpu cortex-a57 -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
 
 /* 下载并启动镜像： */
 tftp 0x60003000 uImage
@@ -114,7 +108,68 @@ tftp 0x60500000 qemu-arm64.dtb
 bootm 0x60003000 - 0x60500000
 ```
 
-## 3、常见错误：
+## 3、常用命令：
+
+```bash
+# 查看内存二进制值
+md 0x60003000
+```
+
+## 4、u-boot 64字节头：
+
+```bash
+#define IH_MAGIC        0x27051956      /* Image Magic Number           */
+#define IH_NMLEN                32      /* Image Name Length            */
+
+struct legacy_img_hdr {
+        uint32_t        ih_magic;       /* Image Header Magic Number    */
+        uint32_t        ih_hcrc;        /* Image Header CRC Checksum    */
+        uint32_t        ih_time;        /* Image Creation Timestamp     */
+        uint32_t        ih_size;        /* Image Data Size              */
+        uint32_t        ih_load;        /* Data  Load  Address          */
+        uint32_t        ih_ep;          /* Entry Point Address          */
+        uint32_t        ih_dcrc;        /* Image Data CRC Checksum      */
+        uint8_t         ih_os;          /* Operating System             */
+        uint8_t         ih_arch;        /* CPU architecture             */
+        uint8_t         ih_type;        /* Image Type                   */
+        uint8_t         ih_comp;        /* Compression Type             */
+        uint8_t         ih_name[IH_NMLEN];      /* Image Name           */
+};
+
+=> md 0x60003000
+60003000: 56190527 ca60a28f ac4a6b63 8667aa00  '..V..`.ckJ...g.
+60003010: 00300060 40300060 502d62aa 00021605  `.0.`.0@.b-P....
+60003020: 00000000 00000000 00000000 00000000  ................
+60003030: 00000000 00000000 00000000 00000000  ................
+
+ih_os   = 0x05 : linux
+ih_arch = 0x16 : arm64
+ih_type = 0x02 : kernel
+ih_comp = 0x00 : none ?
+          0x02 : gzip
+```
+
+## 5、u-boot内存分布：
+
+```c
+CONFIG_ENV_ADDR=0x04000000  // 环境变量存储地址
+CONFIG_ENV_OFFSET 
+CONFIG_ENV_SIZE=0x40000
+CONFIG_ENV_SECT_SIZE=0x40000
+CONFIG_SYS_LOAD_ADDR=0x40200000  //
+CONFIG_DEBUG_UART_BASE=0x9000000
+
+
+
+
+
+
+
+```
+
+
+
+## 6、常见错误：
 
 ### 1）、gcc版本问题：
 
