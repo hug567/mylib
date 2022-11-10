@@ -104,8 +104,12 @@ qemu-system-aarch64 -M virt -m 1024M -cpu cortex-a57 -kernel ./u-boot -nographic
 /* 下载并启动镜像： */
 tftp 0x60003000 uImage
 tftp 0x60500000 vexpress-v2p-ca9.dtb
-tftp 0x60500000 qemu-arm64.dtb
 bootm 0x60003000 - 0x60500000
+
+// 下载aarch64镜像：
+tftp 0x60003000 uImage
+tftp 0x61000000 qemu-arm64.dtb
+bootm 0x60003000 - 0x61000000               // 需计算各组件大小，保证不互相覆盖
 ```
 
 ## 3、常用命令：
@@ -113,6 +117,9 @@ bootm 0x60003000 - 0x60500000
 ```bash
 # 查看内存二进制值
 md 0x60003000
+
+# 查看uImage信息
+iminfo  0x60003000
 ```
 
 ## 4、u-boot 64字节头：
@@ -158,13 +165,6 @@ CONFIG_ENV_SIZE=0x40000
 CONFIG_ENV_SECT_SIZE=0x40000
 CONFIG_SYS_LOAD_ADDR=0x40200000  //
 CONFIG_DEBUG_UART_BASE=0x9000000
-
-
-
-
-
-
-
 ```
 
 
