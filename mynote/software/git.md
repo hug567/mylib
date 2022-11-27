@@ -1,4 +1,4 @@
-##  1、安装git：
+## 1、安装git：
 
 ```C
 sudo apt install git                                     //安装git
@@ -106,9 +106,14 @@ git push github HEAD:master                              //推送至github
 
 ```C
 git cherry-pick <commit-id>                              //挑选提交指定commit
+git commit -s                                            //提交信息中附上Singed-off-by
+git commit -m "message"                                  //提交commit及标题
+git commit -a                                            //不用add提交commit
+
 //----------合并至最近一次commit-------------------------------------------//
 git add <file>                                           //添加文件
 git commit --amend                                       //追加至最新commit
+
 //----------合并至指定commit----------------------------------------------//
 git stash                                                //暂存
 git log --oneline                                        //查看指定commit的ID
@@ -123,16 +128,18 @@ git rebase --continue                                    //移动HEAD至最新co
     git add <file>                                       //添加文件
     git commit --amend                                   //追加至指定commit
     git rebase --continue                                //移动HEAD至最新commit
+
 //----------合并几个commit------------------------------------------------//
 git log --oneline                                        //查看最早需要合并的commit ID
 git rebase -i <ID>^                                      //定位至最早需要合并的commit
 /* 首行pick不动，下面需要被合并的commit将pick改为s，:wq */
 /* 修改commit message，若有冲突则解决冲去，:wq */
+
 //----------调整commit顺序------------------------------------------------//
 git rebase -i HEAD~<n>                                   //定位至最前一条commit
 /* 调整commit顺序后，:wq报错退出 */
 
-//cherry-pick另一个仓库的commit
+//----------cherry-pick另一个仓库的commit----------------------------------//
 git remote add repo2 .../path/to/repo2                     //添加另一个本地仓库
 git remote add repo2 https://gitee.com/hug567/mylib.git    //添加另一个远端仓库
 git fetch repo2                                            //拉取仓库
@@ -153,6 +160,10 @@ git commit -s
 git add <file2> ...
 git commit -s
 git rebase --continue
+
+//git添加commit指定用户
+git commit -s --author="Huang Xing <huangxing567@163.com>"
+git commit --amend --author="Huang Xing <huangxing567@163.com>"
 ```
 
 ### 2.5、撤销操作
@@ -292,4 +303,3 @@ color title-focus blue 237
 # 当前行颜色 (235:黑, 228:黄)
 color cursor 235 228
 ```
-

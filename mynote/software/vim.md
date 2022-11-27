@@ -130,6 +130,7 @@ zc                                   //折叠关闭
 ```
 
 ### 8）、多行注释：
+
 ```C
 //-----多行注释---------//
 ESC                              //退出至常规模式，光标放在行首
@@ -175,8 +176,6 @@ ESC                              //退出
 :r !echo " * Create: $(date '+\%a \%b \%d \%H:\%M:\%S \%Y')"
 ```
 
-
-
 ## 2、vim中使用正则表达式：
 
 ```C
@@ -193,8 +192,6 @@ $                                //匹配行尾
 :10,41s/^\(\t*\)    /\1\t/gc     //行首每4个空格替换成tab
 ```
 
-
-
 ## 3、vim脚本：
 
 ```c
@@ -207,8 +204,6 @@ l: varname                       //变量的范围为当前的函数
 a: varname                       //变量是当前函数的一个参数
 v: varname                       //变量是 Vim 的预定义变量
 ```
-
-
 
 ## 4、vim插件：
 
@@ -283,6 +278,7 @@ Ctrl + T                         //(vim中)返回
 ```
 
 ### 6）AutoComplPop：自动补全
+
 ```c
 git clone https://gitee.com/tsingyixy/AutoComplPop.git
 cd AutoComplPop
@@ -292,6 +288,7 @@ cp doc/* ~/.vim/doc/
 ```
 
 ### 7）LeaderF：文件跳转
+
 ```c
 git clone https://github.com/Yggdroot/LeaderF
 cp -r LeaderF ~/.vim/bundle
@@ -307,8 +304,6 @@ Tab
 <leader> b
 ```
 
-
-
 ## 5、下载配色主题：
 
 ```C
@@ -316,8 +311,6 @@ Tab
 cd ~/.vim/colors                                //放入指定目录(molokai.vim)
 colorscheme molokai                             //在~/.vimrc中设置
 ```
-
-
 
 ## 6、源码编译安装vim提供Python支持
 
@@ -368,18 +361,13 @@ vim --version | grep python                     //查看python支持
 vim --version | grep clipboard                  //查看剪切板支持
 ```
 
-
-
 ## 7、安装YouCompleteMe：
 
 ```c
 git clone git@github.com:ycm-core/YouCompleteMe.git    //下载YouCompleteMe源码
 cp YouCompleteMe ~/.vim/bundle/                        //复制到vim插件目录
 git submodule update --init --recursive                //
-
 ```
-
-
 
 ## 8、C语言常用配色：
 
@@ -390,4 +378,3 @@ git submodule update --init --recursive                //
 字符串(黄色)：RGB(255,215,0), HTML(#FFD700)      //字符串、运算符
 函数名(蓝色)：RGB(95,215,255), HTML(#5FD7FF)
 ```
-

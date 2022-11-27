@@ -11,5 +11,6 @@ tcpdump
     -nnA 'port 80'                                    # 监听指定端口
     -nnA 'port 80 and src host 192.18.0.13'           # 监听来自指定主机和端口的包
     -nnA '!port 22'                                   # 监听除22端口以外的端口
+    -e                                                # 打印mac地址
+    -xx                                               # 打印网络包内容
 ```
-
