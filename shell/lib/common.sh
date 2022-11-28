@@ -10,8 +10,7 @@ SKYBLUE="\033[36m"
 WHITE="\033[37m"
 RESET="\033[0m"
 
-CUR_DIR=$(pwd)
-CPU_THREAD_NUM=$(cat /proc/cpuinfo | grep "processor" | wc -l)
+export CPU_THREAD_NUM=$(cat /proc/cpuinfo | grep "processor" | wc -l)
 
 log_info()
 {
@@ -76,4 +75,35 @@ time_diff()
     min=$(( ($diff_s - $hour * 3600) / 60 ))
     second=$(( $diff_s - ($hour * 3600) - ($min * 60) ))
     printf "%02d:%02d:%02d" $hour $min $second
+}
+
+function task_is_finished() {
+    task=$1
+    ret=$(ps | grep $task | grep -v "grep")
+    if [ "$ret" = "" ]; then
+        return 0 # true
+    else
+        return 1 # false
+    fi
+}
+
+function task_is_running() {
+    task=$1
+    ret=$(ps | grep $task | grep -v "grep")
+    if [ "$ret" != "" ]; then
+        return 0 # true
+    else
+        return 1 # false
+    fi
+}
+
+function wait_task_finish() {
+    task=$1
+    while true; do
+        if task_is_finished $task; then
+            return
+        else
+            sleep 1
+        fi
+    done
 }
