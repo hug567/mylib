@@ -59,7 +59,7 @@ function test02() {
 
 function test03() {
     echo "test03:"
-    sleep 10 &
+    sleep 5 &
     wait_task_finish sleep
     echo "sleep is finished"
 }
@@ -75,11 +75,21 @@ function test04() {
     fi
 }
 
+function test05() {
+    echo "test05:"
+    task1="zsh"
+    task2="htop"
+    if task_is_finished $task1 || task_is_finished $task2; then
+        echo "$task1 or $task2 is finished"
+    fi
+}
+
 function main() {
     test01
     test02
     test03
     test04
+    test05
 }
 
 main
