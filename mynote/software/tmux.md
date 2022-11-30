@@ -23,8 +23,10 @@ tmux ls                                  //列出所有会话
 tmux a                                   //恢复最新创建的会话
 tmux a -t <name>                         //恢复指定会话
 Prefix + s                               //切换会话
-Prefix + d                               //脱离会话
-tmux detach-client                       //脱离会话
+Prefix + d                               //脱离当前会话
+tmux detach-client                       //脱离当前会话
+tmux detach-client -s hx                 //脱离指定会话
+tmux detach-client -a                    //脱离所有会话
 Prefix, Shift + $                        //修改会话名
 ```
 
@@ -102,4 +104,16 @@ export TREM=xterm-256color
 //下载tmux：https://github.com/xnng/my-git-bash/tree/master/tmux
 //将bin目录下所有文件复制到： C：\Program Files\Git\usr\bin
 //将share目录下所有文件复制到： C：\Program Files\Git\usr\share
+```
+
+## 8、tmux插件：
+
+```bash
+# tmux插件
+https://github.com/tmux-plugins/tpm
+https://github.com/tmux-plugins/tmux-resurrect
+
+# tmux-resurrect
+Prefix, Ctrl + S        # 保存会话
+Prefix, Ctrl + R        # 恢复会话
 ```
