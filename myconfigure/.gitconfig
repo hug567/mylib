@@ -6,6 +6,12 @@
 [credential]
 	helper = store
 [http]
+	# 100M: 104857600
+	# 1G: 1073741824
+	# 2G: 2147483648
+	# 10G: 10737418240
+	# 15G: 16106127360
+	# 20G: 21474836480
 	postBuffer = 104857600
 [alias]
 	br = branch
@@ -17,3 +23,4 @@
 	pl = pull
 	ps = push
 	lg = "log --oneline --graph --pretty=format:\"%C(yellow)%h %Cred[%an]%Creset %Cblue[%ad]%Creset %s %Cgreen(%cr)%Cred%d\" --date=format:'%Y-%m-%d %H:%M:%S' -n 30"
+	cmhx = commit -s --author='Huang Xing <huangxing567@163.com>'
