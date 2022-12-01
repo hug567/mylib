@@ -170,6 +170,7 @@ autocmd BufNewFile,BufRead *.h source ~/.vim/scripts/myc.vim
 autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
 autocmd BufNewFile,BufRead *.html source ~/.vim/scripts/myhtml.vim
 autocmd BufNewFile,BufRead *.cpp source ~/.vim/scripts/mycpp.vim
+autocmd BufNewFile,BufRead *.sh source ~/.vim/scripts/mysh.vim
 
 "------------------------------------------------------------------------------"
 map <F10> :LeaderfFile<CR>
