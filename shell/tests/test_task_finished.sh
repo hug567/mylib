@@ -84,12 +84,23 @@ function test05() {
     fi
 }
 
+function test06() {
+    echo "test06:"
+    task="sshd"
+    pids=$(ps aux | grep $task | grep -v grep | awk -F ' ' '{print$2}')
+    echo "$pids" | while read pid
+    do
+        echo "pid: $pid"
+    done
+}
+
 function main() {
     test01
     test02
     test03
     test04
     test05
+    test06
 }
 
 main
