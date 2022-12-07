@@ -161,8 +161,9 @@ git add <file2> ...
 git commit -s
 git rebase --continue
 
-//git添加commit指定用户
+//git添加commit指定作者
 git commit -s --author="Huang Xing <huangxing567@163.com>"
+//已提交的commit修改作者
 git commit --amend --author="Huang Xing <huangxing567@163.com>"
 ```
 
