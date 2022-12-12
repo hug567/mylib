@@ -167,6 +167,10 @@ ESC                              //退出
   ^J        0xa         换行(\n, LN)
   ^@        0xa         换行(\n, LN)
   ^M        0xd         回车(\r, CR, Enter)
+
+
+// 删除在文件末尾自动添加换行符，git diff能检测到
+:set binary noeol
 ```
 
 ### 11）、vim中执行shell命令：
