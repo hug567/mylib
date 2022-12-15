@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function task_is_finished() {
-    task=$1
-    ret=$(ps | grep $task | grep -v "grep")
+    task="$1"
+    ret=$(ps | grep "$task" | grep -v " grep ")
     if [ "$ret" = "" ]; then
         return 0 # true
     else
@@ -11,8 +11,8 @@ function task_is_finished() {
 }
 
 function task_is_running() {
-    task=$1
-    ret=$(ps | grep $task | grep -v "grep")
+    task="$1"
+    ret=$(ps | grep "$task" | grep -v " grep ")
     if [ "$ret" != "" ]; then
         return 0 # true
     else
@@ -21,13 +21,29 @@ function task_is_running() {
 }
 
 function wait_task_finish() {
-    task=$1
+    task="$1"
     while true; do
-        if task_is_finished $task; then
+        if task_is_finished "$task"; then
             return
         else
             sleep 1
         fi
+    done
+}
+
+# eg: kill_9_task "iperf.*-c"
+function kill_9_task() {
+    task="$1"
+    tasks=$(ps aux | grep "$task" | grep -v " grep ")
+    if [ "$tasks" = "" ]; then
+        return
+    fi
+    echo "$tasks" | while read onetask
+    do
+        pid=$(echo "$onetask" | awk -F ' ' '{print$2}')
+        kill -9 $pid
+        log_info "run cmd: kill -9 $pid"
+        log_info "task: [$onetask]"
     done
 }
 
@@ -87,10 +103,10 @@ function test05() {
 function test06() {
     echo "test06:"
     task="sshd"
-    pids=$(ps aux | grep $task | grep -v grep | awk -F ' ' '{print$2}')
+    pids=$(ps aux | grep "$task" | grep -v " grep " | awk -F ' ' '{print$2}')
     echo "$pids" | while read pid
     do
-        echo "pid: $pid"
+        echo "$task pid: $pid"
     done
 }
 
