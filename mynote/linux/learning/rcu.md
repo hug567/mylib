@@ -1,7 +1,6 @@
 # 1、基本概念：
 
 * Read-Copy Update，先创建一个旧数据的copy，然后写者更新这个copy，最后再用新的数据替换掉旧的数据。
-
 * 代码：
 
 ```c
@@ -22,14 +21,13 @@ Documentation/RCU/*
 * 宽限期：Grace Period
 * 指所有线程都至少一次进入静默态的时间。
   * 宽限期前所有在读者临界区的读者在宽限区后都会结束；
-
   * 不同的宽限期可能有部分或全部重叠‘
-
   * 宽限期后， 宽限期开始前的所有读者都完成读操作；
 * RCU类型：
   * 经典RCU
   * 可睡眠RCU
   * 微型RCU：用于单核系统，CONFIG_
+
 # 2、主要接口：
 
 ```c
@@ -45,4 +43,3 @@ synchronize_rcu()/call_rcu()
 rcu_assign_pointer()
 rcu_dereference()
 ```
-
