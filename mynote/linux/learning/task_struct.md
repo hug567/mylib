@@ -1,5 +1,24 @@
 # 1、task_struct
 
+```c
+struct thread_info thread_info;
+int on_cpu;
+int cpu;
+int recent_use_cpu;
+int wake_cpu;
+int on_rq;
+int nr_cpus_allowed;
+cpumask_t cpus_mask;
+unsigned int migration_disabled;
+unsigned short migration_flags;
+struct sched_info sched_info;
+int lockdep_depth;
+union {
+        refcount_t              rcu_users;
+        struct rcu_head         rcu;
+};
+```
+
 # 2、thread_info
 
 ```c
