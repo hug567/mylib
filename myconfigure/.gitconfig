@@ -14,7 +14,8 @@
 	# 20G: 21474836480
 	postBuffer = 104857600
 [alias]
-	br = branch
+	br = !sh -c 'git branch | cat'
+	#br = "!br() { git branch | cat; }; br"
 	co = checkout
 	st = status
 	cm = commit
