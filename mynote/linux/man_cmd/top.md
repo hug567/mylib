@@ -11,6 +11,14 @@ top -> k -> <pid>                         # 向指定进程发送SIGTERM信号(k
 top -> r -> <pid> -> <nice>               # 修改指定进程的nice值
 top -b -n 1 > top.log                     # 所有进程信息存入文件中
 top -H -b -n 1 > top.log                  # 所有线程信息存入文件中
+
+# 交互式命令：
+  c                                       # 切换显示命令名称与完整命令行
+  m                                       # 不同样式显示内存使用信息
+  t                                       # 不同样式显示cpu使用信息
+  P                                       # 按cpu使用降序排列
+  M                                       # 按内存使用降序排列
+  w                                       # 将当前配置写入~/.toprc
 ```
 
 # 2、结果含义
@@ -46,4 +54,3 @@ MiB Swap:   2048.0 total,      0.1 free,   2047.9 used.  20780.8 avail Mem
     PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
     932 root      20   0 1078932   8188   3140 S   6.2   0.0  31:03.71 NetworkManager
 ```
-
