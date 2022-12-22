@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function print_absolute_path() {
+    for file in $*
+    do
+        abs_path=$(cd $(dirname $(pwd)/$file); pwd)
+        ls ${abs_path}/$(basename $file)
+    done
+}
+
+function main() {
+    print_absolute_path $*
+}
+
+main $*
