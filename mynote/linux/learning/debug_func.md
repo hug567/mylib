@@ -22,6 +22,10 @@ void show_stack(NULL, NULL, NULL);
 void show_stack(task, NULL, NULL);
 //打印指定task的调用栈
 void sched_show_task(task)
+//指定cpu正在运行的task
+#define cpu_curr(cpu) (cpu_rq(cpu)->curr)
+//task所在cpu
+unsigned int task_cpu(const struct task_struct *p)
 
 //include/linux/debug_locks.h
 //打印所有锁信息
