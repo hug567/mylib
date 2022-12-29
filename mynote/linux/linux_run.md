@@ -103,7 +103,9 @@ find . | cpio -o --format=newc > ../rootfs.img            //制作文件系统
 cd ..                                                     //返回上层目录
 gzip -c rootfs.img > rootfs.img.gz                        //压缩文件系统
 ```
+
 #### 1.4.2、制作从sd卡启动内核：
+
 ```c
 mkdir rootfs
 cd rootfs
@@ -243,6 +245,7 @@ Networking options  --->
 ```
 
 ## 3、Linaro aarch64工具链编译linux内核:
+
 ```c
 /* 下载工具链： */
 https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
@@ -361,7 +364,7 @@ str r6, [r7]
 
 ### 2)、交叉编译elf：
 
-```shell
+```bash
 # 报错：交叉编译的elf打包到qemu中执行报：
 ./test.elf: line 1: syntax error: unexpected word (expecting ")")
 
@@ -371,7 +374,7 @@ arm-linux-gnueabi-gcc test.c -o test.elf
 
 ### 3）、启动无hotplug：
 
-```shell
+```bash
 # 报错：kernel启动时报：
 can't create /proc/sys/kernel/hotplug: nonexistent directory
 
@@ -379,5 +382,13 @@ can't create /proc/sys/kernel/hotplug: nonexistent directory
 CONFIG_UEVENT_HELPER=y
 ```
 
+## 7、编译rt内核
 
+```bash
+git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/rt/linux-stable-rt
+cd linux-stable-rt
+git checkout v5.10-rt
+mkdir build-aarch64
+cd build-aarch64
 
+```
