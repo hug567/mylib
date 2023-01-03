@@ -12,11 +12,18 @@ cpumask_t cpus_mask;
 unsigned int migration_disabled;
 unsigned short migration_flags;
 struct sched_info sched_info;
-int lockdep_depth;
 union {
         refcount_t              rcu_users;
         struct rcu_head         rcu;
 };
+
+#ifdef CONFIG_LOCKDEP
+# define MAX_LOCK_DEPTH                 48UL
+        u64                             curr_chain_key;
+        int                             lockdep_depth;                //锁的深度
+        unsigned int                    lockdep_recursion;            //递归深度
+        struct held_lock                held_locks[MAX_LOCK_DEPTH];   //持有的锁
+#endif
 ```
 
 # 2、thread_info
