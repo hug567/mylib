@@ -45,7 +45,7 @@ Tasks: 511 total,   2 running, 479 sleeping,   0 stopped,  30 zombie
 MiB Mem :  31770.4 total,   2446.4 free,  10415.0 used,  18909.0 buff/cache
 #           交换区总大小(MB)      空闲(MB)      已使用(MB) 
 MiB Swap:   2048.0 total,      0.1 free,   2047.9 used.  20780.8 avail Mem
-# PR: 实时优先级
+# PR: 实时优先级，OS动态调整，用户不能修改，值越小优先级越高
 # NI: nice值，-20~19，值越小，优先级越高
 # VIRT：虚存占用(kb)
 # RES：物存占用(kb)
