@@ -307,6 +307,10 @@ Tab
 // 搜索当前Buffer：
 <leader> b
 ```
+### 8）BufferExplorer
+```bash
+:BufExplorer                  # 查看历史打开文件
+```
 
 ## 5、下载配色主题：
 

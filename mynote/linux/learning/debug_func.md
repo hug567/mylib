@@ -1,4 +1,5 @@
 # 1、常用kernel调试函数：
+## 1.1、task：
 
 ```c
 // include/linux/sched/signal.h
@@ -26,7 +27,11 @@ void sched_show_task(task)
 #define cpu_curr(cpu) (cpu_rq(cpu)->curr)
 //task所在cpu
 unsigned int task_cpu(const struct task_struct *p)
+```
 
+## 1.2、锁：
+
+```c
 //include/linux/debug_locks.h
 //打印所有锁信息
 void debug_show_all_locks(void)
@@ -36,7 +41,8 @@ void debug_show_held_locks(task)
 void debug_check_no_locks_freed(const void *mem_from, unsigned long mem_len)
 //检查当前进程是否持有锁
 void debug_check_no_locks_held(void)
-
+// mutex是否被持有
+bool mutex_is_locked(struct mutex *lock)
 ```
 
 # 2、调试文件：
