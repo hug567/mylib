@@ -2,14 +2,14 @@
 
 ```c
 struct thread_info thread_info;
-int on_cpu;
+int on_cpu;    //正在cpu上运行
 int cpu;
 int recent_use_cpu;
 int wake_cpu;
 int on_rq;
 int nr_cpus_allowed;
 cpumask_t cpus_mask;
-unsigned int migration_disabled;
+unsigned int migration_disabled;  //禁止迁移，0：不禁止；>0：禁止
 unsigned short migration_flags;
 struct sched_info sched_info;
 union {
