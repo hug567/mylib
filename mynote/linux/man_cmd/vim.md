@@ -168,9 +168,20 @@ ESC                              //退出
   ^@        0xa         换行(\n, LN)
   ^M        0xd         回车(\r, CR, Enter)
 
-
+// 显示控制字符
+:set invlist
+// 不显示控制字符
+:set nolist
+// eol字符显示为$
+:set listchars=eol:$
+// 显示tab、eol和空格
+:set listchars=tab:>-,eol:$,space:·
 // 删除在文件末尾自动添加换行符，git diff能检测到
-:set binary noeol
+:set binary noendofline
+:set bin noeol
+// 在文件末尾添加换行符：
+在末尾添加一行空行，保存文件，然后再删除，并再保存文件
+
 ```
 
 ### 11）、vim中执行shell命令：
