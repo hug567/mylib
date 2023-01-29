@@ -43,10 +43,13 @@ def test_print_num(*nums):
 # 获取当前文件名、函数名、行号
 # import sys
 def get_file_func_linenum():
-    print("file: ",        sys._getframe().f_code.co_filename, sep='')
-    print("function: ",    sys._getframe().f_code.co_name, sep='')
+    print("-------------------------------------------------------------------")
+    print("file: ", sys._getframe().f_code.co_filename, sep='')
+    print("function: ", sys._getframe().f_code.co_name, sep='')
     print("line number: ", sys._getframe().f_lineno, sep='')
     print("[hx-debug] exec location: ", sys._getframe().f_code.co_name, "()/", sys._getframe().f_lineno, sep='')
+    print("[hx-debug] exec location: {", sys._getframe().f_code.co_filename, "}: ",
+          sys._getframe().f_code.co_name, "()/", sys._getframe().f_lineno, sep='')
 
 # 主函数
 def main():
