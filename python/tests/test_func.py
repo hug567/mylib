@@ -40,6 +40,14 @@ def test_count(lst):
 def test_print_num(*nums):
     print("nums: ", nums, sep='')
 
+# 获取当前文件名、函数名、行号
+# import sys
+def get_file_func_linenum():
+    print("file: ",        sys._getframe().f_code.co_filename, sep='')
+    print("function: ",    sys._getframe().f_code.co_name, sep='')
+    print("line number: ", sys._getframe().f_lineno, sep='')
+    print("[hx-debug] exec location: ", sys._getframe().f_code.co_name, "()/", sys._getframe().f_lineno, sep='')
+
 # 主函数
 def main():
     test_get_time()
@@ -58,5 +66,6 @@ def main():
     test_print_num(10)
     test_print_num(10, 11)
     test_print_num(10, 11, 12)
+    get_file_func_linenum()
 
 main()

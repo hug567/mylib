@@ -53,7 +53,8 @@ docker images -h                                            # 查看image命令�
 docker images                                               # 查看本地docker镜像
 docker images -a                                            # 查到所有镜像
 docker images -q                                            # 只显示IMAGE ID
-docker rmi abozanich/kail:latest                            # 删除镜像
+docker rmi ubuntu:latest                                    # 删除镜像
+docker rmi <IMAGE ID>                                       # 删除镜像
 
 # 打包镜像
 docker save -o myopensuse.tar huangxing/myopensuse:latest
@@ -150,4 +151,3 @@ yum -y install zsh                       # 安装zsh
 Failed to set locale, defaulting to C.UTF-8
 
 ```
-
