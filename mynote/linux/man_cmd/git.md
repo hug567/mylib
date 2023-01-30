@@ -257,7 +257,23 @@ git am <patch>                                   # 应用patch
 git am --abort                                   # 撤销应用patch
 ```
 
-## 3、安装gitbook：
+## 3、git lfs：
+
+```bash
+git lfs pull                                            # 拉取文件
+git lfs track <file>                                    # 追踪文件
+git lfs untrack <file>                                  # 取消追踪文件
+git lfs ls-files                                        # 显示追踪文件列表
+git lfs status                                          # 查看lfs追踪的文件状态
+
+# 提交文件，与普通文件提交相同
+git add <files>
+git commit
+git push origin HEAD:branch
+
+```
+
+## 4、gitbook：
 
 ```shell
 sudo apt install nodejs npm
@@ -276,7 +292,7 @@ gitbook init
 gitbook serve
 ```
 
-## 4、tig：
+## 5、tig：
 
 ```c
 sudo apt install tig                         //安装tig
