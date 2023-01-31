@@ -62,9 +62,11 @@ def check_file_exist(fname):
 def create_delete_file():
     # 需先有目录
     fname="/tmp/python_test.txt"
+    # 创建文件
     file = open(fname, 'w')
     check_file_exist(fname)
     file.close()
+    # 删除文件
     os.remove(fname)
     check_file_exist(fname)
 
