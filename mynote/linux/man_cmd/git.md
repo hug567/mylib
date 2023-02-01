@@ -115,6 +115,7 @@ git commit -a                                            //不用add提交commit
 //----------合并至最近一次commit-------------------------------------------//
 git add <file>                                           //添加文件
 git commit --amend                                       //追加至最新commit
+git commit --amend --no-edit                             //不修改commit描述
 
 //----------合并至指定commit----------------------------------------------//
 git stash                                                //暂存

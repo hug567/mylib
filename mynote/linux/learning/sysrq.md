@@ -1,5 +1,7 @@
 # 1、常用命令：
 
+- 注：结果打印在串口(console)，ssh连接看不见，可以使用dmesg查看；
+
 ```bash
 # 使能所有sysrq
 echo 1 > /proc/sys/kernel/sysrq
