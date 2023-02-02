@@ -21,6 +21,9 @@ X：TASK_DEAD - EXIT_DEAD，退出状态，进程即将被销毁
 
 # 3、调度信息：
 
+- 信息获取：cat /proc/sched_debug
+- 对应源码：kernel/sched/debug.c
+
 ```bash
 cpu#0
   .nr_running                    : 18                           # 可运行任务数量
@@ -65,11 +68,83 @@ cfs_rq[0]:/user.slice
 
 # 4、优先级：
 
-
 - 线程优先级范围：0~139，值越小，优先级越高；
 - 用户态线程优先级范围：100~139，默认优先级是120，对应nice值为0；
-
 - nice值范围：-20~19，对应优先级100~139；
 - 只有内核线程支持低于100的优先级，优先级低于100的线程称为RT级线程；
 - SCHED_NORMAL调度策略为CFS，为默认调度策略，完全公平调度，没有优先级的概念；
 - SCHED_FIFO、SCHED_RR为实时调度策略，优先级范围为1~99；
+
+# 5、CFS：
+
+- 每个cpu对应一个rq，每个rq对应一个cfs_rq，cfs_rq处理的单元是sched_entity，sched_entiy位于每个task_struct中；
+
+```c
+struct task_struct {
+	struct sched_entity	se;
+};
+
+struct task_struct *p = container_of(se, struct taks_struct, se);
+```
+
+- 调度发生时，调度器从cfs_rq中选择vruntime最小的task运行；
+- 若调度器选择了一个任务组，则继续从改调度组中选择vruntime最新的task；
+
+# 6、sched_entity：
+
+```c
+/* file: include/linux/sched.h */
+struct sched_entity {
+	/* For load-balancing: */
+	/* 权重，权重由进程的 nice 值进行计算 */
+	struct load_weight load;
+	/* 红黑树节点 */
+	struct rb_node run_node;
+	struct list_head group_node;
+	/* 是否在 runqueue 上，1 则表示在 rq 中 */
+	unsigned int on_rq;
+
+	/* 记录该进程在 CPU 上开始执行的时间 */
+	u64 exec_start;
+	/* 记录总运行时间 */
+	u64 sum_exec_runtime;
+	/* 该进程的虚拟运行时间，该值是红黑树中的key, CFS 依据该值来保证公平调度 */
+	u64 vruntime;
+	/* 截止该调度周期开始时，进程的总运行时间，在check_preempt_tick中会使用到 */
+	u64 prev_sum_exec_runtime;
+
+	/* scheduler 做负载均衡时，对该进程的迁移次数 */
+	u64 nr_migrations;
+
+	/* 统计数据 */
+	struct sched_statistics statistics;
+
+#ifdef CONFIG_FAIR_GROUP_SCHED
+	int depth;
+	/* parent 如果非空的话，那么一定指向一个代表 task_group 的 sched_entity, 即my_q 非空 */
+	struct sched_entity *parent;
+	/* rq on which this entity is (to be) queued: */
+	struct cfs_rq *cfs_rq;
+	/* rq "owned" by this entity/group: */
+	/*
+	 * 用来判断该 se 是否是一个 task, 如果 my_q 为null, 则是task, 否则则表示是一个
+	 * task_group 参考宏 entity_is_task
+	 */
+	struct cfs_rq *my_q;
+	/* cached value of my_q->h_nr_running */
+	unsigned long runnable_weight;
+#endif
+
+#ifdef CONFIG_SMP
+	/*
+	 * Per entity load average tracking.
+	 *
+	 * Put into separate cache line so it does not
+	 * collide with read-mostly values above.
+	 */
+	struct sched_avg avg;
+#endif
+};
+```
+
+![cfs_rq](../../.pictures/20230201202312_cfs_rq.jpg)
