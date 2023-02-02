@@ -28,4 +28,4 @@ make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j3
 # qemu启动命令
 END_TIME=$(date +%s)
 log_info "time spend: $(time_diff ${END_TIME} ${START_TIME})"
-log_info "Run kernel: ~/code/mylib/linux/shell/qemu-run-aarch64.sh"
+log_info "Run kernel: ~/code/mylib/linux/shell/aarch64/qemu_run_Image.sh"
