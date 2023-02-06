@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function case_use() {
-    val=$h
+    local val=$h # 局部变量
 }
 
 function test_case01() {

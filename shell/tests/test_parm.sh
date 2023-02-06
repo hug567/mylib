@@ -2,7 +2,7 @@
 
 # 传递带空格的参数
 function test_para_with_space() {
-    para1="$1"
+    local para1="$1"
     echo "para1: [$para1]"
 }
 
@@ -11,7 +11,7 @@ function traverse_param() {
     # 参数个数
     echo "param num: $#"
     # 遍历参数
-    i=1
+    local i=1
     for p in $*
     do
         echo "param $i: $p"

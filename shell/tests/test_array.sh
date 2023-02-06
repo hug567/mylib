@@ -2,7 +2,7 @@
 
 function test01() {
     echo "test01:"
-    arr01=(
+    local arr01=(
         "element01"
         "element02"
     )
@@ -11,7 +11,7 @@ function test01() {
         echo "element: [$ele]"
     done
 
-    arr02=(
+    local arr02=(
         element03
         element04
     )

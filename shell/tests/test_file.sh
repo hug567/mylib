@@ -2,7 +2,7 @@
 
 # 逐行读取文件
 function read_file_by_line() {
-    file=$1
+    local file=$1
     # 方式一
     while read line
     do

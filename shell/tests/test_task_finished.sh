@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function task_is_finished() {
-    task="$1"
-    ret=$(ps | grep "$task" | grep -v " grep ")
+    local task="$1"
+    local ret=$(ps | grep "$task" | grep -v " grep ")
     if [ "$ret" = "" ]; then
         return 0 # true
     else
@@ -11,8 +11,8 @@ function task_is_finished() {
 }
 
 function task_is_running() {
-    task="$1"
-    ret=$(ps | grep "$task" | grep -v " grep ")
+    local task="$1"
+    local ret=$(ps | grep "$task" | grep -v " grep ")
     if [ "$ret" != "" ]; then
         return 0 # true
     else
@@ -21,7 +21,7 @@ function task_is_running() {
 }
 
 function wait_task_finish() {
-    task="$1"
+    local task="$1"
     while true; do
         if task_is_finished "$task"; then
             return
@@ -33,14 +33,14 @@ function wait_task_finish() {
 
 # eg: kill_9_task "iperf.*-c"
 function kill_9_task() {
-    task="$1"
-    tasks=$(ps aux | grep "$task" | grep -v " grep ")
+    local task="$1"
+    local tasks=$(ps aux | grep "$task" | grep -v " grep ")
     if [ "$tasks" = "" ]; then
         return
     fi
     echo "$tasks" | while read onetask
     do
-        pid=$(echo "$onetask" | awk -F ' ' '{print$2}')
+        local pid=$(echo "$onetask" | awk -F ' ' '{print$2}')
         kill -9 $pid
         log_info "run cmd: kill -9 $pid"
         log_info "task: [$onetask]"
@@ -65,7 +65,7 @@ function test01() {
 
 function test02() {
     echo "test02:"
-    task="sleep"
+    local task="sleep"
     if task_is_finished $task; then
         echo "$task is finished"
     else
@@ -82,7 +82,7 @@ function test03() {
 
 function test04() {
     echo "test04:"
-    task="zsh"
+    local task="zsh"
     if ! task_is_finished $task; then
         echo "$task is running"
     fi
@@ -93,8 +93,8 @@ function test04() {
 
 function test05() {
     echo "test05:"
-    task1="zsh"
-    task2="htop"
+    local task1="zsh"
+    local task2="htop"
     if task_is_finished $task1 || task_is_finished $task2; then
         echo "$task1 or $task2 is finished"
     fi
@@ -102,8 +102,8 @@ function test05() {
 
 function test06() {
     echo "test06:"
-    task="sshd"
-    pids=$(ps aux | grep "$task" | grep -v " grep " | awk -F ' ' '{print$2}')
+    local task="sshd"
+    local pids=$(ps aux | grep "$task" | grep -v " grep " | awk -F ' ' '{print$2}')
     echo "$pids" | while read pid
     do
         echo "$task pid: $pid"

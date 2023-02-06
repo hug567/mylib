@@ -2,7 +2,7 @@
 
 # 求余运算
 function test_mod() {
-    num=11
+    local num=11
     let mod=num%10
     echo "mod = $mod"
 
