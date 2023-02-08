@@ -1,9 +1,9 @@
 ## 1、安装tmux：
 
 ```c
-sudo apt install tmux                    //安装tmux
-tmux -V                                  //查看tmux版本
-Ctrl + B                                 //默认Prefix键
+sudo apt install tmux                   //安装tmux
+tmux -V                                 //查看tmux版本
+Ctrl + B                                //默认Prefix键
 
 tmux show-options -g | grep prefix      //tmux查看prefix键
 set -g prefix C-b                       //设置prefix键为Ctrl+b
@@ -56,14 +56,15 @@ Prefix + !                               //当前窗格切换至新窗口
 Prefix + { / }                           //窗格切换位置
 Prefix + PageUp / PageDown               //上下翻页
 q                                        //退出翻页
-Prefix, Alt+方向键                        //缩放窗格
+Prefix, Alt+方向键                       //缩放窗格
 Prefix, Alt+5                            //均匀分布窗格
 
 /*----- ~/.tmux.conf -----*/
 bind ` send-prefix                       //按两次prefix输入`键
 bind u display-pane                      //自定义命令显示窗格编号 (Prefix + u)
+tmux display-pane                        //tmux命令显示当前窗口的窗格编号
 
-tmux swap-pane -s 2 -t 1                 //交换窗格
+tmux swap-pane -s 2 -t 1                 //交换窗格位置
 ```
 
 ## 5、文本复制粘贴：
