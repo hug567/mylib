@@ -7,6 +7,9 @@ source ${MYLIB}/linux/shell/common.sh
 
 check_in_build_dir
 
+log_info "CPU_THREAD = $CPU_THREAD"
+log_info "COMPILE_THREAD = $COMPILE_THREAD"
+
 # 删除编译生成文件
 #make clean
 
@@ -17,13 +20,13 @@ check_in_build_dir
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 
 # 编译内核
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j3
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$COMPILE_THREAD
 
 # 编译内核模块(.ko)
-#make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j3
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j$CPU_THREAD
 
 # 编译dts文件(生成dtb文件)
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j3
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j$CPU_THREAD
 
 # qemu启动命令
 END_TIME=$(date +%s)

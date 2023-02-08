@@ -1,12 +1,14 @@
 #!/bin/bash
 
-source ${MYLIB}/linux/shell/common.sh
+CUR_SOURCE_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+export MYLIB=$(cd $CUR_SOURCE_DIR/../../..; pwd)
+source $MYLIB/linux/shell/common.sh
 
 IMAGE="arch/arm64/boot/Image"
 ROOTFS="rootfs.gzip"
 DTB=""
 
-check_files_exist
+check_files_exist $IMAGE $ROOTFS
 
 #qemu-system-aarch64 \
 #    -M virt -m 512M -nographic \
