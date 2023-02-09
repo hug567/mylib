@@ -1,0 +1,48 @@
+# systemctl：
+
+```bash
+systemctl start xxx                        # 启动服务
+systemctl researt xxx                      # 重启服务
+systemctl staop xxx                        # 停止服务
+systemctl list-units                       # 列出单元
+systemctl daemon-reload                    # 修改服务文件后重新加载
+systemctl is-active xxx                    # 查看是否是开机自启
+systemctl enable xxx                       # 使能开机自启
+systemctl disable xxx                      # 关闭开机自启
+systemctl list-timers                      # 列出所有定时任务
+systemctl list-jobs                        # 列出活动任务
+
+# 重新加载service文件：
+sudo systemctl daemon-reload
+sudo systemctl restart test.service
+sudo systemctl status test.service
+
+# 重定向输出到文件
+ExecStart=/bin/bash -c 'echo helloworld >> /tmp/systemd.log'
+
+# ExecStart执行多条指令
+ExecStart=/bin/bash -c '\
+        date >> /tmp/systemd.log; \
+        time=$(date); \
+        num=$(date | head -c 2 | tail -c 1); \
+        echo [$time] >> /tmp/systemd.log; \
+        echo "num = $num" >> /tmp/systemd.log; \
+        if [ $num == 2 ]; then \
+                echo "num is 2" >> /tmp/systemd.log; \
+        else \
+                echo "num is not 2" >> /tmp/systemd.log; \
+        fi \
+        '
+```
+
+# journalctl：
+
+```bash
+journalctl -u xxx                          # 查看service启动日志
+```
+
+# systemd-analyze：
+
+```bash
+
+```
