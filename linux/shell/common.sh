@@ -49,3 +49,16 @@ check_in_build_dir()
         exit
     fi
 }
+
+create_net_tun_dev() {
+    local ret=$(ifconfig | grep tap0)
+    if [ "$ret" != "" ]; then
+        log_info "tap0 is already exist"
+    else
+        log_info "will create tap0"
+        # delete tap0: sudo ip tuntap del dev tap0 mode tap
+        sudo ip tuntap add dev tap0 mode tap
+        sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0
+    fi
+    ifconfig tap0
+}

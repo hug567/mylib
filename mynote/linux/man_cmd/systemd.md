@@ -44,5 +44,11 @@ journalctl -u xxx                          # 查看service启动日志
 # systemd-analyze：
 
 ```bash
-
+systemd-analyze blame                                  # 查看各服务启动时间
+systemd-analyze plot > systemd_plot.svg                # 输出启动详情svg图像
+systemd-analyze critical-chain                         # 显示默认启动时间单元时间关键链
+systemd-analyze critical-chain xxx.service             # 显示指定单元时间关键链 (必须加.service后缀)
+systemd-analyze dump > systemd_dump.log                # 输出全部单元状态日志
+systemd-analyze log-level                              # 打印systemd日志级别
+systemd-analyze log-target                             # 打印systemd日志输出目标
 ```
