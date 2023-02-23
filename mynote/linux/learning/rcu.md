@@ -19,10 +19,11 @@ Documentation/RCU/*
   * 在时钟tick中检测CPU处于用户模式或者idle模式，则表明CPU离开了临界区；
   * 在不支持抢占的RCU实现中，检测到CPU有上下文切换，就能表明CPU离开了临界区；
 * 宽限期：Grace Period
-* 指所有线程都至少一次进入静默态的时间。
+  * 指所有线程都至少一次进入静默态的时间；
   * 宽限期前所有在读者临界区的读者在宽限区后都会结束；
-  * 不同的宽限期可能有部分或全部重叠‘
+  * 不同的宽限期可能有部分或全部重叠；
   * 宽限期后， 宽限期开始前的所有读者都完成读操作；
+  * 同一时刻最多只有一个GP；
 * RCU类型：
   * 经典RCU
   * 可睡眠RCU
@@ -30,11 +31,12 @@ Documentation/RCU/*
 
 * 常见缩写：
 
-```c
+```bash
 gp: grace perid, 宽限期
 gps: grace perid start, 宽限期开始
 gp_seq: grace period sequence, 宽限期序列
 qs: quiescent state, 静止状态
+rnp: rcu_node pointer, rcu_node指针
 rdp: rcu_data pointer, rcu_data指针
 iw: irq work
 ```
@@ -53,7 +55,6 @@ struct rcu_state
  * Tree TCU中的节点
  */
 struct rcu_node
-
 
 /*
  * 每个cpu对应一个
@@ -74,6 +75,14 @@ rcu_dereference()
 # 3、主要数据结构：
 
 ```c
+struct rcu_node {
+    /*
+     * 阻塞在rcu读关键区的task，此head链接的是task->rcu_node_entry
+     * 如：list_add(&t->rcu_node_entry, &rnp->blkd_tasks);
+     */
+	struct list_head blkd_tasks;
+}
+
 struct rcu_data {
 	unsigned long grpmask; /* Mask to apply to leaf qsmask. */
 }
@@ -99,9 +108,9 @@ struct rcu_data {
 # P3744/1:b..l:
 #   P3744: 阻塞进程pid为3744
 #   0/1: 是否嵌套
-#   b: rcu读临界区被抢占
-#   .: 
-#   .: 
-#   l: 
+#   ./b: rcu读临界区被抢占
+#   ./q: 
+#   ./e: 
+#   ./l: 
 [ 2077.394277] rcu:         Tasks blocked on leve-0 rcu_node (CPUs 0-10): P3744/1:b..l
 ```
