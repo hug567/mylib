@@ -1,11 +1,12 @@
 ## 1、初始化设置
 
-#### 1)、 离线安装插件：
+#### 1）、 离线安装插件：
+
 ```c
 Extensions (Ctrl+Shift+X) -> 从VSIX安装
 ```
 
-#### 2）、 设置中文：
+#### 2）、设置中文：
 
 ```c
 Ctrl+Shift+P -> Configure Display Language -> Install additioallanguages
@@ -13,8 +14,8 @@ Chinese (Simplified) Language -> Install
 Ctrl+Shift+P -> zh-ch -> Restart
 ```
 
-
 #### 3）、 使用bash：
+
 ```c
 /* 安装git bash -> 将安装路径添加至系统变量PATH */
 bash --version                                       //在cmd中验证设置否成功
@@ -128,11 +129,13 @@ launch.json                                //调试配置文件
 ```
 
 #### 4）、创建c_cpp_properties.json：
+
 ```c
 待补充
 ```
 
-## 3、常用操作：
+## 3、常用操作快捷键：
+
 ```c
 //编辑
 Ctrl + Enter                    //在光标下一行插入新行
@@ -179,14 +182,27 @@ ssh-keygen -t rsa
 
 ## 5、常用代码风格设置：
 
-#### 1）、设置tab：
+#### 1）、设置主题：
+
+```bash
+Ctr + Shift + P -> Preferences: Color Theme -> Monokai
+// 或
+Ctr + Shift + P -> Preferences: Open User Settings (JSON) -> "workbench.colorTheme": "Monokai",
+```
+
+#### 2）、设置tab：
 
 ```c
 使用空格缩进：Ctrl+Shift+P -> Indent Using Spaces -> 4
 使用tab缩进：Ctrl+Shift+P -> Indent Using Tabs -> 4
+
+// 显示tab
+文件 -> 首选项 -> 设置 -> Editor: Render Control Characters -> 勾选
+// 或
+Ctr + Shift + P -> Preferences: Open User Settings (JSON) -> "editor.renderControlCharacters": true,
 ```
 
-#### 2）、设置空格、tab颜色：
+#### 3）、设置空格、tab颜色：
 
 ```c
 F:\Program Files\Microsoft VS Code\resources\app\extensions\theme-monokai\themes\monokai-color-theme.json

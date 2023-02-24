@@ -14,21 +14,23 @@ Documentation/RCU/*
 ```
 
 * 静止状态：Quiescent State
+
   * 当一个线程正在访问RCU保护的临界区时，认为是活动的状态，而当它离开了临界区后，则认为它是静止的状态；
   * 当所有的CPU都至少经历过一次QS后，宽限期将结束并触发回收工作；
   * 在时钟tick中检测CPU处于用户模式或者idle模式，则表明CPU离开了临界区；
   * 在不支持抢占的RCU实现中，检测到CPU有上下文切换，就能表明CPU离开了临界区；
 * 宽限期：Grace Period
+
   * 指所有线程都至少一次进入静默态的时间；
   * 宽限期前所有在读者临界区的读者在宽限区后都会结束；
   * 不同的宽限期可能有部分或全部重叠；
   * 宽限期后， 宽限期开始前的所有读者都完成读操作；
   * 同一时刻最多只有一个GP；
 * RCU类型：
+
   * 经典RCU
   * 可睡眠RCU
   * 微型RCU：用于单核系统，CONFIG_
-
 * 常见缩写：
 
 ```bash
@@ -49,19 +51,19 @@ iw: irq work
  * 支持不同类型的RCU状态：rcu_sched_state，rcu_bh_state，rcu_preempt_state
  * 全局变量，只有一个
  */
-struct rcu_state
+struct rcu_state;
 
 /*
  * Tree TCU中的节点
  */
-struct rcu_node
+struct rcu_node;
 
 /*
  * 每个cpu对应一个
  * 描述cpu的rcu状态，每个CPU都维护一个rcu_data，归属于某一个rcu_node
  * 用于检测静止状态并进行处理，对应得CPU进行RCU回调
  */
-struct rcu_data
+struct rcu_data;
 
 // 读者
 rcu_read_lock()
@@ -76,10 +78,10 @@ rcu_dereference()
 
 ```c
 struct rcu_node {
-    /*
-     * 阻塞在rcu读关键区的task，此head链接的是task->rcu_node_entry
-     * 如：list_add(&t->rcu_node_entry, &rnp->blkd_tasks);
-     */
+	/*
+	 * 阻塞在rcu读关键区的task，此head链接的是task->rcu_node_entry
+	 * 如：list_add(&t->rcu_node_entry, &rnp->blkd_tasks);
+	 */
 	struct list_head blkd_tasks;
 }
 
@@ -107,8 +109,8 @@ struct rcu_data {
 # CPUs 0-10: cpu编号0-10
 # P3744/1:b..l:
 #   P3744: 阻塞进程pid为3744
-#   0/1: 是否嵌套
-#   ./b: rcu读临界区被抢占
+#   0/1: rcu是否嵌套
+#   ./b: rcu读临界区是否被抢占
 #   ./q: 
 #   ./e: 
 #   ./l: 
