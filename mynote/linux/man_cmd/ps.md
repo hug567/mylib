@@ -7,7 +7,7 @@ ps                                 # 打印当前会话中的进程信息
 ps aux                             # 打印所有进程信息
 ps -elT                            # 打印所有线程信息
 ps -elTF
-# 按指定格式打印所有线程信息
+# 按指定格式打印所有线程信息 (显示完整线程名称)
 ps -eT -o f,s,uid,pid,spid,ppid,c,pri,ni,addr,sz,wchan,rss,psr,stime,tty,time,cmd
 ```
 

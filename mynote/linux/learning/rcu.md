@@ -45,6 +45,7 @@ gpk: gp_kthread, 宽限期内核线程, rcu_preempt/13
 qs: quiescent state, 静止状态
 rnp: rcu_node pointer, rcu_node指针
 rdp: rcu_data pointer, rcu_data指针
+rtp: rcu_task pointer, rcu_task指针
 iw: irq work
 exp: expedited, 加速
 ```
@@ -63,8 +64,8 @@ exp: expedited, 加速
     t = kthread_create(rcu_gp_kthread, NULL, "%s", rcu_state.name);  //comm: rcu_preempt, pid: 13
     smp_store_release(&rcu_state.gp_kthread, t);
     ```
+- 
 
-    
 
 # 2、主要接口：
 
@@ -89,7 +90,7 @@ struct rcu_node;
  */
 struct rcu_data;
 
-struct rcu_tasks;  //rcu任务状态机
+struct rcu_tasks;  //rcu任务状态机，kname: "rcu_tasks"
 
 /*
  * 回调列表，嵌在其他数据结构中，synchronize_rcu时使用
@@ -265,7 +266,6 @@ static int __noreturn rcu_gp_kthread(void *unused)
 		rcu_gp_cleanup();
 			rcu_state.gp_end = jiffies;
 
-//宽限期ftrace
 //宽限期开始
 trace_rcu_grace_period(rcu_state.name, rcu_state.gp_seq, TPS("start"));
 //宽限期正在等待当前cpu，当前cpu需要静止状态
@@ -277,3 +277,17 @@ trace_rcu_grace_period(rcu_state.name, rcu_state.gp_seq, TPS("end"));
 
 ```
 
+# 6、rcu线程：
+
+- rcu_preempt：
+  - xx
+- rcuc/%u：
+  - per cpu线程，用于执行rcu回调
+
+- rcu_gp：
+  - 工作队列，
+- rcu_par_gp：
+  - 工作队列，
+- rcu_tasks_kthred：
+- rcu_tasks_rude_kthred：
+- rcu_tasks_trace_kthred ：
