@@ -2,7 +2,7 @@
 
 ```c
 struct thread_info thread_info;
-int on_cpu;    //正在cpu上运行
+int on_cpu;                       //正在cpu上运行
 int cpu;
 int recent_use_cpu;
 int wake_cpu;
@@ -23,6 +23,13 @@ union {
         int                             lockdep_depth;                //锁的深度
         unsigned int                    lockdep_recursion;            //递归深度
         struct held_lock                held_locks[MAX_LOCK_DEPTH];   //持有的锁
+#endif
+
+#ifdef CONFIG_PREEMPT_RCU
+        int                             rcu_read_lock_nesting;        //rcu读者是否嵌套
+        union rcu_special               rcu_read_unlock_special;
+        struct list_head                rcu_node_entry;
+        struct rcu_node                 *rcu_blocked_node;
 #endif
 ```
 
