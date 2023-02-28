@@ -9,6 +9,17 @@ ps -elT                            # 打印所有线程信息
 ps -elTF
 # 按指定格式打印所有线程信息 (显示完整线程名称)
 ps -eT -o f,s,uid,pid,spid,ppid,c,pri,ni,addr,sz,wchan,rss,psr,stime,tty,time,cmd
+
+# 查看进程所属调度类 (class)
+#   TS  SCHED_OTHER
+#   FF  SCHED_FIFO
+#   RR  SCHED_RR
+#   B   SCHED_BATCH
+#   ISO SCHED_ISO
+#   IDL SCHED_IDEL
+#   -   未上报
+#   ?   未知的值
+ps -eo pid,spid,pri,ni,class,cmd
 ```
 
 # 2、打印的信息含义：
