@@ -1,5 +1,8 @@
 #!/bin/bash
-# shell逻辑运行
+# shell逻辑运算
+#   与：-a / &&
+#   或：-o / ||
+#   非：!
 
 # 逻辑与
 function test_and() {
