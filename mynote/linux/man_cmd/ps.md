@@ -19,7 +19,7 @@ ps -eT -o f,s,uid,pid,spid,ppid,c,pri,ni,addr,sz,wchan,rss,psr,stime,tty,time,cm
 #   IDL SCHED_IDEL
 #   -   未上报
 #   ?   未知的值
-ps -eo pid,spid,pri,ni,class,cmd
+ps -eTo pid,spid,pri,ni,class,cmd
 ```
 
 # 2、打印的信息含义：

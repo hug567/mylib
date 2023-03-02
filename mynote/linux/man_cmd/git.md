@@ -17,7 +17,7 @@ git config --global credential.helper store              //长期缓存账号密
 
 ```C
 git log                                                  //查看提交日志
-git log --name-status                                    //log显示修改文件列表
+git log --name-status                                    //log显示修改/新增文件列表
 git log --stat                                           //查看commit修改行数
 git show                                                 //查看最新commit详细修改
 git show <commitID>                                      //查看指定commit详细修改

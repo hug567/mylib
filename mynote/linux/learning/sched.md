@@ -296,3 +296,38 @@ struct task_group {
 ```
 
 ![cfs_rq](../../.pictures/20230227111931_task_group.jpg)
+
+# 8、sched_rt_entity：
+
+```c
+struct sched_rt_entity {
+        struct list_head                run_list;           //用于挂载rt_rq的优先级队上的链表节点
+        unsigned long                   timeout;            //调度超时时间
+        unsigned long                   watchdog_stamp;     //记录jiffies值
+        unsigned int                    time_slice;         //时间片
+        unsigned short                  on_rq;              //是否处于rt_rq中
+        unsigned short                  on_list;            //是否添加到rt_rq的优先级队列中并更新bitmap
+
+        struct sched_rt_entity          *back;
+#ifdef CONFIG_RT_GROUP_SCHED                                //rt组调度
+        struct sched_rt_entity          *parent;
+        /* rq on which this entity is (to be) queued: */
+        struct rt_rq                    *rt_rq;
+        /* rq "owned" by this entity/group: */
+        struct rt_rq                    *my_q;
+#endif
+} __randomize_layout;
+```
+
+# 9、调度起点：
+
+```c
+asmlinkage __visible void __sched schedule(void)
+
+/*
+ * 周期调度器：每个cpu的tick中断会调用
+ */
+void scheduler_tick(void)
+    curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
+```
+
