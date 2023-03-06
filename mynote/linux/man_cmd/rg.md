@@ -15,5 +15,8 @@ rg -e "xxx" ./
   -B <num>       # 打印匹配行之后的num行
   -C <num>       # 打印匹配行之前和之后的num行
   --binary       # 搜索二进制文件
+
+# 查找指定文件，若find结果为空，将搜索所有文件
+rg -e "text" $(find . -name kernel.log)
 ```
 

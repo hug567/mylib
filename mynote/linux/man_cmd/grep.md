@@ -21,4 +21,7 @@ grep -nr "text" ./                                           # 递归搜索子�
 grep -anr "text" ./                                          # 同时搜索二进制文件
 pa aux | grep "sshd" | grep -v " grep "                      # 反向过滤
 ps aux | grep -E "sshd|httpd"                                # 逻辑或，匹配字符串之一
+
+# 查找指定文件中的字符，注意不加-r
+grep -n "text" $(fine . -name "kernel.log")
 ```

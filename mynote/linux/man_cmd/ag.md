@@ -1,4 +1,10 @@
-# 1、参数含义：
+# 1、安装：
+
+```bash
+sudo apt install silversearcher-ag
+```
+
+# 2、参数含义：
 
 ```bash
 -A <num>                      # 打印匹配行之后的num行
@@ -6,7 +12,7 @@
 -u                            # 搜索所有文件
 ```
 
-# 2、常用命令：
+# 3、常用命令：
 
 ```bash
 ag "string" --ignore-dir <dir>                 # 排除目录
