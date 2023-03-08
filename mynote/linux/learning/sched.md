@@ -397,6 +397,8 @@ struct rt_rq {
 ## 1）、task进入rt_rq：
 
 ```c
-
+enqueue_task()  //kernel/sched/core.c
+    p->sched_class->enqueue_task(rq, p, flags);
+		enqueue_task_rt()  //kernel/sched/rt.c
 ```
 
