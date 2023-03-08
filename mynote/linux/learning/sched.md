@@ -321,13 +321,82 @@ struct sched_rt_entity {
 
 # 9、调度起点：
 
+- 触发调度的时刻：
+  - 分为触发和执行两部分，触发为在当前进程thread_info->flags中设置TIF_NEED_RESCHED标志，执行时通过schedule()函数完成进程选择和切换；
+  - TIF_NEED_RESCHED标志：被设置的任务可抢占当前正在运行的任务；
+  - 设置TIF_NEED_RESCHED标志时机：
+    - tick中断中进行周期性检查时调用schedule_tick()；
+    - 被wake_up()唤醒进程比正在运行的进程优先级高时，会抢占当前进程；
+- 执行schedule()的时机：
+  - 系统调用结束或中断返回时；
+  - 进程由于需要睡眠等主动调用schedule()；
+- 系统调用yield、pause也会触发调度；
+
 ```c
+set_tsk_need_resched()
+
 asmlinkage __visible void __sched schedule(void)
+    __schedule()
+	    pick_next_task()
+    		for_each_class(class)
+    			p = class->pick_next_task(rq);
 
 /*
  * 周期调度器：每个cpu的tick中断会调用
  */
 void scheduler_tick(void)
     curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
+```
+
+## 1）、系统调用返回时触发调度：
+
+```c
+ret_to_user  //arch/arm64/kernel/entry.S
+    do_notify_resume()  //arch/arm64/kernel/signal.c
+    	schedule()
+```
+
+# 10 struct rt_rq：
+
+```c
+struct rt_rq {
+        struct rt_prio_array    active;
+        unsigned int            rt_nr_running;
+        unsigned int            rr_nr_running;
+#if defined CONFIG_SMP || defined CONFIG_RT_GROUP_SCHED
+        struct {
+                int             curr; /* highest queued rt task prio */
+#ifdef CONFIG_SMP
+                int             next; /* next highest */
+#endif
+        } highest_prio;
+#endif
+#ifdef CONFIG_SMP
+        unsigned long           rt_nr_migratory;
+        unsigned long           rt_nr_total;
+        int                     overloaded;
+        struct plist_head       pushable_tasks;
+
+#endif /* CONFIG_SMP */
+        int                     rt_queued;
+
+        int                     rt_throttled;
+        u64                     rt_time;
+        u64                     rt_runtime;
+        /* Nests inside the rq lock: */
+        raw_spinlock_t          rt_runtime_lock;
+
+#ifdef CONFIG_RT_GROUP_SCHED
+        unsigned long           rt_nr_boosted;
+
+        struct rq               *rq;
+        struct task_group       *tg;
+};
+```
+
+## 1）、task进入rt_rq：
+
+```c
+
 ```
 
