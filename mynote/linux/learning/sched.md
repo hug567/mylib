@@ -321,6 +321,7 @@ struct sched_rt_entity {
 
 # 9、调度起点：
 
+- ttwu：try to wake up，尝试唤醒
 - 触发调度的时刻：
   - 分为触发和执行两部分，触发为在当前进程thread_info->flags中设置TIF_NEED_RESCHED标志，执行时通过schedule()函数完成进程选择和切换；
   - TIF_NEED_RESCHED标志：被设置的任务可抢占当前正在运行的任务；
@@ -346,6 +347,16 @@ asmlinkage __visible void __sched schedule(void)
  */
 void scheduler_tick(void)
     curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
+
+wake_up_process()
+    try_to_wake_up()
+    	ttwu_do_activate()
+			ttwu_do_wakeup()
+			    p->sched_class->task_woken(rq, p);
+					task_woken_rt()
+			            push_rt_tasks(rq);
+							activate_task()
+			                    enqueue_task()
 ```
 
 ## 1）、系统调用返回时触发调度：
