@@ -337,34 +337,47 @@ struct sched_rt_entity {
 set_tsk_need_resched()
 
 asmlinkage __visible void __sched schedule(void)
-    __schedule()
-	    pick_next_task()
-    		for_each_class(class)
+    __schedule();
+	    pick_next_task();
+    		for_each_class(class);
     			p = class->pick_next_task(rq);
 
 /*
  * 周期调度器：每个cpu的tick中断会调用
  */
-void scheduler_tick(void)
+void scheduler_tick(void);
     curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
 
-wake_up_process()
-    try_to_wake_up()
-    	ttwu_do_activate()
-			ttwu_do_wakeup()
-			    p->sched_class->task_woken(rq, p);
-					task_woken_rt()
-			            push_rt_tasks(rq);
-							activate_task()
-			                    enqueue_task()
+wake_up_process(p);
+    try_to_wake_up(p, TASK_NORMAL, 0);
+    	ttwu_do_activate();
+		    ttwu_runnable()/ttwu_queue();  //task_on_rq_queued()
+				ttwu_do_wakeup();
+				    p->sched_class->task_woken(rq, p);
+						task_woken_rt(rq, p);
+			        	    push_rt_tasks(rq);
+								push_rt_task(rq, false);
+									pick_next_pushable_task();
+									activate_task();
+				                	    enqueue_task();
+
+schedule(void);
+	__schedule(false, false);
+		pick_next_task(rq, prev, rf);  //prev: curr task on cpu
+			put_prev_task(rq, p);  //only cfs
+			put_prev_task_balanc(); -> put_prev_task(rq, p);  //all sched class
+				prev->sched_class->put_prev_task(rq, prev);
+					put_prev_task_rt(rq, p);
+						enqueue_pushable_task();
+							plist_add(&p->pushable_tasks, &rq->rt.pushable_tasks);
 ```
 
 ## 1）、系统调用返回时触发调度：
 
 ```c
 ret_to_user  //arch/arm64/kernel/entry.S
-    do_notify_resume()  //arch/arm64/kernel/signal.c
-    	schedule()
+    do_notify_resume();  //arch/arm64/kernel/signal.c
+    	schedule();
 ```
 
 # 10 struct rt_rq：
