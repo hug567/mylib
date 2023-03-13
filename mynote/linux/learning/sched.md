@@ -350,16 +350,21 @@ void scheduler_tick(void);
 
 wake_up_process(p);
     try_to_wake_up(p, TASK_NORMAL, 0);
-    	ttwu_do_activate();
-		    ttwu_runnable()/ttwu_queue();  //task_on_rq_queued()
-				ttwu_do_wakeup();
-				    p->sched_class->task_woken(rq, p);
-						task_woken_rt(rq, p);
-			        	    push_rt_tasks(rq);
-								push_rt_task(rq, false);
-									pick_next_pushable_task();
-									activate_task();
-				                	    enqueue_task();
+		ttwu_runnable(p, wake_flags)/ttwu_queue(p, cpu, wake_flags);  //task_on_rq_queued()
+			ttwu_do_wakeup();
+			    p->sched_class->task_woken(rq, p);
+					task_woken_rt(rq, p);
+		        	    push_rt_tasks(rq);
+							push_rt_task(rq, false);
+								pick_next_pushable_task();
+								activate_task();  //kernel/sched/core.c
+		 	                	    enqueue_task();
+
+wake_up_process(p);
+	try_to_wake_up(p, TASK_NORMAL, 0);
+		ttwu_queue(p, cpu, wake_flags);
+    		ttwu_do_activate(rq, p, wake_flags, rf);
+				activate_task(rq, p, en_flags)
 
 schedule(void);
 	__schedule(false, false);
