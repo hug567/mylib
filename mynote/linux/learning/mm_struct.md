@@ -22,7 +22,8 @@ struct task_struct {
 # 2、常见缩写：
 
 ```bash
-pfn：page frame number，页帧号（物理内存区域编号）
+pfn：page frame number，页帧号（物理内存区域编号）；物理地址x，页对齐，其页帧号为(x>>PAGE_SHIFT)
+pte：page table entry，页表项
 lm：linear map，线性映射
 kasan：Kernel Address Sanitizer，内核地址消毒器
 ```
