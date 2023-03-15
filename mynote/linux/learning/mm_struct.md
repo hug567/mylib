@@ -58,6 +58,9 @@ cat /proc/<pid>/maps
 #define PAGE_END             (_PAGE_END(vabits_actual))  //0xffff,8000,0000,0000
 #define PHYS_OFFSET          ({ VM_BUG_ON(memstart_addr & 1); memstart_addr; })  //0x4000,0000
 #define PHYS_PFN_OFFSET      (PHYS_OFFSET >> PAGE_SHIFT)  //0x4,0000
+#define PAGE_SIZE            (_AC(1, UL) << PAGE_SHIFT)  //0x1000
+#define PAGE_MASK            (~(PAGE_SIZE-1))  //0xffff,ffff,ffff,f000
+PGDIR_SHIFT
 
 // vabits_actual = 48
 // memstart_addr = 0x4000,0000
