@@ -13,9 +13,15 @@ struct task_struct {
      * 用户进程：active_mm == mm
      * 内核线程：
      *   未运行时：active_mm == NULL
-     *   运行时：active_mm == 上一个进程的内存描述符
+     *   运行时：active_mm == 上一个进程的mm
      */
     struct mm_struct *active_mm;
+};
+
+struct mm_struct{
+    struct {
+        pgd_t *pgd;  //页目录虚址
+    } __randomize_layout;
 };
 ```
 
