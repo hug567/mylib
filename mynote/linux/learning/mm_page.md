@@ -50,3 +50,6 @@ do_page_fault()
 				handle_pte_fault()
 ```
 
+# 5、内核页表：
+
+- swapper_pg_dir：内核pgd虚址，
