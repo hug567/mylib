@@ -273,6 +273,9 @@ git add <files>
 git commit
 git push origin HEAD:branch
 
+# 追踪已普通提交的二进制文件
+git lfs track <files>
+git lfs migrate import --no-rewrite <files> -m "lfs track"
 ```
 
 ## 4、gitbook：

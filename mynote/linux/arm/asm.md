@@ -108,6 +108,14 @@ cas x0, x1, [x4]  //从内存[x4]读取值与x0比较，若相同则将x1存入�
 
 casp  //比较交换两对寄存器
 casp x0, x1, x2, x3, [x4]  //同时操作两对寄存器
+
+cbz  //值为0就跳转
+cbz w4, ffff8000101f1d40 <find_get_entries+0x260>  //w4值为0则跳转
+
+cbnz  //值不为0就跳转
+
+tbnz  //测试指定bit位不为0则跳转
+tbnz w19, #0, ffff8000101f1c2c <find_get_entries+0x14c>  //w19第0位不为0则跳转
 ```
 
 ### 3.3、程序状态寄存器传输指令：
