@@ -66,7 +66,8 @@ cat /proc/<pid>/maps
 #define PHYS_PFN_OFFSET      (PHYS_OFFSET >> PAGE_SHIFT)  //0x4,0000
 #define PAGE_SIZE            (_AC(1, UL) << PAGE_SHIFT)  //0x1000
 #define PAGE_MASK            (~(PAGE_SIZE-1))  //0xffff,ffff,ffff,f000
-PGDIR_SHIFT
+#define PGDIR_SHIFT          ARM64_HW_PGTABLE_LEVEL_SHIFT(4 - CONFIG_PGTABLE_LEVELS)  //39，虚址中pgd索引的偏移位数，bit[39,47]
+#define PTRS_PER_PGD         (1 << (VA_BITS - PGDIR_SHIFT))  //0x200=512，一个pgd页能存储的pud项数
 
 // vabits_actual = 48
 // memstart_addr = 0x4000,0000

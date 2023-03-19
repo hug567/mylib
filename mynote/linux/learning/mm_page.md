@@ -53,3 +53,12 @@ do_page_fault()
 # 5、内核页表：
 
 - swapper_pg_dir：内核pgd虚址，
+
+```c
+swapper_pg_dir   = KERNEL_RAM_VADDR-PG_DIR_SIZE
+PAGE_OFFSET      = CONFIG_PAGE_OFFSET
+```
+
+- PAGE_OFFSET：内核空间和用户空间虚拟地址的空间的划分界限，如：0xffff,0000,0000,0000
+
+- TEXT_OFFSET：编译内核时指定，表示内核代码起始的偏移
