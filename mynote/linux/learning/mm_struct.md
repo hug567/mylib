@@ -43,7 +43,7 @@ cat /proc/iomem
 cat /proc/<pid>/maps
 ```
 
-- aarc h64，48位虚址，4k页，4级页表：
+- aarch64，48位虚址，4k页，4级页表：
 
 ```bash
        Start            End         Size   Use
