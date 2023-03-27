@@ -8,6 +8,7 @@ objdump -T xxx.so    # 查看动态符号表
     -l    # 在输出中包含行号和文件名
     -h    # 显示节头信息
     -t    # 打印符号表
+    -T    # 打印动态符号表
 
 # 常用命令：
 objdump -d -S vmlinux > vmlinux.asm              # 反汇编代码并插入源码
