@@ -1,0 +1,27 @@
+lsab() {
+    if [ $# = 0 ]; then
+        local ret=$(ls)
+        if [ "$ret" = "" ]; then
+            ret="."
+        fi
+    else
+        local ret=$*
+    fi
+    ret=$(echo "$ret" | awk -F ' ' '{for (i = 1; i <= NF; i++) print $i}')
+    echo "$ret" | while read f
+    do
+        if [ -d $f ]; then
+            dir=$(cd $f; pwd)
+            echo $dir
+            continue
+        fi
+        if [ ${f:0:1} = '/' -o ${f:0:1} = '~' ]; then
+            local abs="$f"
+        else
+            local abs="$PWD/$f"
+        fi
+        if [ -e $abs ]; then
+            echo "$abs"
+        fi
+    done
+}
