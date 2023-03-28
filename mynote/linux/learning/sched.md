@@ -76,113 +76,9 @@ cfs_rq[0]:/user.slice
 - SCHED_NORMAL调度策略为CFS，为默认调度策略，完全公平调度，没有优先级的概念；
 - SCHED_FIFO、SCHED_RR为实时调度策略，优先级范围为1~99；
 
-# 5、CFS：
 
-- 每个cpu对应一个rq，每个rq对应一个cfs_rq，cfs_rq处理的单元是sched_entity，sched_entiy位于每个task_struct中；
 
-```c
-struct task_struct {
-	struct sched_entity	se;
-};
-
-struct task_struct *p = container_of(se, struct taks_struct, se);
-```
-
-- 调度发生时，调度器从cfs_rq中选择vruntime最小的task运行；
-- 若调度器选择了一个任务组，则继续从改调度组中选择vruntime最新的task；
-
-```c
-struct cfs_rq {
-        struct load_weight      load;
-        unsigned int            nr_running;
-        unsigned int            h_nr_running;      /* SCHED_{NORMAL,BATCH,IDLE} */
-        unsigned int            idle_h_nr_running; /* SCHED_IDLE */
-
-        u64                     exec_clock;
-        u64                     min_vruntime;
-#ifndef CONFIG_64BIT
-        u64                     min_vruntime_copy;
-#endif
-
-        struct rb_root_cached   tasks_timeline;
-
-        /*
-         * 'curr' points to currently running entity on this cfs_rq.
-         * It is set to NULL otherwise (i.e when none are currently running).
-         */
-        struct sched_entity     *curr;
-        struct sched_entity     *next;
-        struct sched_entity     *last;
-        struct sched_entity     *skip;
-
-#ifdef  CONFIG_SCHED_DEBUG
-        unsigned int            nr_spread_over;
-#endif
-
-#ifdef CONFIG_SMP
-        /*
-         * CFS load tracking
-         */
-        struct sched_avg        avg;
-#ifndef CONFIG_64BIT
-        u64                     load_last_update_time_copy;
-#endif
-        struct {
-                raw_spinlock_t  lock ____cacheline_aligned;
-                int             nr;
-                unsigned long   load_avg;
-                unsigned long   util_avg;
-                unsigned long   runnable_avg;
-        } removed;
-
-#ifdef CONFIG_FAIR_GROUP_SCHED
-        unsigned long           tg_load_avg_contrib;
-        long                    propagate;
-        long                    prop_runnable_sum;
-
-        /*
-         *   h_load = weight * f(tg)
-         *
-         * Where f(tg) is the recursive weight fraction assigned to
-         * this group.
-         */
-        unsigned long           h_load;
-        u64                     last_h_load_update;
-        struct sched_entity     *h_load_next;
-#endif /* CONFIG_FAIR_GROUP_SCHED */
-#endif /* CONFIG_SMP */
-
-#ifdef CONFIG_FAIR_GROUP_SCHED
-        struct rq               *rq;    /* CPU runqueue to which this cfs_rq is attached */
-
-        /*
-         * leaf cfs_rqs are those that hold tasks (lowest schedulable entity in
-         * a hierarchy). Non-leaf lrqs hold other higher schedulable entities
-         * (like users, containers etc.)
-         *
-         * leaf_cfs_rq_list ties together list of leaf cfs_rq's in a CPU.
-         * This list is used during load balance.
-         */
-        int                     on_list;
-        struct list_head        leaf_cfs_rq_list;
-        struct task_group       *tg;    /* group that "owns" this runqueue */
-
-#ifdef CONFIG_CFS_BANDWIDTH
-        int                     runtime_enabled;
-        s64                     runtime_remaining;
-
-        u64                     throttled_clock;
-        u64                     throttled_clock_pelt;
-        u64                     throttled_clock_pelt_time;
-        int                     throttled;
-        int                     throttle_count;
-        struct list_head        throttled_list;
-#endif /* CONFIG_CFS_BANDWIDTH */
-#endif /* CONFIG_FAIR_GROUP_SCHED */
-};
-```
-
-# 6、sched_entity：
+# 5、sched_entity：
 
 ```c
 /* file: include/linux/sched.h */
@@ -241,7 +137,7 @@ struct sched_entity {
 
 ![cfs_rq](../../.pictures/20230201202312_cfs_rq.jpg)
 
-# 7、struct task_group：
+# 6、struct task_group：
 
 ```c
 struct task_group {
@@ -297,7 +193,7 @@ struct task_group {
 
 ![cfs_rq](../../.pictures/20230227111931_task_group.jpg)
 
-# 8、sched_rt_entity：
+# 7、sched_rt_entity：
 
 ```c
 struct sched_rt_entity {
@@ -319,7 +215,7 @@ struct sched_rt_entity {
 } __randomize_layout;
 ```
 
-# 9、调度起点：
+# 8、调度起点：
 
 - ttwu：try to wake up，尝试唤醒
 - 触发调度的时刻：
@@ -361,15 +257,18 @@ wake_up_process(p);
 								activate_task();  //kernel/sched/core.c
 		 	                	    enqueue_task();
 
-//唤醒任务
+//唤醒任务，加入运行队列
 wake_up_process(p);
 	try_to_wake_up(p, TASK_NORMAL, 0);
-		cpu = select_task_rq();
+		cpu = select_task_rq();  //选择被唤醒的任务进入的cpu
 		ttwu_queue(p, cpu, wake_flags);
     		ttwu_do_activate(rq, p, wake_flags, rf);
-				activate_task(rq, p, en_flags)
+				activate_task(rq, p, en_flags);
                     enqueue_task();
-						......
+					    p->sched_class->enqueue_task(rq, p, flags);
+							enqueue_task_fair();  //cfs enqueue task
+								enqueue_entity();
+									__enqueue_entity();
 
 //执行调度，调度新的任务或者仍然执行当前任务
 schedule(void);
@@ -381,13 +280,6 @@ schedule(void);
 					put_prev_task_rt(rq, p);
 						enqueue_pushable_task();
 							plist_add(&p->pushable_tasks, &rq->rt.pushable_tasks);
-
-//cfs enqueue task
-enqueue_task()
-    p->sched_class->enqueue_task(rq, p, flags);
-		enqueue_task_fair()
-			enqueue_entity()
-				__enqueue_entity()
 
 put_prev_entity
     __enqueue_entity
@@ -401,7 +293,7 @@ ret_to_user  //arch/arm64/kernel/entry.S
     	schedule();
 ```
 
-# 10 struct rt_rq：
+# 9、struct rt_rq：
 
 ```c
 struct rt_rq {
@@ -446,4 +338,5 @@ enqueue_task()  //kernel/sched/core.c
     p->sched_class->enqueue_task(rq, p, flags);
 		enqueue_task_rt()  //kernel/sched/rt.c
 ```
+
 
