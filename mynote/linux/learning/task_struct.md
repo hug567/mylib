@@ -1,36 +1,95 @@
 # 1、task_struct
 
 ```c
-struct thread_info thread_info;
-int on_cpu;                       //正在cpu上运行
-int cpu;
-int recent_use_cpu;
-int wake_cpu;
-int on_rq;
-int nr_cpus_allowed;
-cpumask_t cpus_mask;
-unsigned int migration_disabled;  //禁止迁移，0：不禁止；>0：禁止
-unsigned short migration_flags;
-struct sched_info sched_info;
-union {
-        refcount_t              rcu_users;
-        struct rcu_head         rcu;
+struct task_struct {
+        struct thread_info thread_info;
+        /* -1 unrunnable, 0 runnable, >0 stopped: */
+        volatile long                   state;
+        int on_cpu;                       //正在cpu上运行
+        int cpu;
+        int recent_use_cpu;
+        int wake_cpu;
+        int on_rq;
+        int nr_cpus_allowed;
+        cpumask_t cpus_mask;
+        unsigned int migration_disabled;  //禁止迁移，0：不禁止；>0：禁止
+        unsigned short migration_flags;
+        struct sched_info sched_info;
+        union {
+                refcount_t              rcu_users;
+                struct rcu_head         rcu;
+        };
+
+        #ifdef CONFIG_LOCKDEP
+        # define MAX_LOCK_DEPTH                 48UL
+                u64                             curr_chain_key;
+                int                             lockdep_depth;                //锁的深度
+                unsigned int                    lockdep_recursion;            //递归深度
+                struct held_lock                held_locks[MAX_LOCK_DEPTH];   //持有的锁
+        #endif
+
+        #ifdef CONFIG_PREEMPT_RCU
+                int                             rcu_read_lock_nesting;        //rcu读者是否嵌套
+                union rcu_special               rcu_read_unlock_special;
+                struct list_head                rcu_node_entry;
+                struct rcu_node                 *rcu_blocked_node;
+        #endif
+};
+```
+
+## 1）、state：
+
+```c
+struct task_struct {
+        /* -1 unrunnable, 0 runnable, >0 stopped: */
+        volatile long                   state;
 };
 
-#ifdef CONFIG_LOCKDEP
-# define MAX_LOCK_DEPTH                 48UL
-        u64                             curr_chain_key;
-        int                             lockdep_depth;                //锁的深度
-        unsigned int                    lockdep_recursion;            //递归深度
-        struct held_lock                held_locks[MAX_LOCK_DEPTH];   //持有的锁
-#endif
+/*
+ * Task state bitmask. NOTE! These bits are also
+ * encoded in fs/proc/array.c: get_task_state().
+ *
+ * We have two separate sets of flags: task->state
+ * is about runnability, while task->exit_state are
+ * about the task exiting. Confusing, but this way
+ * modifying one set can't modify the other one by
+ * mistake.
+ */
 
-#ifdef CONFIG_PREEMPT_RCU
-        int                             rcu_read_lock_nesting;        //rcu读者是否嵌套
-        union rcu_special               rcu_read_unlock_special;
-        struct list_head                rcu_node_entry;
-        struct rcu_node                 *rcu_blocked_node;
-#endif
+/* Used in tsk->state: */
+#define TASK_RUNNING                    0x0000
+#define TASK_INTERRUPTIBLE              0x0001
+#define TASK_UNINTERRUPTIBLE            0x0002
+#define __TASK_STOPPED                  0x0004
+#define __TASK_TRACED                   0x0008
+/* Used in tsk->exit_state: */
+#define EXIT_DEAD                       0x0010
+#define EXIT_ZOMBIE                     0x0020
+#define EXIT_TRACE                      (EXIT_ZOMBIE | EXIT_DEAD)
+/* Used in tsk->state again: */
+#define TASK_PARKED                     0x0040
+#define TASK_DEAD                       0x0080
+#define TASK_WAKEKILL                   0x0100
+#define TASK_WAKING                     0x0200
+#define TASK_NOLOAD                     0x0400
+#define TASK_NEW                        0x0800
+#define TASK_STATE_MAX                  0x1000
+
+/* Convenience macros for the sake of set_current_state: */
+#define TASK_KILLABLE                   (TASK_WAKEKILL | TASK_UNINTERRUPTIBLE)
+#define TASK_STOPPED                    (TASK_WAKEKILL | __TASK_STOPPED)
+#define TASK_TRACED                     (TASK_WAKEKILL | __TASK_TRACED)
+
+#define TASK_IDLE                       (TASK_UNINTERRUPTIBLE | TASK_NOLOAD)
+
+/* Convenience macros for the sake of wake_up(): */
+#define TASK_NORMAL                     (TASK_INTERRUPTIBLE | TASK_UNINTERRUPTIBLE)
+
+/* get_task_state(): */
+#define TASK_REPORT                     (TASK_RUNNING | TASK_INTERRUPTIBLE | \
+                                         TASK_UNINTERRUPTIBLE | __TASK_STOPPED | \
+                                         __TASK_TRACED | EXIT_DEAD | EXIT_ZOMBIE | \
+                                         TASK_PARKED)
 ```
 
 # 2、thread_info

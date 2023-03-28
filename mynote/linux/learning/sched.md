@@ -348,6 +348,7 @@ asmlinkage __visible void __sched schedule(void)
 void scheduler_tick(void);
     curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
 
+//唤醒任务
 wake_up_process(p);
     try_to_wake_up(p, TASK_NORMAL, 0);
 		ttwu_runnable(p, wake_flags)/ttwu_queue(p, cpu, wake_flags);  //task_on_rq_queued()
@@ -360,12 +361,17 @@ wake_up_process(p);
 								activate_task();  //kernel/sched/core.c
 		 	                	    enqueue_task();
 
+//唤醒任务
 wake_up_process(p);
 	try_to_wake_up(p, TASK_NORMAL, 0);
+		cpu = select_task_rq();
 		ttwu_queue(p, cpu, wake_flags);
     		ttwu_do_activate(rq, p, wake_flags, rf);
 				activate_task(rq, p, en_flags)
+                    enqueue_task();
+						......
 
+//执行调度，调度新的任务或者仍然执行当前任务
 schedule(void);
 	__schedule(false, false);
 		pick_next_task(rq, prev, rf);  //prev: curr task on cpu
@@ -375,6 +381,16 @@ schedule(void);
 					put_prev_task_rt(rq, p);
 						enqueue_pushable_task();
 							plist_add(&p->pushable_tasks, &rq->rt.pushable_tasks);
+
+//cfs enqueue task
+enqueue_task()
+    p->sched_class->enqueue_task(rq, p, flags);
+		enqueue_task_fair()
+			enqueue_entity()
+				__enqueue_entity()
+
+put_prev_entity
+    __enqueue_entity
 ```
 
 ## 1）、系统调用返回时触发调度：
