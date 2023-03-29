@@ -19,6 +19,7 @@ e2fsck    # ext2/3/4磁盘修复
 # 2、常用方式：
 
 ```bash
-e2fsck -p -v -f /dev/sda
+e2fsck -pvf /dev/sda
+e2fsck -yDf /dev/sda
 ```
 

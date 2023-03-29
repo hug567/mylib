@@ -230,47 +230,31 @@ struct sched_rt_entity {
 - 系统调用yield、pause也会触发调度；
 
 ```c
-set_tsk_need_resched()
-
-asmlinkage __visible void __sched schedule(void)
-    __schedule();
-	    pick_next_task();
-    		for_each_class(class);
-    			p = class->pick_next_task(rq);
-
-/*
- * 周期调度器：每个cpu的tick中断会调用
- */
-void scheduler_tick(void);
-    curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
-
-//唤醒任务
-wake_up_process(p);
-    try_to_wake_up(p, TASK_NORMAL, 0);
-		ttwu_runnable(p, wake_flags)/ttwu_queue(p, cpu, wake_flags);  //task_on_rq_queued()
-			ttwu_do_wakeup();
-			    p->sched_class->task_woken(rq, p);
-					task_woken_rt(rq, p);
-		        	    push_rt_tasks(rq);
-							push_rt_task(rq, false);
-								pick_next_pushable_task();
-								activate_task();  //kernel/sched/core.c
-		 	                	    enqueue_task();
-
-//唤醒任务，加入运行队列
+/* 唤醒任务，加入运行队列 */
 wake_up_process(p);
 	try_to_wake_up(p, TASK_NORMAL, 0);
 		cpu = select_task_rq();  //选择被唤醒的任务进入的cpu
-		ttwu_queue(p, cpu, wake_flags);
+		ttwu_queue(p, cpu, wake_flags);  //cpu: task将进入的cpu，不一定是当前cpu
     		ttwu_do_activate(rq, p, wake_flags, rf);
 				activate_task(rq, p, en_flags);
                     enqueue_task();
 					    p->sched_class->enqueue_task(rq, p, flags);
 							enqueue_task_fair();  //cfs enqueue task
 								enqueue_entity();
+									update_curr(cfs_rq);
+										account_cfs_rq_runtime(cfs_rq, delta_exec);
+											__account_cfs_rq_runtime(cfs_rq, delta_exec);
+												resched_curr(rq_of(cfs_rq));
+													struct task_struct *curr = rq->curr;
+													set_tsk_need_resched(curr);  //对应cpu的当前进程设置需调度标志
 									__enqueue_entity();
 
-//执行调度，调度新的任务或者仍然执行当前任务
+/* 
+ * 执行调度，调度新的任务或者仍然执行当前任务
+ * 调用schedule()的时刻：
+ *   1)、系统调用或中断返回；
+ *   2)、进程主动调用；
+ */
 schedule(void);
 	__schedule(false, false);
 		pick_next_task(rq, prev, rf);  //prev: curr task on cpu
@@ -280,9 +264,17 @@ schedule(void);
 					put_prev_task_rt(rq, p);
 						enqueue_pushable_task();
 							plist_add(&p->pushable_tasks, &rq->rt.pushable_tasks);
+		context_switch(rq, prev, next, &rf);  //切换到下一个任务
 
-put_prev_entity
-    __enqueue_entity
+/*
+ * 周期调度器：每个cpu的tick中断会调用
+ */
+void scheduler_tick(void);
+    curr->sched_class->task_tick(rq, curr, 0);  //调度类的task_tick回调
+		task_tick_fair();
+			entity_tick();
+				resched_curr(rq_of(cfs_rq));
+					set_tsk_need_resched(curr);
 ```
 
 ## 1）、系统调用返回时触发调度：
@@ -290,8 +282,37 @@ put_prev_entity
 ```c
 ret_to_user  //arch/arm64/kernel/entry.S
     do_notify_resume();  //arch/arm64/kernel/signal.c
-    	schedule();
+		if (thread_flags & _TIF_NEED_RESCHED)
+	    	schedule();
 ```
+
+## 2）、抢占过程：
+
+- wake_up_process唤醒高优先级任务，挑选cpu，放入rq，放入时会根据优先级放到rq的头部，调用resched_curr()给该cpu的当前进程设置需要调度的标志；
+  - 挑选出的cpu不一定是当前cpu；
+
+- 在tick中断，中断或系统调用返回时，调用schedule()，若检查到当前进程有需要调度标志，pick_next_task挑选新任务，然后运行；
+
+## 3）、设置TIF_NEED_RESCHED标志：
+
+- wake_up_process()唤醒的任务比目标cpu上当前任务的优先级高时；
+- tick中断进行周期性检查时；
+  - 当前任务时间片用完，需要调度新任务；
+
+```c
+scheduler_tick();
+    curr->sched_class->task_tick(rq, curr, 0);
+		task_tick_fair();
+			entity_tick();
+				resched_curr(rq_of(cfs_rq));
+					set_tsk_need_resched(curr);
+```
+
+## 4）、任务切换：
+
+- kernel只在两个地方调用pick_next_task()实际切换到下一个任务：
+  - schedule()中调度下一个任务，是最常见的任务切换点；
+  - cpu热插拔时，将拔出cpu上的任务迁移到其他核；
 
 # 9、struct rt_rq：
 
