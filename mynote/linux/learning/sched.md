@@ -219,7 +219,7 @@ struct sched_rt_entity {
 
 - ttwu：try to wake up，尝试唤醒
 - 触发调度的时刻：
-  - 分为触发和执行两部分，触发为在当前进程thread_info->flags中设置TIF_NEED_RESCHED标志，执行时通过schedule()函数完成进程选择和切换；
+  - 分为触发和执行两部分，触发为在指定cpu的当前进程thread_info->flags中设置TIF_NEED_RESCHED标志，执行时通过schedule()函数完成进程选择和切换；
   - TIF_NEED_RESCHED标志：被设置的任务可抢占当前正在运行的任务；
   - 设置TIF_NEED_RESCHED标志时机：
     - tick中断中进行周期性检查时调用schedule_tick()；
