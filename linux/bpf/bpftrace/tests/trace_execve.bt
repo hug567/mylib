@@ -1,0 +1,17 @@
+// /usr/bin/bpftrace
+
+BEGIN {
+	@g_count=0;
+	printf("g_count = %d\n", @g_count);
+}
+
+t:syscalls:sys_enter_execve {
+	printf("[");
+	time("%H:%S:%M");
+	printf("] [%2d][%s/%d] execve [%s]\n", cpu, comm, pid, str(args->filename));
+	@g_count++;
+	if (@g_count == 50) {
+		printf("Finish trace syscalls sys_enter_execve\n");
+		exit();
+	}
+}

@@ -1,0 +1,18 @@
+// /usr/bin/bpftrace
+
+BEGIN {
+	@g_count=0;
+	printf("g_count = %d\n", @g_count);
+}
+
+t:sched:sched_process_fork {
+	printf("[");
+	time("%Y-%m-%d %H:%S:%M");
+	printf("][%2d][%s/%d] call fork\n",
+	       cpu, comm, pid);
+	@g_count++;
+	if (@g_count == 50) {
+		printf("Finish trace ......\n");
+		exit();
+	}
+}
