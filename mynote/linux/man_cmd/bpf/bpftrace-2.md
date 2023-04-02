@@ -65,7 +65,7 @@ kstack                                   # 内核栈追踪
 ustack                                   # 用户栈追踪
 arg0, arg1, ... etc.                     # Arguments to the function being traced
 retval                                   # Return value from function being traced
-func                                     # Name of the function currently being traced
+func                                     # 当前追踪的函数名
 probe                                    # 探测点全称
 rand                                     # Random number of type u32.
 curtask                                  # Current task_struct as a u64.
