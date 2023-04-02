@@ -1,0 +1,19 @@
+// /usr/bin/bpftrace
+
+BEGIN {
+	@g_count=0;
+	printf("g_count = %d\n", @g_count);
+}
+
+tracepoint:sched:sched_wakeup /args->pid == 390/ {
+	printf("[");
+	time("%Y-%m-%d %H:%S:%M");
+	printf("][%2d][%s/%d] wakeup [%s/%d] to cpu %d\n", cpu,
+	       comm, pid,
+	       args->comm, args->pid, args->target_cpu);
+	@g_count++;
+	if (@g_count == 10) {
+		printf("Finish trace ......\n");
+		exit();
+	}
+}
