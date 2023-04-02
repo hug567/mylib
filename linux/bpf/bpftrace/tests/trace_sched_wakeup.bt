@@ -5,7 +5,7 @@ BEGIN {
 	printf("g_count = %d\n", @g_count);
 }
 
-tracepoint:sched:sched_wakeup /args->pid == 390/ {
+tracepoint:sched:sched_wakeup /args->pid == 12/ {
 	printf("[");
 	time("%Y-%m-%d %H:%S:%M");
 	printf("][%2d][%s/%d] wakeup [%s/%d] to cpu %d\n", cpu,
@@ -16,4 +16,5 @@ tracepoint:sched:sched_wakeup /args->pid == 390/ {
 		printf("Finish trace ......\n");
 		exit();
 	}
+	printf("ksym: %s\n", ksym(0xffff8000100f8b00));
 }
