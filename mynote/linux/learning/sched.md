@@ -314,6 +314,17 @@ scheduler_tick();
   - schedule()中调度下一个任务，是最常见的任务切换点；
   - cpu热插拔时，将拔出cpu上的任务迁移到其他核；
 
+## 5）、主动调用schedule()：
+
+```c
+//先将task状态设为非TASK_RUNNING，然后被调度出cpu，并从rq移除
+schedule()
+    if (!preempt && prev_state) {  //task状态不是TASK_RUNNING
+        deactivate_task();
+        	dequeue_task(rq, p, flags);
+        		p->sched_class->dequeue_task(rq, p, flags);
+```
+
 # 9、struct rt_rq：
 
 ```c
