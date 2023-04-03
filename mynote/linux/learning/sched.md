@@ -1,10 +1,10 @@
 # 1、调度的时机
 
-tick中断中；
+tick中断中：调用schedule_tick()；
 
-中断返回时；
+中断返回时：调用schedule()；
 
-阻塞操作：semaphore、mutex、等待队列等；
+阻塞操作：semaphore、mutex、等待队列等接口中主动调用schedule()；
 
 # 2、进程状态
 
@@ -75,8 +75,6 @@ cfs_rq[0]:/user.slice
 - 系统中存在实时进程时，优先执行实时进程；直到实时进程结束或者主动让出CPU，才会调度非实时进程。
 - SCHED_NORMAL调度策略为CFS，为默认调度策略，完全公平调度，没有优先级的概念；
 - SCHED_FIFO、SCHED_RR为实时调度策略，优先级范围为1~99；
-
-
 
 # 5、sched_entity：
 
@@ -233,7 +231,7 @@ struct sched_rt_entity {
 /* 唤醒任务，加入运行队列 */
 wake_up_process(p);
 	try_to_wake_up(p, TASK_NORMAL, 0);
-		cpu = select_task_rq();  //选择被唤醒的任务进入的cpu
+		cpu = select_task_rq();  //选择被唤醒的任务要进入的cpu
 		ttwu_queue(p, cpu, wake_flags);  //cpu: task将进入的cpu，不一定是当前cpu
     		ttwu_do_activate(rq, p, wake_flags, rf);
 				activate_task(rq, p, en_flags);
@@ -282,7 +280,7 @@ void scheduler_tick(void);
 ```c
 ret_to_user  //arch/arm64/kernel/entry.S
     do_notify_resume();  //arch/arm64/kernel/signal.c
-		if (thread_flags & _TIF_NEED_RESCHED)
+		if (thread_flags & _TIF_NEED_RESCHED)  //当前线程被设置了需调度标志
 	    	schedule();
 ```
 
@@ -322,7 +320,8 @@ schedule()
     if (!preempt && prev_state) {  //task状态不是TASK_RUNNING
         deactivate_task();
         	dequeue_task(rq, p, flags);
-        		p->sched_class->dequeue_task(rq, p, flags);
+        		p->sched_class->dequeue_task(rq, p, flags);  //从rq中移除
+    next = pick_next_task(rq, prev, &rf);  //选择下一个可运行进程
 ```
 
 # 9、struct rt_rq：
