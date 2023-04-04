@@ -7,6 +7,10 @@
 ```bash
 git clone https://github.com/brendangregg/perf-tools
 
+# 确认kernel是否开始CONFIG_KPROBES
+cat /proc/config.gz | gunzip | grep KPROBES
+# ubuntu
+cat /boot/config-$(uname -r) | grep KPROBES
 ```
 
 # 3、使用：
