@@ -310,19 +310,41 @@ cp doc/* ~/.vim/doc/
 git clone https://github.com/Yggdroot/LeaderF
 cp -r LeaderF ~/.vim/bundle
 
-<leader>键：\
+<leader键>：\
 
 // 搜索当前目录下文件：
-<leaser> f
+<leader键> f
 // 进入/退出文件选择：
 Tab
 
 // 搜索当前Buffer：
-<leader> b
+<leader键> b
+
+:Leaderf rg                    //使用rg搜索字符
+:Leaderf rg -h                 //查看帮助
+            -A num             //显示匹配行之后的num行
+            -B num             //显示匹配行之前的num行
+            -C num             //显示匹配行前后的num行
+            -e pattern         //匹配正则表达式
+//常见用法
+:Leardf rg -e 'struct mm_struct \{'                 //在当前目录下搜索
+:Leardf rg -e 'struct mm_struct \{' include         //指定目录搜索
 ```
 ### 8）BufferExplorer
 ```bash
 :BufExplorer                  # 查看历史打开文件
+```
+
+## 9）、mru
+
+```bash
+# 查看最近打开文件：https://github.com/yegappan/mru
+:MRU
+
+# 映射到快捷键
+nmap <C-a> :MRU<CR>
+# 设置窗口高度
+let MRU_Window_Height = 20
 ```
 
 ## 5、下载配色主题：
