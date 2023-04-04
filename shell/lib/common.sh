@@ -18,20 +18,28 @@ else
 fi
 export COMPILE_THREAD
 
-log_info()
+# export HX_VERBOSE=1
+log_debug()
 {
-    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][INFO ] $1"
+    if [ "$HX_VERBOSE" = "1" ]; then
+        echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][D] $1"
+    fi
 }
 
-log_error()
+log_info()
 {
-    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][ERROR] $1"
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][I] $1"
 }
 
 # eg: log_info_var SHELL
 log_info_var()
 {
     log_info "$1 = $(eval echo '$'"$1")"
+}
+
+log_error()
+{
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][E] $1"
 }
 
 # eg: check_files_exist file1 file2 ...
