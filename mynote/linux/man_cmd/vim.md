@@ -186,14 +186,14 @@ ESC                              //退出
 
 ```
 
-### 11）、vim中执行shell命令：
+### 11）、执行shell命令：
 
 ```c
 // vim中执行shell命令，结果插入当前光标下一行
 :r !echo " * Create: $(date '+\%a \%b \%d \%H:\%M:\%S \%Y')"
 ```
 
-## 2、vim中使用正则表达式：
+## 2、正则表达式：
 
 ```C
 \n                               //换行
@@ -224,9 +224,10 @@ v: varname                       //变量是 Vim 的预定义变量
 
 ## 4、vim插件：
 
-### 1）、Pathgyen：离线插件管理器
+### 1）、Pathgyen：
 
 ```c
+//离线插件管理器
 //下载地址：https://github.com/tpope/vim-pathogen/
 //下载到目录：~/.vim/autoload/.vim
 //在~/.vimrc中加入：
@@ -235,9 +236,10 @@ syntax on
 filetype plugin indent on
 ```
 
-### 2）、NERDTree：显示目录树
+### 2）、NERDTree：
 
 ```C
+//显示目录树
 //地址：https://github.com/scrooloose/nerdtree
 cd ~/.vim/bundle                                    //进入vim插件目录
 git clone git@github.com:scrooloose/nerdtree.git    //下载NERDTree
@@ -264,27 +266,30 @@ B                                //打开书签 (Shift + B)
 :NERDTreeCWD                //跳转至当前vim当前工作路径(:pwd)下的目录
 ```
 
-### 3）、Taglist：显示函数列表（需ctags支持）
+### 3）、Taglist：
 
 ```C
+//显示函数列表，需ctags支持
 sudo apt install ctags                                  //安装ctags
 git clone git@github.com:vim-scripts/taglist.vim.git    //下载taglist
 cp taglist.txt ~/.vim/doc                               //复制taglist.txt
 cp taglist.vim ~/.vim/pugin                             //复制taglist.vim
 ```
 
-### 4）astyle：格式化代码
+### 4）、astyle：
 
 ```C
+//格式化代码
 sudo apt install astyle          //安装astyle
 astyle --version                 //查看astyle版本
 :%!astyle --style=kr             //格式化当前文件
 :1,40!astyle --style=kr          //格式化指定区域
 ```
 
-### 5）ctags：函数跳转
+### 5）、ctags：
 
 ```C
+//函数跳转
 sudo apt install ctags           //安装ctags
 ctags --version                  //查看ctags版本
 ctags -R *                       //递归生产tags文件
@@ -294,9 +299,10 @@ Ctrl + T                         //(vim中)返回
     --exclude=file.c             //排除文件或目录
 ```
 
-### 6）AutoComplPop：自动补全
+### 6）、AutoComplPop：
 
 ```c
+//自动补全
 git clone https://gitee.com/tsingyixy/AutoComplPop.git
 cd AutoComplPop
 cp autoload/acp.vim ~/.vim/autoload/
@@ -304,9 +310,10 @@ cp plugin/acp.vim ~/.vim/plugin/
 cp doc/* ~/.vim/doc/
 ```
 
-### 7）LeaderF：文件跳转
+### 7）、LeaderF：
 
 ```c
+//模糊搜索
 git clone https://github.com/Yggdroot/LeaderF
 cp -r LeaderF ~/.vim/bundle
 
@@ -327,15 +334,15 @@ Tab
             -C num             //显示匹配行前后的num行
             -e pattern         //匹配正则表达式
 //常见用法
-:Leardf rg -e 'struct mm_struct \{'                 //在当前目录下搜索
-:Leardf rg -e 'struct mm_struct \{' include         //指定目录搜索
+:Leaderf rg -e 'struct mm_struct \{'                 //在当前目录下搜索
+:Leaderf rg -e 'struct mm_struct \{' include         //指定目录搜索
 ```
-### 8）BufferExplorer
+### 8）、BufferExplorer：
 ```bash
 :BufExplorer                  # 查看历史打开文件
 ```
 
-## 9）、mru
+### 9）、MRU：
 
 ```bash
 # 查看最近打开文件：https://github.com/yegappan/mru
@@ -355,9 +362,10 @@ cd ~/.vim/colors                                //放入指定目录(molokai.vim
 colorscheme molokai                             //在~/.vimrc中设置
 ```
 
-## 6、源码编译安装vim提供Python支持
+## 6、编译vim：
 
 ```c
+//源码编译安装vim提供Python支持
 sudo apt-get install python-dev python3-dev libncurses5-dev xorg-dev  //安装依赖
 vim --version | grep python                     //查看vim对python的支持
 sudo apt --purge remove vim                     //卸载vim
