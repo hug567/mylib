@@ -19,6 +19,8 @@ mkdir -p /dev/pts
 
 mount -t devpts devpts /dev/pts
 
+mount -t debugfs none /sys/kernel/debug
+
 /sbin/mdev -s
 
 echo /sbin/mdev > /proc/sys/kernel/hotplug

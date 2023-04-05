@@ -10,14 +10,6 @@ SKYBLUE="\033[36m"
 WHITE="\033[37m"
 RESET="\033[0m"
 
-export CPU_THREAD=$(cat /proc/cpuinfo | grep "processor" | wc -l)
-if [ $CPU_THREAD -gt 4 ]; then
-    let COMPILE_THREAD=CPU_THREAD-1
-else
-    COMPILE_THREAD=$CPU_THREAD
-fi
-export COMPILE_THREAD
-
 # export HX_VERBOSE=1
 log_debug()
 {
@@ -121,3 +113,15 @@ function wait_task_finish() {
         fi
     done
 }
+
+prepare() {
+    CPU_THREAD=$(cat /proc/cpuinfo | grep "processor" | wc -l)
+    if [ $CPU_THREAD -gt 4 ]; then
+        let COMPILE_THREAD=CPU_THREAD-1
+    else
+        COMPILE_THREAD=$CPU_THREAD
+    fi
+    export CPU_THREAD COMPILE_THREAD
+}
+
+prepare $*

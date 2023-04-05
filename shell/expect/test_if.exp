@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+
+puts "int: ------------------------------------"
+set var  5
+if {$var == 5} {
+    puts "var is equal to 5"
+} else {
+    puts "var is not equal to 5"
+}
+
+puts "string: ---------------------------------"
+set str  "hello"
+if {$str == "hello"} {
+    puts "str is equal to hello"
+} else {
+    puts "str is not equal to hello"
+}
