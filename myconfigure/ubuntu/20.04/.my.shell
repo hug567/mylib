@@ -25,3 +25,21 @@ lsab() {
         fi
     done
 }
+
+tas() {
+    if [ $# != 1 ]; then
+        echo "please assign one tmux session name"
+        return
+    fi
+    local sname=$1
+    local ret=$(tmux ls | grep "^$sname: ")
+    if [ "$ret" = "" ]; then
+        echo "can't find session: $sname"
+        return
+    fi
+    local attached=$(echo $ret | grep "attached")
+    if [ "$attached" != "" ]; then
+        tmux detach-client -s $sname
+    fi
+    tmux attach -t $sname
+}
