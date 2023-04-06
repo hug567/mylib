@@ -20,7 +20,7 @@ log_debug()
 
 log_info()
 {
-    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][I] $1"
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${GREEN}I${RESET}] $1"
 }
 
 # eg: log_info_var SHELL
@@ -31,7 +31,7 @@ log_info_var()
 
 log_error()
 {
-    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][E] $1"
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${RED}E${RESET}] $1"
 }
 
 # eg: check_files_exist file1 file2 ...
