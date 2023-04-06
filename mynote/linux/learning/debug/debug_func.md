@@ -45,6 +45,13 @@ void debug_check_no_locks_held(void)
 bool mutex_is_locked(struct mutex *lock)
 ```
 
+## 1.3、辅助函数：
+
+```c
+//判断addr是否是一个有效的内核虚拟地址
+virt_addr_valid(addr)
+```
+
 # 2、调试文件：
 
 ```bash

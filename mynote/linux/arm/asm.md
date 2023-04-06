@@ -139,8 +139,11 @@ tbnz w19, #0, ffff8000101f1c2c <find_get_entries+0x14c>  //w19第0位不为0则�
 ### 3.3、程序状态寄存器传输指令：
 
 ```c
-mrs  //将状态寄存器读取到通用寄存器
-mrs x0, tpidr_el1  //将TPIDR_EL1读取到x0 (TPIDR_EL1, EL1 Software Thread ID Register)
+mrs    //将系统寄存器的值读取到通用寄存器
+mrs x0, tpidr_el1    //将tpidr_el1读取到x0 (TPIDR_EL1, EL1 Software Thread ID Register)
+
+msr    //将通用寄存器的值写入系统寄存器
+msr tpidr_el1, x0    //将tpidr_el1的值读到x0
 ```
 
 ### 3.4、内存访问指令：
@@ -219,6 +222,9 @@ CPSR
 //特殊寄存器：
 wzr              //32位零寄存器
 xzr(x31)         //64零寄存器，写入代表丢弃结果，读取是0（zero register）
+
+ttbr0_el1        //用户态地址转换，页表基地址寄存器
+ttbr1_el1        //内核态地址转换，页表基地址寄存器
 ```
 
 ## 5、C语言嵌套ARM汇编：

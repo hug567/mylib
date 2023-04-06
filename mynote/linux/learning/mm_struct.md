@@ -5,24 +5,40 @@
 ```c
 struct task_struct {
     /*
-     * 用户进程：mm != NULL
-     * 内核线程：mm == NULL
+     * 用户线程：mm == active_mm == 0xffff000012345678
+     * 内核线程：
+     *     mm == NULL
+     *     正在运行：
+     *         active_mm == 上个进程的mm
+     *     未在运行：
+     *        active_mm == NULL
      */
     struct mm_struct *mm;
-    /*
-     * 用户进程：active_mm == mm
-     * 内核线程：
-     *   未运行时：active_mm == NULL
-     *   运行时：active_mm == 上一个进程的mm
-     */
     struct mm_struct *active_mm;
 };
 
 struct mm_struct{
     struct {
-        pgd_t *pgd;  //页目录虚址
+        pgd_t *pgd;  //页目录虚址，对应的pgd.val存储的是页表物理地址
     } __randomize_layout;
 };
+```
+
+## 1）、ttbr1_el1：
+
+- 访问内核空间虚拟地址时，mmu自动从ttbr1_el1中存储的页表中翻译物理地址；
+
+```c
+//arch/arm64/kernel/head.S
+__primary_switch
+    adrp x1, init_pg_dir
+    __enable_mmu
+    	msr ttbr1_el1, x1                   // load TTBR1
+
+secondary_startup
+    adrp x1, swapper_pg_dir
+    __enable_mmu
+	    msr ttbr1_el1, x1                   // load TTBR1
 ```
 
 # 2、常见缩写：
