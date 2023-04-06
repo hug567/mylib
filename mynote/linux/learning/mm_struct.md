@@ -71,19 +71,19 @@ cat /proc/<pid>/maps
 - 常见变量：
 
 ```c
-#define VA_BITS              (CONFIG_ARM64_VA_BITS)  //48
-#define VA_BITS_MIN          (VA_BITS)  //48
-#define PAGE_SHIFT           CONFIG_ARM64_PAGE_SHIFT  //12
-#define _PAGE_OFFSET(va)     (-(UL(1) << (va)))
-#define PAGE_OFFSET          (_PAGE_OFFSET(VA_BITS))  //(-(1UL << 48)) = 0xffff,0000,0000,0000
-#define _PAGE_END(va)        (-(UL(1) << ((va) - 1)))  //-(1UL << (48 - 1)) = 0xffff,8000,0000,0000
-#define PAGE_END             (_PAGE_END(vabits_actual))  //0xffff,8000,0000,0000
-#define PHYS_OFFSET          ({ VM_BUG_ON(memstart_addr & 1); memstart_addr; })  //0x4000,0000
-#define PHYS_PFN_OFFSET      (PHYS_OFFSET >> PAGE_SHIFT)  //0x4,0000
-#define PAGE_SIZE            (_AC(1, UL) << PAGE_SHIFT)  //0x1000
-#define PAGE_MASK            (~(PAGE_SIZE-1))  //0xffff,ffff,ffff,f000
-#define PGDIR_SHIFT          ARM64_HW_PGTABLE_LEVEL_SHIFT(4 - CONFIG_PGTABLE_LEVELS)  //39，虚址中pgd索引的偏移位数，bit[39,47]
-#define PTRS_PER_PGD         (1 << (VA_BITS - PGDIR_SHIFT))  //0x200=512，一个pgd页能存储的pud项数
+#define VA_BITS           (CONFIG_ARM64_VA_BITS)  //48
+#define VA_BITS_MIN       (VA_BITS)  //48
+#define PAGE_SHIFT        CONFIG_ARM64_PAGE_SHIFT  //12
+#define _PAGE_OFFSET(va)  (-(UL(1) << (va)))
+#define PAGE_OFFSET       (_PAGE_OFFSET(VA_BITS))  //(-(1UL << 48))=0xffff,0000,0000,0000，内核起始虚址
+#define _PAGE_END(va)     (-(UL(1) << ((va) - 1)))  //-(1UL << (48 - 1)) = 0xffff,8000,0000,0000
+#define PAGE_END          (_PAGE_END(vabits_actual))  //0xffff,8000,0000,0000
+#define PHYS_OFFSET       ({ VM_BUG_ON(memstart_addr & 1); memstart_addr; })  //0x4000,0000, 起始物理地址
+#define PHYS_PFN_OFFSET   (PHYS_OFFSET >> PAGE_SHIFT)  //0x4,0000
+#define PAGE_SIZE         (_AC(1, UL) << PAGE_SHIFT)  //0x1000
+#define PAGE_MASK         (~(PAGE_SIZE-1))  //0xffff,ffff,ffff,f000
+#define PGDIR_SHIFT       ARM64_HW_PGTABLE_LEVEL_SHIFT(4 - CONFIG_PGTABLE_LEVELS)  //39，虚址中pgd索引的偏移位数，bit[39,47]
+#define PTRS_PER_PGD      (1 << (VA_BITS - PGDIR_SHIFT))  //0x200=512，一个pgd页能存储的pud项数
 
 // vabits_actual = 48
 // memstart_addr = 0x4000,0000
@@ -106,7 +106,7 @@ mm->mmap_base
 stack 
 ```
 
-- 顶端：TASK_SIZE - 1，即0000ffffffffffff；
+- 顶端：TASK_SIZE - 1，即0x0000,ffff,ffff,ffff；
 
 ## 2）、内核空间：
 

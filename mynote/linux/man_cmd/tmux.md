@@ -10,6 +10,8 @@ set -g prefix C-b                       //设置prefix键为Ctrl+b
 set -g prefix2 C-b                      //设置prefix2键为Ctrl+b
 unbind C-a                              //取消快捷键C-a
 bind C-b send-prefix                    //设置prefix键为Ctrl+b
+
+tmux list-commands                      //列出所有支持的命令
 ```
 
 ## 2、会话操作(session)：
