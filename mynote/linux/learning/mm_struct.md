@@ -113,10 +113,9 @@ fffffdffffe00000 ffffffffffdfffff     2TB  vmemmap
 ffffffffffe00000 ffffffffffffffff     2MB  [guard region]
 ```
 
-- kernel logical memory map：线性映射区(linear map, lm)，VA和PA可以通过线性关系转换，此段的物理地址连续；
+- kernel logical memory map：线性映射区(linear map, lm)，VA和PA可以通过线性关系转换，此段的物理地址连续，kmalloc()分配的是此段地址；
 
 ```c
-__is_lm_address(addr)
 __is_lm_address(addr)
 ```
 
