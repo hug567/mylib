@@ -98,6 +98,8 @@ cat /proc/<pid>/maps
 #define PAGE_MASK         (~(PAGE_SIZE-1))  //0xffff,ffff,ffff,f000
 #define PGDIR_SHIFT       ARM64_HW_PGTABLE_LEVEL_SHIFT(4 - CONFIG_PGTABLE_LEVELS)  //39，虚址中pgd索引的偏移位数，bit[39,47]
 #define PTRS_PER_PGD      (1 << (VA_BITS - PGDIR_SHIFT))  //0x200=512，一个pgd页能存储的pud项数
+#define TASK_SIZE_64      (UL(1) << vabits_actual)
+#define TASK_SIZE         TASK_SIZE_64  //0x0001,0000,0000,0000，用户地址空间大小
 
 // vabits_actual = 48
 // memstart_addr = 0x4000,0000
@@ -130,16 +132,16 @@ stack
        Start            End         Size           Use
  -------------------------------------------------------------------
 ffff000000000000 ffff7fffffffffff   128TB  kernel logical memory map
-ffff800000000000 ffff9fffffffffff    32TB  kasan shadow region
-ffffa00000000000 ffffa00007ffffff   128MB  bpf jit region
-ffffa00008000000 ffffa0000fffffff   128MB  modules
-ffffa00010000000 fffffdffbffeffff   ~93TB  vmalloc
+ffff800000000000 ffff800000000000    32TB  kasan shadow region
+ffff800000000000 ffff800008000000   128MB  bpf jit region
+ffff800008000000 ffff800010000000   128MB  modules
+ffff800010000000 fffffdffbfff0000   ~93TB  vmalloc
 fffffdffbfff0000 fffffdfffe5f8fff  ~998MB  [guard region]
 fffffdfffe5f9000 fffffdfffe9fffff  4124KB  fixed mappings
 fffffdfffea00000 fffffdfffebfffff     2MB  [guard region]
-fffffdfffec00000 fffffdffffbfffff    16MB  PCI I/O space
+fffffdfffec00000 fffffdffffc00000    16MB  PCI I/O space
 fffffdffffc00000 fffffdffffdfffff     2MB  [guard region]
-fffffdffffe00000 ffffffffffdfffff     2TB  vmemmap
+fffffdffffe00000 ffffffffffe00000     2TB  vmemmap
 ffffffffffe00000 ffffffffffffffff     2MB  [guard region]
 ```
 
@@ -179,6 +181,12 @@ __is_lm_address(addr)
 #define MODULES_END             (MODULES_VADDR + MODULES_VSIZE)  //0xffff,8000,1000,0000
 ```
 
+- kimage：内核代码映射区
+```c
+#define KIMAGE_VADDR         (MODULES_END)  //xffff,8000,1000,0000
+                             //kimage_vaddr = 0xffff800010000000
+```
+
 - vmalloc：虚拟地址连续，但物理地址不一定连续；
 
 ```c
@@ -187,20 +195,26 @@ __is_lm_address(addr)
                                 //size: VMALLOC_END - VMALLOC_START = 0x7dff,afff,0000
 ```
 
-- fixed mappings：固定映射区，系统启动时，内存管理还没使能，将次区域映射到物理内存上；
+- fixed mappings：固定映射区，系统启动时，内存管理还没使能，将此区域映射到物理内存上；
+
+```c
+#define FIXADDR_START   (FIXADDR_TOP - FIXADDR_SIZE)  //0xffff,fdff,fe5f,9000
+#define FIXADDR_SIZE    (__end_of_permanent_fixed_addresses << PAGE_SHIFT)  //0x407000
+#define FIXADDR_TOP     (PCI_IO_START - SZ_2M)  //0xffff,fdff,fea0,0000
+```
 
 - PCI I/O space：PCI总线使用；
 
 ```c
+#define PCI_IO_START            (PCI_IO_END - PCI_IO_SIZE)  //0xffff,fdff,fec0,0000
 #define PCI_IO_SIZE             SZ_16M  //0x100,0000
 #define PCI_IO_END              (VMEMMAP_START - SZ_2M)  //0xfff,ffdf,fffc0,0000
-#define PCI_IO_START            (PCI_IO_END - PCI_IO_SIZE)  //0xffff,fdff,fec0,0000
 ```
 
 - vmemmap：稀疏内存模型中用来存放所有struct page的虚拟地址空间；
 
 ```c
-#define STRUCT_PAGE_MAX_SHIFT   (order_base_2(sizeof(struct page)))  //能够存储struct page结构体的区域的位移，如：6
+#define STRUCT_PAGE_MAX_SHIFT   (order_base_2(sizeof(struct page)))  //能够存储struct page空间大小的位移，如：6
                                                                      //sizeof(struct page) = 44
 #define VMEMMAP_SIZE ((_PAGE_END(VA_BITS_MIN) - PAGE_OFFSET) \
                         >> (PAGE_SHIFT - STRUCT_PAGE_MAX_SHIFT))  //0x200,0000,0000
