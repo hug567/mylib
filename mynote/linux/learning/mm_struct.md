@@ -41,6 +41,20 @@ secondary_startup
 	    msr ttbr1_el1, x1                   // load TTBR1
 ```
 
+## 2）、地址空间切换：
+
+```c
+switch_mm()  //arch/arm64/include/asm/mmu_context.h
+    if (prev != next)
+        __switch_mm(next);
+			check_and_switch_context(next);
+
+copy_mm()
+    dup_mm()
+    	mm = allocate_mm();
+		memcpy(mm, oldmm, sizeof(*mm));
+```
+
 # 2、常见缩写：
 
 ```bash
