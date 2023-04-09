@@ -26,6 +26,55 @@ parse_args() {
     fi
 }
 
+install_zlib() {
+    local src=$1
+    local dst=$2
+
+    check_dirs_exist $src $dst
+    check_files_exist $src/lib/libz.a
+    cp -r $src/* $dst
+}
+
+install_openssl() {
+    local src=$1
+    local dst=$2
+
+    check_dirs_exist $src $dst
+    check_files_exist $src/bin/openssl
+    cp -r $src/* $dst
+}
+
+install_openssh() {
+    local src=$1
+    local dst=$2
+
+    check_dirs_exist $src $dst
+    check_files_exist $src/ssh
+
+    if [ ! -d $dsr/usr/local/bin ]; then
+        mkdir -p $dsr/usr/local/bin
+    fi
+    if [ ! -d $dsr/usr/local/etc ]; then
+        mkdir -p $dsr/usr/local/etc
+    fi
+    if [ ! -d $dsr/usr/libexec ]; then
+        mkdir -p $dsr/usr/local/libexec
+    fi
+    cp ${src}/scp         ${dst}/usr/bin
+    cp ${src}/sftp        ${dst}/usr/bin
+    cp ${src}/ssh         ${dst}/usr/bin
+    cp ${src}/sshd        ${dst}/usr/bin
+    cp ${src}/ssh-add     ${dst}/usr/bin
+    cp ${src}/ssh-agent   ${dst}/usr/bin
+    cp ${src}/ssh-keygen  ${dst}/usr/bin
+    cp ${src}/ssh-keyscan ${dst}/usr/bin
+    cp ${src}/moduli      ${dst}/usr/etc
+    cp ${src}/ssh_config  ${dst}/usr/etc
+    cp ${src}/sshd_config ${dst}/usr/etc
+    cp ${src}/sftp-server ${dst}/usr/libexec
+    cp ${src}/ssh-keysign ${dst}/usr/libexec
+}
+
 make_rootfs() {
     if [ -d rootfs ]; then
         sudo rm -rf rootfs
@@ -34,12 +83,16 @@ make_rootfs() {
     cd rootfs
     cp -rf ${BUSYBOX_BIN_DIR}/* ./
 
-    mkdir -p proc sys tmp root dev/pts etc/init.d usr/bin lib/modules
+    mkdir -p proc sys tmp root dev/pts etc/init.d usr/bin lib/modules usr/local/bin
     cp ${LIB_ROOTFS_DIR}/etc/init.d/rcS etc/init.d/
     cp ${LIB_ROOTFS_DIR}/etc/profile etc/
     chmod a+x etc/init.d/rcS
     chmod a+x etc/profile
     cp ${LIB_ROOTFS_DIR}/etc/passwd etc/
+
+    install_zlib /home/hx/code/others/zlib-1.2.13/build-aarch64/install $PWD
+    install_openssl /home/hx/code/others/openssl-3.1.0/build-aarch64/install $PWD
+    install_openssh /home/hx/code/others/openssh-9.3p1/build-aarch64 $PWD
 
     find . | cpio -o --format=newc > ../rootfs.cpio
     cd ..
