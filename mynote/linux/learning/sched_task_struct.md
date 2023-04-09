@@ -5,11 +5,21 @@ struct task_struct {
         struct thread_info thread_info;
         /* -1 unrunnable, 0 runnable, >0 stopped: */
         volatile long                   state;
-        int on_cpu;                       //正在cpu上运行
-        int cpu;
+    	/*
+    	 * 0: task不在cpu上运行, finish_task()
+         * 1: task正在cpu上运行, prepare_task()
+         */
+        int                             on_cpu;  //正在cpu上运行
+        /* Current CPU: */
+        unsigned int                    cpu;
         int recent_use_cpu;
         int wake_cpu;
-        int on_rq;
+    	/*
+    	 * task_struct::on_rq states: 
+    	 * #define TASK_ON_RQ_QUEUED       1
+    	 * #define TASK_ON_RQ_MIGRATING    2
+    	 */
+        int                             on_rq;
         int nr_cpus_allowed;
         cpumask_t cpus_mask;
         unsigned int migration_disabled;  //禁止迁移，0：不禁止；>0：禁止

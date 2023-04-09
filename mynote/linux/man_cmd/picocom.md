@@ -10,6 +10,6 @@ sudo apt install picocom
 # 登陆串口
 sudo picocom -b 115200 /dev/ttyUSB0
 # 退出picocom
-Ctrl-A, Ctrl-Q
+Ctrl-A, Ctrl-X
 ```
 

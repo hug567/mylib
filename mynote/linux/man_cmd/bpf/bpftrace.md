@@ -4,6 +4,15 @@
 sudo apt install bpftrace
 ```
 
+- 使能kprobe：
+```bash
+CONFIG_KPROBES=y
+CONFIG_HAVE_KPROBES=y
+CONFIG_KPROBE_EVENTS=y
+CONFIG_KPROBES_ON_FTRACE=y
+CONFIG_HAVE_KPROBES_ON_FTRACE=y
+```
+
 # 2、命令参数：
 
 ```bash

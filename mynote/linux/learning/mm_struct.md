@@ -9,7 +9,7 @@ struct task_struct {
      * 内核线程：
      *     mm == NULL
      *     正在运行：
-     *         active_mm == 上个进程的mm
+     *         active_mm == 上个进程的mm，内核线程没有独立的地址空间，通过active_mm保存上一个进程的mm_struct，是为了进程做user1 -> kernel -> user1的切换时，可以避免切换用户地址空间，避免清TLB
      *     未在运行：
      *        active_mm == NULL
      */

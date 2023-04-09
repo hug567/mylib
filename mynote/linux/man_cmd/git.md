@@ -84,6 +84,7 @@ git push origin HEAD:master                              //推送本地分支至
 git push origin HEAD:master -f                           //强制推送本地分支至远端
 git branch -r                                            //查看所有远端分支
 git push --delete origin <branch>                        //删除远端分支
+git push --all origin                                    //本地所有分支都推送到远端origin
 
 //----------重命名远端分支-------------------------------------------------//
 git push --delete origin <branch>                        //删除远端分支
