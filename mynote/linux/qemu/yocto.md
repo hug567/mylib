@@ -4,6 +4,7 @@
 sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
      build-essential chrpath socat libsdl1.2-dev xterm
 
+# 在线编译，需VPN
 git clone git://git.yoctoproject.org/poky
 git clone https://git.yoctoproject.org/poky
 git clone https://github.com/yoctoproject/poky.git
@@ -114,7 +115,11 @@ PV = "1.0"
 LOCAL_REPO="/home/hx/repo/all-repos/mazu"
 SRC_URI = "file://${LOCAL_REPO};protocol=file"
 S = "${WORKDIR}/${LOCAL_REPO}"
+```
 
+## 3）、常见变量：
+
+```bash
 # 常用变量
 libdir       = /usr/lib
 includedir   = /usr/include
@@ -139,5 +144,6 @@ STAGING_DIR_NATIVE = .../netplan/0.101-r0/recipe-sysroot-native
 STAGING_DIR_TARGET = .../netplan/0.101-r0/recipe-sysroot
 STAGING_INCDIR = .../netplan/0.101-r0/recipe-sysroot/usr/include
 STAGING_LIBDIR = .../netplan/0.101-r0/recipe-sysroot/usr/lib
+TOPDIR = .../poky/build-aarch64
 ```
 
