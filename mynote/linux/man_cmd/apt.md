@@ -5,6 +5,7 @@ apt-cache search xxx                  # 搜索软件包
 apt-cache depends xxx                 # 查看软件包依赖
 
 apt download xxx                      # 下载deb包
+apt list --installed                  # 显示已安装的包
 
 sudo apt update                       # 更新镜像源
 sudo apt intall xxx                   # 安装软件包及其依赖
