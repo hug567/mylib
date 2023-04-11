@@ -18,6 +18,9 @@ bitbake core-image-minimal
 # yocto使用的kernel代码
 git clone https://git.yoctoproject.org/linux-yocto
 git clone https://git.yoctoproject.org/yocto-kernel-cache
+
+# 修改代码后编译kernel
+./tmp/work/qemuarm64-poky-linux/linux-yocto/5.15.32+gitAUTOINC+meta_machine-r0/temp/run.do_compile
 ```
 
 # 1）、需下载的包：
@@ -25,6 +28,9 @@ git clone https://git.yoctoproject.org/yocto-kernel-cache
 ```bash
 cd downloads
 wget http://downloads.yoctoproject.org/releases/uninative/3.6/x86_64-nativesdk-libc-3.6.tar.xz
+
+# 尝试是否可以不联网编译yocto
+BB_NO_NETWORK
 ```
 
 ## 2）、源码位置：
@@ -42,15 +48,17 @@ git clone https://git.yoctoproject.org/linux-yocto
 
 ```bash
 bitbake <target>                             # 执行指定target的所有任务
-bitbake -c <target>                          # 执行指定target的所有任务
+bitbake -c <task> <target>                   # 执行指定target的指定任务
 bitbake -c do_configure <target>             # 执行指定target的do_configure任务
-bitbake -c cleanall <target>                 # 执行指定target的cleanall任务
-bitbake -c cleanstate <target>
+bitbake -c clean <target>                    # 清除指定target的所有输出文件
+bitbake -c cleansstate <target>              # 清除指定target的所有输出文件和共享状态缓存
+bitbake -c cleanall <target>                 # 清除指定target的所有输出文件、共享状态缓存和下载的源文件
 bitbake -c listtasks <target>                # 显示指定target的可执行任务
 bitbake -s                                   # 显示所有可执行的包
 bitbake -e <target>                          # 显示指定target当前执行环境
 bitbake -g <target>                          # 显示指定任务的所有依赖
 bitbake -b <xx.bb>                           # 直接执行指定bb文件
+bitbake -v <target>                          # 打印一些调试信息
 bitbake -vDDD <target>                       # 打印一些调试信息，可以跟多个D
 ```
 
@@ -145,5 +153,16 @@ STAGING_DIR_TARGET = .../netplan/0.101-r0/recipe-sysroot
 STAGING_INCDIR = .../netplan/0.101-r0/recipe-sysroot/usr/include
 STAGING_LIBDIR = .../netplan/0.101-r0/recipe-sysroot/usr/lib
 TOPDIR = .../poky/build-aarch64
+TMPDIR = 
+```
+
+## 4）、相关目录：
+
+```bash
+# do_fetch git clone后存储的位置：
+build/downloads/git2/disk.sda.code.linux-qemu.poky.build-aarch64.......linux-yocto
+
+# 任务执行顺序：log.task_order
+tmp/work/qemuarm64-poky-linux/linux-yocto/5.15.32+gitAUTOINC+meta_machine-r0/temp/log.task_order
 ```
 
