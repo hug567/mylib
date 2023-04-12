@@ -158,6 +158,7 @@ STAGING_INCDIR = .../netplan/0.101-r0/recipe-sysroot/usr/include
 STAGING_LIBDIR = .../netplan/0.101-r0/recipe-sysroot/usr/lib
 TOPDIR = .../poky/build-aarch64
 TMPDIR = 
+DL_DIR ?= "${BSPDIR}/downloads"    # local.conf
 ```
 
 ## 4）、相关目录：
