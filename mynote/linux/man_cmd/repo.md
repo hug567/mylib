@@ -11,9 +11,9 @@ repo --version
 
 ```bash
 # 使用远端manifest仓库
-repo init -u https://gitee.com/hug567/manifest
+repo init -u https://gitee.com/hug567/manifest --repo-url=https://gitee.com/hug567/git-repo.git
 # 使用本地manifest仓库
-repo init -u /home/hx/code/manifest
+repo init -u /home/hx/code/manifest --repo-url=/home/hx/code/git-repo
 # 同步代码
 repo sync
 ```

@@ -60,6 +60,10 @@ bitbake -g <target>                          # 显示指定任务的所有依赖
 bitbake -b <xx.bb>                           # 直接执行指定bb文件
 bitbake -v <target>                          # 打印一些调试信息
 bitbake -vDDD <target>                       # 打印一些调试信息，可以跟多个D
+
+# 修改tmp/work-shared/qemuarm64/kernel-source中的代码后重新编译linux
+bitbake -C compile linux-yocto               # 推荐使用
+bitbake -f -c compile linux-yocto
 ```
 
 ## 2）、创建layer：

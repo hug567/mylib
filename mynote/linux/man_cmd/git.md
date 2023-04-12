@@ -238,6 +238,7 @@ git stash show                                 //查看最新stash差异
 git stash show -p                              //查看最新stash详细修改
 git stash show -p <id>                         //查看指定id的stash详细修改
 git stash pop stash@{1}                        //恢复指定暂存
+git stash drop                                 //删除所有暂存
 git stash drop stash@{1}                       //删除指定暂存
 git stash push <file>...                       //暂存指定文件
 git stash push -m "message" <file>...          //暂存指定文件并自定义message
