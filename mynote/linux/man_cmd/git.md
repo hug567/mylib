@@ -218,6 +218,9 @@ git stash pop
 git add <files>
 git commit --amend
 git rebase --continue
+
+git revert HEAD                                //撤销最近一次提交
+git revert <commit>                            //撤销指定commit提交
 ```
 
 ### 2.6、设置忽略

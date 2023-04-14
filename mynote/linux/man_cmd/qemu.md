@@ -1,4 +1,4 @@
-## 1、基本命令
+# 1、基本命令
 ----
 ```c
 -cpu         //
@@ -9,7 +9,9 @@
 -nographic                                  //不使用图形化界面，只使用串口
 -append "console=ttyAMA0"                   //串口设备是哪个tty
 ```
-## 2、qemu支持网络
+
+# 2、qemu支持网络
+
 ----
 ```c
 /* 首先内核中支持tap/tuns设备：CONFIG_TUN */
@@ -21,7 +23,7 @@ linux-4.15/drivers/net/Kconfig
 
 ```
 
-## 3、qemu help
+# 3、qemu help
 
 ```c
 qemu-system-arm -machine help                           //查看支持的开发板
@@ -56,7 +58,7 @@ tftp>q                                                  //推出连接
 /* 创建虚拟网口： */
 ```
 
-## 4、编译qemu：
+# 4、编译qemu：
 
 ```shell
 # 下载源码
@@ -74,6 +76,34 @@ mkdir build-arm
 cd build-arm
 ../configure  --target-list=arm-softmmu    #qemu-system-arm
 make
+
+```
+
+# 5、添加网桥：
+
+```bash
+sudo apt install bridge-utils
+
+# netplan设置网桥
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp1s0:
+      dhcp4: no
+  bridges:
+    br0:
+      dhcp4: yes
+      interfaces:
+         - enp1s0
+
+# 手动创建网桥
+sudo brctl addbr bro
+# 查看网桥
+brctl show
+# 为网桥添加接口
+sudo brctl addif br0 tap0
+sudo brctl addif br0 enp0s31f6
 
 ```
 
