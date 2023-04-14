@@ -25,6 +25,9 @@ usage() {
 #    -kernel Image--5.15.32+git0+63e25b5717_387a676543-r0-qemuarm64-20230408154253.bin \
 #    -append 'root=/dev/vda rw mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0::eth0:off:8.8.8.8'
 
+#        -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 \
+#        -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+
 run_kernel() {
     local image=$1
     check_files_exist ./tmp/deploy/images/qemuarm64/Image-qemuarm64.bin
