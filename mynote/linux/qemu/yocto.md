@@ -14,6 +14,8 @@ git checkout tags/yocto-4.0 -b yocto-4.0
 
 source oe-init-build-env
 bitbake core-image-minimal
+# 完整版镜像
+bitbake core-image-full-cmdline
 
 # yocto使用的kernel代码
 git clone https://git.yoctoproject.org/linux-yocto

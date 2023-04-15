@@ -97,8 +97,6 @@ network:
       interfaces:
          - enp1s0
 
-# 手动创建网桥
-sudo brctl addbr bro
 # 查看网桥
 brctl show
 # 为网桥添加接口
