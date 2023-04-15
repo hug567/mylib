@@ -117,4 +117,6 @@ export MYLIB=$HOME/code/mylib
 # 设置环境变量PATH
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin:$PATH"
 export PATH="$HOME/tools/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin:$PATH"
+
+[ -f ~/.my.shell ] && source ~/.my.shell
 ################################# 自定义配置 #################################
