@@ -99,9 +99,50 @@ network:
 
 # 查看网桥
 brctl show
+# 创建网桥
+sudo brctl addbr br0
 # 为网桥添加接口
 sudo brctl addif br0 tap0
 sudo brctl addif br0 enp0s31f6
+# 删除网桥
+sudo brctl delbr br0
+# 启动网桥stp (Spanning Tree Protocol, 生成树协议,防止网桥网络中形成环路)
+sudo brctl stp br0 on
+# 关闭网桥stp
+sudo brctl stp br0 off
+```
 
+# 6、iptables实现qemu访问大网：
+
+## 1）、host配置：
+```bash
+# 设置host tap0 ip：
+sudo ifconfig tap0 192.168.0.1 netmask 255.255.255.0
+# 设置host端口转发：
+sudo iptables -t nat -A POSTROUTING -s 192.168.0.101 -j SNAT --to 10.110.192.42
+# 永久保存配置：
+sudo apt install iptables-persistent
+sudo netfilter-persitent save
+```
+## 2）、qemu配置
+```bash
+# 设置qemu镜像ip：
+ifconfig eth0 192.168.0.101 netmask 255.255.255.0
+# 确认qemu路由：
+route
+#----- default: 192.168.0.1 ------------------------------------------------#
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         192.168.0.1     0.0.0.0         UG    0      0        0 eth0
+192.168.0.0     0.0.0.0         255.255.255.0   U     0      0        0 eth0
+#---------------------------------------------------------------------------#
+# qemu镜像设置dns：
+vi /etc/resolv.conf
+#---------------------------------------------------------------------------#
+nameserver 172.20.4.31    # echo "nameserver 172.20.4.31" > /etc/resolv.conf
+nameserver 10.110.0.15    # echo "nameserver 10.110.0.15" >> /etc/resolv.conf
+#---------------------------------------------------------------------------#
+# 验证网络：
+ping baidu.com -c 4
 ```
 
