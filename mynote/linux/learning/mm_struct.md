@@ -106,6 +106,9 @@ cat /proc/<pid>/maps
 // kimage_vaddr = 0xffff,8000,1000,0000
 // kimage_voffset = 0xffff,7fff,cfe0,0000
 // vmemmap = 0xffff,fdff,fee0,0000
+swapper_pg_dir
+init_pg_dir
+init_pg_end
 ```
 
 ## 1）、用户空间：
