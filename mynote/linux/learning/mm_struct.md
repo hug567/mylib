@@ -19,7 +19,7 @@ struct task_struct {
 
 struct mm_struct{
     struct {
-        pgd_t *pgd;  //页目录虚址，对应的pgd.val存储的是页表物理地址
+        pgd_t *pgd;  //存储页全局目录的内存的虚址，对应的pgd.val存储的是页表物理地址
     } __randomize_layout;
 };
 ```
