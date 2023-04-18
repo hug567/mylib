@@ -173,3 +173,13 @@ build/downloads/git2/disk.sda.code.linux-qemu.poky.build-aarch64.......linux-yoc
 tmp/work/qemuarm64-poky-linux/linux-yocto/5.15.32+gitAUTOINC+meta_machine-r0/temp/log.task_order
 ```
 
+# 4、sysroot：
+
+- recipe-sysroot：目标架构sysroot
+- recipr-sysroot：host架构sysroot
+- 安装：do_install时，将文件安装到${D}指定的目录中(一般是image目录)；
+- 填充：do_populate_sysroot时，将安装到${D}中的内容，填充到sysroot目录；
+- SYSROOT_DIRS：要填充到sysroot中的目录列表；
+
+- do_prepare_recipe_sysroot与do_populate_sysroot是staging.bbclass类中关键任务，用于共享配方之间成果物；${SYSROOT_DESTDIR}目录最终会放置到共享区（默认为build/tmp/sysroots-components）暂存，其他配方构建时就可以从共享区拷贝；
+- ${D}目录下自动拷贝的目录由三个变量指定，分别为SYSROOT_DIRS（目标设备需要保存的子目录）、SYSROOT_DIRS_BLACKLIST（目标设备不需要保存的子目录）、SYSROOT_DIRS_NATIVE（本机设备需要保存的目录）；
