@@ -103,6 +103,9 @@ ssh -T git@github.com
 /* 推动至远端： */
 git push origin HEAD:master                              //推送至origin(gitee)
 git push github HEAD:master                              //推送至github
+
+// 添加本地仓库为远端
+git remote add local /home/hx/code/linux-5.10
 ```
 
 ### 2.4、commit操作

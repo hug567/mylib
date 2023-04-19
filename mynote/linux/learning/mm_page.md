@@ -64,8 +64,17 @@ do_page_fault()
 ```c
 swapper_pg_dir   = KERNEL_RAM_VADDR-PG_DIR_SIZE
 PAGE_OFFSET      = CONFIG_PAGE_OFFSET
+init_pg_dir  //初始阶段页表，被放在内核镜像.bss段之后
+#define INIT_DIR_SIZE (PAGE_SIZE * EARLY_PAGES(KIMAGE_VADDR, _end))  //初始阶段页表大小
+init_pg_end
 ```
 
 - PAGE_OFFSET：内核空间和用户空间虚拟地址的空间的划分界限，如：0xffff,0000,0000,0000
 
 - TEXT_OFFSET：编译内核时指定，表示内核代码起始的偏移
+
+## 1）、起始阶段页表创建：
+
+- 第一段：identity mapping，把物理地址mapping到物理地址上去，为打开mmu做准备；
+- 第二段：kernel image mapping，将kernel running需要的地址（kernel txt、dernel rodata、data、bss等等）进行映射；
+- 第三段：blob memory对应的mapping；

@@ -89,6 +89,7 @@ cat /proc/<pid>/maps
 #define VA_BITS_MIN       (VA_BITS)  //48
 #define PAGE_SHIFT        CONFIG_ARM64_PAGE_SHIFT  //12
 #define _PAGE_OFFSET(va)  (-(UL(1) << (va)))
+/* 系统启动时，会将启动物理地址 PHYS_OFFSET 映射到内核起始虚拟地址 PAGE_OFFSET */
 #define PAGE_OFFSET       (_PAGE_OFFSET(VA_BITS))  //(-(1UL << 48))=0xffff,0000,0000,0000，内核起始虚址
 #define _PAGE_END(va)     (-(UL(1) << ((va) - 1)))  //-(1UL << (48 - 1)) = 0xffff,8000,0000,0000
 #define PAGE_END          (_PAGE_END(vabits_actual))  //0xffff,8000,0000,0000
@@ -106,9 +107,11 @@ cat /proc/<pid>/maps
 // kimage_vaddr = 0xffff,8000,1000,0000
 // kimage_voffset = 0xffff,7fff,cfe0,0000
 // vmemmap = 0xffff,fdff,fee0,0000
-swapper_pg_dir
-init_pg_dir
-init_pg_end
+swapper_pg_dir = 0xffffffc008e82000  //kernel image mapping初始阶段使用的页表
+init_pg_dir = 0xffffffc009490000
+init_pg_end = 0xffffffc009492000
+idmap_pg_dir
+idmap_pg_end
 ```
 
 ## 1）、用户空间：
@@ -214,7 +217,7 @@ __is_lm_address(addr)
 #define PCI_IO_END              (VMEMMAP_START - SZ_2M)  //0xfff,ffdf,fffc0,0000
 ```
 
-- vmemmap：稀疏内存模型中用来存放所有struct page的虚拟地址空间；
+- vmemmap：稀疏内存模型(NUMA)中用来存放所有struct page的虚拟地址空间；
 
 ```c
 #define STRUCT_PAGE_MAX_SHIFT   (order_base_2(sizeof(struct page)))  //能够存储struct page空间大小的位移，如：6
@@ -225,5 +228,24 @@ __is_lm_address(addr)
 #define VMEMMAP_END             (VMEMMAP_START + VMEMMAP_SIZE) //0xffff,ffff,ffe0,0000
 ```
 
-  
+#  4、内核内存空间：
+
+```c
+struct mm_struct init_mm = {
+        .mm_rb          = RB_ROOT,
+        .pgd            = swapper_pg_dir,
+        .mm_users       = ATOMIC_INIT(2),
+        .mm_count       = ATOMIC_INIT(1),
+        .write_protect_seq = SEQCNT_ZERO(init_mm.write_protect_seq),
+        MMAP_LOCK_INITIALIZER(init_mm)
+        .page_table_lock =  __SPIN_LOCK_UNLOCKED(init_mm.page_table_lock),
+        .arg_lock       =  __SPIN_LOCK_UNLOCKED(init_mm.arg_lock),
+        .mmlist         = LIST_HEAD_INIT(init_mm.mmlist),
+        .user_ns        = &init_user_ns,
+        .cpu_bitmap     = CPU_BITS_NONE,
+        INIT_MM_CONTEXT(init_mm)
+};
+
+#define INIT_MM_CONTEXT(name) .pgd = init_pg_dir,  //内核空间pgd虚址
+```
 
