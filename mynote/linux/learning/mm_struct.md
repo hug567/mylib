@@ -190,7 +190,9 @@ __is_lm_address(addr)
 - kimage：内核代码映射区
 ```c
 #define KIMAGE_VADDR         (MODULES_END)  //xffff,8000,1000,0000
-                             //kimage_vaddr = 0xffff800010000000
+                             //kimage_vaddr = 0xffff,8000,1000,0000
+#define KERNEL_START         _text  //内核镜像起始虚址, 0xffff,8000,1000,0000
+#define KERNEL_END           _end  //内核镜像结束虚址, 0xffff,8000,120a,0000
 ```
 
 - vmalloc：虚拟地址连续，但物理地址不一定连续；

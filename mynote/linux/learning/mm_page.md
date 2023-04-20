@@ -64,9 +64,12 @@ do_page_fault()
 ```c
 swapper_pg_dir   = KERNEL_RAM_VADDR-PG_DIR_SIZE
 PAGE_OFFSET      = CONFIG_PAGE_OFFSET
-init_pg_dir  //初始阶段页表，被放在内核镜像.bss段之后
+init_pg_dir  //初始阶段页表，被放在内核镜像.bss段之后, 0xffff80000a08c000
 #define INIT_DIR_SIZE (PAGE_SIZE * EARLY_PAGES(KIMAGE_VADDR, _end))  //初始阶段页表大小
-init_pg_end
+init_pg_end  //0xffff80000a091000
+    
+idmap_pg_dir  //identity mapping，恒等映射，在mmu使能前，建立的物理地址和虚拟地址相等的映射
+#define IDMAP_DIR_SIZE (IDMAP_PGTABLE_LEVELS * PAGE_SIZE)  //恒等映射页大小，0x3000=3*4k
 ```
 
 - PAGE_OFFSET：内核空间和用户空间虚拟地址的空间的划分界限，如：0xffff,0000,0000,0000
