@@ -50,3 +50,10 @@ pip list
 pip install xxx
 ```
 
+## 5、pydoc：
+```bash
+# 查看所有python模块
+pydoc modules
+pydoc2 modules
+pydoc3 modules
+```
