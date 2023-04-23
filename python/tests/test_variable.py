@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 ################################################################################
 # python练习：变量的定义与使用
 # python版本：python 3.6.3
@@ -56,3 +57,16 @@ print("0.1 / 0.2 = ", 0.1 / 0.2)  # 0.5
 
 # 数组转字符串
 print("str(1234) = " + str(1234))
+
+def test_var_type():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+    var=1
+    print("var type:", type(var))
+    var='12345'
+    print("var type:", type(var))
+
+def main():
+    test_var_type()
+
+if __name__ == '__main__':
+    main()

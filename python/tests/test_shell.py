@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 ################################################################################
 # python练习：执行shell命令
 # python版本：python 3.6.9
@@ -10,7 +12,7 @@ import subprocess
 def test_os_system():
     print("test_os_system: --------------------------")
     os.system('pwd')
-    os.system('ls')
+    ret = os.system('ls &')
 
 # python中可以获取命令执行结果
 def test_os_popen():
