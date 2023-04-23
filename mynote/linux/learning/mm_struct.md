@@ -22,6 +22,8 @@ struct mm_struct{
         pgd_t *pgd;  //存储页全局目录的内存的虚址，对应的pgd.val存储的是页表物理地址
     } __randomize_layout;
 };
+
+struct vm_area_struct
 ```
 
 ## 1）、ttbr1_el1：
@@ -71,6 +73,8 @@ kasan：Kernel Address Sanitizer，内核地址消毒器
 cat /proc/iomem
 # 查看进程用户空间内存布局
 cat /proc/<pid>/maps
+# 4级页表
+pgd -> pud -> pmd -> pte -> va[11:0]
 ```
 
 - aarch64，48位虚址，4k页，4级页表：

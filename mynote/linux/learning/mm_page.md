@@ -50,11 +50,31 @@ page_to_pfn(page)
 # 4、缺页异常：
 
 ```c
-do_page_fault()
+do_page_fault()  //arch/arm64/mm/fault.c
 	__do_page_fault()
-		handle_mm_fault()
+		handle_mm_fault()  //mm/memory.c
 			__handle_mm_fault()
-				handle_pte_fault()
+    			pgd = pgd_offset(mm, address);
+				p4d = p4d_alloc(mm, pgd, address);  //linux默认使用4级页表，此时没有p4d
+				vmf.pud = pud_alloc(mm, p4d, address);
+					__pud_alloc()
+                        pud_alloc_one()
+                        p4d_populate()
+                        	__p4d_populate()
+                        		set_p4d()
+				vmf.pmd = pmd_alloc(mm, vmf.pud, address);
+					xx
+				handle_pte_fault(&vmf);
+					do_fault(vmf);
+						do_read_fault()
+                            __do_fault()
+                            finish_fault()
+                            	pte_alloc()
+                            		__pte_alloc()
+                            			pte_alloc_one(mm);
+											pmd_populate(mm, pmd, new);
+												__pmd_populate()
+                                                    set_pmd()
 ```
 
 # 5、内核页表：
