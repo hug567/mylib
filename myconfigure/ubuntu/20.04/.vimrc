@@ -171,7 +171,9 @@ autocmd BufNewFile,BufRead *.py source ~/.vim/scripts/mypython.vim
 autocmd BufNewFile,BufRead *.html source ~/.vim/scripts/myhtml.vim
 autocmd BufNewFile,BufRead *.cpp source ~/.vim/scripts/mycpp.vim
 autocmd BufNewFile,BufRead *.sh source ~/.vim/scripts/mysh.vim
-
+" 保存文件前设置noendofline
+autocmd BufWrite    * :set binary noendofline
+autocmd BufWritePre * :set binary noendofline
 "------------------------------------------------------------------------------"
 map <F10> :LeaderfFile<CR>
 
