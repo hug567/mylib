@@ -63,7 +63,11 @@ do_page_fault()  //arch/arm64/mm/fault.c
                         	__p4d_populate()
                         		set_p4d()
 				vmf.pmd = pmd_alloc(mm, vmf.pud, address);
-					xx
+					__pmd_alloc(mm, pud, address);
+                        pmd_alloc_one(mm, address);
+                        	pud_populate(mm, pud, new);
+								__pud_populate();
+									set_pud();
 				handle_pte_fault(&vmf);
 					do_fault(vmf);
 						do_read_fault()
