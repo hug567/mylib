@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+
+# 脚本文件获取参数
+# 2023.04.25
+
+set script_name $argv0
+set param_num $argc
+set param1 [lindex $argv 0]
+set param2 [lindex $argv 1]
+set param3 [lindex $argv 2]
+
+puts "script_name: $script_name"
+puts "param_num: $param_num"
+puts "param1: $param1"
+puts "param2: $param2"
+puts "param3: $param3"

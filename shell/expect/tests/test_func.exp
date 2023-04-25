@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+
+# expect function
+# 2023.04.25
+
+# function without parameter
+proc hello {} {
+    puts "hello expect"
+}
+
+# function with one parameter
+proc print_name {name} {
+    puts "name: $name"
+}
+
+# function with return value
+proc add { a b } {
+    set sum [expr {$a+$b}]
+    return $sum
+}
+
+proc main {} {
+    # function call
+    hello
+
+    print_name Bob
+
+    set sum [add 3 8]
+    puts "3 + 8 = $sum"
+}
+
+main
