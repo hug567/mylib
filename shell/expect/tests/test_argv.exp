@@ -14,3 +14,7 @@ puts "param_num: $param_num"
 puts "param1: $param1"
 puts "param2: $param2"
 puts "param3: $param3"
+
+# get shell env var
+set cur_dir $::env(PWD)
+puts "cur_dir: $cur_dir"

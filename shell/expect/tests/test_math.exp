@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+
+# mathematical calculation
+# 2023.04.26
+
+proc test_add {} {
+    puts "test_add: --------------------------------------------"
+
+    set a 3
+    set b 5
+    # a + b
+    set sum [expr {$a+$b}]
+    puts "$a + $b = $sum"
+
+    set x 7
+    set i $x
+    # i++
+    incr i
+    puts "$x + 1 = $i"
+
+    set i $x
+    # i += 3
+    incr i 3
+    puts "$x + 3 = $i"
+}
+
+proc test_sub {} {
+    puts "test_sub: --------------------------------------------"
+
+    set a 9
+    set b 3
+    # a - b
+    set ret [expr {$a-$b}]
+    puts "$a - $b = $ret"
+
+    set x 7
+    set i $x
+    # i--
+    incr i -1
+    puts "$x - 1 = $i"
+
+    set i $x
+    # i -= 3
+    incr i -3
+    puts "$x - 3 = $i"
+}
+
+proc main {} {
+    test_add
+    test_sub
+}
+
+main

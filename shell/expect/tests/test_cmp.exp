@@ -1,0 +1,59 @@
+#!/usr/bin/expect -f
+
+# expect compare
+# 2023.04.26
+
+proc compare_int {a b} {
+    # equal
+    if {$a == $b} {
+        puts "$a == $b"
+    # not equal
+    } elseif {$a != $b} {
+        puts "$a != $b"
+    }
+
+    # greater
+    if {$a > $b} {
+        puts "$a > $b"
+    # less
+    } elseif {$a < $b} {
+        puts "$a < $b"
+    # equal
+    } elseif {$a == $b} {
+        puts "$a == $b"
+    } else {
+        puts "a: $a, b: $b"
+    }
+}
+
+# Integer comparison
+proc test_cmp_int {} {
+    puts "test_cmp_int: ----------------------------------------"
+    compare_int 1 2
+    compare_int 3 3
+    compare_int 5 4
+}
+
+proc compare_str {a b} {
+    # equal
+    if {$a == $b} {
+        puts "$a == $b"
+    # not equal
+    } elseif {$a != $b} {
+        puts "$a != $b"
+    }
+}
+
+# String comparison
+proc test_cmp_str {} {
+    puts "test_cmp_str: ----------------------------------------"
+    compare_str "12345" "12345"
+    compare_str "12345" "543"
+}
+
+proc main {} {
+    test_cmp_int
+    test_cmp_str
+}
+
+main

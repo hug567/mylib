@@ -1,0 +1,15 @@
+#!/usr/bin/expect -f
+
+# expect send ascii
+# 2023.04.26
+
+proc test_send_ascii {} {
+    # send Ctrl-C
+    send "\003"
+}
+
+proc main {} {
+    test_send_ascii
+}
+
+main

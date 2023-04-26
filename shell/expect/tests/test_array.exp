@@ -1,0 +1,20 @@
+#!/usr/bin/expect -f
+
+# expect array
+# 2023.04.26
+
+proc test_array {} {
+    puts "test_array: ------------------------------------------"
+    set arr(0) "hello"
+    set arr(1) "world"
+    set arr(2) "!"
+    for {set i 0} {$i < 3} {incr i} {
+        puts "arr($i) = $arr($i)"
+    }
+}
+
+proc main {} {
+    test_array
+}
+
+main

@@ -10,6 +10,7 @@ proc hello {} {
 
 # function with one parameter
 proc print_name {name} {
+    # parameter reference
     puts "name: $name"
 }
 
@@ -25,6 +26,7 @@ proc main {} {
 
     print_name Bob
 
+    # function call
     set sum [add 3 8]
     puts "3 + 8 = $sum"
 }

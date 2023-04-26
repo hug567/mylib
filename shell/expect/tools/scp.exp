@@ -11,25 +11,32 @@ proc usage {} {
 }
 
 proc scp {} {
-    set timeout 10
-    set files [lindex $argv 0]
+    set files "/tmp/vim_tmp.txt"
     set user jenkins
     set ip 10.116.36.44
     set port 1000
     set password jenkins
-    spawn scp -r $files -p$port $user@$ip
+    exec sh -c {export PS1="[host] $ "}
+    # never timeout
+    set timeout -1
+    spawn scp -P$port -r $files $user@$ip:~
     expect {
-        "*yes/no" { send "yes\r"; exp_continue}
-        "*password:" { send "$password\r" }
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r" }
+        timeout { exit 127 }
     }
-    interact
+    # sleep 10
+    expect "*100%*"
+    expect "*\[host\] $ *"
+    set timeout 10
 }
 
 proc main {} {
     #if {$para_num != 1} {
-        usage
+    #    usage
     #}
     #puts "para_num: $para_num"
+    scp
 }
 
-main $*
+main

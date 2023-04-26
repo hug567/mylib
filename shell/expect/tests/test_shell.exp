@@ -3,14 +3,44 @@
 # run shell cmd in expect
 # 2023.04.26
 
-# function without parameter
-proc run_shell_cmd {} {
+# run shell cmd and get result
+proc test_run_shell_cmd {} {
+    puts "test_run_shell_cmd: ----------------------------------"
     set time [exec date "+%Y-%m-%d %H:%M:%S"]
-    puts "current time: $time"
+    puts "current time: $time\n"
+
+    set files [exec sh -c {ls -l ~/man_*}]
+    puts "$files\n"
+
+    # does not care about exec result
+    exec sh -c {touch ~/test_file.txt}
+    set file [exec sh -c {ls -l ~/test_file.txt}]
+    puts "$file\n"
+    # does not care about exec result
+    exec sh -c {rm ~/test_file.txt}
+}
+
+# shell cmd use variables in expect
+proc test_use_expect_var {} {
+    puts "test_use_expect_var: ---------------------------------"
+    set file "/home/hx/test_file_02.txt"
+    exec touch $file
+    set f [exec ls -l $file]
+    puts "$f\n"
+    exec rm $file
+}
+
+proc test_get_env_var {} {
+    puts "test_get_env_var: ------------------------------------"
+    # get shell env var
+    set cur_dir $::env(PWD)
+    puts "cur_dir: $cur_dir"
 }
 
 proc main {} {
-    run_shell_cmd
+    test_run_shell_cmd
+    test_use_expect_var
+    test_get_env_var
 }
 
 main

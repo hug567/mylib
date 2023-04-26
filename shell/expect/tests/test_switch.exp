@@ -1,0 +1,26 @@
+#!/usr/bin/expect -f
+
+# expect switch
+# 2023.04.26
+
+proc test_switch {} {
+    puts "test_switch: -----------------------------------------"
+    set var 2
+    switch $var {
+    0 {
+        puts "var is 0"
+    }
+    1 {
+        puts "var is 2"
+    }
+    2 {
+        puts "var is 2"
+    }
+    }
+}
+
+proc main {} {
+    test_switch
+}
+
+main
