@@ -2,15 +2,16 @@
 
 set timeout 10
 
-set user jenkins
-set ip 10.116.36.44
-set port 1000
-set password jenkins
+set user guest
+set ip 192.168.0.10
+set port 22
+set password guest
 
 spawn ssh -p$port $user@$ip
 expect {
-    "*yes/no" { send "yes\r"; exp_continue}
-    "*password:" { send "$password\r" }
+    "*yes/no*" { send "yes\r"; exp_continue}
+    "*password*" { send "$password\r" }
+    timeout { exit 127 }
 }
 
 interact
