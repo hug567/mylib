@@ -13,9 +13,8 @@ ssh_server() {
 expect <<EOF
     set timeout 10
     spawn ssh -p$port $user@$ip
-    expect {
-        "password" { send "$passwd\n" }
-    }
+    expect "*password*"
+    send "$passwd\n"
     expect "*jenkins@*"
     send "ls\n"
     expect "*jenkins@*"
@@ -35,17 +34,16 @@ scp_to_server() {
     PS1="[host] $ "
     echo $PS1
 expect <<EOF
-    set timeout 10
+    set timeout 10000
     spawn scp -P$port -r $file $user@$ip:~
-    expect {
-        "password" { send "$passwd\n" }
-    }
+    expect "*password*"
+    send "$passwd\n"
     expect "*100%*"
+    set timeout 10
     expect "*\[host\] $ *"
     spawn ssh -p$port $user@$ip "ls"
-    expect {
-        "password" { send "$passwd\n" }
-    }
+    expect "*password*"
+    send "$passwd\n"
     expect "*\[host\] $ *"
 EOF
 }
