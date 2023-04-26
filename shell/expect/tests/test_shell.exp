@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+
+# run shell cmd in expect
+# 2023.04.26
+
+# function without parameter
+proc run_shell_cmd {} {
+    set time [exec date "+%Y-%m-%d %H:%M:%S"]
+    puts "current time: $time"
+}
+
+proc main {} {
+    run_shell_cmd
+}
+
+main

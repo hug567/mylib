@@ -1,0 +1,35 @@
+#!/usr/bin/expect -f
+
+set para_num $argc
+set script_name $argv0
+
+puts "para_num: $para_num"
+puts "script_name: $script_name"
+
+proc usage {} {
+    puts "scp.exp <file>        scp files to remote"
+}
+
+proc scp {} {
+    set timeout 10
+    set files [lindex $argv 0]
+    set user jenkins
+    set ip 10.116.36.44
+    set port 1000
+    set password jenkins
+    spawn scp -r $files -p$port $user@$ip
+    expect {
+        "*yes/no" { send "yes\r"; exp_continue}
+        "*password:" { send "$password\r" }
+    }
+    interact
+}
+
+proc main {} {
+    #if {$para_num != 1} {
+        usage
+    #}
+    #puts "para_num: $para_num"
+}
+
+main $*
