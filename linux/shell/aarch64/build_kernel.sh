@@ -28,6 +28,9 @@ make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$COMPILE_THREA
 # 编译dts文件(生成dtb文件)
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j$CPU_THREAD
 
+mkdir -p tools/testing/selftests
+make -C ../tools/testing/selftests O=`pwd`/tools/testing/selftests ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$CPU_THREAD
+
 # qemu启动命令
 END_TIME=$(date +%s)
 log_info "time spend: $(time_diff ${END_TIME} ${START_TIME})"
