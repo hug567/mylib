@@ -4,28 +4,28 @@ using namespace std;
 
 class Node {
 public:
-	int val;
-	Node* next;
-	Node* random;
+    int val;
+    Node* next;
+    Node* random;
 
-	Node() {}
+    Node() {}
 
-	Node(int _val, Node* _next, Node* _random) {
-		val = _val;
-		next = _next;
-		random = _random;
-	}
+    Node(int _val, Node* _next, Node* _random) {
+        val = _val;
+        next = _next;
+        random = _random;
+    }
 };
 
 class Solution {
 public:
-	Node* copyRandomList(Node* head) {
+    Node* copyRandomList(Node* head) {
 
-	}
+    }
 };
 
 int main()
 {
-	cout << "hello first cpp" << endl;
-	return 0;
+    cout << "hello first cpp" << endl;
+    return 0;
 }
