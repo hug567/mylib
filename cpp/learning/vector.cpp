@@ -94,6 +94,11 @@ static void testIntVector(void)
 
     // clear vector
     arr01.clear();
+
+    // initialization vector at definition time
+    vector<int> arr02 = { 1, 3, 5, 7, 9, 2, 4, 6, 8, 0 };
+    printIntVector(arr02);
+    arr02.clear();
 }
 
 // vector as function return value
