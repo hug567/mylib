@@ -62,23 +62,34 @@ static void testFunctionParameterReference(void)
     printArrayReference(arr);
 }
 
-struct Studend {
+struct Student {
     char name[30];
     int score;
 };
 
-static void addStudendScore(struct Studend &stu)
+// struct reference as function parameter
+static void addStudentScore(struct Student &stu)
 {
     stu.score += 5;
 }
 
+// struct reference as function return value
+static struct Student & adjustStutendScore(struct Student &stu, int score)
+{
+    stu.score += score;
+    return stu;
+}
+
 static void testStructReference(void)
 {
-    struct Studend bob = { "Bob", 80 };
+    struct Student bob = { "Bob", 80 };
 
     cout << bob.name << " score: " << bob.score << endl;
-    addStudendScore(bob);
+    addStudentScore(bob);
     cout << bob.name << " score: " << bob.score << endl;
+
+    struct Student tmp = adjustStutendScore(bob, 10);
+    cout << tmp.name << " score: " << tmp.score << endl;
 }
 
 int main()
