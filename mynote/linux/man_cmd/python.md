@@ -39,7 +39,7 @@ sudo update-alternatives --display python
 sudo update-alternatives --config python
 ```
 
-## 4、pip：
+## 4、pip/pip3：
 
 ```shell
 # 升级pip
