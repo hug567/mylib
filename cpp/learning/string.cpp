@@ -10,6 +10,7 @@ using std::string;
 //c类型的字符串
 void string_like_c(void)
 {
+    cout << "[" << __func__ << ":" << __LINE__ << "]: ----------------" << endl;
     const char *str1 = "c string 1";
     cout << "str1: " << str1 << endl;
 
@@ -20,6 +21,7 @@ void string_like_c(void)
 //string类
 void string_class(void)
 {
+    cout << "[" << __func__ << ":" << __LINE__ << "]: ----------------" << endl;
     // string定义
     string str1 = "test string 1";
     cout << "str1: " << str1 << endl;
@@ -48,11 +50,17 @@ void string_class(void)
     // string长度
     cout << "str6 size: " << str6.size() << endl;
     cout << "str6 len: " << str6.length() << endl;
+
+    // initialize another string using a single element of one string
+    string str7 = "012345";
+    string str8 = str7.substr(2, 1);
+    cout << "str7: " << str7 << ", str8: " << str8 << endl;
 }
 
 //其他类似的字符串
 static void string_others(void)
 {
+    cout << "[" << __func__ << ":" << __LINE__ << "]: ----------------" << endl;
     //2字节宽度的字符
     wchar_t str1[] = L"w_char string";
     wcout << "str1: " << str1 << endl;
@@ -66,10 +74,26 @@ static void string_others(void)
     cout << R"(This is a "raw" string)" << endl;
 }
 
+static void testStringCut(void)
+{
+    cout << "[" << __func__ << ":" << __LINE__ << "]: ----------------" << endl;
+    string str = "0123456789";
+
+    // get the substring from index 2 to the end
+    string sub = str.substr(2);
+    cout << "sub string: " << sub << endl;
+
+    // get the substring from index 2 with length 3
+    sub = str.substr(2, 3);
+    cout << "sub string: " << sub << endl;
+}
+
 int main(void)
 {
     string_like_c();
     string_class();
     string_others();
+    testStringCut();
+
     return 0;
 }
