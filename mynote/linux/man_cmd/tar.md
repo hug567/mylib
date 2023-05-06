@@ -28,6 +28,8 @@ tar -zcvf file.tar.gz file1 file2 ...
 
 # 查看压缩包内容
 tar -tvf file.tar.gz
+# 查看压缩包顶层目录内容
+tar -tf file.tar.gz | awk -F '/' '{print$1}' | sort -u
 
 # 解压分割的多个tar文件
 cat files.tar.gz.part* | tar -zxv
