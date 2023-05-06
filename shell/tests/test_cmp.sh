@@ -115,12 +115,66 @@ function test_num_cmp() {
     fi
 }
 
+# 字符串比较：
+#   =：等于
+#   !=：不等于
+#   >：大于
+#   <：小于
+#   -n：字符串长度不为0
+#   -z：字符串长度为0
+function test_string_cmp() {
+    echo "$FUNCNAME:-----------------------------"
+    local str1=
+    local str2=
+
+    # test string equal
+    str1="123"
+    str2="123"
+    if [ ${str1} = ${str2} ]; then
+        echo "$str1 = $str2"
+    fi
+
+    # test string not equal
+    str1="123"
+    str2="456"
+    if [ ${str1} != ${str2} ]; then
+        echo "$str1 != $str2"
+    fi
+
+    # test string greater than
+    str1="456"
+    str2="1234"
+    if [ ${str1} > ${str2} ]; then
+        echo "$str1 > $str2"
+    fi
+
+    # test string less than
+    str1="1234"
+    str2="456"
+    if [ ${str1} \< ${str2} ]; then
+        echo "$str1 < $str2"
+    fi
+
+    # test string length is not 0
+    str1="123"
+    if [ -n ${str1} ]; then
+        echo "str1 length is not 0, length: ${#str1}"
+    fi
+
+    # test string length is 0
+    str1=""
+    if [ -z ${str1} ]; then
+        echo "str1 length is 0"
+    fi
+}
+
 function main() {
     test_para_num $*
     test_pwd
     test_dir_exist
     test_var_empty
     test_num_cmp
+    test_string_cmp
 }
 
 main $*
