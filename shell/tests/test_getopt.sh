@@ -28,8 +28,40 @@ function test_getopt() {
     _test_getopt -n Tom -a 19
 }
 
+function _test_getopts() {
+    local name=
+    local age=
+    local short=
+
+    while getopts :a:n:s opt; do
+        case "$opt" in
+            a) age=$OPTARG ;;
+            n) name=$OPTARG ;;
+            s) short=1 ;;
+            *) echo "unknown option: $opt" ;;
+        esac
+    done
+    if [[ $short = 1 ]]; then
+        echo "Student: $name/$age"
+    else
+        echo "Student name: $name, age: $age"
+    fi
+    # reset OPTIND
+    OPTIND=1
+}
+
+function test_getopts() {
+    echo "$FUNCNAME:-----------------------------"
+    _test_getopts -n Bob -a 18 -s
+
+    # reset OPTIND
+    OPTIND=1
+    _test_getopts -n Tom -a 19
+}
+
 function main() {
     test_getopt
+    test_getopts
 }
 
 main
