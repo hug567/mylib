@@ -23,11 +23,25 @@ test_func_ret() {
         echo "$fname run fail with ret: $?"
     fi
 
+    # 在if中执行命令并判断返回值
+    if [ $(_func_success; echo $?) -eq 0 ]; then
+        echo "$fname run success with ret: $?"
+    else
+        echo "$fname run fail with ret: $?"
+    fi
+
     # 第二种判断函数是否成功的方式，推荐
     local fname="_func_failed"
     _func_failed
     local ret=$?
     if [ "$ret" = "0" ]; then
+        echo "$fname run success with ret: $?"
+    else
+        echo "$fname run fail with ret: $?"
+    fi
+
+    # 在if中执行命令并判断返回值
+    if [ $(_func_failed; echo $?) -eq 0 ]; then
         echo "$fname run success with ret: $?"
     else
         echo "$fname run fail with ret: $?"

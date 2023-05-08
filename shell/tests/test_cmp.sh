@@ -144,7 +144,7 @@ function test_string_cmp() {
     # test string greater than
     str1="456"
     str2="1234"
-    if [ ${str1} > ${str2} ]; then
+    if [ ${str1} \> ${str2} ]; then
         echo "$str1 > $str2"
     fi
 
