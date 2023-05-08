@@ -115,6 +115,42 @@ function test_num_cmp() {
     fi
 }
 
+# 数字比较
+#   >：大于
+#   <：小于
+#   ==：等于
+#   !=：不等于
+#   &&：与
+#   ||：或
+function test_num_cmp_02() {
+    echo "$FUNCNAME:------------------------------"
+    if [[ 5 > 4 ]]; then
+        echo "5 > 4"
+    fi
+
+    # >=
+    if [[ 5 > 5 || 5 == 5 ]]; then
+        echo "5 >= 5"
+    fi
+
+    if [[ 4 < 5 ]]; then
+        echo "4 < 5"
+    fi
+
+    # <=
+    if [[ 4 < 4 || 4 == 4 ]]; then
+        echo "4 <= 4"
+    fi
+
+    if [[ 3 == 3 ]]; then
+        echo "3 == 3"
+    fi
+
+    if [[ 3 != 2 ]]; then
+        echo "3 != 2"
+    fi
+}
+
 # 字符串比较：
 #   =：等于
 #   !=：不等于
@@ -174,6 +210,7 @@ function main() {
     test_dir_exist
     test_var_empty
     test_num_cmp
+    test_num_cmp_02
     test_string_cmp
 }
 

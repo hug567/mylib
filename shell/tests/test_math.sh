@@ -125,11 +125,23 @@ function test_bc() {
     echo " 3 / 2 = $(echo "scale=4; 3 / 2" | bc)"
 }
 
+# support: + - * / % ++ -- & | ~ && || << >> **
+function test_brackets() {
+    echo "$FUNCNAME:-----------------------------"
+    local var=
+
+    var=$((1 + 2 * 3 - 4))
+    echo "var = $var"
+
+    echo "2^4 = $((2 ** 4))"
+}
+
 function main() {
     test_let
     test_expr
     test_square
     test_bc
+    test_brackets
 }
 
 main
