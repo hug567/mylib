@@ -105,3 +105,14 @@ idmap_pg_dir  //identity mapping，恒等映射，在mmu使能前，建立的物
 - 第一段：identity mapping，把物理地址mapping到物理地址上去，为打开mmu做准备；
 - 第二段：kernel image mapping，将kernel running需要的地址（kernel txt、dernel rodata、data、bss等等）进行映射；
 - 第三段：blob memory对应的mapping；
+
+# 6、调试文件：
+
+```bash
+/proc/iomem                           # 部分物理地址信息
+/proc/buddyinfo                       # buddy各阶页帧信息
+/proc/pagetypeinfo                    # 页帧分配状态
+/proc/slabinfo                        # slab所有活动缓存的列表
+/proc/sys/kernel/randomize_va_space   # 用户态进程地址空间随机化
+```
+
