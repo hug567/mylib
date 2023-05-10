@@ -6,6 +6,16 @@ tick中断中：调用schedule_tick()；
 
 阻塞操作：semaphore、mutex、等待队列等接口中主动调用schedule()；
 
+## 1）、调度类：
+
+- linux调度类：stop、dl、rt、fair、idle；
+- linux调度策略：
+  - stop：只有一个任务，不需要调度策略；
+  - dl：SCHED_DEADLINE；
+  - rt：SCHED_FIFO、SCHED_RR；
+  - fair：SCHED_NORMAL、SCHED_BATCH、SCHED_IDLE (运行优先级较低的后台任务)；
+  - idle：每个cpu对应一个idle任务，无调度策略；
+
 # 2、进程状态
 
 ```bash

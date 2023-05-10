@@ -43,6 +43,6 @@ mkdir -p build-aarch64/install
 cd build-aarch64
 ../configure --host=aarch64-linux-gnu --with-zlib=/home/hx/code/others/zlib-1.2.13/build-aarch64/install --with-ssl-dir=/home/hx/code/others/openssl-3.1.0/build-aarch64/install --prefix=$PWD/install --disable-etc-default-login
 make -j
-make install
+# make install
 ```
 
