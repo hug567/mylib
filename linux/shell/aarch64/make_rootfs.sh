@@ -26,6 +26,49 @@ parse_args() {
     fi
 }
 
+_install_file() {
+    local file=$1
+    local dst=$2
+    if [ ! -f $file ]; then
+        echo "$file does not exist"
+        exit 1
+    fi
+    if [ ! -d $dst ]; then
+        echo "dst dir $dst does not exist"
+        exit 1
+    fi
+    echo "install $file to $dst"
+    install $file $dst
+}
+
+_install_to_lib() {
+    _install_file $1 lib
+}
+
+_install_to_etc() {
+    _install_file $1 etc
+}
+
+install_libc() {
+    local root_dir=$1
+    local libc_dir=$(dirname $(which aarch64-linux-gnu-gcc))/../aarch64-linux-gnu/libc/lib
+    local lib_files=(
+        ld-2.25.so
+        ld-linux-aarch64.so.1
+        libc.so.6
+        libc-2.25.so
+        libdl.so.2
+        libdl-2.25.so
+        libutil.so.1
+        libutil-2.25.so
+        libresolv.so.2
+        libresolv-2.25.so
+    )
+    for file in ${lib_files[@]}; do
+        _install_to_lib $libc_dir/$file
+    done
+}
+
 install_zlib() {
     local src=$1
     local dst=$2
@@ -68,19 +111,27 @@ install_openssh() {
     cp ${src}/ssh-agent   ${dst}/usr/bin
     cp ${src}/ssh-keygen  ${dst}/usr/bin
     cp ${src}/ssh-keyscan ${dst}/usr/bin
-    cp ${src}/moduli      ${dst}/usr/etc
-    cp ${src}/ssh_config  ${dst}/usr/etc
-    cp ${src}/sshd_config ${dst}/usr/etc
+    #cp ${src}/moduli      ${dst}/usr/etc
+    #cp ${src}/ssh_config  ${dst}/usr/etc
+    #cp ${src}/sshd_config ${dst}/usr/etc
     cp ${src}/sftp-server ${dst}/usr/libexec
     cp ${src}/ssh-keysign ${dst}/usr/libexec
 }
 
-make_rootfs() {
-    if [ -d rootfs ]; then
-        sudo rm -rf rootfs
+install_tmp_files() {
+    local root_dir=$1
+    local dst_dir=$root_dir/tmp
+    local tmp_dir="/tmp/rootfs-aarch64"
+    if [ ! -d $tmp_dir ]; then
+        return
     fi
-    mkdir rootfs
-    cd rootfs
+    for file in $tmp_dir/*; do
+        echo "copy $file to $dst_dir"
+        cp -r $file $dst_dir
+    done
+}
+
+install_base_file() {
     cp -rf ${BUSYBOX_BIN_DIR}/* ./
 
     mkdir -p proc sys tmp root dev/pts etc/init.d usr/bin lib/modules usr/local/bin
@@ -90,8 +141,21 @@ make_rootfs() {
     chmod a+x etc/profile
     cp ${LIB_ROOTFS_DIR}/etc/passwd etc/
 
-    install_zlib /home/hx/code/others/zlib-1.2.13/build-aarch64/install $PWD
-    install_openssl /home/hx/code/others/openssl-3.1.0/build-aarch64/install $PWD
+    #_install_to_etc $LIB_ROOTFS_DIR/etc/inittab
+}
+
+make_rootfs() {
+    if [ -d rootfs ]; then
+        rm -rf rootfs
+    fi
+    mkdir rootfs
+    cd rootfs
+
+    install_base_file
+    install_libc $(pwd)
+    install_tmp_files $(pwd)
+    #install_zlib /home/hx/code/others/zlib-1.2.13/build-aarch64/install $PWD
+    #install_openssl /home/hx/code/others/openssl-3.1.0/build-aarch64/install $PWD
     install_openssh /home/hx/code/others/openssh-9.3p1/build-aarch64 $PWD
 
     find . | cpio -o --format=newc > ../rootfs.cpio
