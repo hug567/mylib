@@ -2,7 +2,8 @@
 
 # 进入目录后回到原目录
 function test_entry_dir() {
-    echo "test_entry_dir:"
+    echo "$FUNCNAME:-----------------------------"
+
     echo "PWD = $PWD"
 
     pushd /tmp

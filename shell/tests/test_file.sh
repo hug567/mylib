@@ -2,6 +2,8 @@
 
 # 逐行读取文件
 function read_file_by_line() {
+    echo "$FUNCNAME:-----------------------------"
+
     local file=$1
     # 方式一
     while read line

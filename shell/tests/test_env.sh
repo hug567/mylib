@@ -1,6 +1,8 @@
 #!/bin/bash
 
-using_env_var() {
+function using_env_var() {
+    echo "$FUNCNAME:-----------------------------"
+
     # 变量是否存在
     if [ $G_TEST_VAR ]; then
         echo "G_TEST_VAR already defined: $G_TEST_VAR"

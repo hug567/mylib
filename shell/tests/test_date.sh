@@ -4,7 +4,7 @@
 #   START_TIME=$(date +%s)
 #   END_TIME=$(date +%s)
 #   time_diff $END_TIME $START_TIME
-time_diff()
+function time_diff()
 {
     local end_time=$1
     local start_time=$2
@@ -15,11 +15,20 @@ time_diff()
     printf "%02d:%02d:%02d" $hour $min $second
 }
 
-START_TIME=$(date +%s)
-END_TIME=$(date +%s)
+function test_time_diff() {
+    echo "$FUNCNAME:-----------------------------"
 
-echo "time diff: $(time_diff 0 0)"
-echo "time diff: $(time_diff 100 0)"
-echo "time diff: $(time_diff 10000 0)"
-echo "time diff: $(time_diff 10000 123)"
-echo "time diff: $(time_diff $END_TIME $START_TIME)"
+    local START_TIME=$(date +%s)
+    local END_TIME=$(date +%s)
+    echo "time diff: $(time_diff 0 0)"
+    echo "time diff: $(time_diff 100 0)"
+    echo "time diff: $(time_diff 10000 0)"
+    echo "time diff: $(time_diff 10000 123)"
+    echo "time diff: $(time_diff $END_TIME $START_TIME)"
+}
+
+function main() {
+    test_time_diff
+}
+
+main
