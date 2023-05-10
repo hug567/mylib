@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # 判断变量是否为空
-var_is_null() {
+function var_is_null() {
+    echo "$FUNCNAME:-----------------------------"
+
     local var1=
     if [ ! -n "$var1" ]; then
         echo "var1 is NULL"
