@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # git获取指定文件的最早与最新一次提交时间
 
 import os

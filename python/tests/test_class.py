@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 ################################################################################
 # python练习：类
 # python版本：python 3.6.9
@@ -31,21 +32,6 @@ class Book(): # 类名使用驼峰命名法
         print("  price: ", self.price, sep='')
         print("  pages: ", self.pages, sep='')
 
-# 创建类的实例
-book1 = Book('math', 100)
-# 访问属性
-print("book name: ", book1.name, sep='')
-print("book price: ", book1.price, sep='')
-print("book pages: ", book1.pages, sep='')
-# 直接修改属性值
-book1.pages = 120
-book1.all_info()
-# 调用方法
-book1.set_name('english')
-book1.set_price(200)
-print("book name: ", book1.get_name(), sep='')
-print("book price: ", book1.get_price(), sep='')
-
 # 继承
 class ElectricBook(Book):
 
@@ -61,5 +47,31 @@ class ElectricBook(Book):
         print('  pages: ', self.pages, sep='') # 访问父类成员
         print('  size: ', self.size, sep='') # 访问子类成员
 
-ebook = ElectricBook("physics", 45, 115)
-ebook.all_info()
+def test_book():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+    # 创建类的实例
+    book1 = Book('math', 100)
+    # 访问属性
+    print("book name: ", book1.name, sep='')
+    print("book price: ", book1.price, sep='')
+    print("book pages: ", book1.pages, sep='')
+    # 直接修改属性值
+    book1.pages = 120
+    book1.all_info()
+    # 调用方法
+    book1.set_name('english')
+    book1.set_price(200)
+    print("book name: ", book1.get_name(), sep='')
+    print("book price: ", book1.get_price(), sep='')
+
+def test_electric_book():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+    ebook = ElectricBook("physics", 45, 115)
+    ebook.all_info()
+
+def main():
+    test_book()
+    test_electric_book()
+
+if __name__ == '__main__':
+    main()

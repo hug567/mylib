@@ -1,21 +1,20 @@
 #!/usr/bin/python3
 ################################################################################
-# python练习：获取参数类型
-# python版本：python 3.6.9
-# 时间：2023-03-13
+# Description: import python class
+# Version: python 3.6.9
+# Time: 2023-05-11
 ################################################################################
-import os
 import sys
-#import subprocess
+# import single class
+from car import Car
 
-# 获取参数类型
-def test_var_type():
+def test_car():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
-    a = 3
-    print("var a type:", type(a))
+    car01 = Car(100, 200, 300)
+    car01.info()
 
 def main():
-    test_var_type()
+    test_car()
 
 if __name__ == '__main__':
     main()
