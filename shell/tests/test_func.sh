@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function _return_value() {
+function _func_return() {
     return $1  # echo only return int
 }
 
-function _func_result() {
+function _func_echo() {
     echo $1  # can echo any type of data
 }
 
@@ -13,25 +13,30 @@ function test_get_func_ret() {
     echo "$FUNCNAME:-----------------------------"
     local ret=
 
-    _return_value 0
+    _func_return 0
     ret=$?  # $?: function return value
-    echo "_return_value ret: $ret"
-    _return_value 123
+    echo "_func_return ret: $ret"
+    _func_return 123
     ret=$?  # $?: function return value
-    echo "_return_value ret: $ret"
+    echo "_func_return ret: $ret"
 
     # determine whether cmd is successful according to the return value
-    if _return_value 0; then
-        echo "_return_value run success"
+    # check function return value in if statement
+    if _func_return 0; then  # return 0: if is true
+        echo "_func_return run success"
     fi
     # negate the return value
-    if ! _return_value 123; then
-        echo "_return_value run failed"
+    if ! _func_return 123; then  # return not 0: if is false
+        echo "_func_return run failed"
     fi
 
-    echo "_func_result 0: $(_func_result 0)"
-    echo "_func_result 456: $(_func_result 456)"
-    echo "_func_result 'test_string': $(_func_result 'test_string')"
+    echo "_func_echo 0: $(_func_echo 0)"
+    echo "_func_echo 456: $(_func_echo 456)"
+    echo "_func_echo 'test_string': $(_func_echo 'test_string')"
+    # check function echo value in if statement
+    if [ "$(_func_echo "12345")" = "12345" ]; then
+        echo "_func_echo is 12345"
+    fi
 }
 
 _func_success() {
