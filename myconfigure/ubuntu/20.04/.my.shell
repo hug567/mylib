@@ -1,110 +1,66 @@
-export PATH="$HOME/code/mycode/shell/mazu:$PATH"
-export PATH="$HOME/code/mycode/shell/zeus:$PATH"
-export PATH="$HOME/code/mycode/shell/tools:$PATH"
+# lsab
+# lsab .
+# lsab ./
+# lsab ./*
+# lsab dir
+# lsab dir/*
+# lsab file.txt
+# lsab file.txt dir1 dir2
+lsab() {
+    local ret=
+    local dir=
+    local abs=
+    if [ $# = 0 ]; then
+        echo "$(pwd)/"
+        ret=$(ls)
+        if [ "$ret" = "" ]; then
+            ret="."
+        fi
+    else
+        ret="$*"
+    fi
+    ret=$(echo "$ret" | awk -F ' ' '{for (i = 1; i <= NF; i++) print $i}')
+    echo "$ret" | while read f
+    do
+        if [ -d $f ]; then
+            dir=$(cd $f; pwd)
+            echo $dir
+            continue
+        fi
+        if [ ${f:0:1} = '/' -o ${f:0:1} = '~' ]; then
+            abs="$f"
+        else
+            abs=$(cd $(dirname $f); pwd)/$(basename $f)
+        fi
+        if [ -e $abs ]; then
+            echo "$abs"
+        fi
+    done
+}
 
-# ----- mazu ----------------------------------------------------------------- #
-MAZUPWD='w+G)X8e)M5gwJ.*}wx,X'
-
-# mazu命令
-alias mazupwd="echo 'w+G)X8e)M5gwJ.*}wx,X'"
-
-ssh_to_server() {
-    local user=$1
-    local ip=$2
-    local port=$3
-    local passwd=$4
-
-    ping $ip -c 1 > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "ping $ip failed"
+tas() {
+    if [ $# != 1 ]; then
+        echo "please assign one tmux session name"
         return
     fi
-    sshpass -p $passwd ssh -o StrictHostKeyChecking=no -p$port $user@$ip -t "bash"
+    local sname=$1
+    local ret=$(tmux ls | grep "^$sname: ")
+    if [ "$ret" = "" ]; then
+        echo "can't find session: $sname"
+        return
+    fi
+    local attached=$(echo $ret | grep "attached")
+    if [ "$attached" != "" ]; then
+        tmux detach-client -s $sname
+    fi
+    tmux attach -t $sname
 }
 
-ssh_to_nuc() {
-    local ip=$1
-    local user=jenkins
-    local passwd=jenkins
-    local port=1000
-
-    ssh_to_server $user $ip $port $passwd
-}
-
-alias mazu01='ssh_to_nuc 10.116.36.26'
-alias mazu02='ssh_to_nuc 10.116.36.28'
-alias mazu03='ssh_to_nuc 10.110.193.14'
-alias mazu04='ssh_to_nuc 10.116.36.29'
-alias mazu05='ssh_to_nuc 10.116.36.69'
-alias mazu06='ssh_to_nuc 10.116.36.33'
-alias mazu07='ssh_to_nuc 10.116.36.43'
-alias mazu08='ssh_to_nuc 10.116.36.57'
-alias mazu09='ssh_to_nuc 10.116.36.45'
-alias mazu10='ssh_to_nuc 10.116.36.72'
-alias mazu11='ssh_to_nuc 10.116.36.118'
-alias mazu12='ssh_to_nuc 10.116.36.119'
-alias mazu15='ssh_to_nuc 10.116.36.97'
-alias mazu16='ssh_to_nuc 10.110.193.45'
-alias mazu21='ssh_to_nuc 10.110.193.114'
-alias mazu22='ssh_to_nuc 10.116.36.44'
-alias mazu33='ssh_to_nuc 10.116.36.99'
-alias mazu37='ssh_to_nuc 10.116.36.94'
-alias mazu39='ssh_to_nuc 10.116.36.92'
-alias mazu41='ssh_to_nuc 10.116.36.76'
-alias mazu42='ssh_to_nuc 10.116.36.70'
-alias mazu43='ssh_to_nuc 10.116.36.88'
-alias mazu45='ssh_to_nuc 10.116.36.95'
-alias  ccc23='ssh_to_nuc 10.110.193.136'
-alias  ccc24='ssh_to_nuc 10.110.193.94'
-alias  ccc44='ssh_to_nuc 10.116.36.87'
-alias  ccc46='ssh_to_nuc 10.116.36.128'
-alias  ccc47='ssh_to_nuc 10.116.36.129'
-alias  ccc48='ssh_to_nuc 10.116.36.130'
-alias  ccc53='ssh_to_nuc 10.116.36.103'
-alias  ccc54='ssh_to_nuc 10.116.36.104'
-alias  ccc57='ssh_to_nuc 10.116.36.90'
-alias kris='sshpass -p a ssh -p 1111 kris@10.110.193.150'
-alias krishx='ssh -p 1111 hx@10.110.193.150'
-#alias hxvim='HOME=/home/hx/xing.huang6 vim'
-#alias hxtmux='HOME=/home/hx/xing.huang6 tmux -2'
-alias s1="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@10.42.0.21"
-alias s2="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@10.42.0.22"
-alias s3="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@10.42.0.23"
-alias s4="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@10.42.0.24"
-alias can505='cangen can5 -g 640 -I 505 -L 8 -D 2340FFFFFFFFFFFF &'
-alias ss1="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@172.20.1.21"
-alias ss2="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@172.20.1.22"
-alias ss3="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@172.20.1.23"
-alias ss4="sshpass -p 'w+G)X8e)M5gwJ.*}wx,X' ssh -o StrictHostKeyChecking=no root@172.20.1.24"
-
-alias resetmazussh='reset_mazu_ssh.sh $*'
-alias scpfrommazu='scp_from_mazu.sh $*'
-alias scplogfrommazu='scp_log_from_mazu.sh $*'
-alias scptomazu='scp_to_mazu.sh $*'
-alias scpconfigtomazu='scp_config_to_mazu.sh $*'
-alias runcmdinmazu='run_cmd_in_mazu.sh $*'
-alias downloadfromartifactory='download_from_artifactory.sh $*'
-alias dfa='download_from_artifactory.sh $*'
-alias rsyncfrommazu='rsync_from_mazu.sh $*'
-alias rsynctomazu='rsync_to_mazu.sh $*'
-
-scptomazuflash() {
+tarfile() {
     local file=$1
-    local soc=$2
-    scp_to_mazu.sh $file $soc /mnt/flash
+    if [ $# != 1 ]; then
+        echo "usage: tarfile <file.tar.gz>"
+        return
+    fi
+    tar -tf $file | awk -F '/' '{print$1}' | sort -u
 }
-
-scptos1flash() {
-    local file=$1
-    scp_to_mazu.sh $file s1 /mnt/flash
-}
-
-# ----- zeus ----------------------------------------------------------------- #
-ZEUSPWD='MQY%3EfEzn3hw!aI'
-alias zeuspwd="echo 'MQY%3EfEzn3hw!aI'"
-alias zeus-s1="sshpass -p 'MQY%3EfEzn3hw!aI' ssh -o StrictHostKeyChecking=no root@10.42.0.21"
-alias zeus-s2="sshpass -p 'MQY%3EfEzn3hw!aI' ssh -o StrictHostKeyChecking=no root@10.42.0.22"
-alias zeus-s3="sshpass -p 'MQY%3EfEzn3hw!aI' ssh -o StrictHostKeyChecking=no root@10.42.0.23"
-alias zeus-s4="sshpass -p 'MQY%3EfEzn3hw!aI' ssh -o StrictHostKeyChecking=no root@10.42.0.24"
-# zeus board
-alias zeus45='sshpass -p jenkins ssh -p1000 jenkins@10.110.193.119 -t "bash"'

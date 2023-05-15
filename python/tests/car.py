@@ -11,3 +11,9 @@ class Car:
         print("car length:", self.length)
         print("car width:", self.width)
         print("car height:", self.height)
+
+class PetrolCar(Car):
+
+    def __init__(self):
+
+    def info(self):
