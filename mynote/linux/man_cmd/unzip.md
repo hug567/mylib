@@ -15,6 +15,8 @@ unzip
 unzip file.zip
 # 解压文件到指定目录
 unzip file.zip -d dir
+# 解压部分内容到指定目录
+unzip file.zip "aaa/bbb" -d dir
 
 # 查看压缩包中文件
 unzip -l file.zip

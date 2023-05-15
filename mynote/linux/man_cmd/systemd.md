@@ -11,6 +11,8 @@ systemctl enable xxx                       # 使能开机自启
 systemctl disable xxx                      # 关闭开机自启
 systemctl list-timers                      # 列出所有定时任务
 systemctl list-jobs                        # 列出活动任务
+# 列出服务依赖
+systemctl list-dependencies xxx
 
 # 重新加载service文件：
 sudo systemctl daemon-reload
