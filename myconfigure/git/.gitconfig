@@ -26,3 +26,8 @@
 	ps = push
 	lg = "log --oneline --graph --pretty=format:\"%C(yellow)%h %Cred[%an]%Creset %Cblue[%ad]%Creset %s %Cgreen(%cr)%Cred%d\" --date=format:'%Y-%m-%d %H:%M:%S' -n 30"
 	cmhx = commit -s --author='Huang Xing <huangxing567@163.com>'
+	brau = "!brau() { git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | cat; }; brau"
+[http]
+	#proxy = http://proxy.nioint.com:8080
+[https]
+	#proxy = https://proxy.nioint.com:8080
