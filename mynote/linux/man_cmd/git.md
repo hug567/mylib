@@ -106,6 +106,8 @@ git push github HEAD:master                              //推送至github
 
 // 添加本地仓库为远端
 git remote add local /home/hx/code/linux-5.10
+// 查看分支作者
+git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
 ```
 
 ### 2.4、commit操作
