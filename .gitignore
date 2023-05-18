@@ -5,6 +5,7 @@
 *.elf
 *.ko
 *.mk
+!/makefile/**/*.mk
 *.cmd
 
 *.exe
