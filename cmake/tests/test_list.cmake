@@ -62,10 +62,40 @@ function(test_list_modify)
     # insert to index 2, start from 0
     list(INSERT num 2 6)
     message("after insert, num: ${num}")
+
+    set(files a.c b.h c.cpp)
+    # include filter
+    list(FILTER files INCLUDE REGEX "[A-Za-z0-9_-]+.c$")
+    message("after include filter: ${files}")
+    set(files a.c b.h c.cpp)
+    # exclude filter
+    list(FILTER files EXCLUDE REGEX "[A-Za-z0-9_-]+.c$")
+    message("after exclude filter: ${files}")
 endfunction()
 
 function(test_list_ordering)
     message("${CMAKE_CURRENT_FUNCTION}: --------------------------------------")
+
+    set(num 1 2 3 4 5)
+    list(REVERSE num)
+    message("after reverse: ${num}")
+
+    set(num 3 5 4 1 2)
+    # ascending, default mode
+    list(SORT num)
+    #list(SORT num ORDER ASCENDING)
+    message("after sort ascending: ${num}")
+    # descending
+    list(SORT num ORDER DESCENDING)
+    message("after sort descending: ${num}")
+
+    set(str abc aBD)
+    # case sensitive, default mode
+    list(SORT str CASE SENSITIVE)
+    message("after sort case sensitive: ${str}")
+    # case insensitive
+    list(SORT str CASE INSENSITIVE)
+    message("after sort case insensitive: ${str}")
 endfunction()
 
 function(main)
