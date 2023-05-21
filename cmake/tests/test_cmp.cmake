@@ -2,6 +2,9 @@
 # run: cmake -P test_cmp.cmake
 # 2023.05.16
 
+# EQUAL    GREATER    LESS    GREATER_EQUAL    LESS_EQUAL
+# STREQUAL STRGREATER STRLESS STRGREATER_EQUAL STRLESS_EQUAL
+
 function(test_cmp_number)
     message("${CMAKE_CURRENT_FUNCTION}: --------------------------------------")
 

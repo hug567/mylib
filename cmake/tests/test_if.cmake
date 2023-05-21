@@ -40,10 +40,23 @@ function(test_if_elseif)
     endif()
 endfunction()
 
+function(test_if_basic)
+    message("${CMAKE_CURRENT_FUNCTION}: --------------------------------------")
+    set(var01 1)
+    if(${var01})
+        message("if condition is true: var01 = ${var01}")
+    endif()
+
+    if(DEFINED ENV{PATH})
+        message("env var is defined: PATH")
+    endif()
+endfunction()
+
 function(main)
     test_if()
     test_if_else()
     test_if_elseif()
+    test_if_basic()
 endfunction()
 
 main()
