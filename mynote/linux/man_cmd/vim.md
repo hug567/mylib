@@ -196,6 +196,26 @@ ESC                              //退出
 :r !echo " * Create: $(date '+\%a \%b \%d \%H:\%M:\%S \%Y')"
 ```
 
+### 12）、tab标签：
+
+```bash
+# 新建标签
+:tabnew
+# 关闭当前标签
+:tabc
+# 关闭所有标签
+:tabo
+# 查看所有标签
+:tabs
+# 跳转至前一个标签
+:tabp / gT
+# 跳转至后一个标签
+:tabn / gt
+# 跳转是指定tab
+1gt / 2gt / 3gt ......
+:tabn 1 / :tabn 2 / :tabn 3 ......
+```
+
 ## 2、正则表达式：
 
 ```C

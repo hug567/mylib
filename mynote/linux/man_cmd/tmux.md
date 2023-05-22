@@ -85,10 +85,11 @@ j                                        //光标向下
 k                                        //光标向上
 l                                        //光标向右
 
-tmux capture-pane -S -                   //保存当前窗格中所有历史到buffer
-tmux capture-pane -S - -t 1              //保存指定窗格中所有历史到buffer [-t target-pane]
 Prefix + PageUp                          //查看当前窗格行数，右上角现实的是当前行的倒数行数与总行数
+tmux capture-pane -S -                   //保存当前窗格中所有历史到buffer
 tmux capture-pane -S -351                //保存当前窗格中倒数指定行到buffer
+tmux capture-pane -S - -t 1              //保存当前window指定pane中所有历史到buffer [-t target-pane]
+tmux capture-pane -t main:3.2 -S -       //保存其他pane所有历史到buffer， session:main, window:3, pane:2
 tmux save-buffer output.log              //buffer内容保存到文件
 ```
 
