@@ -253,3 +253,53 @@ nmap <C-]> :cs find g <C-R>=expand("<cword>")<CR><CR>
 let MRU_Window_Height = 20
 nmap <C-a> :MRU<CR>
 "------------------------------------------------------------------------------"
+" jump to tab: \+1, \+2, \+3 ...
+noremap <silent><leader>1 :tabn 1<CR>
+noremap <silent><leader>2 :tabn 2<CR>
+noremap <silent><leader>3 :tabn 3<CR>
+noremap <silent><leader>4 :tabn 4<CR>
+noremap <silent><leader>5 :tabn 5<CR>
+noremap <silent><leader>6 :tabn 6<CR>
+noremap <silent><leader>7 :tabn 7<CR>
+noremap <silent><leader>8 :tabn 8<CR>
+noremap <silent><leader>9 :tabn 9<CR>
+noremap <silent><leader>0 :tabs  <CR>
+noremap <silent><leader>n :tabnew<CR>
+noremap <silent><leader>c :tabc<CR>
+
+" custom tab color
+hi TabLine     term=standout cterm=standout ctermfg=242 ctermbg=15
+hi TabLineSel  term=bold cterm=bold gui=bold ctermfg=220 ctermbg=242
+hi TabLineFill term=standout cterm=standout ctermfg=242 ctermbg=15
+
+function MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    " select the highlighting
+    if i + 1 == tabpagenr()
+      let s ..= '%#TabLineSel#'
+    else
+      let s ..= '%#TabLine#'
+    endif
+
+    " set the tab page number (for mouse clicks)
+    "let s ..= '%' .. (i + 1) .. 'T'
+
+    " the label is made by MyTabLabel()
+    "let s ..= ' %{MyTabLabel(' .. (i + 1) .. ')} '
+    let s ..= '[tab:' .. (i + 1) .. ']  '
+  endfor
+
+  " after the last tab fill with TabLineFill and reset tab page nr
+  let s ..= '%#TabLineFill#%T'
+
+  " right-align the label to close the current tab page
+  "if tabpagenr('$') > 1
+  "  let s ..= '%=%#TabLine#%999Xclose'
+  "endif
+
+  return s
+endfunction
+" custom tab label
+set tabline=%!MyTabLine()
+"------------------------------------------------------------------------------"

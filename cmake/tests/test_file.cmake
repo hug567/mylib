@@ -5,6 +5,7 @@
 function(test_filesystem)
     message("${CMAKE_CURRENT_FUNCTION}: --------------------------------------")
 
+    # find files in dir
     file(GLOB txtfiles /tmp/*.txt)
     message("/tmp .txt files: ${txtfiles}")
 endfunction()
