@@ -11,9 +11,9 @@ function(test_generage_message)
     # print variable
     message("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 
-    message(TRACE "this is a trace message")
-    message(DEBUG "this is a debug message")
-    message(VERBOSE "this is a verbose message")
+    message(TRACE "this is a trace message") # cmake --log-level=TRACE
+    message(DEBUG "this is a debug message") # cmake --log-level=DEBUG
+    message(VERBOSE "this is a verbose message") # cmake --log-level=VERBOSE
     message(STATUS "this is a status message")
     message(NOTICE "this is a notice message") # default log level
     # with DEPRECATION, cmake execution will continue

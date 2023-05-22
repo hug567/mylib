@@ -13,8 +13,8 @@ public:
         int i, j;
         vector<int> ret;
 
-        for (i = 0; i < nums.size() - 1; i++) {
-            for (j = i + 1; j < nums.size(); j++) {
+        for (i = 0; i < (int)nums.size() - 1; i++) {
+            for (j = i + 1; j < (int)nums.size(); j++) {
                 if (nums[i] + nums[j] == target) {
                     ret.push_back(i);
                     ret.push_back(j);

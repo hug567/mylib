@@ -20,7 +20,7 @@ public:
         int l = center, r = center;
         pal = s.substr(center, 1);
 
-        while (l >=0 && r < s.length()) {
+        while (l >=0 && r < (int)s.length()) {
             if (s[l] == s[r]) {
                 pal = s.substr(l, r - l + 1);
                 l--;
@@ -34,13 +34,13 @@ public:
     void palindromeCenterTwoChar(const string & s, int start, string & pal) {
         int l = start, r = start + 1;
 
-        if (r >= s.length() || s[l] != s[r]) {
+        if (r >= (int)s.length() || s[l] != s[r]) {
             pal = "";
             return;
         }
 
         pal = s.substr(start, 2);
-        while (l >=0 && r < s.length()) {
+        while (l >=0 && r < (int)s.length()) {
             if (s[l] == s[r]) {
                 pal = s.substr(l, r - l + 1);
                 l--;
@@ -54,7 +54,6 @@ public:
     string longestPalindrome(string s) {
         string sub = "", tmp;
         int len = s.length();
-        int l, r;
 
         // TODO: Where acceleration can be optimized
         //for (int i = 0; i < len && (sub.length() < (len - i)); i++) {

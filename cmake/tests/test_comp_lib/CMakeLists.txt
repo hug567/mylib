@@ -13,3 +13,9 @@ endif()
 add_library(math SHARED
     ../src/math.c
 )
+
+# add library version:
+#   libmath.so -> libmath.so.2
+#   libmath.so.2 -> libmath.so.0.1
+#   libmath.so.0.1
+SET_TARGET_PROPERTIES(math PROPERTIES VERSION 0.1 SOVERSION 2)

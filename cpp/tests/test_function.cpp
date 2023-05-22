@@ -1,3 +1,6 @@
+// learning cpp function
+// 2023-05-22
+
 #include <iostream>
 #include <stdarg.h> /* 可变参数 */
 

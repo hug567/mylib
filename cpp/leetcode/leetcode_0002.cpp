@@ -20,7 +20,7 @@ struct ListNode {
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int i, sum, carry = 0, tmp;
+        int sum, carry = 0, tmp;
         int len1 = length(l1);
         int len2 = length(l2);
         ListNode *shortList, *longList, *ret, *tail, *node;
@@ -76,7 +76,7 @@ struct ListNode *createList(const vector<int> & arr)
     int i;
     struct ListNode *head, *tail, *tmp;
 
-    for (i = 0; i < arr.size(); i++) {
+    for (i = 0; i < (int)arr.size(); i++) {
         tmp = new ListNode;
         tmp->val = arr[i];
         tmp->next = nullptr;
