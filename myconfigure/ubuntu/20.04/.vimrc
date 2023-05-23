@@ -252,6 +252,7 @@ nmap <C-]> :cs find g <C-R>=expand("<cword>")<CR><CR>
 " MRU插件：Most Recently Used，列出最近打开的文件
 let MRU_Window_Height = 20
 nmap <C-a> :MRU<CR>
+
 "------------------------------------------------------------------------------"
 " jump to tab: \+1, \+2, \+3 ...
 noremap <silent><leader>1 :tabn 1<CR>
@@ -272,34 +273,11 @@ hi TabLine     term=standout cterm=standout ctermfg=242 ctermbg=15
 hi TabLineSel  term=bold cterm=bold gui=bold ctermfg=220 ctermbg=242
 hi TabLineFill term=standout cterm=standout ctermfg=242 ctermbg=15
 
-function MyTabLine()
-  let s = ''
-  for i in range(tabpagenr('$'))
-    " select the highlighting
-    if i + 1 == tabpagenr()
-      let s ..= '%#TabLineSel#'
-    else
-      let s ..= '%#TabLine#'
-    endif
-
-    " set the tab page number (for mouse clicks)
-    "let s ..= '%' .. (i + 1) .. 'T'
-
-    " the label is made by MyTabLabel()
-    "let s ..= ' %{MyTabLabel(' .. (i + 1) .. ')} '
-    let s ..= '[tab:' .. (i + 1) .. ']  '
-  endfor
-
-  " after the last tab fill with TabLineFill and reset tab page nr
-  let s ..= '%#TabLineFill#%T'
-
-  " right-align the label to close the current tab page
-  "if tabpagenr('$') > 1
-  "  let s ..= '%=%#TabLine#%999Xclose'
-  "endif
-
-  return s
-endfunction
-" custom tab label
-set tabline=%!MyTabLine()
+"------------------------------------------------------------------------------"
+let ver = version
+if ver == 800
+    source ~/.vim/vimrc/vimrc-8.0
+elseif ver == 801
+    source ~/.vim/vimrc/vimrc-8.1
+endif
 "------------------------------------------------------------------------------"

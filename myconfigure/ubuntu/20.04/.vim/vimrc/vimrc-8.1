@@ -1,0 +1,15 @@
+function MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    if i + 1 == tabpagenr()
+      let s ..= '%#TabLineSel#'
+    else
+      let s ..= '%#TabLine#'
+    endif
+    let s ..= '[tab:' .. (i + 1) .. ']  '
+  endfor
+  let s ..= '%#TabLineFill#%T'
+  return s
+endfunction
+
+set tabline=%!MyTabLine()
