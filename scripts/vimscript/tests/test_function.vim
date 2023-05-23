@@ -1,4 +1,5 @@
 " learning vimscript function
+" vim version: 8.1
 " run: vim -c 'source test_xxx.vim'
 " 2023-05-22
 
@@ -14,18 +15,19 @@ function! TestPrintInfo(name, age)
     echo "name: " .. a:name .. ", age: " .. a:age
 endfunction
 
-function! TestReturn(num01, num02)
+" shorthand keywords: func / endfunc
+func! TestReturn(num01, num02)
     echo "TestReturn: -----------------------------------------"
     return a:num01 + a:num02
-endfunction
+endfunc
 
-func! Main()
+function! Main()
     " function call
     call TestPrint()
     " function call with parameters
     call TestPrintInfo("Bob", 18)
     " function call and get return value
     echo "1 + 2 = " .. TestReturn(1, 2)
-endfunc
+endfunction
 
 call Main()

@@ -1,4 +1,5 @@
 " learning vimscript variable
+" vim version: 8.1
 " run: vim -c 'source test_xxx.vim'
 " 2023-05-23
 
@@ -28,9 +29,9 @@ function! TestVarScope()
     echo "local age: " .. l:age
 endfunction
 
-func! Main()
+function! Main()
     call TestVar()
     call TestVarScope()
-endfunc
+endfunction
 
 call Main()

@@ -1,4 +1,5 @@
 " get vim version in vimscript
+" vim version: 8.1
 " run: vim -c 'source test_xxx.vim'
 " 2023-05-23
 
@@ -8,8 +9,8 @@ function! TestGetVersion()
     echo "current vim version: " .. l:var
 endfunction
 
-func! Main()
+function! Main()
     call TestGetVersion()
-endfunc
+endfunction
 
 call Main()
