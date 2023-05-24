@@ -18,6 +18,9 @@ function test_temp_redirect() {
     ls xxx 2> $file
     echo "$file:"; cat $file; rm $file
 
+    # redirect STDOUT and STDERR to /dev/null
+    ls xxx > /dev/null 2>&1
+
     # redirect STDOUT and STDERR to different file
     ls -l $0 xxx 1> $file 2> $file2
     echo "$file:"; cat $file; rm $file
@@ -26,6 +29,10 @@ function test_temp_redirect() {
     # redirect STDOUT and STDERR to same file
     ls -l $0 xxx &> $file # /dev/null
     echo "$file:"; cat $file; rm $file
+
+    # redirect STDOUT and STDERR to /dev/null
+    ls xxx > /dev/null 2>&1
+    ls xxx &> /dev/null
 
     # redirect STDOUT to STDERR
     echo "This is an error message" >&2
