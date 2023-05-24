@@ -3,10 +3,20 @@
 " run: vim -c 'source test_xxx.vim'
 " 2023-05-24
 
+" and or not
 function! TestLogic()
     echo "TestLogic: ------------------------------------------"
-    echo getcwd()
-    echo expand('%:h')
+    if 1 == 1 && 2 < 3
+        echo "1 == 1 && 2 < 3"
+    endif
+
+    if 1 > 2 || 2 < 3
+        echo "1 > 2 || 2 < 3"
+    endif
+
+    if ! 0
+        echo "!0"
+    endif
 endfunction
 
 function! Main()
