@@ -1,6 +1,6 @@
 source ~/.vim/vimrc/plugin.vim
 source ~/.vim/vimrc/color.vim
-source ~/.vim/vimrc/display.vim.vim
+source ~/.vim/vimrc/display.vim
 source ~/.vim/vimrc/nerdtree.vim
 source ~/.vim/vimrc/taglist.vim
 source ~/.vim/vimrc/leaderf.vim
