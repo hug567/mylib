@@ -21,11 +21,24 @@ def test_call():
     ret = subprocess.call("pwd", shell=True)
     print("call ret:", ret) # 0: success, !0: fail
 
+# recommended method of executing shell cmd
 def test_popen():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
-    files=subprocess.Popen("ls -l", shell=True)
-    files.wait()
-    print(type(files))
+
+    output = []
+    # run shell cmd
+    p = subprocess.Popen("ls -l", shell=True, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+    # realtime output
+    while True:
+        line = p.stdout.readline()
+        if not line:
+            break
+        output.append(line.strip().decode('utf-8'))
+        print(output[-1])
+
+    # wait for the shell cmd to finish
+    p.wait()
 
     # wait for cmd run finish
     print("will sleep 5s")
