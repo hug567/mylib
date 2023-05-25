@@ -14,8 +14,10 @@ tar
 # 2、常用命令：
 
 ```bash
-# 解压文件
+# 解压全部文件
 tar -xvf file.tar.gz
+# 解压单个目录
+tar -zxvf file.tar.gz dir01/dir02
 
 # 解压到指定目录
 tar -xvf file.tar.gz -C dir
