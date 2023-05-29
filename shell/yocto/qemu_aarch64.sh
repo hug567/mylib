@@ -38,6 +38,8 @@ run_kernel() {
         -kernel Image-qemuarm64.bin \
         -device virtio-blk-device,drive=disk0 \
         -drive id=disk0,file=${image},if=none,format=raw \
+        -device virtio-blk-device,drive=disk1 \
+        -drive id=disk1,file=./disk1.img,if=none,format=raw \
         -device virtio-net-device,netdev=net0,mac=52:54:00:12:34:02 \
         -netdev tap,id=net0,script=no,downscript=no,ifname=tap0 \
         -object rng-random,filename=/dev/urandom,id=rng0 \
@@ -46,7 +48,7 @@ run_kernel() {
         -device usb-tablet \
         -device usb-kbd  \
         -device virtio-gpu-pci \
-        --append 'root=/dev/vda rw mem=256M ip=192.168.0.101::192.168.0.1:255.255.255.0::eth0:off:8.8.8.8'
+        --append 'root=/dev/vdb rw mem=256M ip=192.168.0.101::192.168.0.1:255.255.255.0::eth0:off:8.8.8.8'
 }
 
 main() {
