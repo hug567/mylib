@@ -10,11 +10,20 @@
 function traverse_cmd_result() {
     echo -e "\n$FUNCNAME: --------------------------------------"
     local result=$(ls -l)
-    echo "$result" # 加双引号会保留换行符
+    # echo "$result" # 加双引号会保留换行符
     # 逐行遍历结果
     echo "$result" | while read line
     do
-        echo "each line: [$line]"
+        echo "line: [$line]"
+    done
+
+    echo "[test \\r]: ----------"
+    # 原始字符串以\r作为换行符，使用sed替换为\n
+    local content=$(echo -e "line 1\rline 2\rline 3\r")
+    content=$(echo $content | sed 's/\r/\n/g')
+    echo "$content" | while read item
+    do
+        echo "item: [$item]"
     done
 }
 
