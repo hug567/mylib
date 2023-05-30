@@ -11,31 +11,36 @@ WHITE="\033[37m"
 RESET="\033[0m"
 
 # export HX_VERBOSE=1
-log_debug()
+function log_debug()
 {
     if [ "$HX_VERBOSE" = "1" ]; then
-        echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][D] $1"
+        echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][D] $*"
     fi
 }
 
-log_info()
+function log_info()
 {
-    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${GREEN}I${RESET}] $1"
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${GREEN}I${RESET}] $*"
 }
 
 # eg: log_info_var SHELL
-log_info_var()
+function log_info_var()
 {
     log_info "$1 = $(eval echo '$'"$1")"
 }
 
-log_error()
+function log_warn()
 {
-    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${RED}E${RESET}] $1"
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${YELLOW}W${RESET}] $*"
+}
+
+function log_error()
+{
+    echo -e "[$(date +"%Y-%m-%d %H:%M:%S")][${RED}E${RESET}] $*"
 }
 
 # eg: check_files_exist file1 file2 ...
-check_files_exist()
+function check_files_exist()
 {
     for file in $*
     do
@@ -46,13 +51,13 @@ check_files_exist()
     done
 }
 
-check_file_exist()
+function check_file_exist()
 {
     check_files_exist $*
 }
 
 # eg: check_dirs_exist dir1 dir2 ...
-check_dirs_exist()
+function check_dirs_exist()
 {
     for dir in $*
     do
@@ -63,7 +68,7 @@ check_dirs_exist()
     done
 }
 
-check_dir_exist()
+function check_dir_exist()
 {
     check_dirs_exist $*
 }
@@ -72,7 +77,7 @@ check_dir_exist()
 #   START_TIME=$(date +%s)
 #   END_TIME=$(date +%s)
 #   time_diff $END_TIME $START_TIME
-time_diff()
+function time_diff()
 {
     end_time=$1
     start_time=$2
@@ -114,7 +119,7 @@ function wait_task_finish() {
     done
 }
 
-prepare() {
+function prepare() {
     CPU_THREAD=$(cat /proc/cpuinfo | grep "processor" | wc -l)
     if [ $CPU_THREAD -gt 4 ]; then
         let COMPILE_THREAD=CPU_THREAD-1
