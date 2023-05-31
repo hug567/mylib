@@ -32,7 +32,17 @@ fn test_var_dec() {
     println!("fisrt name: {}, last name: {}", fisrt, last);
 }
 
+// const variable
+fn test_const_var() {
+    println!("[test_const_var]: --------------------------------------");
+
+    // all uppercase and underlined, must define data type
+    const MAX_LEN:u32 = 1000;
+    println!("MAX_LEN: {}", MAX_LEN);
+}
+
 fn main() {
     test_var();
     test_var_dec();
+    test_const_var();
 }

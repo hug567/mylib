@@ -4,6 +4,8 @@ SRCDIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
 BUILDDIR=$(pwd)
 
 SRCFILES=(
+    test_cmp.rs
+    test_number.rs
     test_print.rs
     test_var.rs
 )
