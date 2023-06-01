@@ -92,9 +92,33 @@ test_func_ret() {
     fi
 }
 
+function _greater_10() {
+    local num=$1
+    if [ $num -gt 10 ]; then
+        return 0  # true
+    else
+        return 1  # false
+    fi
+}
+
+function test_return_bool() {
+    echo "$FUNCNAME:-----------------------------"
+
+    local num=11
+    if _greater_10 $num; then  # true
+        echo "$num > 10"
+    fi
+
+    num=9
+    if ! _greater_10 $num; then  # ! false
+        echo "$num <= 10"
+    fi
+}
+
 main() {
     test_get_func_ret
     test_func_ret
+    test_return_bool
 }
 
 main

@@ -1,6 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
+
 class helloRecipe(ConanFile):
     name = "hello"
     version = "1.0.0"
@@ -36,3 +37,7 @@ class helloRecipe(ConanFile):
     def package(self):
         cmake = CMake(self)
         cmake.install()
+
+    
+
+    
