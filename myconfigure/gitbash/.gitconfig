@@ -6,6 +6,8 @@
 [core]
 	editor = vim
 	quotepath = false
+	autocrlf = false
+	safecrlf = warn
 [credential]
 	helper = store
 [http]
