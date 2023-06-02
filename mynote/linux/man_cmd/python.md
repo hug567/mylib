@@ -42,12 +42,25 @@ sudo update-alternatives --config python
 ## 4、pip/pip3：
 
 ```shell
+# 查询包：https://pypi.org/
+
 # 升级pip
 python -m pip install --upgrade pip
+
 # 查看已安装的python包
 pip list
+
 # 安装python包
 pip install xxx
+# 安装指定版本
+sudo pip3 install conan==1.60.1
+
+# 卸载包
+sudo pip3 unstall conan
+# 卸载是指定版本
+sudo pip3 unstall conan==2.0.4
+# 卸载当前用户目录下的包
+pip3 unstall conan
 ```
 
 ## 5、pydoc：

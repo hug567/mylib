@@ -47,6 +47,8 @@ docker attach <CONTAINER ID>                                # 进入容器
 docker ps -a                                                # 查看容器
 docker rm <CONTAINER ID>                                    # 删除指定容器
 docker rm $(docker ps -aq)                                  # 删除所有容器
+# docker进入启动的artifactory CE容器
+docker exec -it <2539a4ef69a0> bash
 
 # 镜像操作
 docker images -h                                            # 查看image命令帮助
