@@ -2,8 +2,8 @@
 
 ```bash
 # 安装
-sudo pip install canon
-sudo pip install canon=1.60.1
+sudo pip3 install canon
+sudo pip3 install canon=1.60.1
 
 # 查看帮助
 conan -h
@@ -22,6 +22,7 @@ conan remote add conan-transit https://conan-transit.bintray.com
 conan remote remove <xxx>
 
 conan remote add local http://localhost:8082/ui/admin/repositories/local
+conan remote add local http://localhost:9300
 ```
 
 ## 2）、search：
@@ -48,7 +49,9 @@ conan install -h
 # 查看remove帮助
 conan remove -h
 # 删除本地包
-conan remove <xxx>
+conan remove <hello>
+# 删除远端包
+conan remove -r <remove> <hello/1.0.0>
 ```
 
 ## 5）、new：
@@ -104,6 +107,24 @@ conan list -r <remote> h*
 
 ```bash
 # 上传包到远端
-conan upload -r <remote> <package>
+conan upload -r <remote> <hello/1.0.0>
+```
+
+# 2、conan_server
+
+```bash
+# 安装
+sudo pip3 install canon_server
+
+# 目录
+~/.conan_server
+# 配置文件
+~/.conan_server/server.conf
+
+# 启动
+conan_server
+
+# conan添加远端
+conan remote add local http://localhost:9300
 ```
 
