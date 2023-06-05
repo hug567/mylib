@@ -119,6 +119,26 @@ function wait_task_finish() {
     done
 }
 
+function set_shell_runtime() {
+    local ret=$(uname -s)
+    case "$ret" in
+        *Linux*)
+            SHELLRUNTIME=Linux
+            ;;
+        *MINGW64_NT*)
+            SHELLRUNTIME=Gitbash
+            ;;
+        *CYGWIN_NT*)
+            SHELLRUNTIME=Mobaxterm
+            ;;
+        *)
+            SHELLRUNTIME=Unknown
+            ;;
+    esac
+    export SHELLRUNTIME
+    log_debug "SHELLRUNTIME = $SHELLRUNTIME"
+}
+
 function prepare() {
     CPU_THREAD=$(cat /proc/cpuinfo | grep "processor" | wc -l)
     if [ $CPU_THREAD -gt 4 ]; then
@@ -127,6 +147,8 @@ function prepare() {
         COMPILE_THREAD=$CPU_THREAD
     fi
     export CPU_THREAD COMPILE_THREAD
+
+    set_shell_runtime
 }
 
 prepare $*

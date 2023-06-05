@@ -6,14 +6,18 @@ function var_is_null() {
 
     local var1=
     if [ ! -n "$var1" ]; then
-        echo "var1 is NULL"
-    else
-        echo "var1 is not NULL"
+        echo "[!-n] var1 is NULL"
+    fi
+    if [ -z $var1 ]; then
+        echo "[-z] var1 is NULL"
     fi
 
     local var2="12345"
     if [ -n "$var2" ]; then
-        echo "var2 is not NULL: $var2"
+        echo "[-n] var2 is not NULL: $var2"
+    fi
+    if [ ! -z "$var2" ]; then
+        echo "[!-z] var2 is not NULL: $var2"
     fi
 }
 

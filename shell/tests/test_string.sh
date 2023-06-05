@@ -55,10 +55,44 @@ function test_string_split() {
     done
 }
 
+# 字符串中存在指定的子串
+function test_sub_exist() {
+    echo "$FUNCNAME:-----------------------------"
+
+    local str="helloworld"
+    local sub="hello"
+
+    # wildcard character
+    if [[ -n "$sub" && "$str" == *"$sub"* ]]; then
+        echo "[**] $sub exist in $str"
+    fi
+
+    # grep
+    if [ "$(echo $str | grep $sub)" != "" ]; then
+        echo "[grep] $sub exist in $str"
+    fi
+
+    # case in
+    case "$str" in # helloworld
+        *"$sub"*) # *hello*
+            echo "[case] $sub exist in $str"
+            ;;
+        *)
+            echo "[case] $sub does not exist in $str"
+            ;;
+    esac
+
+    # =~
+    if [[ $str =~ $sub ]]; then
+        echo "[=~] $sub exist in $str"
+    fi
+}
+
 function main() {
     test_string_cut
     test_string_length
     test_string_split
+    test_sub_exist
 }
 
 main
