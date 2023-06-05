@@ -1,0 +1,11 @@
+supported os:
+    ubuntu 18
+    ubuntu 20
+    ubuntu 22
+    gitbash
+    mobaxterm
+    opensuse
+    kail
+    centos 7
+    centos 8
+    fedora

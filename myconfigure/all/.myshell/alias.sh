@@ -1,0 +1,5 @@
+alias ll="ls -l"
+alias lla="ls -al"
+alias lsa="ls -a"
+alias cls="clear"
+alias tmux="tmux -2"
