@@ -47,9 +47,21 @@ function test_echo_long_line() {
          "line 3"
 }
 
+# using which
 function __cmd_exist() {
     local cmd=$1
     if which $cmd &> /dev/null; then
+        echo "$cmd exist"
+    else
+        echo "$cmd not exist"
+    fi
+}
+
+# using type and check rerurn value
+function __cmd_exist_2() {
+    local cmd=$1
+    local ret=$(type "$cmd" 2>&1 | grep "not found")
+    if [ "$ret" == "" ]; then
         echo "$cmd exist"
     else
         echo "$cmd not exist"
@@ -61,6 +73,8 @@ function test_cmd_exist() {
 
     __cmd_exist cmake
     __cmd_exist xxx
+    __cmd_exist_2 vim
+    __cmd_exist_2 yyy
 }
 
 function main() {

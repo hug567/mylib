@@ -1,6 +1,8 @@
 " learning vimscript compare number
 " vim version: 8.1
 " run: vim -c 'source test_xxx.vim'
+" run: :cd .../vimscript/tests
+"      :source test_xxx.vim
 " 2023-05-23
 
 function! TestCmpNum()
@@ -38,6 +40,17 @@ endfunction
 
 function! TestCmpString()
     echo "TestCmpString: --------------------------------------"
+
+    let l:str1 = "hello"
+    let l:str2 = "hello"
+    if l:str1 == l:str2
+        echo l:str1 .. " == " .. l:str2
+    endif
+
+    let l:str2 = "world"
+    if l:str1 != l:str2
+        echo l:str1 .. " != " .. l:str2
+    endif
 endfunction
 
 function! Main()

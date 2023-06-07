@@ -1,6 +1,8 @@
 " learning vimscript if
 " vim version: 8.1
 " run: vim -c 'source test_xxx.vim'
+" run: :cd .../vimscript/tests
+"      :source test_xxx.vim
 " 2023-05-23
 
 function! TestIf()
@@ -29,8 +31,29 @@ function! TestIf()
     endif
 endfunction
 
+function! __ReturnTrue()
+    return 1
+endfunction
+
+function! __ReturnFalse()
+    return 0
+endfunction
+
+function! TestFunctionReturn()
+    echo "TestFunctionReturn: ---------------------------------"
+
+    if __ReturnTrue()
+        echo "function return true"
+    endif
+
+    if ! __ReturnFalse()
+        echo "function return false"
+    endif
+endfunction
+
 function! Main()
     call TestIf()
+    call TestFunctionReturn()
 endfunction
 
 call Main()

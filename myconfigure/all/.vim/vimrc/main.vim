@@ -1,3 +1,4 @@
+source ~/.vim/vimrc/lib.vim
 source ~/.vim/vimrc/plugin.vim
 source ~/.vim/vimrc/color.vim
 source ~/.vim/vimrc/display.vim

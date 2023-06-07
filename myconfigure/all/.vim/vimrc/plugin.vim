@@ -16,8 +16,10 @@ call plug#begin()
     " https://github.com/preservim/nerdtree
     Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
-    " https://github.com/Yggdroot/LeaderF
-    Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+    if IsLinux()
+        " https://github.com/Yggdroot/LeaderF
+        Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+    endif
 
     " https://github.com/yegappan/mru
     Plug 'yegappan/mru'

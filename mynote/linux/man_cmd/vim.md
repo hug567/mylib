@@ -122,7 +122,8 @@ shift + *                            //搜索单词
 :source ~/.vimrc                     //更新配置文件
 :hi / :highlight                     //查看当前颜色配置
 :f / Ctrl + G                        //查看文件名
-:pwd                                 //查看父目录
+:pwd                                 //查看当前工作目录
+:cd /home/hx/xxx                     //修改当前工作目录
 :diffthis                            //比较文件，在打开的两个文件中分别执行
 :diffupdate                          //比较更新
 zo                                   //折叠打开
