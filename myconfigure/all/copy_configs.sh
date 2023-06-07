@@ -14,6 +14,8 @@ OVERWRITTEN_FILES=(
     .tmux
     .gitconfig
     .tigrc
+    .vimrc
+    .vim
     copy_configs.sh
 )
 
