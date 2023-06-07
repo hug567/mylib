@@ -77,3 +77,27 @@ function is_ash() {
     __cur_shell "/ash"
     return $?
 }
+
+function is_windows_nt() {
+    local kernel=$(uname -s)
+    if [[ "$kernel" =~ "$NT" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function is_gitbash() {
+    if ! is_windows_nt; then
+        return 1
+    fi
+    local dis=$(uname -s | grep "Mingw")
+    if [ -z "$dis" ]; then
+        return 1
+    fi
+    local os=$(uname -o | grep "Msys")
+    if [ -z "$os" ]; then
+        return 1
+    fi
+    return 0
+}

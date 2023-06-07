@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+source $SCRIPT_DIR/.myshell/lib.sh
+
 # needs to be overwritten unconditionally
 OVERWRITTEN_FILES=(
     .myshell
@@ -19,7 +22,10 @@ NOT_EXIST_FILES=(
     .profile
 )
 
-SCRIPT_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+# only gitbash needed config files
+GITBASH_FILES=(
+    .minttyrc
+)
 
 function usage() {
     echo "Usage: $0 <home>       copy configures to home dir"
@@ -54,10 +60,23 @@ function copy_need_overwritten_files() {
     done
 }
 
+function copy_gitbash_files() {
+    local dst=$1
+
+    for f in ${GITBASH_FILES[@]}; do
+        rm -rf $dst/$f
+        copy_files $SCRIPT_DIR/$f $dst
+    done
+}
+
 function copy_configures() {
     local dst=$1
+
     copy_need_overwritten_files $dst
     copy_not_exist_files $dst
+    if is_gitbash; then
+        copy_gitbash_files $dst
+    fi
 }
 
 function main() {

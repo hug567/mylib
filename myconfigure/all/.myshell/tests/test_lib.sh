@@ -44,10 +44,19 @@ function test_shell() {
     fi
 }
 
+function test_gitbash() {
+    echo "$FUNCNAME:-----------------------------"
+
+    if is_gitbash; then
+        echo "current is gitbash"
+    fi
+}
+
 function main() {
     test_kernel
     test_ubuntu
     test_shell
+    test_gitbash
 }
 
 main $*
