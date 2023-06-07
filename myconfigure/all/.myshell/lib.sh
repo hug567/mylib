@@ -68,6 +68,14 @@ function is_bash() {
     return $?
 }
 
+function is_linux_bash() {
+	if is_linux -a is_bash; then
+	    return 0
+	else
+	   return 1
+	fi
+}
+
 function is_zsh() {
     __cur_shell "zsh"
     return $?
@@ -91,7 +99,7 @@ function is_gitbash() {
     if ! is_windows_nt; then
         return 1
     fi
-    local dis=$(uname -s | grep "Mingw")
+    local dis=$(uname -s | grep "MINGW")
     if [ -z "$dis" ]; then
         return 1
     fi

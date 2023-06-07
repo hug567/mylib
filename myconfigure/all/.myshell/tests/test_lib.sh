@@ -42,6 +42,10 @@ function test_shell() {
     else
         echo "Cannot recognize the current shell"
     fi
+
+    if is_linux_bash; then
+        echo "current is linux bash"
+    fi
 }
 
 function test_gitbash() {
@@ -49,6 +53,8 @@ function test_gitbash() {
 
     if is_gitbash; then
         echo "current is gitbash"
+    else
+        echo "current is not gitbash"
     fi
 }
 
