@@ -8,7 +8,7 @@ sudo apt install docker.io                                  # 安装docker
 sudo docker info                                            # 查看docker系统信息
 sudo docker version                                         # 查看docker版本信息
 
-sudo gpasswd -a $USER docker && newgrp docker               # 当前用户加入docker用户组
+sudo gpasswd -a $USER docker && newgrp docker               # 当前用户加入docker用户组(临时)
 
 docker search hello-world                                   # 查询镜像
 docker pull hello-world                                     # 拉取镜像
@@ -25,7 +25,8 @@ sudo vim /etc/docker/daemon.json
 }
 # 重启docker
 sudo systemctl restart docker
-sudo docker info                                            # 查看镜像源
+# 查看镜像源
+docker info
 
 sudo systemctl start docker                                 # 启动docker
 sudo systemctl daemon-reload                                # 重启docker守护进程
@@ -64,6 +65,8 @@ docker save -o myopensuse.tar huangxing/myopensuse:latest
 docker loader -i myopensuse.tar
 
 docker run -it centos:latest /bin/bash                      # docker启动centos
+# 映射host目录到容器
+docker run -it -v /home/hx/data:/data centos:latest /bin/bash
 
 # docker使用容器制作Image：
 sudo docker commit <CONTAINER ID> huangxing/myopensuse:latest
