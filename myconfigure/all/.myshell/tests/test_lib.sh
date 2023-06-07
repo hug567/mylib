@@ -12,12 +12,14 @@ function test_kernel() {
     fi
 }
 
-function test_ubuntu() {
+function test_linux_distro() {
     echo "$FUNCNAME:-----------------------------"
     if is_ubuntu; then
         echo "current os is ubuntu"
+    elif is_opensuse; then
+        echo "current os is opensuse"
     else
-        echo "current os is not ubuntu"
+        echo "current os is unknown distro"
     fi
 
     if is_ubuntu_18_04; then
@@ -26,8 +28,10 @@ function test_ubuntu() {
         echo "current os is ubuntu 20.04"
     elif is_ubuntu_22_04; then
         echo "current os is ubuntu 22.04"
+    elif is_opensuse_15_3; then
+        echo "current os is opensuse 15.3"
     else
-        echo "current os is unknown ubuntu version"
+        echo "current os is unknown distro"
     fi
 }
 
@@ -60,7 +64,7 @@ function test_gitbash() {
 
 function main() {
     test_kernel
-    test_ubuntu
+    test_linux_distro
     test_shell
     test_gitbash
 }

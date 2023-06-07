@@ -44,9 +44,29 @@ function! TestSubString()
     endif
 endfunction
 
+function! TestStrCombine()
+    echo "TestStrCombine: -------------------------------------"
+
+    let l:str1 = "hello"
+    let l:str2 = "world"
+
+    " method 1
+    let l:comb = l:str1 .. l:str2
+    echo "l:comb: " .. l:comb
+
+    " method 2
+    let l:comb .= " in vimscript"
+    echo "l:comb: " .. l:comb
+
+    " method 3
+    let l:comb = printf("%s%s", "hello", " vimscript")
+    echo "l:comb: " .. l:comb
+endfunction
+
 function! Main()
     call TestStringCmp()
     call TestSubString()
+    call TestStrCombine()
 endfunction
 
 call Main()

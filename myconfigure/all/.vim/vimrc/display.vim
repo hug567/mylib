@@ -18,7 +18,9 @@ set listchars=tab:>-,trail:-
 set ignorecase
 " 设置光标样式
 let &t_SI.="\e[2 q" "INSERT模式，2:方块
+if IsGreaterVim800()
 let &t_SR.="\e[2 q" "REPLACE模式, 2:方块
+endif
 let &t_EI.="\e[2 q" "NORMAL模式, 2:方块
 " 使能系统剪切板+ (vim需支持+clipboard)
 "set clipboard^=unnamed,unnamedplus

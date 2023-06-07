@@ -37,7 +37,9 @@ endfunc
 "delcommand SaveToTmpFile
 command SaveToTmpFile call SaveToTmpFile()
 " y命令复制时自动写入临时文件
+if IsGreaterVim800()
 autocmd TextYankPost * :call SaveToTmpFile()
+endif
 
 " 读取临时文件到寄存器0中
 func! LoadFromTmpFile()
