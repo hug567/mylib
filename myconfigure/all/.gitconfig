@@ -1,0 +1,55 @@
+# gitbase config:
+#   Right Click -> Options... -> Text -> Locale:zh_CN -> Character set:UTF-8 -> Save
+[user]
+	name = Huang Xing
+	email = huangxing567@163.com
+	#name = xing.huang6
+	#email = xing.huang6@nio.com
+[core]
+	editor = vim
+	quotepath = false
+	autocrlf = false
+	safecrlf = warn
+[color]
+	ui = auto
+[credential]
+	helper = store
+[http]
+	# 100M: 104857600
+	# 1G: 1073741824
+	# 2G: 2147483648
+	# 10G: 10737418240
+	# 15G: 16106127360
+	# 20G: 21474836480
+	postBuffer = 10737418240
+	#proxy = http://proxy.nioint.com:8080
+[https]
+	#proxy = https://proxy.nioint.com:8080
+[alias]
+	br = branch
+	#br = !sh -c 'git branch | cat'
+	#br = "!br() { git branch $* | cat; }; br"
+	co = checkout
+	ck = cherry-pick
+	st = status
+	cm = commit
+	cs = commit -s
+	dif = diff
+	pl = pull
+	ps = push
+	lg = "log --oneline --graph --pretty=format:\"%C(yellow)%h %Cred[%an]%Creset %Cblue[%ad]%Creset %s %Cgreen(%cr)%Cred%d\" --date=format:'%Y-%m-%d %H:%M:%S' -n 1000"
+	cmhx = commit --author='Huang Xing <huangxing567@163.com>'
+	cmahx = commit --amend --author='Huang Xing <huangxing567@163.com>'
+	brau = "!brau() { git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | cat; }; brau"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[i18n]
+	commitencoding = utf-8
+	logoutputencoding = utf-8
+[credential "https://git.nevint.com"]
+	provider = gitlab
+[credential "https://gitee.com"]
+	provider = generic

@@ -1,4 +1,5 @@
 # Ubuntu 20.04 (2022.06.25)
+# if failed, try http://
 deb     https://mirrors.aliyun.com/ubuntu/ focal           main restricted universe multiverse
 deb     https://mirrors.aliyun.com/ubuntu/ focal-security  main restricted universe multiverse
 deb     https://mirrors.aliyun.com/ubuntu/ focal-updates   main restricted universe multiverse

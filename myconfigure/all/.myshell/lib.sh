@@ -1,0 +1,79 @@
+#!/usr/bin/bash
+
+function is_linux() {
+    local kernel=$(uname -s)
+    if [ "$kernel" == "Linux" ]; then
+        return 0 # true
+    fi
+    return 1 # false
+}
+
+function is_ubuntu() {
+    if ! is_linux; then
+        return 1
+    fi
+    local dis=$(uname -a | grep "Ubuntu")
+    if [ -n "$dis" ]; then
+        return 0
+    fi
+    return 1
+}
+
+function __ubuntu_version() {
+    local ver=$1
+    if ! is_ubuntu; then
+        return 1
+    fi
+    local version=$(uname -a | grep "$ver")
+    if [ -n "$version" ]; then
+        return 0
+    fi
+    return 1
+}
+
+function is_ubuntu_18_04() {
+    __ubuntu_version "18.04"
+    return $?
+}
+
+function is_ubuntu_20_04() {
+    __ubuntu_version "20.04"
+    return $?
+}
+
+function is_ubuntu_22_04() {
+    __ubuntu_version "22.04"
+    return $?
+}
+
+function is_mobaxterm() {
+    return 1
+}
+
+function is_gitbash() {
+    return 1
+}
+
+function __cur_shell() {
+    local shell=$1
+    if [[ "$SHELL" =~ "$shell" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function is_bash() {
+    __cur_shell "bash"
+    return $?
+}
+
+function is_zsh() {
+    __cur_shell "zsh"
+    return $?
+}
+
+function is_ash() {
+    __cur_shell "/ash"
+    return $?
+}

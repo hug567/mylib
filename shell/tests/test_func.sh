@@ -115,10 +115,34 @@ function test_return_bool() {
     fi
 }
 
+function __pass_true() {
+    _func_return 0
+    return $?
+}
+
+function __pass_false() {
+    _func_return 123
+    return $?
+}
+
+# Passing return values between functions
+function test_pass_ret() {
+    echo "$FUNCNAME:-----------------------------"
+
+    if __pass_true; then
+        echo "pass true between functions"
+    fi
+
+    if ! __pass_false; then
+        echo "pass false between functions"
+    fi
+}
+
 main() {
     test_get_func_ret
     test_func_ret
     test_return_bool
+    test_pass_ret
 }
 
 main

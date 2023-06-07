@@ -1,0 +1,14 @@
+# tig version: 2.4.1
+
+# 颜色设置语法：color area fgcolor bgcolor [attributes]
+# 中间分隔线颜色
+color title-blur blue default
+# 底部聚焦栏颜色 (237:灰)
+color title-focus blue 237
+# 当前行颜色 (15:白, 239:灰)
+color cursor 15 239
+
+# 竖直分割窗口
+set vertical-split = true
+# 右侧窗口比例
+set split-view-width = 70%
