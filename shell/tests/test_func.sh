@@ -136,6 +136,10 @@ function test_pass_ret() {
     if ! __pass_false; then
         echo "pass false between functions"
     fi
+
+    if __pass_true -a ! __pass_false; then
+        echo "__pass_true and ! __pass_false"
+    fi
 }
 
 main() {
