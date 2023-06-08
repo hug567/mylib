@@ -137,3 +137,31 @@ function is_opensuse_15_3() {
     __opensuse_version "15.3"
     return $?
 }
+
+function is_fedora() {
+    if ! is_linux; then
+        return 1
+    fi
+    local dis=$(cat /etc/os-release | grep "Fedora")
+    if [ -n "$dis" ]; then
+        return 0
+    fi
+    return 1
+}
+
+function __fedora_version() {
+    local ver=$1
+    if ! is_fedora; then
+        return 1
+    fi
+    local version=$(cat /etc/os-release | grep "Fedora" | grep "$ver")
+    if [ -n "$version" ]; then
+        return 0
+    fi
+    return 1
+}
+
+function is_fedora_35() {
+    __fedora_version "35"
+    return $?
+}

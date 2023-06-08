@@ -1,5 +1,7 @@
-alias ll="ls -l"
-alias lla="ls -al"
-alias lsa="ls -a"
-alias cls="clear"
-alias tmux="tmux -2"
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias lla='ls -al'
+alias lsa='ls -a'
+alias cls='clear'
+alias clss='clear && clear'
+alias tmux='tmux -2'

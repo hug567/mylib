@@ -18,6 +18,8 @@ function test_linux_distro() {
         echo "current os is ubuntu"
     elif is_opensuse; then
         echo "current os is opensuse"
+    elif is_fedora; then
+        echo "current os is fedora"
     else
         echo "current os is unknown distro"
     fi
@@ -30,6 +32,8 @@ function test_linux_distro() {
         echo "current os is ubuntu 22.04"
     elif is_opensuse_15_3; then
         echo "current os is opensuse 15.3"
+    elif is_fedora_35; then
+        echo "current os is fedora 35"
     else
         echo "current os is unknown distro"
     fi

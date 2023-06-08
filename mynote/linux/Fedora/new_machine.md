@@ -6,7 +6,7 @@ sudo adduser hx                         //创建用户
 sudo passwd hx                          //设置密码
 sudo deluser -r hx                      //删除用户
 
-// 设置软件源
+// Fedora设置软件源
 cd /etc/yun.repos.d
 
 sudo curl -o fedora.repo http://mirrors.aliyun.com/repo/fedora.repo
