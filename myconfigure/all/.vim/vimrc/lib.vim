@@ -68,8 +68,24 @@ function! TestShellCmd()
     endif
 endfunction
 
+function! TestVimVersion()
+    echo "TestVimVersion: -------------------------------------"
+    if IsVim703()
+        echo "current vim version is 703"
+    elseif IsVim800()
+        echo "current vim version is 800"
+    elseif IsVim801()
+        echo "current vim version is 801"
+    elseif IsVim802()
+        echo "current vim version is 802"
+    elseif IsVim900()
+        echo "current vim version is 900"
+    endif
+endfunction
+
 function! Main()
     call TestShellCmd()
+    call TestVimVersion()
 endfunction
 
 "call Main()

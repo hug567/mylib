@@ -16,7 +16,7 @@ call plug#begin()
     " https://github.com/preservim/nerdtree
     Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
-    if IsLinux()
+    if IsLinux() && CmdExist("python3")
         " https://github.com/Yggdroot/LeaderF
         Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
     endif

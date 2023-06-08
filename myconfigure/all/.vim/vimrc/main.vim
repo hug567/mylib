@@ -12,8 +12,8 @@ source ~/.vim/vimrc/mru.vim
 source ~/.vim/vimrc/tab.vim
 
 let ver = version
-if ver == 800
+if ver == 703 || ver == 800
     source ~/.vim/vimrc/vimrc-8.0
-elseif ver == 801
+elseif ver == 801 || ver == 802 || ver == 900
     source ~/.vim/vimrc/vimrc-8.1
 endif
