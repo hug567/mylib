@@ -46,14 +46,6 @@ function is_ubuntu_22_04() {
     return $?
 }
 
-function is_mobaxterm() {
-    return 1
-}
-
-function is_gitbash() {
-    return 1
-}
-
 function __cur_shell() {
     local shell=$1
     if [[ "$SHELL" =~ "$shell" ]]; then
@@ -88,7 +80,7 @@ function is_ash() {
 
 function is_windows_nt() {
     local kernel=$(uname -s)
-    if [[ "$kernel" =~ "$NT" ]]; then
+    if [[ "$kernel" =~ "NT" ]]; then
         return 0
     else
         return 1
@@ -105,6 +97,17 @@ function is_gitbash() {
     fi
     local os=$(uname -o | grep "Msys")
     if [ -z "$os" ]; then
+        return 1
+    fi
+    return 0
+}
+
+function is_mobaxterm() {
+    if ! is_windows_nt; then
+        return 1
+    fi
+    # uame -s: CYGWIN_NT-10.0-WOW
+    if [ ! -f /usr/share/mobaxterm ]; then
         return 1
     fi
     return 0

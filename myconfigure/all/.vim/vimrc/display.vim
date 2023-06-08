@@ -24,3 +24,7 @@ endif
 let &t_EI.="\e[2 q" "NORMAL模式, 2:方块
 " 使能系统剪切板+ (vim需支持+clipboard)
 "set clipboard^=unnamed,unnamedplus
+
+if IsVim703()
+    set nofoldenable
+endif

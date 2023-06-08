@@ -61,6 +61,8 @@ function test_gitbash() {
 
     if is_gitbash; then
         echo "current is gitbash"
+    elif is_mobaxterm; then
+        echo "current is mobaxterm"
     else
         echo "current is not gitbash"
     fi

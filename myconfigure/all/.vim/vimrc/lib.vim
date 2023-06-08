@@ -42,6 +42,10 @@ function! IsVim802()
     return __IsVimVersion(802)
 endfunction
 
+function! IsVim900()
+    return __IsVimVersion(900)
+endfunction
+
 function! IsGreaterVim800()
     let l:v = version
     if l:v >= 800
