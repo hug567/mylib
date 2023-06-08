@@ -10,7 +10,7 @@ endfunction
 function! CmdExist(cmd)
     let l:cmdstr = printf("%s%s", "type ", a:cmd)
     let l:ret = system(l:cmdstr)
-    if match(l:ret, "not found") != -1
+    if match(l:ret, "not found") != -1 || empty(l:ret)
         return 0
     else
         return 1
@@ -55,12 +55,22 @@ function! IsGreaterVim800()
     endif
 endfunction
 
+function! IsMobaxterm()
+    if filereadable("/usr/share/mobaxterm")
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
 "------------------------------------------------------------------------------"
 
 function! TestShellCmd()
     echo "TestShellCmd: ---------------------------------------"
     if IsLinux()
         echo "current is linux"
+    else
+        echo "current is not linux"
     endif
 
     if CmdExist("vim") && ! CmdExist("yyy")
@@ -69,6 +79,12 @@ function! TestShellCmd()
 
     if ! CmdExist("xxx")
         echo "cmd xxx does not exist"
+    endif
+
+    if IsMobaxterm()
+        echo "current is mobaxterm"
+    else
+        echo "current is not mobaxterm"
     endif
 endfunction
 

@@ -38,15 +38,20 @@ endfunc
 command SaveToTmpFile call SaveToTmpFile()
 " y命令复制时自动写入临时文件
 if IsGreaterVim800()
-autocmd TextYankPost * :call SaveToTmpFile()
+    autocmd TextYankPost * :call SaveToTmpFile()
 endif
 
 " 读取临时文件到寄存器0中
 func! LoadFromTmpFile()
-    let list = readfile("/tmp/vim_tmp.txt")
-    call setreg("\"", list)
-    call setreg("0", list)
-    call setreg("1", list)
+    if ! filereadable("/tmp/vim_tmp.txt")
+        echo "/tmp/vim_tmp.txt does not exist"
+        return
+    endif
+    let l:list = readfile("/tmp/vim_tmp.txt")
+    let l:str = join(l:list, nr2char(10))
+    call setreg("\"", l:str)
+    call setreg("0", l:str)
+    call setreg("1", l:str)
     silent execute "put"
     echo "read tmp file /tmp/vim_tmp.txt to reg[0]"
 endfunc
