@@ -168,3 +168,14 @@ function is_fedora_35() {
     __fedora_version "35"
     return $?
 }
+
+function is_in_docker() {
+    if ! is_linux; then
+        return 1
+    fi
+    if [ -f /.dockerenv ]; then
+        return 0
+    else
+        return 1
+    fi
+}

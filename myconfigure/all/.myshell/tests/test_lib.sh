@@ -10,6 +10,12 @@ function test_kernel() {
     else
         echo "current os is not linux"
     fi
+
+    if is_in_docker; then
+        echo "current is in docker"
+    else
+        echo "current is not in docker"
+    fi
 }
 
 function test_linux_distro() {
