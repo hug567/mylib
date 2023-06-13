@@ -122,7 +122,7 @@ function wait_task_finish() {
 function cmd_exist() {
     local cmd=$1
     local ret=$(type "$cmd" 2>&1 | grep "not found")
-    if [ -z $ret ]; then
+    if [ -z "$ret" ]; then
         return 0 # exist
     else
         return 1 # not exist
