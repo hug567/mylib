@@ -57,6 +57,7 @@ function test_array_local_access() {
     echo "arr[1-3]: ${arr[@]:1:3}"
 }
 
+# shell dictionary
 function test_associated_array() {
     echo "$FUNCNAME:-----------------------------"
 
