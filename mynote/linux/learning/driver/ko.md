@@ -31,7 +31,7 @@ void cleanup_module(void) __attribute__((alias("mml_exit")));;
 
 - insmod指令调用sys_init_module()函数加载ko：
 ```c
-sys_init_module()
+sys_init_module()  //SYSCALL_DEFINE3(init_module, ...
 	load_module()
     	apply_relocations()
     		apply_relocate_add()  //arch/arm64/kernel/module.c
@@ -39,8 +39,16 @@ sys_init_module()
 					xxx
     			case R_AARCH64_ABS64:
 					reloc_data()
-			    		mm->init = xx;
+			    		mm->init = xxx;
+						mm->exit = yyy;
 		do_init_module()
 			do_one_initcall()
     			ret = fn();  //module_init()
+```
+
+- rmmode指令调用sys_delete_module()函数卸载ko：
+
+```c
+sys_delete_module()  //SYSCALL_DEFINE2(delete_module, ...
+    mod->exit();
 ```
