@@ -33,13 +33,22 @@ run_kernel() {
     check_files_exist ./tmp/deploy/images/qemuarm64/Image-qemuarm64.bin
 
     cd tmp/deploy/images/qemuarm64
+
+    local disk1="./disk1.img"
+    local dev_disk1=""
+    if [ -f $disk1 ]; then
+        dev_disk1="
+        -device virtio-blk-device,drive=disk1 \
+        -drive id=disk1,file=./disk1.img,if=none,format=raw \
+        "
+    fi
+
     qemu-system-aarch64 \
         -M virt -cpu cortex-a57 -smp 4 -m 256 -nographic \
         -kernel Image-qemuarm64.bin \
+        ${dev_disk1} \
         -device virtio-blk-device,drive=disk0 \
         -drive id=disk0,file=${image},if=none,format=raw \
-        -device virtio-blk-device,drive=disk1 \
-        -drive id=disk1,file=./disk1.img,if=none,format=raw \
         -device virtio-net-device,netdev=net0,mac=52:54:00:12:34:02 \
         -netdev tap,id=net0,script=no,downscript=no,ifname=tap0 \
         -object rng-random,filename=/dev/urandom,id=rng0 \
@@ -48,7 +57,7 @@ run_kernel() {
         -device usb-tablet \
         -device usb-kbd  \
         -device virtio-gpu-pci \
-        --append 'root=/dev/vdb rw mem=256M ip=192.168.0.101::192.168.0.1:255.255.255.0::eth0:off:8.8.8.8'
+        --append "root=/dev/vda rw mem=256M ip=192.168.0.101::192.168.0.1:255.255.255.0::eth0:off:8.8.8.8"
 }
 
 main() {
