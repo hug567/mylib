@@ -13,6 +13,8 @@ tar
 
 # 2、常用命令：
 
+## 1）、解压：
+
 ```bash
 # 解压全部文件
 tar -xvf file.tar.gz
@@ -22,12 +24,6 @@ tar -zxvf file.tar.gz dir01/dir02
 # 解压到指定目录
 tar -xvf file.tar.gz -C dir
 
-# 压缩单个文件或目录
-tar -zcvf file.tar.gz file
-
-# 压缩多个文件或目录
-tar -zcvf file.tar.gz file1 file2 ...
-
 # 查看压缩包内容
 tar -tvf file.tar.gz
 # 查看压缩包顶层目录内容
@@ -35,8 +31,24 @@ tar -tf file.tar.gz | awk -F '/' '{print$1}' | sort -u
 
 # 解压分割的多个tar文件
 cat files.tar.gz.part* | tar -zxv
+```
+
+## 2)、压缩：
+
+```bash
+# 打包但不压缩
+tar -cvf file.tar file
+
+# 压缩单个文件或目录(gz)
+tar -zcvf file.tar.gz file
+
+# 压缩多个文件或目录(gz)
+tar -zcvf file.tar.gz file1 file2 ...
 
 # 压缩后分割为多个文件：使用split命令
 tar -zcvf file.tar.gz file | split -b 1024M -d -a 1 - file.tar.gz
+
+# 压缩为bz2格式，体积更小，但压缩解压时间更长
+tar -jcvf file.tar.bz2 file
 ```
 
