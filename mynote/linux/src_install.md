@@ -27,9 +27,6 @@ make                                                     //编译
 sudo make install                                        //安装
 qemu-img --version                                       //查看qemu版本
 /usr/local/bin                                           //qemu install location
-
-
-
 ```
 
 ## 3、Q/A：
@@ -39,7 +36,5 @@ qemu-img --version                                       //查看qemu版本
  * undefined symbol: g_type_check_instance_is_fundamentally_a
  */
 /* 解决：*/
-
-
 ```
 
