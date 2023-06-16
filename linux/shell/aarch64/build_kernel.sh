@@ -20,7 +20,7 @@ log_info "COMPILE_THREAD = $COMPILE_THREAD"
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 
 # 编译内核
-make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- V=1 -j1 #$COMPILE_THREAD
+make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$COMPILE_THREAD
 
 # 编译内核模块(.ko)
 #make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j$CPU_THREAD

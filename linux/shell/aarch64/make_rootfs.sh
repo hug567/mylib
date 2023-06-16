@@ -156,7 +156,7 @@ make_rootfs() {
     install_tmp_files $(pwd)
     #install_zlib /home/hx/code/others/zlib-1.2.13/build-aarch64/install $PWD
     #install_openssl /home/hx/code/others/openssl-3.1.0/build-aarch64/install $PWD
-    install_openssh /home/hx/code/others/openssh-9.3p1/build-aarch64 $PWD
+    #install_openssh /home/hx/code/others/openssh-9.3p1/build-aarch64 $PWD
 
     find . | cpio -o --format=newc > ../rootfs.cpio
     cd ..
