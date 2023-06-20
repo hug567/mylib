@@ -1,7 +1,7 @@
-# 1、安装：
+# 1、命令参数：
 
 ```bash
-sudo apt install net-tools
+ifconfig
 ```
 
 # 2、常见用法：

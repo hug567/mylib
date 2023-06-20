@@ -4,6 +4,11 @@
 start_kernel()
     vfs_caches_init_early();
 	vfs_caches_init();
+		mnt_init()
+            init_mount_tree()
+                mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", NULL);
+                root.mnt = mnt;
+                set_fs_root(current->fs, &root);
 ```
 
 
