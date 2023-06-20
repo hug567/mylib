@@ -5,7 +5,7 @@ function sync_clipboard() {
     local ip=$2
     local new_md5=
     local old_md5=
-    
+
     cd ~
     scp $user@$ip:/tmp/vim_tmp.txt . &> /dev/null
     if [ ! -f vim_tmp.txt ]; then
@@ -30,7 +30,9 @@ function sync_clipboard() {
 function main() {
     local i=0
     while true; do
-        echo "loop: $i"
+        if [ $(expr $i % 10) -eq 0 ]; then
+            echo "loop: $i"
+        fi
         sync_clipboard hx 10.110.192.42
         sleep 1
         let i=i+1

@@ -12,4 +12,7 @@ sudo apt intall xxx                   # 安装软件包及其依赖，或升级�
 sudo apt remove xxx                   # 删除软件包，不删除依赖，保留配置文件
 sudo apt prune xxx                    # 删除软件包及依赖，删除配置文件
 sudo apt --only-upgrade install xxx   # 仅更新指定软件包，若未安装，则直接退出
+
+# 查看包信息(版本、依赖等)
+apt show xxx
 ```
