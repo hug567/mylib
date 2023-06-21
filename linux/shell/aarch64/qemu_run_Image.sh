@@ -34,9 +34,8 @@ function qemu_run() {
         -M virt -cpu cortex-a57 -smp 4 -m 256 -nographic \
         -kernel ${image} \
         -initrd ${rootfs} \
-        -netdev tap,id=mynet,script=no,downscript=no,ifname=tap0 \
-        -device virtio-net-device,netdev=mynet,mrg_rxbuf=off,csum=off,guest_csum=off,\
-gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,guest_ufo=off \
+        -device virtio-net-device,netdev=net0 \
+        -netdev tap,id=net0,script=no,downscript=no,ifname=tap0 \
         --append "console=ttyAMA0 rdinit=/linuxrc"
 }
 
