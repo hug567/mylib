@@ -167,8 +167,6 @@ CONFIG_SYS_LOAD_ADDR=0x40200000  //
 CONFIG_DEBUG_UART_BASE=0x9000000
 ```
 
-
-
 ## 6、常见错误：
 
 ### 1）、gcc版本问题：
@@ -338,7 +336,12 @@ index 6a1f05ac3e..0e64e7cf4f 100644
 ## Error inserting "ethaddr" variable, errno=1
 ```
 
+## 7、u-boot传递给kernel的信息：
 
+- 内核地址：
+- initrd地址：
+- dtb地址：x0
+- cmdline：
 
 
 
