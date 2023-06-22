@@ -1,24 +1,25 @@
-# hexedit二进制编辑
-
-## 安装：
+# 1、命令参数：
 
 ```bash
-# ubuntu
-sudo apt install hexedit                                 //安装hexedit
+# 安装
+sudo apt install hexedit
+
+hexedit
+	-l <num>                  # 打开文件指定列宽
 ```
 
-## 使用：
+# 2、常用命令：
 
-```c
-man hexedit                                              //查看手册
+```bash
+man hexedit                                              # 查看手册
 
-touch <filename>                                         //创建文件
-hexedit <filename>                                       //打开文件
-hexedit --linelength 16 <filename>                       //打开文件时指定列宽
-F1                                                       //帮助
-F2                                                       //保存
-Ctrl + X                                                 //保存并退出
-F7                                                       //复制
-F8   
+hexedit <filename>                                       # 打开文件
+hexedit -l 16 <filename>                                 # 打开文件时指定列宽
+F1                                                       # 帮助
+F2                                                       # 保存
+F7                                                       # 复制
+F8                                                       #
+Ctrl + X                                                 # 保存并退出
+Ctrl + C                                                 # 退出不保存
 ```
 

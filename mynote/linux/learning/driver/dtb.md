@@ -34,9 +34,11 @@ struct fdt_header {
 ```
 
 ```shell
-# vim查看二进制文件：
+# vim已十六进制查看二进制文件：
 vim -b file.dtb
 :%!xxd
+# 恢复成二进制显示
+:%!xxd -r
 ```
 
 * 以大端dtb文件为例，文件头大小为40字节：

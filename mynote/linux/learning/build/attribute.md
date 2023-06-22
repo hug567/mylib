@@ -5,7 +5,7 @@
 - 已弃用的属性和目标克隆属性也不会被复制；
 
 ```c
-#define __copy(symbol)                   __attribute__((__copy__(symbol)))
+#define __copy(symbol) __attribute__((__copy__(symbol)))
 
 // 原始函数，带有一组属性
 __attribute__((noinline, pure)) int original_function(int x) {
@@ -20,6 +20,17 @@ __attribute__((copy(original_function))) int new_function(int x) {
 # 2、alias：
 
 ```c
+//符号别名
+__attribute__((alias))
+```
 
+# 3、bitwise：
+
+- 表示类型或函数具有特定的位操作行为，当在类型或函数声明中使用性时，编译器将位操作进行更严格的检查；
+
+- 如将使用bitwise标记的类型的变量，与其他未标记类型的变量进行位操作时，编译器将产生警告或错误，指出可能的问题；
+
+```c
+typedef unsigned int __attribute__((bitwise)) op_t;
 ```
 

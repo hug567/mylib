@@ -161,6 +161,12 @@ ESC                              //退出
 :set fileformat                  //查看文件格式(dos/unix)
 :set fileformat=unix             //设置文件格式为unix
 :w new_file.txt                  //vim中另存为文件
+
+// vim已十六进制查看二进制文件：
+vim -b file.dtb
+:%!xxd
+// 恢复成二进制显示
+:%!xxd -r
 ```
 
 ### 10）、vim控制字符：
