@@ -1,53 +1,10 @@
-# tmux 2.6
-# tmux插件
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin "tmux-plugins/tmux-resurrect"
-run '~/.tmux/plugins/tpm/tpm'
 ##############################################################################
-# tmux支持256色
-set -g default-terminal "xterm-256color"
-set-option -ga terminal-overrides ",xterm-256color:Tc"
-# 提示信息显示时间(ms)
-set -g display-time 3000
-# Prefix键与命令键见的延迟
-set -g escape-time 0
-# 历史消息限制
-set -g history-limit 65535
-# 窗口索引从1开始
-set -g base-index 1
-# 面板索引从1开始
-set -g pane-base-index 1
-##############################################################################
-# 自定义前缀Prefix (默认: Ctrl + B)
-unbind C-b
-set -g prefix `
-# 按两下输入原始键值
-bind ` send-prefix
 # 竖直分割窗口 (Prefix + \)
 unbind %
 bind \ splitw -h  -c '#{pane_current_path}'
 # 水平分割窗口 (Prefix + -)
 unbind '"'
 bind - splitw -v -c '#{pane_current_path}'
-# 退出面板 (Prefix + q)
-bind q killp
-# 显示pane编号 (Pregix + u)
-bind u display-pane
-# 重新加载tmux配置文件 (Prefix + r)
-bind r source ~/.tmux.conf \; display "Reloaded tmux configuration ~"
-##############################################################################
-# 进入tmux默认使用zsh
-set -g default-command /bin/zsh
-set -g default-shell /bin/zsh
-# 禁止重命名面板
-set-option -g allow-rename off
-# 设置tmux消息属性
-set -g message-attr bright
-set -g message-style fg='#101010',bg='#bebe12',bold,bright
-#set -g message-fg white
-#set -g message-bg yellow
-# 设置窗口样式
-setw -g window-style bg='#272822'
 # 设置面板样式
 set -g pane-border-fg '#595959'
 set -g pane-border-bg '#272822'
@@ -59,30 +16,3 @@ set -g status-bg '#353535'
 setw -g window-status-current-fg colour226
 setw -g window-status-current-bg '#353535'
 setw -g window-status-current-attr bold
-# 使用vim模式
-setw -g mode-keys vi
-# 禁用鼠标功能
-setw -g mouse off
-##############################################################################
-# 选择面板快捷键
-bind-key h select-pane -L  # Prefix h
-bind-key j select-pane -D  # Prefix j
-bind-key k select-pane -U  # Prefix k
-bind-key l select-pane -R  # Prefix l
-# 选择面板快捷键
-bind -n M-Left  select-pane -L # Alt + Left
-bind -n M-Right select-pane -R # Alt + Right
-bind -n M-Up    select-pane -U # Alt + Up
-bind -n M-Down  select-pane -D # Alt + Down
-# 选择窗口快捷键
-bind -n S-Left  previous-window # Shilt + Left
-bind -n S-Right next-window     # Shift + Right
-# 缩放面板快捷键
-bind -r ^h resizep -L 5  # Prefix Ctrl+h
-bind -r ^j resizep -D 5  # Prefix Ctrl+j
-bind -r ^k resizep -U 5  # Prefix Ctrl+k
-bind -r ^l resizep -R 5  # Prefix Ctrl+l
-# 交换面板快捷键
-#bind ^u swapp -U # Prefix Ctrl+u (swap with prevous)
-#bind ^d swapp -D # Prefix Ctrl+d (swap with next)
-##############################################################################
