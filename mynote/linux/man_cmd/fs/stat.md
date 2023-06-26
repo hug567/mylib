@@ -62,3 +62,23 @@ stat -L <link>       # 显示软连接指向的实体文件的信息
 stat -c "" <file>    # 以指定格式显示文件信息
 ```
 
+# 3、命令结果：
+
+```bash
+[qemu@linux]: /tmp $ stat test_io.ko
+  File: test_io.ko
+  Size: 72528           Blocks: 144        IO Block: 4096   regular file
+Device: 2h/2d   Inode: 6           Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1001/ UNKNOWN)   Gid: ( 1001/ UNKNOWN)
+Access: 2023-06-15 14:42:50.000000000 +0000
+Modify: 2023-06-15 14:42:50.000000000 +0000
+Change: 1970-01-01 00:00:00.332000000 +0000
+
+[qemu@linux]: /tmp $ stat -f test_io.ko
+  File: "test_io.ko"
+    ID: abd48c9b4348dfff Namelen: 255     Type: tmpfs
+Block size: 4096
+Blocks: Total: 22217      Free: 13279      Available: 13279
+Inodes: Total: 22217      Free: 21785
+```
+
