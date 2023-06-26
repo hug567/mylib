@@ -26,7 +26,7 @@ function test_dir_exist() {
     fi
 }
 
-function test_var_empty() {
+function test_n_var() {
     echo "$FUNCNAME:----------------------------"
     # 判断变量是否为空
     para01=
@@ -34,8 +34,11 @@ function test_var_empty() {
         echo "para01 is NULL"
     fi
     para01="xx"
+    if test -n "$para01" ; then
+        echo "[test -n] para01 is not NULL: $para01"
+    fi
     if [ -n "$para01" ]; then
-        echo "para01 is not NULL: $para01"
+        echo "[-n] para01 is not NULL: $para01"
     fi
 
     # 判断变量是否为空
@@ -47,14 +50,20 @@ function test_var_empty() {
     if [ $para02 ]; then
         echo "para02 is not NULL: $para02"
     fi
+}
 
+function test_z_var() {
+    echo "$FUNCNAME:----------------------------"
     # 判断变量是否为空
     para03=
-    if test -z $para03; then
-        echo "para03 is NULL"
+    if test -z "$para03"; then
+        echo "[test -z] para03 is NULL"
+    fi
+    if [ -z "$para03" ]; then
+        echo "[-z] para03 is NULL"
     fi
     para03="zz"
-    if ! test -z $para03; then
+    if ! test -z "$para03"; then
         echo "para03 is not NULL: $para03"
     fi
 
@@ -208,7 +217,8 @@ function main() {
     test_para_num $*
     test_pwd
     test_dir_exist
-    test_var_empty
+    test_n_var
+    test_z_var
     test_num_cmp
     test_num_cmp_02
     test_string_cmp
