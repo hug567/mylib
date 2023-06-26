@@ -48,7 +48,8 @@ function is_ubuntu_22_04() {
 
 function __cur_shell() {
     local shell=$1
-    if [[ "$SHELL" =~ "$shell" ]]; then
+    local ret=$(ls -l /proc/$$/exe | grep "$shell")
+    if [ -n "$ret" ]; then
         return 0
     else
         return 1
