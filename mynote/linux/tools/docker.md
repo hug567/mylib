@@ -79,12 +79,12 @@ docker rm $(docker ps -aq)                                  # 删除所有容器
 
 # 进入已启动的容器
 docker exec -it <CONTAINER ID> bash
-
 # docker启动centos
 docker run -it centos:latest /bin/bash
 # 映射host目录到容器
 docker run -it -v /home/hx/data:/data centos:latest /bin/bash
-
+# 启动容器可联网
+docker run -it -v /home/hx/data:/data --net=host ubuntu:20.04 /bin/bash
 # 以指定用户启动容器，同时指定工作目录
 docker run --user hx -w /home/hx -it jenkins:v1.0 /bin/bash
 ```
@@ -104,6 +104,9 @@ docker cp ~/.tmux.conf <CONTAINER NAME>:/root
 # 3、dockfile：
 
 ```shell
+# 进入dockerfile文件所在目录
+cd .../dockerfile/
+
 # 根据当前目录下的Dockfile文件构建image
 docker build -t <jenkins:v1.0> ./
 # 指定dockfile文件构建image

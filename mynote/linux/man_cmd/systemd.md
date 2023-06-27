@@ -41,6 +41,10 @@ ExecStart=/bin/bash -c '\
 
 ```bash
 journalctl -u xxx                          # 查看service启动日志
+journalctl -k                              # 查看kernel日志
+# "emerg" (0), "alert" (1), "crit" (2), "err" (3), "warning" (4), "notice" (5), "info" (6), "debug" (7)
+journalctl -k -p err                       # 查看err及以上级别日志
+journalctl -k -f                           # 实时显示内核日志
 ```
 
 # systemd-analyze：
