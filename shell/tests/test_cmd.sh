@@ -68,6 +68,10 @@ function __cmd_exist_2() {
     fi
 }
 
+# whether cmd exist:
+#   which xxx
+#   type xxx
+#   command -v xxx
 function test_cmd_exist() {
     echo "$FUNCNAME:-----------------------------"
 

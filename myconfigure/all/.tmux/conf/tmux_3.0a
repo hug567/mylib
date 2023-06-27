@@ -5,6 +5,8 @@ bind-key '\' split-window -h  -c '#{pane_current_path}'
 # 水平分割窗口 (Prefix + -)
 unbind '"'
 bind-key '-' split-window -v -c '#{pane_current_path}'
+# 设置tmux消息属性
+set -g message-style fg=black,bg=yellow,bold,bright
 # 设置面板样式
 set -g pane-border-style fg=white,bg='#272822'
 set -g pane-active-border-style fg=green,bg='#272822'
