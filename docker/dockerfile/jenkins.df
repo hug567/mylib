@@ -4,13 +4,15 @@
 
 FROM ubuntu:20.04
 
+# using http://...
 COPY sources.list /etc/apt
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
-RUN apt-get -y install apt-utils
-RUN apt-get -y install sudo vim git zsh tmux python3
+RUN apt-get update && \
+    apt-get -y install apt-utils && \
+    apt-get -y install sudo vim git zsh tmux python3 iputils-ping net-tools
 
-RUN useradd -m -s /bin/bash hx && echo "hx:hx1234" | chpasswd
-RUN usermod -aG sudo hx
+RUN useradd -m -s /bin/bash hx && \
+    echo "hx:hx1234" | chpasswd && \
+    usermod -aG sudo hx
