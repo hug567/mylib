@@ -1,4 +1,4 @@
-## 1、在Windows中安装python：
+# 1、在Windows中安装python：
 
 ```c
 https://www.python.org/downloads/windows/                //python下载地址
@@ -6,7 +6,7 @@ https://www.python.org/downloads/windows/                //python下载地址
 python --version      //查看python版本
 ```
 
-## 2、安装openpyxl：
+# 2、安装openpyxl：
 
 ```c
 https://pypi.org/project/jdcal/#files                    //jdcal下载地址
@@ -22,7 +22,7 @@ https://pypi.org/project/openpyxl/#files                 //openpyxl下载地址
 python setup.py install                                  //安装openpyxl库
 ```
 
-## 3、Linux选择python版本：
+# 3、Linux选择python版本：
 
 ```shell
 # 查看python软连接指向文件：
@@ -39,7 +39,7 @@ sudo update-alternatives --display python
 sudo update-alternatives --config python
 ```
 
-## 4、pip/pip3：
+# 4、pip/pip3：
 
 ```shell
 # 查询包：https://pypi.org/
@@ -48,10 +48,10 @@ sudo update-alternatives --config python
 python -m pip install --upgrade pip
 
 # 查看已安装的python包
-pip list
+pip/pip3 list
 
 # 安装python包
-pip install xxx
+sudo pip/pip3 install xxx
 # 安装指定版本
 sudo pip3 install conan==1.60.1
 
@@ -63,7 +63,19 @@ sudo pip3 unstall conan==2.0.4
 pip3 unstall conan
 ```
 
-## 5、pydoc：
+## 1)、离线安装pip包：
+```bash
+# 先在可联网的机器中下载pip包 (或从网址下载：https://pypi.org/)
+pip3 download scapy
+# 将下载的包上传到内网机器
+scp scapy-2.5.0.tar.gz hx@192.168.0.100:~
+# 进入内网机器包所在目录安装
+pip3 install --no-index --find-links=./ scapy
+# 查看已安装的pip包
+pip3 list
+```
+
+# 5、pydoc：
 ```bash
 # 查看所有python模块
 pydoc modules
