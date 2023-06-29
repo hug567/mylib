@@ -15,7 +15,7 @@ function sync_clipboard() {
     fi
     new_md5=$(md5sum $new_file | awk '{print$1}')
     if [ -f $old_file ]; then
-        old_md5=$(md5sum old_file | awk '{print$1}')
+        old_md5=$(md5sum $old_file | awk '{print$1}')
     fi
     if [ "$new_md5" != "$old_md5" ]; then
         echo "Update windows clipboard"
