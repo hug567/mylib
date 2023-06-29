@@ -441,6 +441,12 @@ vim --version | grep VIM                        //查看vim版本
 vim --version | grep python                     //查看python支持
 vim --version | grep clipboard                  //查看剪切板支持
 ```
+### 1）、简单编译：
+```bash
+./configure --enable-pythoninterp --enable-python3interp
+cd src
+make -j
+```
 
 ## 7、安装YouCompleteMe：
 
@@ -452,7 +458,7 @@ git submodule update --init --recursive                //
 
 ## 8、C语言常用配色：
 
-```c
+​```c
 背景色(灰色)：RGB(39,40,34), HTML(#272822)
 关键字(红色)：RGB(249,39,60), HTML(#F9273C)
 宏定义(红色)：RGB(249,39,60), HTML(#F9273C)
