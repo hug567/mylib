@@ -36,7 +36,9 @@ function main() {
     local i=0
     local finish_file="/tmp/vim/tmux_finish.txt"
 
-    rm $finish_file
+    if [ -f $finish_file ]; then
+        rm $finish_file
+    fi
     while true; do
         if [ -f $finish_file ]; then
             exit 0
