@@ -3,28 +3,30 @@
 function sync_clipboard() {
     local user=$1
     local ip=$2
+    local new_file="paste.txt"
+    local old_file="paste-old.txt"
     local new_md5=
     local old_md5=
 
     cd ~
-    scp $user@$ip:/tmp/vim_tmp.txt . &> /dev/null
-    if [ ! -f vim_tmp.txt ]; then
+    scp $user@$ip:/tmp/vim/$new_file . &> /dev/null
+    if [ ! -f $new_file ]; then
         return
     fi
-    new_md5=$(md5sum vim_tmp.txt | awk '{print$1}')
-    if [ -f vim_tmp-old.txt ]; then
-        old_md5=$(md5sum vim_tmp-old.txt | awk '{print$1}')
+    new_md5=$(md5sum $new_file | awk '{print$1}')
+    if [ -f $old_file ]; then
+        old_md5=$(md5sum old_file | awk '{print$1}')
     fi
     if [ "$new_md5" != "$old_md5" ]; then
         echo "Update windows clipboard"
         #echo "new_md5: $new_md5"
         #echo "old_md5: $old_md5"
-        cat vim_tmp.txt | clip
+        cat $new_file | clip
     fi
-    if [ -f vim_tmp-old.txt ]; then
-        rm vim_tmp-old.txt
+    if [ -f $old_file ]; then
+        rm $old_file
     fi
-    mv vim_tmp.txt vim_tmp-old.txt
+    mv $new_file $old_file
 }
 
 function main() {

@@ -16,6 +16,8 @@ func! SaveToTmpFile()
     let line_num = 0
     let substart = 0
     let endidx = len - 1
+    let l:tmp_dir = "/tmp/vim"
+    let l:tmp_file = "/tmp/vim/paste.txt"
     while i < len
        if lines[i] == "\n" || i == endidx
             let sublen = i - substart
@@ -29,9 +31,12 @@ func! SaveToTmpFile()
         endif
         let i += 1
     endwhile
-    call writefile(list, '/tmp/vim_tmp.txt')
+    if ! isdirectory(l:tmp_dir)
+        call mkdir(l:tmp_dir)
+    endif
+    call writefile(list, l:tmp_file)
     if line_num > 0
-        echo line_num . " lines yanked, and save to tmp file /tmp/vim_tmp.txt"
+        echo line_num . " lines yanked, and save to tmp file"
     endif
 endfunc
 "delcommand SaveToTmpFile
@@ -41,12 +46,17 @@ autocmd TextYankPost * :call SaveToTmpFile()
 
 " 读取临时文件到寄存器0中
 func! LoadFromTmpFile()
-    let list = readfile("/tmp/vim_tmp.txt")
+    let l:tmp_dir = "/tmp/vim"
+    let l:tmp_file = "/tmp/vim/paste.txt"
+    if ! isdirectory(l:tmp_dir) || ! filereadable(l:tmp_file)
+        return
+    endif
+    let list = readfile(l:tmp_file)
     call setreg("\"", list)
     call setreg("0", list)
     call setreg("1", list)
     silent execute "put"
-    echo "read tmp file /tmp/vim_tmp.txt to reg[0]"
+    echo "read tmp file to reg[0]"
 endfunc
 "delcommand LoadFromTmpFile
 command LoadFromTmpFile call LoadFromTmpFile()
