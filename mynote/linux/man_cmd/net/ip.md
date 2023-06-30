@@ -40,10 +40,15 @@ sudo ip addr add dev eno1 192.168.1.26/24                   # 设置ip
 sudo ip addr del dev eno1 192.168.1.26/24                   # 删除ip
 sudo ip route add default via 192.168.1.1 dev eno1          # 添加路由
 
-ip link help                                                # 查看命令帮助
+ip link help                                                # 查看link命令帮助
 sudo ip link set dev ens33 address 11:22:33:44:55:66        # 设置MAC地址
 sudo ip link set dev ens33 broadcast 11:22:33:44:55:66      # 设置广播地址
 sudo ip link set dev ens33 mtu 1500                         # 设置MTU
+
+# 修改网卡名
+sudo ip link set eth0 down
+sudo ip link set eth0 name eth1
+sudo ip link set eth1 up
 ```
 
 
