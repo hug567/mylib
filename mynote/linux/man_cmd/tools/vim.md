@@ -415,23 +415,9 @@ make clean; make distclean                      //清除编译生成文件
   --with-x \                                    //支持剪切板
   --with-gnome \                                //?
   --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \     //指定python路径
-  --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/  //指定python3路径
-./configure \
-  --with-features=huge \
-  --enable-rubyinterp \
-  --enable-luainterp \
-  --enable-perlinterp \
-  --enable-multibyte \
-  --enable-cscope \
-  --enable-pythoninterp \
-  --enable-python3interp \
-  --prefix=/usr/local/ \
-  --with-x \
-  --with-gnome \
-  --enable-gui=auto \
-  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \
-  --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/
-make                                            //编译
+  --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu  //指定python3路径
+
+make -j                                         //编译
 make reconfig                                   //当产生错误时
 ./vim --version | grep python                   //查看对python的支持
 ./vim --version | grep clipboard                //查看对clipboard的支持
@@ -458,10 +444,12 @@ git submodule update --init --recursive                //
 
 ## 8、C语言常用配色：
 
-​```c
+```c
 背景色(灰色)：RGB(39,40,34), HTML(#272822)
 关键字(红色)：RGB(249,39,60), HTML(#F9273C)
 宏定义(红色)：RGB(249,39,60), HTML(#F9273C)
 字符串(黄色)：RGB(255,215,0), HTML(#FFD700)      //字符串、运算符
 函数名(蓝色)：RGB(95,215,255), HTML(#5FD7FF)
+```
+
 ```

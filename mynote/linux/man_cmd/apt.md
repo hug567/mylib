@@ -3,6 +3,7 @@
 ```bash
 apt-cache search xxx                  # 搜索软件包
 apt-cache depends xxx                 # 查看软件包依赖
+apt-cache madison vim                 # 查看软件有哪些版本
 
 apt download xxx                      # 下载deb包
 apt list --installed                  # 显示已安装的包
