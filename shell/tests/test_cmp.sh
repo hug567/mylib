@@ -173,15 +173,18 @@ function test_string_cmp() {
     local str2=
 
     # test string equal
-    str1="123"
-    str2="123"
+    str1="str123"
+    str2="str123"
     if [ ${str1} = ${str2} ]; then
         echo "$str1 = $str2"
     fi
+    if [ "${str1}" == "${str2}" ]; then
+        echo "$str1 == $str2"
+    fi
 
     # test string not equal
-    str1="123"
-    str2="456"
+    str1="str123"
+    str2="str456"
     if [ ${str1} != ${str2} ]; then
         echo "$str1 != $str2"
     fi

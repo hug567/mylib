@@ -16,6 +16,7 @@ function test_array() {
         element11
         element12
     )
+    # traverse array
     for ele in ${arr02[@]}; do
         echo "element: [$ele]"
     done
@@ -83,11 +84,25 @@ function test_associated_array() {
     echo "student height: ${stu2["height"]}"
 }
 
+function test_array_append() {
+    echo "$FUNCNAME:-----------------------------"
+
+    # define empty array
+    local arr01=()
+    echo "array size: ${#arr01[@]}"
+
+    # append to array tail
+    arr01+=("Tom")
+    arr01+=("Bob")
+    echo "array size: ${#arr01[@]}"
+}
+
 function main() {
     test_array
     test_array_delete
     test_array_local_access
     test_associated_array
+    test_array_append
 }
 
 main
