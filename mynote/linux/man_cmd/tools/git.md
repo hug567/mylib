@@ -40,6 +40,8 @@ git log --pretty=format:"%cd" --date=format:"%Y" -1 main.c
 git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" --reverse main.c
 
 git status --ignored                                     //查看忽略的文件
+//查看仓库顶层目录
+git rev-parse --show-toplevel
 ```
 
 ### 2.2、本地分支管理
