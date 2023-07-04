@@ -15,3 +15,11 @@ set -g status-style fg=white,bg='#353535'
 setw -g window-status-current-format '#[fg=colour226,bg=default]#I:#W*'
 # 状态栏右侧显示时间
 set -g status-right '[%Y-%m-%d %H:%M:%S]'
+##############################################################################
+# 在复制模式下绑定 Home 键
+bind-key -T copy-mode Home send-keys -X start-of-line
+bind-key -T copy-mode-vi Home send-keys -X start-of-line
+# 在复制模式下绑定 End 键
+bind-key -T copy-mode End send-keys -X end-of-line
+bind-key -T copy-mode-vi End send-keys -X end-of-line
+##############################################################################

@@ -9,10 +9,10 @@ deb-src https://mirrors.163.com/ubuntu/ bionic-updates   main universe restricte
 deb-src https://mirrors.163.com/ubuntu/ bionic-backports main universe restricted multiverse
 
 # Ubuntu 18.04 - 2021.09.05
-https://mirrors.163.com/ubuntu/
-https://mirrors.aliyun.com/ubuntu/
-https://mirrors.huaweicloud.com/ubuntu/
-https://repo.huaweicloud.com/ubuntu/
-https://mirrors.cloud.tencent.com/ubuntu/
-https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
-https://mirrors.ustc.edu.cn/ubuntu/
+# https://mirrors.163.com/ubuntu/
+# https://mirrors.aliyun.com/ubuntu/
+# https://mirrors.huaweicloud.com/ubuntu/
+# https://repo.huaweicloud.com/ubuntu/
+# https://mirrors.cloud.tencent.com/ubuntu/
+# https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+# https://mirrors.ustc.edu.cn/ubuntu/

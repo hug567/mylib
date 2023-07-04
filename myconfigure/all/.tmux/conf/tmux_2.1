@@ -22,10 +22,10 @@ setw -g window-status-current-fg colour226
 setw -g window-status-current-bg '#353535'
 setw -g window-status-current-attr bold
 ##############################################################################
-# 在复制模式下绑定 Home 键
-bind-key -T copy-mode Home send-keys -X start-of-line
-bind-key -T copy-mode-vi Home send-keys -X start-of-line
-# 在复制模式下绑定 End 键
-bind-key -T copy-mode End send-keys -X end-of-line
-bind-key -T copy-mode-vi End send-keys -X end-of-line
+# 绑定Home键
+bind-key -t vi-copy Home start-of-line
+bind-key -t emacs-copy Home start-of-line
+# 绑定End键
+bind-key -t vi-copy End end-of-line
+bind-key -t emacs-copy End end-of-line
 ##############################################################################
