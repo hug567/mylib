@@ -1,0 +1,14 @@
+# create docker image
+# run: docker build -t jenkins:v1.0 -f jenkins.df ./
+# 2023-06-16
+
+FROM jenkins/jenkins:lts-jdk11
+
+# using http://...
+#COPY sources.list /etc/apt
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get -y install apt-utils && \
+    apt-get -y install sudo vim git zsh tmux python3 iputils-ping net-tools
