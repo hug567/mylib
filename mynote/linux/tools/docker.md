@@ -8,7 +8,7 @@ sudo apt install docker.io                                  # 安装docker
 sudo docker info                                            # 查看docker系统信息
 sudo docker version                                         # 查看docker版本信息
 
-sudo gpasswd -a $USER docker && newgrp docker               # 当前用户加入docker用户组(临时)
+sudo gpasswd -a $USER docker && newgrp docker               # 当前用户加入docker用户组(临时)，需重连服务器
 
 docker search hello-world                                   # 查询镜像
 docker pull hello-world                                     # 拉取镜像
@@ -36,7 +36,18 @@ sudo systemctl restart docker.service                       # 重启docker服务
 
 # 2、docker常用命令：
 
-## 1）、启动退出：
+## 1)、常用命令：
+
+```bash
+docker
+	-i                                                      # 交互式操作
+	-t                                                      # 终端
+	-d                                                      # 后台运行容器
+	-v <host_dir>:<container_dir>                           # 映射host目录到容器
+	--net=shot                                              # 使用host网络
+```
+
+## 2）、启动退出：
 
 ```bash
 docker run -it opensuse:latest /bin/bash                    # 启动容器
@@ -44,7 +55,7 @@ exit                                                        # 退出并停止容
 Ctrl-P + Ctrl-Q                                             # 退出容器(不停止)
 ```
 
-## 2）、镜像操作：
+## 3）、镜像操作：
 
 ```bash
 docker search opensuse                                      # 搜索镜像
@@ -72,7 +83,7 @@ docker save -o <myopensuse.tar> <huangxing/myopensuse:latest>
 docker loader -i <myopensuse.tar>
 ```
 
-## 3）、容器操作：
+## 4）、容器操作：
 
 ```bash
 docker ps -a                                                # 查看容器
@@ -94,7 +105,7 @@ docker run -it -v /home/hx/data:/data --net=host ubuntu:20.04 /bin/bash
 docker run --user hx -w /home/hx -it jenkins:v1.0 /bin/bash
 ```
 
-## 4)、文件操作：
+## 5)、文件操作：
 
 ```shell
 # 从容器中拷贝文件到host:
