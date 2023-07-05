@@ -1,0 +1,23 @@
+# create docker image
+# build image:
+#     cd .../docker/dockerfile/
+#     docker build -t myubuntu:v1.0 -f myubuntu.df ./
+# run image:
+#     docker run --user hx -w /home/hx --net=host -it myubuntu:v1.0 /bin/bash
+# 2023-06-16
+
+FROM ubuntu:20.04
+
+# using http://...
+COPY sources.list /etc/apt
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get -y install apt-utils && \
+    apt-get -y install sudo vim git zsh tmux python3 iputils-ping net-tools \
+                       make cmake gcc g++
+
+RUN useradd -m -s /bin/bash hx && \
+    echo "hx:hx1234" | chpasswd && \
+    usermod -aG sudo hx
