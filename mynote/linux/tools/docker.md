@@ -69,24 +69,33 @@ docker pull opensuse/leap:15.3
 # 镜像操作
 docker images -h                                            # 查看image命令帮助
 docker images                                               # 查看本地docker镜像
-docker images -a                                            # 查到所有镜像
+docker images -a                                            # 查看所有镜像
 docker images -q                                            # 只显示IMAGE ID
+docker images ubuntu                                        # 查看指定名称的容器
+docker images ubuntu:18.04                                  # 查看指定名称和版本的容器
+docker images ubuntu 18.04 -q                               # 只显示指定名称和版本的容器的ID
 docker rmi ubuntu:latest                                    # 删除镜像
 docker rmi <IMAGE ID>                                       # 删除镜像
 
-# 打包容器为Image：
+# 打包容器为Image
 sudo docker commit <CONTAINER ID> <huangxing/myopensuse:latest>
-
-# 打包容器为镜像文件
+# 打包Image为文件
 docker save -o <myopensuse.tar> <huangxing/myopensuse:latest>
-# 加载本地镜像文件
-docker loader -i <myopensuse.tar>
+# 从文件加载Image
+docker load -i <myopensuse.tar>
 ```
 
 ## 4）、容器操作：
 
 ```bash
-docker ps -a                                                # 查看容器
+# 只查看启动的容器
+docker ps
+# 查看所有容器详细信息
+docker ps -a
+# 只查看启动的容器的ID
+docker ps -q
+# 只查看所有容器的id
+docke ps -a -q
 docker start <CONTAINER ID>                                 # 启动容器
 docker stop <CONTAINER ID>                                  # 停止容器
 docker attach <CONTAINER ID>                                # 进入容器
@@ -102,7 +111,7 @@ docker run -it -v /home/hx/data:/data centos:latest /bin/bash
 # 启动容器可联网
 docker run -it -v /home/hx/data:/data --net=host ubuntu:20.04 /bin/bash
 # 以指定用户启动容器，同时指定工作目录
-docker run --user hx -w /home/hx -it jenkins:v1.0 /bin/bash
+docker run --user hx -w /home/hx -it myubuntu:v1.0 /bin/bash
 ```
 
 ## 5)、文件操作：
