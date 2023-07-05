@@ -193,7 +193,6 @@ vim -b file.dtb
 :set bin noeol
 // 在文件末尾添加换行符：
 在末尾添加一行空行，保存文件，然后再删除，并再保存文件
-
 ```
 
 ### 11）、执行shell命令：
@@ -450,6 +449,8 @@ git submodule update --init --recursive                //
 宏定义(红色)：RGB(249,39,60), HTML(#F9273C)
 字符串(黄色)：RGB(255,215,0), HTML(#FFD700)      //字符串、运算符
 函数名(蓝色)：RGB(95,215,255), HTML(#5FD7FF)
+```
+
 ```
 
 ```
