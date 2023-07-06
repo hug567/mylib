@@ -1,0 +1,23 @@
+# create myjenkins docker image
+# build image:
+#     cd .../docker/dockerfile/jenkins
+#     docker build -t myjenkins:v1.0 -f myjenkins.df ./
+# run image:
+#     docker run -u root --rm -d --net=host -p 8080:8080 -p 50000:50000 -v /home/hx/code/jenkins/home:/var/jenkins_home -v /home/hx/code/jenkins/root:/root -v /var/run/docker.sock:/var/run/docker.sock -v /home/hx:/data -v /disk/sda:/disk/sda myjenkins:v1.0
+# 2023-06-16
+
+# Debain 11
+FROM jenkins/jenkins:lts-jdk11
+
+# using http://...
+COPY etc/apt/sources.list /etc/apt/
+COPY etc/default/jenkins /etc/default/
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+#RUN ls -l /var; ls -l /var/lib; ls -l /var/lib/apt
+#RUN ls -l /var/lib/apt/lists
+#RUN cd /var/lib/apt/lists; mkdir partial
+RUN apt update
+#    apt-get -y install apt-utils && \
+#    apt-get -y install sudo vim git zsh tmux iputils-ping net-tools

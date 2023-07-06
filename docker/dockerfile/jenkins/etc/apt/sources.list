@@ -1,0 +1,11 @@
+# Debain 11 2023-07-06
+deb http://mirrors.cloud.tencent.com/debian bullseye main
+deb http://mirrors.cloud.tencent.com/debian bullseye-updates main
+
+# http://mirrors.163.com/ubuntu/
+# http://mirrors.aliyun.com/ubuntu/
+# http://mirrors.huaweicloud.com/ubuntu/
+# http://repo.huaweicloud.com/ubuntu/
+# http://mirrors.cloud.tencent.com/ubuntu/
+# http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+# http://mirrors.ustc.edu.cn/ubuntu/
