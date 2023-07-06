@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+        label "mazu15"
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                sh 'whoami; uname -n; pwd'
+                sh 'rm -rf mylib'
+                sh 'rsync -rl hx@10.110.192.42:/home/hx/mazu/mylib ./'
+                sh './mylib/scripts/jenkins/tasks/test01/main.sh $BUILD_NUMBER'
+            }
+        }
+    }
+}

@@ -43,6 +43,9 @@ function run_docker() {
 }
 
 function main() {
+    local build_number=$1
+    echo "build_number: $build_number"
+    echo "cur dir: $(pwd)"
     sudo gpasswd -a $USER docker && newgrp docker
     delete_container
     load_docker_image

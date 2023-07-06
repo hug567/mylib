@@ -16,6 +16,7 @@ function main() {
     cd build
     cmake /data/mylib/cmake/tests/test_comp_exec
     make
+    ./hello.elf
 }
 
 main $*
