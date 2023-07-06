@@ -126,6 +126,17 @@ docker cp ~/.tmux.conf <CONTAINER ID>:/root
 docker cp ~/.tmux.conf <CONTAINER NAME>:/root
 ```
 
+## 6)、 日志：
+
+```bash
+# 查看指定容器日志
+docker logs 33654069bce5
+# 实时输出日志
+docker logs 33654069bce5 -f
+# 查看末尾10行日志
+docker logs 33654069bce5 -n 10
+```
+
 # 3、dockfile：
 
 ```shell
