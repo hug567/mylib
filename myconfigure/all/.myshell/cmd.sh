@@ -96,3 +96,29 @@ function unzipfile() {
     fi
     unzip -l $file | sed '1,3d' | awk '{print$4}' | awk -F '/' '{print$1}' | sed '/^\s*$/d' | sort -u
 }
+
+function show_path_bash() {
+    local pathes=(${PATH//:/ })
+
+    for p in ${pathes[@]}; do
+        echo "$p"
+    done
+}
+
+function show_path_zsh() {
+    local pathes=("${(@s/:/)PATH}")
+
+    for p in ${pathes[@]}; do
+        echo "$p"
+    done
+}
+
+function showpath() {
+    if is_bash; then
+        show_path_bash
+    elif is_zsh; then
+        show_path_zsh
+    else
+        echo "It is currently neither bash nor zsh"
+    fi
+}

@@ -12,9 +12,9 @@ deb-src https://mirrors.aliyun.com/ubuntu/ focal-proposed  main restricted unive
 deb-src https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 
 # Ubuntu 20.04 (2022.06.25)
-https://mirrors.aliyun.com/ubuntu/
-https://mirrors.163.com/ubuntu/
-https://mirrors.huaweicloud.com/ubuntu/
-https://mirrors.cloud.tencent.com/ubuntu/
-https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
-https://mirrors.ustc.edu.cn/ubuntu/
+#https://mirrors.aliyun.com/ubuntu/
+#https://mirrors.163.com/ubuntu/
+#https://mirrors.huaweicloud.com/ubuntu/
+#https://mirrors.cloud.tencent.com/ubuntu/
+#https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+#https://mirrors.ustc.edu.cn/ubuntu/

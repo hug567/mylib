@@ -25,6 +25,7 @@ function test_string_length() {
 }
 
 # 分隔字符串
+# split/division the string according to the specified character
 function test_string_split() {
     echo "$FUNCNAME:-----------------------------"
 
@@ -52,6 +53,13 @@ function test_string_split() {
     local arr=($(echo $str | tr '/' ' '))
     for stu in ${arr[@]}; do
         echo "stu: $stu"
+    done
+
+    echo "test_awk: ----------"
+    local string="123:456:789"
+    local div=$(echo $string | awk -F ':' '{ for (i=1; i<=$NF; i++) print$i }')
+    for str in ${div[@]}; do
+        echo "str: $str"
     done
 }
 

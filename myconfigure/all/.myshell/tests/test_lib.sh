@@ -74,11 +74,18 @@ function test_gitbash() {
     fi
 }
 
+function test_add_path()
+{
+    echo "$FUNCNAME:-----------------------------"
+    add_path "/usr/bin"
+}
+
 function main() {
     test_kernel
     test_linux_distro
     test_shell
     test_gitbash
+    test_add_path
 }
 
 main $*

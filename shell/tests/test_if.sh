@@ -32,9 +32,29 @@ function test_func_ret_or_cmp() {
     fi
 }
 
+function __my_age() {
+    local age=$1
+
+    if [ $age -lt 10 ]; then
+        echo "age < 10"
+    elif [ $age -lt 20 ]; then
+        echo "10 <= age < 20"
+    else
+        echo "age > 20"
+    fi
+}
+
+function test_if_elif() {
+    echo "$FUNCNAME:-----------------------------"
+    __my_age 6
+    __my_age 18
+    __my_age 23
+}
+
 function main() {
     test_func_ret_and_cmp
     test_func_ret_or_cmp
+    test_if_elif
 }
 
 main
