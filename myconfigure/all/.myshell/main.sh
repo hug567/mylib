@@ -1,6 +1,8 @@
 # echo "[ -f ~/.myshell/main.sh ] && source ~/.myshell/main.sh" >> ~/.bashrc
 # echo "[ -f ~/.myshell/main.sh ] && source ~/.myshell/main.sh" >> ~/.zshrc
 
+[ -f ~/.myshell/tests/mysysinfo.sh ] && ~/.myshell/tests/mysysinfo.sh
+
 [ -f ~/.myshell/lib.sh   ] && source ~/.myshell/lib.sh
 [ -f ~/.myshell/alias.sh ] && source ~/.myshell/alias.sh
 [ -f ~/.myshell/env.sh   ] && source ~/.myshell/env.sh
