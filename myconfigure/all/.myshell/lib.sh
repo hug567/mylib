@@ -48,14 +48,14 @@ function is_ubuntu_22_04() {
 
 function __cur_shell() {
     local shell=$1
-    local cmd=
-    local PATH_OLD=
-    local ret=
+    local cmd=""
+    local PATH_OLD=""
+    local ret=""
 
     PATH_OLD=$PATH
     PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     cmd=$(ls -l /proc/$$/exe | grep "$shell")
-    if [ -n "$cmd" ]; then
+    if [ "$cmd" != "" ]; then
         ret=0
     else
         ret=1
@@ -189,52 +189,34 @@ function is_in_docker() {
     fi
 }
 
-function path_existed_bash() {
-    local path=$1
-    local pathes=(${PATH//:/ })
-
-    for p in ${pathes[@]}; do
-        if [ "$p" = "$path" ]; then
-            return 0
-        fi
-    done
-    return 1
-}
-
-function path_existed_zsh() {
-    local path=$1
-    local pathes=("${(@s/:/)PATH}")
-
-    for p in ${pathes[@]}; do
-        if [ "$p" = "$path" ]; then
-            return 0
-        fi
-    done
-    return 1
-}
-
 function path_existed() {
+    local tmp_path=$1
+    local pathes=""
+    local p=""
+
     if is_bash; then
-        path_existed_bash $1
-        return $?
+        pathes=(${PATH//:/ })
     elif is_zsh; then
-        path_existed_zsh $1
-        return $?
-    else
-        echo "It is currently neither bash nor zsh"
+        pathes=("${(@s/:/)PATH}")
     fi
+    for p in ${pathes[@]}; do
+        if [ "$p" = "$tmp_path" ]; then
+            return 0
+        fi
+    done
+    return 1
 }
 
 function add_path() {
-    local path=$1
-    if [ ! -d "$path" ]; then
+    local tmp_path=$1
+    if [ ! -d "$tmp_path" ]; then
         return
     fi
-    local abs_path=$(cd $path; pwd)
+    local abs_path=$(cd $tmp_path; pwd)
     if path_existed "$abs_path"; then
         return
     fi
-    export PATH="$path:$PATH"
+    export PATH="$tmp_path:$PATH"
 }
 
 function source_file() {

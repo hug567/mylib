@@ -1,6 +1,7 @@
 # echo "[ -f ~/.myshell/main.sh ] && source ~/.myshell/main.sh" >> ~/.bashrc
 # echo "[ -f ~/.myshell/main.sh ] && source ~/.myshell/main.sh" >> ~/.zshrc
 
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 [ -f ~/.myshell/lib.sh   ] && source ~/.myshell/lib.sh
 [ -f ~/.myshell/alias.sh ] && source ~/.myshell/alias.sh
 [ -f ~/.myshell/env.sh   ] && source ~/.myshell/env.sh

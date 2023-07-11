@@ -99,6 +99,7 @@ function unzipfile() {
 
 function show_path_bash() {
     local pathes=(${PATH//:/ })
+    local p=""
 
     for p in ${pathes[@]}; do
         echo "$p"
@@ -107,6 +108,7 @@ function show_path_bash() {
 
 function show_path_zsh() {
     local pathes=("${(@s/:/)PATH}")
+    local p=""
 
     for p in ${pathes[@]}; do
         echo "$p"
