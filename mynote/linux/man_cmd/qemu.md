@@ -74,9 +74,8 @@ ls -l /lib/x86_64-linux-gnu/libc*  # /lib/x86_64-linux-gnu/libc.so.6 -> libc-2.2
 # 编译
 mkdir build-arm
 cd build-arm
-../configure  --target-list=arm-softmmu    #qemu-system-arm
-make
-
+../configure --target-list=arm-softmmu,aarch64-softmmu
+make -j
 ```
 
 # 5、添加网桥：
