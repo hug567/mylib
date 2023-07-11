@@ -236,3 +236,10 @@ function add_path() {
     fi
     export PATH="$path:$PATH"
 }
+
+function source_file() {
+    local file=$1
+    if [ -f $file -o -L $file ]; then
+        source $file
+    fi
+}

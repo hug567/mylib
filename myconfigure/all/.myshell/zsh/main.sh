@@ -21,5 +21,5 @@ bindkey "\E[3~" delete-char
 # 打开颜色模式
 autoload -U colors && colors
 
-[ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source_file $ZSH/oh-my-zsh.sh
+source_file ~/.fzf.zsh

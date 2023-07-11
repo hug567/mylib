@@ -6,8 +6,6 @@ source $SCRIPT_DIR/.myshell/lib.sh
 # needs to be overwritten unconditionally
 OVERWRITTEN_FILES=(
     .myshell
-    .mybash
-    .myzsh
     .zshrc
     .oh-my-zsh
     .tmux.conf
