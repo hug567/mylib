@@ -7,7 +7,7 @@ sudo apt install ripgrep
 # Ubuntu 18.04
 sudo add-apt-repository ppa:x4121/ripgrep
 sudo apt update
-sduo apt install ripgrep
+sudo apt install ripgrep
 ```
 
 # 2、常见用法：
