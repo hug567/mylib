@@ -47,6 +47,12 @@ flag：a：可分配
 
 ```c
 adr r0, symbol    //获取标号symbol的地址，存储到r0中
+
+//定义一个段，a:可分配
+.section .init.ramfs,"a"
+
+//在汇编文件中包含一个指定文件，不对该文件做任何操作
+.incbin "usr/initramfs_inc_data"
 ```
 
 ## 3、常用指令：

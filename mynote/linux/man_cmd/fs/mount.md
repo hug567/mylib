@@ -14,5 +14,9 @@ mount    # 挂载分区
 
 ```bash
 mount /dev/sda /var     #
+
+# 挂着ext4镜像文件
+mkdir mount_dir
+sudo mount -o loop file.ext4 mount_dir
 ```
 

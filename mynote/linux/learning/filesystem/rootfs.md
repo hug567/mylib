@@ -9,11 +9,20 @@ start_kernel()
                 mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", NULL);
                 root.mnt = mnt;
                 set_fs_root(current->fs, &root);
+
+//挂载块设备作为rootfs
+start_kernel()
+	arch_call_rest_init()
+		rest_init()
+			kernel_init()
+				kernel_init_freeable()
+					prepare_namespace()
+					    mount_root()
+							mount_block_root()
+							    do_mount_root()
 ```
 
-
-
-数据解构：
+- 数据结构：
 
 ```c
 static struct hlist_head *inode_hashtable __read_mostly;  //fs/inode.c
