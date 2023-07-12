@@ -5,6 +5,9 @@ CUR_SCRIPT_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
 export MYLIB=$(cd ${CUR_SCRIPT_DIR}/../../../; pwd)
 source ${MYLIB}/linux/shell/common.sh
 
+# prepare:
+#   sudo apt install flex bison
+
 check_in_build_dir
 
 log_info "CPU_THREAD = $CPU_THREAD"
