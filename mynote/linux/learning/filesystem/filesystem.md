@@ -18,22 +18,26 @@ static struct file_system_type *file_systems;  //fs/filesystems.c
 cat /proc/filesystems
 ```
 
+# 2、挂载：
 
+- struct dentry：目录项，表示目录或文件；
 
+  - 判断dentry是否是挂载点：
 
+  ```c
+  static inline bool d_mountpoint(const struct dentry *dentry)
+  {
+          return dentry->d_flags & DCACHE_MOUNTED;
+  }  
+  ```
+  
+  - dentry_hashtable：存储所有的dentry对象；
+  - dentry_unused：
 
+- struct mount：挂载实例，每一个挂载的文件系统都有一个对应的struct mount；
 
+- struct mountpoint：挂载点，struct mount的一个成员；
 
+- mount_hashtable：
 
-
-
-
-
-
-
-
-安装：mount
-
-
-
-mount_hashtable
+- mountpoint_hashtable：

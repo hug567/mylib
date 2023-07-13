@@ -12,3 +12,10 @@ sudo deluser -r hx                      #删除用户
 
 ```
 
+# 3、userdel：
+
+```bash
+# 同时删除用户、用户主目录、邮件目录
+sudo userdel -r <user>
+```
+

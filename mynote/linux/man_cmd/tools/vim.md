@@ -222,6 +222,19 @@ vim -b file.dtb
 :tabn 1 / :tabn 2 / :tabn 3 ......
 ```
 
+### 13)、buffer：
+
+```bash
+# 列出buffer
+:ls/:buffers
+# 跳转至下一个buffer
+:bn
+# 跳转至上一个buffer
+:bp
+# 跳转至指定buffer，如：<:b12>
+:b<num>
+```
+
 ## 2、正则表达式：
 
 ```C
@@ -451,6 +464,3 @@ git submodule update --init --recursive                //
 函数名(蓝色)：RGB(95,215,255), HTML(#5FD7FF)
 ```
 
-```
-
-```
