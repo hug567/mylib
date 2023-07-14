@@ -120,13 +120,13 @@ SRC_URI = "file://${TOPDIR}/../packages/netplan_0.101.tar.gz \
 SRCREV = "3e522b7255310bdecca6c781137741dfc4abc021"
 
 # 从本地拉取git仓库，修改的代码需提交commit
-SRC_URI = "git:///home/hx/repo/all-repos/mazu;protocol=file" # 默认是master分支
-SRC_URI = "git:///home/hx/repo/all-repos/mazu;protocol=file;branch=xxx"
+SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file" # 默认是master分支
+SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file;branch=xxx"
 SRCREV = "${AUTOREV}"
 PV = "1.0"
 
 # 从本地拉取代码目录，修改的代码不需要提交commit
-LOCAL_REPO="/home/hx/repo/all-repos/mazu"
+LOCAL_REPO="/home/hx/repo/all-repos/mytest"
 SRC_URI = "file://${LOCAL_REPO};protocol=file"
 S = "${WORKDIR}/${LOCAL_REPO}"
 ```

@@ -71,7 +71,7 @@ tmux swap-pane -s 2 -t 1                 //交换窗格位置
 //tmux在pane中执行shell命令
 tmux send -t main:2.1 'ls' C-m
 //列出指定window中的所有pane
-tmux list-panes -t mazu:2
+tmux list-panes -t main:2
 ```
 
 ## 5、文本复制粘贴：

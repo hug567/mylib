@@ -3,8 +3,6 @@
 [user]
 	name = Huang Xing
 	email = huangxing567@163.com
-	#name = xing.huang6
-	#email = xing.huang6@nio.com
 [core]
 	editor = vim
 	quotepath = false
@@ -22,9 +20,9 @@
 	# 15G: 16106127360
 	# 20G: 21474836480
 	postBuffer = 10737418240
-	#proxy = http://proxy.nioint.com:8080
+	#proxy = http://proxy.xxx.com:8080
 [https]
-	#proxy = https://proxy.nioint.com:8080
+	#proxy = https://proxy.xxx.com:8080
 [alias]
 	br = branch
 	#br = !sh -c 'git branch | cat'
@@ -50,7 +48,5 @@
 [i18n]
 	commitencoding = utf-8
 	logoutputencoding = utf-8
-[credential "https://git.nevint.com"]
-	provider = gitlab
 [credential "https://gitee.com"]
 	provider = generic
