@@ -2,7 +2,7 @@
 
 ```bash
 mount    # 挂载分区 
-    -a             # 挂着所有/etc/fstab中配置的文件系统
+    -a             # 挂载所有/etc/fstab中配置的文件系统
     -t <type>      # 指定文件系统格式
     -v             # 显示详细信息
     -f             # 不真实挂载，通常配合-v
@@ -15,8 +15,11 @@ mount    # 挂载分区
 ```bash
 mount /dev/sda /var     #
 
-# 挂着ext4镜像文件
+# 挂载ext4镜像文件
 mkdir mount_dir
 sudo mount -o loop file.ext4 mount_dir
+
+# 开机自动挂载磁盘: /etc/fstab
+/dev/sda	/disk/sda	ext4	defaults	0	0
 ```
 
