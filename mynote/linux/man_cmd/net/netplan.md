@@ -11,7 +11,18 @@ sudo netplan --debug apply
 
 ## 1)、固定ip：
 ```bash
-
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    wlx82771688de0a:
+      dhcp4: false
+      addresses:
+      - 192.168.1.27/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses:
+        - 192.168.1.1
 ```
 
 ## 2)、dhcp：
