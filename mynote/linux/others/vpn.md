@@ -3,11 +3,10 @@
 ## 1、Ubuntu配置VPN服务器
 
 ```bash
-# openven.service
+# 将安装：openven.service
 sudo apt install openvpn libssl-dev openssl easy-rsa
 
 openvpn --version
-
 # openvpn证书：CA证书、Server端证书、Client端证书
 ```
 
@@ -20,6 +19,83 @@ cd easy-rsa
 sudo cp -r /usr/share/easy-rsa/* .
 sudo cp vars.example vars
 sudo vim vars
+#--------------------------------------------------------#
+export KEY_NAME="vpnairgens"
+#--------------------------------------------------------#
+./easyrsa init-pki
+./easyrsa build-ca nopass
+ls pki
+#-rw------- 1 root root 1204 Jul 20 21:16 pki/ca.crt
+#-rw------- 1 root root 1704 Jul 20 21:16 pki/private/ca.key
+```
+
+### 2)、制作Server端证书：
+
+```bash
+./easyrsa build-server-full vpnairgens nopass
+#-rw------- 1 root root 4626 Jul 20 21:22 pki/issued/vpnairgens.crt
+#-rw------- 1 root root 1704 Jul 20 21:22 pki/private/vpnairgens.key
+```
+
+
+### 3)、制作Client端证书：
+
+```bash
+./easyrsa build-client-full airgens nopass
+#-rw------- 1 root root 4491 Jul 20 21:24 pki/issued/airgens.crt
+#-rw------- 1 root root 1704 Jul 20 21:24 pki/private/airgens.key
+```
+
+### 4)、生成Diffie-Hellman文件：
+
+```bash
+./easyrsa gen-dh
+#-rw------- 1 root root 424 Jul 20 21:30 pki/dh.pem
+```
+
+### 5)、复制证书文件：
+
+```bash
+cp pki/ca.crt pki/issued/vpnairgens.crt pki/private/vpnairgens.key pki/dh.pem ..
+cd ..
+cp dh.pem dh2048.pem
+```
+
+### 6)、配置vpn server：
+
+```bash
+sudo vim server.conf
+#--------------------------------------------------------#
+port 1194
+
+proto tcp
+;proto udp
+
+ca ca.crt
+cert vpnairgens.crt
+key vpnairgens.key
+
+server 10.110.1.0 255.255.255.0
+
+comp-lzo
+;tls-auth ta.key 0
+
+status /var/log/openvpn/openvpn-status.log
+;log /var/log/openvpn/openvpn.log
+log-append /var/log/openvpn/openvpn.log
+
+;mute 20
+;explicit-exit-notify 1
+#--------------------------------------------------------#
+```
+
+### 7)、运行vpn server：
+
+```bash
+cd ~
+nohup /usr/sbin/openvpn --config /etc/openvpn/server.conf &
+# 查看日志
+tail -f /var/log/openvpn/openvpn.log
 ```
 
 
