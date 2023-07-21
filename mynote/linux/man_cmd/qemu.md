@@ -53,7 +53,7 @@ cd ~
 tftp localhost                                          //连接至本机
 tftp>get test1.txt                                      //获取文件
 tftp>put test2.txt                                      //上传文件
-tftp>q                                                  //推出连接
+tftp>q                                                  //退出连接
 
 /* 创建虚拟网口： */
 ```

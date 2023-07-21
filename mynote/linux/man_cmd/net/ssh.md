@@ -22,8 +22,8 @@ ssh-keygen -t rsa -f /var/jenkins_home -C "huangxing567@163.com"
 # 3、ssh-copy-id：
 
 ```bash
-# 拷贝公钥到远端机器
-ssh-copt-id user@192.168.0.101
+# 拷贝公钥到远端机器: ~/.ssh/authorized_keys
+ssh-copy-id user@192.168.0.101
 # 指定端口
 ssh-copt-id -p1000 user@192.168.0.101
 ```
