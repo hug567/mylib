@@ -62,6 +62,21 @@ sudo nextcloud.occ config:system:get teusted_domains
 sudo nextcloud.occ config:system:set teusted_domains 1 --value=example.com
 ```
 
+### 2）、更改数据目录：
+
+```bash
+# 必须是/media或/mnt下的目录
+cd /mnt
+sudo cp -r /var/snap/nextcloud/common/nextcloud/ .
+sduo vim /var/snap/nextcloud/current/nextcloud/config/config.php
+#-----------------------------------------------------#
+'datadirectory' => '/mnt/nextcloud/data',
+#-----------------------------------------------------#
+
+# wrap方案：
+#   nextcloud/data/.ocdata仍放在/media或/mnt目录，data目录中其他目录软连接到其他磁盘目录中
+```
+
 ## 4、配置自签名ssl证书：
 
 ```bash
