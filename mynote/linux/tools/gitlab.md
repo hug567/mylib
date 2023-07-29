@@ -9,7 +9,7 @@ curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script
 sudo apt install gitlab-ce
 
 # 配置文件：
-/etc/gitlab/gitlab.rb
+sudo vim /etc/gitlab/gitlab.rb
 #------------------------------------------------------#
 external_url 'http://192.168.124.27:9002'
 #------------------------------------------------------#
@@ -17,13 +17,45 @@ external_url 'http://192.168.124.27:9002'
 sudo gitlab-ctl reconfigure
 # 重启gitlab
 sudo gitlab-ctl restart
-# 访问
+```
+## 2、配置gitlab：
+```bash
+# 初始化root密码
+cd /opt/gitlab/bin
+# 打开控制台
+sudo gitlab-rails console -e production
+# 查看所有用户
+User.all
+# 获取用户
+u=User.where(id:1).first
+# 设置密码(root)
+u.password='Abc123,456'
+# 确认密码
+u.password_confirmation='Abc123,456'
+# 保存密码
+u.save!
+# 登录gitlab
 http://192.168.124.27:9002/
 
-# 初始化root密码
-/opt/gitlab/bin
-#
-sudo gitlab-ctl refconfigure
-sudo gitlab-rails console -e production
+# 修改数据目录
+sudo vim /etc/gitlab/gitlab.rb
+#------------------------------------------------------#
+git_data_dirs({
+  "default" => {
+    "path" => "/disk/sda/gitlab"
+   }
+})
+#------------------------------------------------------#
+# 旧数据迁移到新目录
+cp -ar /var/opt/gitlab/git-data/repositories /disk/sda/gitlab
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+```
+
+## 3、网页端配置：
+
+```bash
+# 设置中文
+Perferences -> Localization -> Language -> Chinese, Simplified - 简体中文 (98% translated) -> Save changes
 ```
 
