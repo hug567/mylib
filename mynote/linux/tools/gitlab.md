@@ -19,6 +19,7 @@ sudo gitlab-ctl reconfigure
 sudo gitlab-ctl restart
 ```
 ## 2、配置gitlab：
+### 1)、密码设置
 ```bash
 # 初始化root密码
 cd /opt/gitlab/bin
@@ -36,8 +37,10 @@ u.password_confirmation='Abc123,456'
 u.save!
 # 登录gitlab
 http://192.168.124.27:9002/
+```
 
-# 修改数据目录
+### 2)、修改数据目录
+```bash
 sudo vim /etc/gitlab/gitlab.rb
 #------------------------------------------------------#
 git_data_dirs({
@@ -48,6 +51,18 @@ git_data_dirs({
 #------------------------------------------------------#
 # 旧数据迁移到新目录
 cp -ar /var/opt/gitlab/git-data/repositories /disk/sda/gitlab
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+```
+
+### 3)、使能git lfs：
+
+```bash
+sudo vim /etc/gitlab/gitlab.rb
+#------------------------------------------------------#
+gitlab_rails['lfs_enabled'] = true
+gitlab_rails['lfs_storage_path'] = "/disk/sda/gitlab/lfs"
+#------------------------------------------------------#
 sudo gitlab-ctl reconfigure
 sudo gitlab-ctl restart
 ```

@@ -235,6 +235,13 @@ git revert <commit>                            //撤销指定commit提交
 ```c
 .gitignore                                     //会被提交至git仓库
 .git/info/exclude                              //本地设置，不会被提交至git仓库
+
+//设置举例：
+*.swp
+cscope.*
+/vmlinux
+!.gitignore
+/arch/*/include/generated/
 ```
 
 ### 2.7、stash暂存
@@ -274,6 +281,10 @@ git am --abort                                   # 撤销应用patch
 ## 3、git lfs：
 
 ```bash
+# ubuntu 20
+sudo apt install git-lfs
+git lfs --version
+
 git lfs pull                                            # 拉取文件
 git lfs track <file>                                    # 追踪文件
 git lfs untrack <file>                                  # 取消追踪文件
