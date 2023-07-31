@@ -24,5 +24,8 @@ fdisk    # 创建和维护分区表
 ```bash
 fdisk -l                     # 查看所有分区
 fdisk -l -s /dev/sda         # 查看指定分区
+
+# 新建分区
+sudo fdisk /dev/sda
 ```
 
