@@ -1,6 +1,7 @@
 # 1、常用参数：
 
 ```bash
+# 安装
 sudo apt install unrar
 
 unrar

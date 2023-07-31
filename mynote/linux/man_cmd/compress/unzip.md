@@ -1,6 +1,7 @@
 # 1、命令参数：
 
 ```bash
+# 安装
 sudo apt install unzip
 
 unzip

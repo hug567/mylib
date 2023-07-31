@@ -22,7 +22,8 @@ sudo gitlab-ctl restart
 ### 1)、密码设置
 ```bash
 # 初始化root密码
-cd /opt/gitlab/bin
+#cd /opt/gitlab/bin
+
 # 打开控制台
 sudo gitlab-rails console -e production
 # 查看所有用户

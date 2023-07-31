@@ -27,14 +27,11 @@ python setup.py install                                  //安装openpyxl库
 ```shell
 # 查看python软连接指向文件：
 ls -l /usr/bin/python /usr/bin/python2 /usr/bin/python3
-
 # 添加链接管理：
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 # 优先级为1
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2 # 优先级为2
-
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1 # 优先级为1
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 2 # 优先级为2
 # 查看管理的python链接：
 sudo update-alternatives --display python
-
 # 选择python版本：
 sudo update-alternatives --config python
 ```

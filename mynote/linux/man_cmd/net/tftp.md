@@ -1,6 +1,8 @@
 # 搭建tftp服务器：
 
-# 1、Ubuntu 22.04：
+## 1、ubuntu：
+
+- 已验证：ubuntu 22.04、ubuntu16.04
 
 ```bash
 # 安装tftp
