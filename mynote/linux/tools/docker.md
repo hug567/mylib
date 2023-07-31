@@ -60,6 +60,7 @@ Ctrl-P + Ctrl-Q                                             # 退出容器(不�
 ```bash
 docker search opensuse                                      # 搜索镜像
 docker pull opensuse                                        # 拉取镜像
+docker pull ubuntu:16.04
 docker pull ubuntu:18.04
 docker pull ubuntu:20.04
 docker pull ubuntu:22.04
