@@ -129,6 +129,9 @@ PV = "1.0"
 LOCAL_REPO="/home/hx/repo/all-repos/mytest"
 SRC_URI = "file://${LOCAL_REPO};protocol=file"
 S = "${WORKDIR}/${LOCAL_REPO}"
+
+# 为当前recipe提供标识，其他recipe可在DEPENDS中指定该标识，注明依赖关系
+PROVIDES = "virtual/bootloader"
 ```
 
 ## 3）、常见变量：

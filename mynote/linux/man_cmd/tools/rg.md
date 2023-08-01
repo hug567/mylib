@@ -1,7 +1,7 @@
 # 1、安装：
 
 ```bash
-# Ubuntu 20.04
+# Ubuntu 20.04, ubuntu 22.04
 sudo apt install ripgrep
 
 # Ubuntu 18.04
