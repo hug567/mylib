@@ -19,7 +19,7 @@ sudo gitlab-ctl reconfigure
 sudo gitlab-ctl restart
 ```
 ## 2、配置gitlab：
-### 1)、密码设置
+### 1)、密码设置：
 ```bash
 # 初始化root密码
 #cd /opt/gitlab/bin
@@ -40,7 +40,7 @@ u.save!
 http://192.168.124.27:9002/
 ```
 
-### 2)、修改数据目录
+### 2)、修改数据目录：
 ```bash
 sudo vim /etc/gitlab/gitlab.rb
 #------------------------------------------------------#
@@ -63,6 +63,26 @@ sudo vim /etc/gitlab/gitlab.rb
 #------------------------------------------------------#
 gitlab_rails['lfs_enabled'] = true
 gitlab_rails['lfs_storage_path'] = "/disk/sda/gitlab/lfs"
+#------------------------------------------------------#
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+```
+
+### 4)、使能https：
+
+```bash
+cd /etc/gitlab
+mkdir ssl
+cd ssl
+# 复制已制作好的私钥和证书
+sudo cp ~/tools/ssl/private.key ~/tools/ssl/certificate.crt .
+cd ..
+sudo chmod 700 ssl
+
+sudo vim /etc/gitlab/gitlab.rb
+#------------------------------------------------------#
+external_url 'https://192.168.124.27:9002'
+
 #------------------------------------------------------#
 sudo gitlab-ctl reconfigure
 sudo gitlab-ctl restart
