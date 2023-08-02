@@ -50,3 +50,5 @@
 	logoutputencoding = utf-8
 [credential "https://gitee.com"]
 	provider = generic
+[fetch]
+	unpackBare = true
