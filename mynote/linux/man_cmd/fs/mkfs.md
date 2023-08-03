@@ -10,8 +10,12 @@ mkfs    # 创建文件系统
 # 2、常用方式：
 
 ```bash
-mkfs -V -t ext4 /dev/sda             # 创建ext4文件系统
-mkfs -V -c -t ext4 /dev/sda          # 创建前检查坏块
+# 创建ext4文件系统
+mkfs -V -t ext4 /dev/sda
+# 创建前检查坏块
+mkfs -V -c -t ext4 /dev/sda
+# 格式化为fat32文件系统
+sudo mkfs.fat -F 32 /dev/sdc
 ```
 
 

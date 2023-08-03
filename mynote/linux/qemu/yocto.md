@@ -97,7 +97,7 @@ python() {
     bb.note("[hx-debug] PN = %s" % d.getVar('PN'))
     bb.warn("[hx-debug] PN = %s" % d.getVar('PN'))  # warn级别打印
     bb.error("[hx-debug] xxx")
-    
+
     # 只能打印一行时：
     bb.note("\n[hx-debug]:\n",
         "KERNEL_DEBUG_OPTIONS = %s" % d.getVar("KERNEL_DEBUG_OPTIONS"), "\n",
@@ -108,6 +108,14 @@ python() {
 # 在.bbclass文件函数中打印变量，需加大括号
 bbnote "[hx-debug] S = ${S}"
 ```
+
+### 1.2)、xx
+
+```bash
+# poky 2.2.2: meta-poky/conf/distro/poky.conf
+bb.note("[hx-debug] S = %s" % d.getVar('S', True))
+```
+
 
 ## 2）、receipe语法：
 
@@ -120,7 +128,7 @@ SRC_URI = "file://${TOPDIR}/../packages/netplan_0.101.tar.gz \
 SRCREV = "3e522b7255310bdecca6c781137741dfc4abc021"
 
 # 从本地拉取git仓库，修改的代码需提交commit
-SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file" # 默认是master分支
+SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file" # 默认是当前分支
 SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file;branch=xxx"
 SRCREV = "${AUTOREV}"
 PV = "1.0"
@@ -162,7 +170,7 @@ STAGING_DIR_TARGET = .../netplan/0.101-r0/recipe-sysroot
 STAGING_INCDIR = .../netplan/0.101-r0/recipe-sysroot/usr/include
 STAGING_LIBDIR = .../netplan/0.101-r0/recipe-sysroot/usr/lib
 TOPDIR = .../poky/build-aarch64
-TMPDIR = 
+TMPDIR = .../poky/build-aarch64/tmp
 DL_DIR ?= "${BSPDIR}/downloads"    # local.conf
 ```
 

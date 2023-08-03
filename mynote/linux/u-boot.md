@@ -61,7 +61,9 @@ make clean; make mrproper; make distclean
 make CROSS_COMPILE=aarch64-linux-gnu- qemu_arm64_defconfig
 make CROSS_COMPILE=aarch64-linux-gnu- -j3
 qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1024M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
-
+```
+#### 常用命令：
+```bash
 # u-boot设置参数：
 setenv ipaddr 192.168.1.13
 setenv ethaddr 00:04:9f:04:d2:35
@@ -81,7 +83,7 @@ setenv                      # 设置环境变量
 saveenv                     # 保存环境变量
 printenv                    # 打印环境变量
 ```
-
+#### 制作镜像：
 ```c
 sudo apt install u-boot-tools    //安装mkimage工具
 
@@ -342,6 +344,28 @@ index 6a1f05ac3e..0e64e7cf4f 100644
 - initrd地址：
 - dtb地址：x0
 - cmdline：
+
+## 8、常用命令：
+### 1）、mmc：
+
+```bash
+mmc info
+```
+
+### 2）、fat：
+
+```bash
+# 查看指定设备的fat文件系统信息
+fatinfo mmc 0
+# 查看指定fat文件系统中的文件
+fatls mmc 0
+# 查看fat文件系统类型
+fstype mmc 0
+# 读取文件到内存
+fatload
+# 把内存中文件写入mmc设备
+fatwrite
+```
 
 
 

@@ -23,3 +23,12 @@ sudo mount -o loop file.ext4 mount_dir
 /dev/sda	/disk/sda	ext4	defaults	0	0
 ```
 
+# 3、挂载u盘：
+
+```bash
+# 查看u盘设备及问进系统类型
+sudo fdisk -l
+# 挂载u盘(fat32)
+
+```
+

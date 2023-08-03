@@ -277,6 +277,20 @@ git apply --check <patch>                        # 检查patch是否有冲突
 git am <patch>                                   # 应用patch
 git am --abort                                   # 撤销应用patch
 ```
+### 2.9、tag操作：
+```bash
+# 查看所有tag
+git tag
+# 通配符查看一系列tag
+git tag -l "v1.8.5*"
+# 创建标签
+git tag v1.4
+git tag -a v1.4 -m "my version 1.4"
+# 推送标签到远端
+git push origin v1.4
+# 删除标签
+git tag -d v1.4
+```
 
 ## 3、git lfs：
 
