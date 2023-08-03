@@ -290,6 +290,8 @@ git tag -a v1.4 -m "my version 1.4"
 git push origin v1.4
 # 删除标签
 git tag -d v1.4
+# 删除远端仓库中的标签
+git push origin :refs/tags/v1.4
 ```
 
 ## 3、git lfs：

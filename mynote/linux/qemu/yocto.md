@@ -140,6 +140,11 @@ S = "${WORKDIR}/${LOCAL_REPO}"
 
 # 为当前recipe提供标识，其他recipe可在DEPENDS中指定该标识，注明依赖关系
 PROVIDES = "virtual/bootloader"
+
+# 不执行do_rm_work
+do_rm_work() {
+    :
+}
 ```
 
 ## 3）、常见变量：

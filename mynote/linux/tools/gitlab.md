@@ -76,16 +76,22 @@ mkdir ssl
 cd ssl
 # 复制已制作好的私钥和证书
 sudo cp ~/tools/ssl/private.key ~/tools/ssl/certificate.crt .
-cd ..
-sudo chmod 700 ssl
 
 sudo vim /etc/gitlab/gitlab.rb
 #------------------------------------------------------#
-external_url 'https://192.168.124.27:9002'
-
+external_url 'https://192.168.124.27:9003'
+nginx['ssl_certificate'] = "/etc/gitlab/ssl/certificate.crt"
+nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/private.key"
+# 重定向http到https
+nginx['redirect_http_to_https'] = true
+nginx['redirect_http_to_https_port'] = 9002
 #------------------------------------------------------#
 sudo gitlab-ctl reconfigure
 sudo gitlab-ctl restart
+
+# 访问
+http://10.110.0.3:9002
+https://10.110.0.3:9003
 ```
 
 ## 3、网页端配置：
