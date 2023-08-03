@@ -1,0 +1,55 @@
+/*
+ * 验证dtsi中节点能否覆盖dts中的设置
+ * 编译:   dtc -I dts -O dtb -o output.dtb input.dts
+ * 反编译: dtc -I dtb -O dts -o output.dts input.dtb
+ * 2023-08-03
+ */
+/dts-v1/;
+
+
+/ {
+	#address-cells = <0x1>;
+	#size-cells = <0x1>;
+	compatible = "top";
+
+/*
+	main@1 {
+		#address-cells = <0x1>;
+		#size-cells = <0x1>;
+		ranges;
+
+		sub1 {
+			compatible = "sub1";
+			name = "sub1";
+		};
+
+		sub2 {
+			compatible = "sub2";
+			name = "sub2";
+		};
+	};
+*/
+	cpus {
+		#address-cells = <0x1>;
+		#size-cells = <0x0>;
+
+		cpu@0 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <0x0>;
+			clocks = <0x1 0x3>;
+			clock-latency = <0x3e8>;
+			cpu0-supply = <0x2>;
+			operating-points = <0xbb2ca 0xf4240 0x5d965 0xf4240>;
+		};
+
+		cpu@1 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <0x1>;
+			clocks = <0x1 0x3>;
+		};
+	};
+};
+
+/include/ "include.dtsi"

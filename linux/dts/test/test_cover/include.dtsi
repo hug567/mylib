@@ -1,0 +1,39 @@
+/ {
+/*
+	cpus {
+		#address-cells = <0x1>;
+		#size-cells = <0x0>;
+
+		cpu@0 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <0x0>;
+			clocks = <0x1 0x3>;
+			clock-latency = <0x3e8>;
+			cpu0-supply = <0x2>;
+			operating-points = <0xbb2ca 0xf4240 0x5d965 0xf4240>;
+		};
+
+		cpu@1 {
+			compatible = "x";
+			device_type = "x";
+			reg = <0x0>;
+			clocks = <0x0 0x0>;
+		};
+		//cpu@1 { };
+	};
+
+/delete-node/ cpu@1;
+*/
+	&cpus {
+		/delete-node/ cpu@1;
+	};
+
+	serial@e0000000 {
+		#address-cells = <0x1>;
+		#size-cells = <0x1>;
+		compatible = "serial";
+		reg = <0xe0000000 0x1000>;
+		ranges;
+	};
+};
