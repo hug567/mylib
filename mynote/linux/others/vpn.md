@@ -22,8 +22,8 @@ sudo vim vars
 #--------------------------------------------------------#
 export KEY_NAME="vpnairgens"
 #--------------------------------------------------------#
-./easyrsa init-pki
-./easyrsa build-ca nopass
+sudo ./easyrsa init-pki
+sudo ./easyrsa build-ca nopass
 ls pki
 #-rw------- 1 root root 1204 Jul 20 21:16 pki/ca.crt
 #-rw------- 1 root root 1704 Jul 20 21:16 pki/private/ca.key
@@ -32,7 +32,7 @@ ls pki
 ### 2)、制作Server端证书：
 
 ```bash
-./easyrsa build-server-full vpnairgens nopass
+sudo ./easyrsa build-server-full vpnairgens nopass
 #-rw------- 1 root root 4626 Jul 20 21:22 pki/issued/vpnairgens.crt
 #-rw------- 1 root root 1704 Jul 20 21:22 pki/private/vpnairgens.key
 ```
@@ -41,7 +41,7 @@ ls pki
 ### 3)、制作Client端证书：
 
 ```bash
-./easyrsa build-client-full airgens nopass
+sudo ./easyrsa build-client-full airgens nopass
 #-rw------- 1 root root 4491 Jul 20 21:24 pki/issued/airgens.crt
 #-rw------- 1 root root 1704 Jul 20 21:24 pki/private/airgens.key
 ```
@@ -49,16 +49,16 @@ ls pki
 ### 4)、生成Diffie-Hellman文件：
 
 ```bash
-./easyrsa gen-dh
+sudo ./easyrsa gen-dh
 #-rw------- 1 root root 424 Jul 20 21:30 pki/dh.pem
 ```
 
 ### 5)、复制证书文件：
 
 ```bash
-cp pki/ca.crt pki/issued/vpnairgens.crt pki/private/vpnairgens.key pki/dh.pem ..
+sudo cp pki/ca.crt pki/issued/vpnairgens.crt pki/private/vpnairgens.key pki/dh.pem ..
 cd ..
-cp dh.pem dh2048.pem
+sudo cp dh.pem dh2048.pem
 ```
 
 ### 6)、配置vpn server：
