@@ -28,3 +28,13 @@ ssh-copy-id user@192.168.0.101
 ssh-copt-id -p1000 user@192.168.0.101
 ```
 
+#  4、配置config：
+
+```bash
+# 配置文件：~/.ssh/config
+Host hx
+        HostName 10.110.0.3
+        User hx
+        Port 22
+```
+
