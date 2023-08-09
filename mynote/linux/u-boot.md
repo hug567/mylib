@@ -114,17 +114,7 @@ tftp 0x61000000 qemu-arm64.dtb
 bootm 0x60003000 - 0x61000000               // 需计算各组件大小，保证不互相覆盖
 ```
 
-## 3、常用命令：
-
-```bash
-# 查看内存二进制值
-md 0x60003000
-
-# 查看uImage信息
-iminfo  0x60003000
-```
-
-## 4、u-boot 64字节头：
+## 3、u-boot 64字节头：
 
 ```bash
 #define IH_MAGIC        0x27051956      /* Image Magic Number           */
@@ -158,7 +148,7 @@ ih_comp = 0x00 : none ?
           0x02 : gzip
 ```
 
-## 5、u-boot内存分布：
+## 4、u-boot内存分布：
 
 ```c
 CONFIG_ENV_ADDR=0x04000000  // 环境变量存储地址
@@ -169,7 +159,7 @@ CONFIG_SYS_LOAD_ADDR=0x40200000  //
 CONFIG_DEBUG_UART_BASE=0x9000000
 ```
 
-## 6、常见错误：
+## 5、常见错误：
 
 ### 1）、gcc版本问题：
 
@@ -338,37 +328,50 @@ index 6a1f05ac3e..0e64e7cf4f 100644
 ## Error inserting "ethaddr" variable, errno=1
 ```
 
-## 7、u-boot传递给kernel的信息：
+## 6、u-boot传递给kernel的信息：
 
 - 内核地址：
 - initrd地址：
 - dtb地址：x0
 - cmdline：
 
-## 8、常用命令：
-### 1）、mmc：
+## 7、常用命令：
+
+### 1)、常用：
+
+```bash
+help / ?
+help <cmd>
+printenv
+# 查看板子硬件信息
+bdinfo
+# 查看uImage信息
+iminfo  0x60003000
+# 查看内存二进制值
+md 0x60003000
+```
+
+### 2）、mmc：
 
 ```bash
 mmc info
 ```
 
-### 2）、fat：
+### 3）、fat：
 
 ```bash
 # 查看指定设备的fat文件系统信息
 fatinfo mmc 0
 # 查看指定fat文件系统中的文件
 fatls mmc 0
+fatls mmc 0 <dir>
 # 查看fat文件系统类型
 fstype mmc 0
-# 读取文件到内存
-fatload
+# 读取文件到内存指定地址
+fatload mmc 0 0x00000000 /success/BOOT.BIN
 # 把内存中文件写入mmc设备
-fatwrite
+fatwrite mmc 0 00000000 image.ub 0x90caa8
 ```
-
-
-
 
 
 

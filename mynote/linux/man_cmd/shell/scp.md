@@ -9,5 +9,7 @@ scp
 
 ```bash
 scp -r dir user@192.168.0.101:~
+# 从远端拷贝多个文件
+scp hx@10.110.0.3:~/temp/tftpboot/\{BOOT.BIN,image.ub\} .
 ```
 
