@@ -242,6 +242,9 @@ cscope.*
 /vmlinux
 !.gitignore
 /arch/*/include/generated/
+
+//忽略某个目录下的所有指定类型文件
+/subdir/**/*.elf
 ```
 
 ### 2.7、stash暂存
@@ -297,7 +300,7 @@ git push origin :refs/tags/v1.4
 ## 3、git lfs：
 
 ```bash
-# ubuntu 20
+# ubuntu 20/22
 sudo apt install git-lfs
 git lfs --version
 

@@ -32,7 +32,7 @@ function sync_clipboard() {
 function main() {
     local i=0
     while true; do
-        if [ $(expr $i % 10) -eq 0 ]; then
+        if [ $(expr $i % 100) -eq 0 ]; then
             echo "loop: $i"
         fi
         sync_clipboard hx 10.110.0.3
