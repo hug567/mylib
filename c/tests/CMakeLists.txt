@@ -20,4 +20,7 @@ function(compile_single_file)
     endforeach()
 endfunction(compile_single_file)
 
+file(GLOB test_files *.c)
+compile_single_file(${test_files})
+
 add_subdirectory(attribute)
