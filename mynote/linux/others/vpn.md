@@ -4,7 +4,7 @@
 
 ```bash
 # 将安装：openven.service
-sudo apt install openvpn libssl-dev openssl easy-rsa
+sudo apt install openvpn libssl-dev openssl easy-rsa (lzop)
 
 openvpn --version
 # openvpn证书：CA证书、Server端证书、Client端证书
@@ -106,11 +106,28 @@ tail -f /var/log/openvpn/openvpn.log
 
 
 
+# 方案二：
 
+## 1、ubuntu安装openvpn server：
 
+```bash
+wget https://git.io/vpn -O openvpn-install.sh
+wget https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh
+chmod +x openvpn-install.sh
+# protocol: UDP
+sudo ./openvpn-install.sh
+# service:
+sudo systemctl start/stop/status/restart openvpn-server@server.service
+# 凭证文件：
+/root/client.ovpn
+```
 
+## 2、windows opvpnclient链接：
 
+```bash
+# 从服务器下载client配置文件：
 
+```
 
 
 
