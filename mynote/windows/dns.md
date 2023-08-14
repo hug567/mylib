@@ -16,7 +16,7 @@ domain:vvvdj.com,                           geoip:cn,
 gitlab.rhosoon.com                          10.110.0.3
 #---------------------------------------------------------#
 
-# 浏览器方位
+# 浏览器访问
 http://gitlab.rhosoon.com:9002
 https://gitlab.rhosoon.com:9003
 ```

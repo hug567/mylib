@@ -300,7 +300,10 @@ git push origin :refs/tags/v1.4
 ## 3、git lfs：
 
 ```bash
-# ubuntu 20/22
+# ubuntu 16.04
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt install git-lfs
+# ubuntu 20.04/22.04
 sudo apt install git-lfs
 git lfs --version
 
