@@ -122,11 +122,23 @@ sudo systemctl start/stop/status/restart openvpn-server@server.service
 /root/client.ovpn
 ```
 
-## 2、windows opvpnclient链接：
+## 2、windows openvpn client连接：
 
 ```bash
 # 从服务器下载client配置文件：
+/root/client.ovpn
+# 复制到openvpn client配置文件目录
+C:\Users\Administrator\OpenVPN\config
+# 启动openvpn连接，验证：
+ping 10.8.0.1
+```
 
+## 3、linux openvpn client连接：
+
+```bash
+sudo apt install openvpn
+#sudo cp client.ovpn /etc/openvpn/client
+sudo openvpn --config client.ovpn
 ```
 
 
