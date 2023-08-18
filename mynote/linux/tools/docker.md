@@ -44,7 +44,8 @@ docker
 	-t                                                      # 终端
 	-d                                                      # 后台运行容器
 	-v <host_dir>:<container_dir>                           # 映射host目录到容器
-	--net=shot                                              # 使用host网络
+	--net=host                                              # 使用host网络
+	--name=<xxx>                                            # 启动容器时指定名称
 ```
 
 ## 2）、启动退出：
@@ -113,6 +114,10 @@ docker run -it -v /home/hx/data:/data centos:latest /bin/bash
 docker run -it -v /home/hx/data:/data --net=host ubuntu:20.04 /bin/bash
 # 以指定用户启动容器，同时指定工作目录
 docker run --user hx -w /home/hx -it myubuntu:v1.0 /bin/bash
+
+# 重命名容器
+docker rename <CONTAINER ID> <new_name>
+docker rename <CONTAINER NAMES> <new_name>
 ```
 
 ## 5)、文件操作：
