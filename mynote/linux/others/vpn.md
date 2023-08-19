@@ -110,6 +110,8 @@ tail -f /var/log/openvpn/openvpn.log
 
 ## 1、ubuntu安装openvpn server：
 
+### 1）、安装：
+
 ```bash
 wget https://git.io/vpn -O openvpn-install.sh
 wget https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh
@@ -120,6 +122,12 @@ sudo ./openvpn-install.sh
 sudo systemctl start/stop/status/restart openvpn-server@server.service
 # 凭证文件：
 /root/client.ovpn
+```
+
+### 2）、
+
+```bash
+sudo systemctl restart openvpn-server@server.service
 ```
 
 ## 2、windows openvpn client连接：
