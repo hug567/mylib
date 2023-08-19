@@ -124,11 +124,104 @@ sudo systemctl start/stop/status/restart openvpn-server@server.service
 /root/client.ovpn
 ```
 
-### 2）、
+### 2）、重启openvpn：
 
 ```bash
 sudo systemctl restart openvpn-server@server.service
 ```
+
+### 3）、设置用户密码登录：
+
+- 添加脚本：
+
+```bash
+sudo vim /etc/openvpn/checkpsw.sh 
+```
+
+```bash
+#!/bin/sh
+###########################################################
+# checkpsw.sh (C) 2004 Mathias Sundman 
+#
+# This script will authenticate OpenVPN users against
+# a plain text file. The passfile should simply contain
+# one row per user with the username first followed by
+# one or more space(s) or tab(s) and then the password.
+
+PASSFILE="/etc/openvpn/psw-file"
+LOG_FILE="/etc/openvpn/openvpn-password.log"
+TIME_STAMP=`date "+%Y-%m-%d %T"`
+
+###########################################################
+
+if [ ! -r "${PASSFILE}" ]; then
+  echo "${TIME_STAMP}: Could not open password file "${PASSFILE}" for reading." >> ${LOG_FILE}
+  exit 1
+fi
+
+CORRECT_PASSWORD=`awk '!/^;/&&!/^#/&&$1=="'${username}'"{print $2;exit}' ${PASSFILE}`
+
+if [ "${CORRECT_PASSWORD}" = "" ]; then 
+  echo "${TIME_STAMP}: User does not exist: username="${username}", password="${password}"." >> ${LOG_FILE}
+  exit 1
+fi
+
+if [ "${password}" = "${CORRECT_PASSWORD}" ]; then 
+  echo "${TIME_STAMP}: Successful authentication: username="${username}"." >> ${LOG_FILE}
+  exit 0
+fi
+
+echo "${TIME_STAMP}: Incorrect password: username="${username}", password="${password}"." >> ${LOG_FILE}
+exit 1
+```
+
+```bash
+sudo chmod +x /etc/openvpn/checkpsw.sh
+```
+- 添加账号文件：
+```bash
+sudo vim /etc/openvpn/psw-file
+#----------------------------------------------------------------#
+user1 password1
+user2 password2
+user3 password3
+#----------------------------------------------------------------#
+```
+- 更新server配置：
+```bash
+cd /etc/openvpn
+sudo vim server.conf
+#- 在末尾添加：----------------------------------------------------#
+script-security 3
+auth-user-pass-verify /etc/openvpn/checkpsw.sh via-env
+username-as-common-name
+verify-client-cert none
+#----------------------------------------------------------------#
+
+# 重启openvpn server:
+sudo systemctl restart openvpn-server@server.service
+```
+### 4）、设置静态ip：
+```bash
+cd /etc/openvpn
+mkdir ccd
+cd ccd
+# 已用户名创建文件：
+sudo vim huangxing01
+#----------------------------------------------------------------#
+ifconfig-push 10.8.0.10 10.8.0.11
+#----------------------------------------------------------------#
+
+# 更新server配置
+sudo vim /etc/openvpn/server.conf
+#----------------------------------------------------------------#
+client-config-dir /etc/openvpn/ccd
+#----------------------------------------------------------------#
+
+# 重启openvpn server:
+sudo systemctl restart openvpn-server@server.service
+```
+
 
 ## 2、windows openvpn client连接：
 
@@ -149,32 +242,26 @@ sudo apt install openvpn
 sudo openvpn --config client.ovpn
 ```
 
+- 使用账号密码连接：
+```bash
+vim client.ovpn
+#----------------------------------------------------------------#
+client
+dev tun
+proto udp
+remote 39.107.248.84 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+auth SHA512
+cipher AES-256-CBC
+ignore-unknown-option block-outside-dns
+verb 3
+# 增加使用用户名密码登录openvpn服务器配置：
+auth-user-pass
+#----------------------------------------------------------------#
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-vpn服务器
-
-客户端证书
-
-用户认证
-
-定义VPN路由
-
-定义网络地址转换(NAT)规则
