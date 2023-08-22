@@ -1,4 +1,13 @@
-# 1、ko加载：
+# 1、编译驱动ko：
+
+```bash
+# Makefile:
+
+# test.c：
+
+```
+
+# 2、ko加载：
 
 * Linux驱动编译成ko时，module_init、module_exit展开为：
 ```c
