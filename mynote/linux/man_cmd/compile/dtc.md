@@ -15,5 +15,6 @@ dtc -I dtb -O dts -o output.dts input.dtb
 ```bash
 # 读取二进制dts值
 cat /sys/firmware/devicetree/base/serial\@3100000/reg | xxd
+cat /proc/device-tree/amba/serial\@e0001000/reg | od -X
 ```
 
