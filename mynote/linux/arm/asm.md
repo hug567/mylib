@@ -84,6 +84,12 @@ tbnz w19, #0, ffff8000101f1c2c <find_get_entries+0x14c>  //w19第0位不为0则�
 mov ra, rb          //将rb中存放的数据传送给ra，mov不能直接操作内存中的数据
 mov ra, #0x12       //将立即数0x12存入ra寄存器中，立即数不能太大，太大用ldr
 mov ra, #'A'        //将字符A存入ra寄存器中
+//按位取反后传送
+movn r1, #0xFF      //r1=0xFFFFFF00
+//加载到低16位，高半部清零：0x0000-0xFFFF
+movw r1, 0xDF0D     //r1=0x0000DF0D
+//加载到寄存器高半部，低半部不受影响：0x0000-0xFFFF
+movt r1, #0xFFFF    //r1=0xFFFF0000
 
 stp                 //入栈指令 (aarch64栈由高地址向底地址增长)
 /*

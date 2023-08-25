@@ -347,26 +347,7 @@ git lfs track <files>
 git lfs migrate import --no-rewrite <files> -m "lfs track"
 ```
 
-## 4、gitbook：
-
-```shell
-sudo apt install nodejs npm
-npm config set registry http://mirrors.tools.huawei.com/npm/
-npm cache clean --force
-npm install -g gitbook-cli
-gitbook -V
-
-# 查看gitbook版本：
-gitbook --version
-
-# 空目录中创建gitbook
-gitbook init
-
-# 查看预览
-gitbook serve
-```
-
-## 5、tig：
+## 4、tig：
 
 ```c
 sudo apt install tig                         //安装tig
