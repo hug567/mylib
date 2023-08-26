@@ -130,7 +130,7 @@ sudo systemctl start/stop/status/restart openvpn-server@server.service
 sudo systemctl restart openvpn-server@server.service
 ```
 
-### 3）、设置用户密码登录：
+### 3）、设置用户名密码登录：
 
 - 添加脚本：
 
@@ -189,13 +189,15 @@ user3 password3
 ```
 - 更新server配置：
 ```bash
-cd /etc/openvpn
-sudo vim server.conf
+# 配置文件：/etc/openvpn/server.conf
+#         /etc/openvpn/server/server.conf
+sudo vim /etc/openvpn/server/server.conf
 #- 在末尾添加：----------------------------------------------------#
 script-security 3
 auth-user-pass-verify /etc/openvpn/checkpsw.sh via-env
 username-as-common-name
 verify-client-cert none
+client-to-client
 #----------------------------------------------------------------#
 
 # 重启openvpn server:
@@ -203,19 +205,10 @@ sudo systemctl restart openvpn-server@server.service
 ```
 ### 4）、设置静态ip：
 ```bash
-cd /etc/openvpn
-mkdir ccd
-cd ccd
-# 已用户名创建文件：
-sudo vim huangxing01
-#----------------------------------------------------------------#
-ifconfig-push 10.8.0.10 10.8.0.11
-#----------------------------------------------------------------#
-
-# 更新server配置
-sudo vim /etc/openvpn/server.conf
-#----------------------------------------------------------------#
-client-config-dir /etc/openvpn/ccd
+# 设置指定用户获取静态ip：
+sudo vim /etc/openvpn/server/ipp.txt
+#- 尾部添加:  ----------------------------------------------------#
+huangxing01,10.8.0.11,
 #----------------------------------------------------------------#
 
 # 重启openvpn server:
@@ -242,9 +235,10 @@ sudo apt install openvpn
 sudo openvpn --config client.ovpn
 ```
 
-- 使用账号密码连接：
+## 4、客户端设置使用账号密码连接：
 ```bash
-vim client.ovpn
+cp client.ovpn huangxing01.ovpn
+vim huangxing01.ovpn
 #----------------------------------------------------------------#
 client
 dev tun
@@ -261,7 +255,9 @@ ignore-unknown-option block-outside-dns
 verb 3
 # 增加使用用户名密码登录openvpn服务器配置：
 auth-user-pass
+# 删除cert和key
 #----------------------------------------------------------------#
+
+# 修改后使用账号密码连接
+sudo openvpn --config huangxing01.ovpn
 ```
-
-
