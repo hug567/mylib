@@ -1,0 +1,7 @@
+{
+	"name" : "Tom",
+	"age" : 18,
+	"weight" : 50.8,
+	"score" : [85, 93, 78],
+	"pass": true
+}
