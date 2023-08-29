@@ -10,6 +10,12 @@
 
 - dcache：数据cache；
 
-
+```c
+// 在armv7裸核程序中验证可成功将写数据从cache同步到内存，pa：内存物理地址
+static inline void flush_cache(void *pa)
+{
+    asm volatile("mcr p15, 0, %0, c7, c14, 1"::"r"(pa));
+}
+```
 
 # aarch64 cache：
