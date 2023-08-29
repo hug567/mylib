@@ -19,7 +19,8 @@ static void usage(const char *name)
 
 static void test_change_int(cJSON *root)
 {
-	cJSON_ReplaceItemInObject(root, "age", cJSON_CreateNumber(20));
+	int age = 20;
+	cJSON_ReplaceItemInObject(root, "age", cJSON_CreateIntArray(&age, 1));
 }
 
 static void test_change_int_array(cJSON *root)
