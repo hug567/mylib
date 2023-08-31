@@ -29,3 +29,18 @@ fdisk -l -s /dev/sda         # 查看指定分区
 sudo fdisk /dev/sda
 ```
 
+- 例：mmcblk0中已新建了2个分区mmcblk0p1、mmcblk0p1， 但mmcblk0中还有空间
+
+```bash
+root@ax_peta:/run/media# ls -l /dev/mmcblk0*
+brw-rw----    1 root     disk      179,   0 Jan  1  1970 /dev/mmcblk0
+brw-rw----    1 root     disk      179,   1 Jan  1  1970 /dev/mmcblk0p1
+brw-rw----    1 root     disk      179,   2 Jan  1  1970 /dev/mmcblk0p2
+```
+
+- 则可在mmcblk0中继续新建分区：
+
+```bash
+sudo fdisk /dev/mmcblk0
+```
+

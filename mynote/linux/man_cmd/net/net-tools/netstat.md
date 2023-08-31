@@ -15,5 +15,11 @@ netstat
 
 ```bash
 netstat -l
+# 查看所有端口监听
+netstat -nlp
+# 查看所有tcp端口监听
+netstat -nltp
+# 查看所有udp端口监听
+netstat -nlup
 ```
 

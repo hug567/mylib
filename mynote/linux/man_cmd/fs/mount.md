@@ -26,7 +26,7 @@ sudo mount -o loop file.ext4 mount_dir
 # 3、挂载u盘：
 
 ```bash
-# 查看u盘设备及问进系统类型
+# 查看u盘设备及文件系统类型
 sudo fdisk -l
 # 挂载u盘(fat32)
 
