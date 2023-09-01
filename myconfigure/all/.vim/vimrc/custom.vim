@@ -67,7 +67,7 @@ map <C-p> :call LoadFromTmpFile()<CR>
 "------------------------------------------------------------------------------"
 
 func! CreateTime()
-    let l:date = system("date '+%Y-%m-%m %H:%M:%S'")
+    let l:date = system("date '+%Y-%m-%d %H:%M:%S'")
     let l:str = " * Create: " .. l:date
     " delete tail char
     let l:len = len(l:str)
