@@ -176,8 +176,8 @@ vim -b file.dtb
   ^@        0x0         NUL
   ^H        0x8         退格(Backspace)
   ^I        0x9         水平制表符
-  ^J        0xa         换行(\n, LN)
-  ^@        0xa         换行(\n, LN)
+  ^J        0xa         换行(\n, LN/LF)
+  ^@        0xa         换行(\n, LN/LF)
   ^M        0xd         回车(\r, CR, Enter)
 
 // 显示控制字符
