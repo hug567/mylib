@@ -32,9 +32,20 @@ def test_define_string():
 def test_format_string():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
+def test_string_array():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+    str_list = [
+            'string array member 1',
+            'string array member 2 xxx',
+            'string array member 3 ppppp',
+    ]
+    for l in str_list:
+        print(l)
+
 def main():
     test_define_string()
     test_format_string()
+    test_string_array()
 
 if __name__ == '__main__':
     main()
