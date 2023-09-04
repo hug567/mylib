@@ -7,7 +7,7 @@
 #  $@：所有参数，视为同一字符中的多个单词，可使用for param in "$@"遍历
 
 # 逐行遍历命令的执行结果
-function test_traverse_cmd_result() {
+function test_cmd_traverse_result() {
     echo "$FUNCNAME:-----------------------------"
     local result=$(ls -l)
     # echo "$result" # 加双引号会保留换行符
@@ -81,11 +81,32 @@ function test_cmd_exist() {
     __cmd_exist_2 yyy
 }
 
+function __cmd_multi_params() {
+    local params_all=$*
+    local params_form_2=${@:2}
+    local params_2_to_3=${@:2:2}
+    local last_param=${@:$#}
+
+    # ${@:start:size}, index starts from 1
+    echo "params_all:    $params_all"
+    echo "params_form_2: $params_form_2"
+    echo "params_2_to_3: $params_2_to_3"
+    echo "params_2_to_3: $params_2_to_3"
+    echo "last param:    $last_param"
+}
+
+function test_cmd_multi_params() {
+    echo "$FUNCNAME:-----------------------------"
+
+    __cmd_multi_params p1 p2 p3 p4 p5
+}
+
 function main() {
-    test_traverse_cmd_result
+    test_cmd_traverse_result
     test_echo_long_line
     test_cmd_ret
     test_cmd_exist
+    test_cmd_multi_params
 }
 
 main
