@@ -6,6 +6,8 @@
 ################################################################################
 import os
 
+# number, string, list,...
+
 def test_print_string():
     # 默认换行
     print("hello world!")
