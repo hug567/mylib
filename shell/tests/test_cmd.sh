@@ -12,8 +12,7 @@ function test_cmd_traverse_result() {
     local result=$(ls -l)
     # echo "$result" # 加双引号会保留换行符
     # 逐行遍历结果
-    echo "$result" | while read line
-    do
+    echo "$result" | while read line; do
         echo "line: [$line]"
     done
 
@@ -21,8 +20,7 @@ function test_cmd_traverse_result() {
     # 原始字符串以\r作为换行符，使用sed替换为\n
     local content=$(echo -e "line 1\rline 2\rline 3\r")
     content=$(echo $content | sed 's/\r/\n/g')
-    echo "$content" | while read item
-    do
+    echo "$content" | while read item; do
         echo "item: [$item]"
     done
 }
