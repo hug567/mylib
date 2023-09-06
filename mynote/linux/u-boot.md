@@ -29,7 +29,7 @@ quit                                                     //推出tftp服务
 
 ## 2、编译u-boot：
 
-### 1）、下载u-boot源码：
+### 2.1、下载u-boot源码：
 
 ```c
 wget https://ftp.denx.de/pub/u-boot/u-boot-2014.01.tar.bz2
@@ -37,7 +37,11 @@ git clone https://github.com/u-boot/u-boot.git
 git clone https://gitee.com/mirrors/u-boot.git
 ```
 
-### 2）、编译u-boot：
+### 2.2、编译u-boot：
+
+#### 2.2.1、arm：
+
+- 已验证可编译：v2018.05、v2019.01
 
 ```bash
 # 版本匹配：
@@ -52,17 +56,31 @@ mkdir build-vexpress_a9
 cd build-vexpress_a9
 make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_config
 make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j4
+
+# 创建tap0：
+sudo ip tuntap add dev tap0 mode tap
+sudo ifconfig tap0 192.168.0.1 netmask 255.255.255.0
+
 # 启动验证u-boot：
 qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
-
+````
+#### 2.2.2、aarch64：
+````bash
 # 编译aarch64版：
 cd u-boot
 make clean; make mrproper; make distclean
-make CROSS_COMPILE=aarch64-linux-gnu- qemu_arm64_defconfig
-make CROSS_COMPILE=aarch64-linux-gnu- -j3
+mkdir build-aarch64
+cd build-aarch64
+make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- qemu_arm64_defconfig
+make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- -j3
+
+# 启动验证：
 qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1024M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
 ```
-#### 常用命令：
+### 2.3、启动：
+
+#### 2.3.1、常用命令：
+
 ```bash
 # u-boot设置参数：
 setenv ipaddr 192.168.1.13
@@ -83,7 +101,9 @@ setenv                      # 设置环境变量
 saveenv                     # 保存环境变量
 printenv                    # 打印环境变量
 ```
-#### 制作镜像：
+
+#### 2.3.2、制作镜像：
+
 ```c
 sudo apt install u-boot-tools    //安装mkimage工具
 
@@ -96,7 +116,7 @@ sudo cp uImage /var/lib/tftproot
 sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
 ```
 
-### 3）、手动启动linux内核：
+#### 2.3.3、手动启动linux内核：
 
 ```c
 /* 启动u-boot: */
