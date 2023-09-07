@@ -40,5 +40,21 @@ sudo iptables -L -t nat --line-number
 iptables -t nat -D POSTROUTING 1
 ```
 
+# 3、相关概念：
 
+## 3.1、规则作用位置：
 
+```bash
+PREROUTING             # 数据包进入路由表之前
+INPUT                  # 通过路由表后目的地为本机
+FORWARDING             # 通过路由表后，目的地不为本机
+OUTPUT                 # 由本机产生，向外转发
+POSTROUTIONG           # 发送到网卡接口之前
+```
+
+## 3.2、策略类型：
+
+- ACCEPT：接受；
+- REJECT：拒绝并回传拒绝包；
+- LOG：记录；
+- DROP：丢弃，不相应；
