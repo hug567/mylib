@@ -64,8 +64,21 @@ def test_modify_list():
     del ages[-1]
     print("ages:", ages)
 
-    print("delete: ----------")
+    print("pop: ----------")
+    # pop tail
+    tail = ages.pop()
+    print("tail:", tail)
+    # pop by index, start from 0
+    member = ages.pop(1)
+    print("ages[1]:", member)
     print("ages:", ages)
+
+    print("remove: ----------")
+    ages = [18, 25, 36, 42]
+    print("ages:", ages)
+    # remove by value
+    ages.remove(25)
+    print("after remove by value, ages:", ages)
 
 def main():
     test_define_list()
