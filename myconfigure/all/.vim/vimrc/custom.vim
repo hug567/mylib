@@ -76,6 +76,14 @@ func! CreateTime()
     call append(line('.'), l:newstr)
     " move the cursor to the next line
     normal! j
+    let l:str = "# Create: " .. l:date
+    " delete tail char
+    let l:len = len(l:str)
+    let l:newstr = strpart(l:str, 0, len - 1)
+    " insert on the line under the cursor
+    call append(line('.'), l:newstr)
+    " move the cursor to the next line
+    normal! j
 endfunction
 command Createtime call CreateTime()
 "------------------------------------------------------------------------------"

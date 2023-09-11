@@ -3,6 +3,7 @@
 #include <stdio.h>
     FILE
     printf()
+    snprintf()
     fopen()
     fclose()
     fread()
@@ -34,6 +35,10 @@
     close()
     read()
     write()
+    sleep()
+
+#include <pthread.h>
+    pthread_create()
 
 #include <sys/ioctl.h>
     ioctl()
@@ -42,4 +47,5 @@
     socket()
 
 #include <sys/socket.h>
+#include <netinet/in.h>
     struct sockaddr_in
