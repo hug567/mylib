@@ -1,30 +1,32 @@
 ## 1、主机配置：
 
-```c
-// 机创建tun/tap设备：
-sudo apt install uml-utilities bridge-utils              //安装依赖
-sudo ip tuntap add dev tap0 mode tap                     //创建tap设备
-sudo ifconfig tap0 192.168.1.10 netmask 255.255.255.0    //配置ip
-sudo ip tuntap del dev tap0 mode tap                     //删除tap设备
+```bash
+# 机创建tun/tap设备：
+sudo apt install uml-utilities bridge-utils              # 安装依赖
+sudo ip tuntap add dev tap0 mode tap                     # 创建tap设备
+sudo ifconfig tap0 192.168.1.10 netmask 255.255.255.0    # 配置ip
+sudo ip tuntap del dev tap0 mode tap                     # 删除tap设备
 
-// 主机安装TFTP工具：
-sudo apt install tftp-hpa tftpd-hpa xinetd               //安装依赖
-sudo /etc/init.d/tftpd-hpa start                         //启动服务
-sudo systemctl start tftpd-hpa.service                   //启动服务
+# 主机安装TFTP工具：
+sudo apt install tftp-hpa tftpd-hpa xinetd               # 安装依赖
+sudo /etc/init.d/tftpd-hpa start                         # 启动服务
+sudo systemctl start tftpd-hpa.service                   # 启动服务
 
-// 默认目录：/srv/tfpt
-sudo vim /etc/default/tftpd-hpa                          //查看配置文件
-TFTP_DIRECTORY="/var/lib/tftpboot"                       //拉取uImage目录
-sudo /etc/init.d/tftpd-hpa restart                       //重启TFTP服务
+# 默认目录：/srv/tfpt
+sudo vim /etc/default/tftpd-hpa                          # 查看配置文件
+#--------------------------------------------------#
+TFTP_DIRECTORY="/var/lib/tftpboot"                       # 拉取uImage目录
+#--------------------------------------------------#
+sudo /etc/init.d/tftpd-hpa restart                       # 重启TFTP服务
 
-// 主机tftp测试：
-tftp localhost                                           //连接至本地
-get <file>                                               //获取文件
-status                                                   //查看状态
-quit                                                     //推出tftp服务
+# 主机tftp测试：
+tftp localhost                                           # 连接至本地
+get <file>                                               # 获取文件
+status                                                   # 查看状态
+quit                                                     # 退出tftp服务
 
-// 修改网络配置：
-//sudo vim /etc/network/interfaces
+# 修改网络配置：
+#sudo vim /etc/network/interfaces
 ```
 
 ## 2、编译u-boot：
@@ -102,7 +104,7 @@ saveenv                     # 保存环境变量
 printenv                    # 打印环境变量
 ```
 
-#### 2.3.2、制作镜像：
+#### 2.3.2、制作linux镜像：
 
 ```c
 sudo apt install u-boot-tools    //安装mkimage工具
