@@ -4,7 +4,7 @@ make clean
 make mrproper
 
 make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_config
-make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j
+make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j3
 
 # 拷贝u-boot文件至tftp根目录
 sudo cp u-boot /var/lib/tftproot
