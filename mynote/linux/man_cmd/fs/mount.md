@@ -3,7 +3,7 @@
 ```bash
 mount    # 挂载分区 
     -a             # 挂载所有/etc/fstab中配置的文件系统
-    -t <type>      # 指定文件系统格式
+    -t <type>      # 指定文件系统格式(vfat,ext4)
     -v             # 显示详细信息
     -f             # 不真实挂载，通常配合-v
     -o noatime     # 不更新访问时间
