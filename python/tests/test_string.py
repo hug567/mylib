@@ -4,7 +4,7 @@
 # python 3.6.9
 # 2023-05-15
 ################################################################################
-
+import re
 import sys
 
 def test_define_string():
@@ -14,7 +14,7 @@ def test_define_string():
     print("str01:", str01)
     # access single char
     print("str01[0]:", str01[0])
-    # cut string: start from 1, end before 5
+    # cut string: start from 1, end before 5 (string index start from 0)
     print("str01[1:5]:", str01[1:5])
     # cut string: start from 1, to last char
     print("str01[1:]:", str01[1:])
@@ -42,10 +42,27 @@ def test_string_array():
     for l in str_list:
         print(l)
 
+def test_string_match():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    # find sub string
+    string = "hello world, hello python"
+    if string.find("world") >= 0:
+        print("find string \"world\" in string")
+    else:
+        print("does not find string \"world\" in string")
+
+    # regular match
+    if re.search("world.*python", string) != None:
+        print("find \"world.*python\" in string")
+    else:
+        print("does not find \"world.*python\" in string")
+
 def main():
     test_define_string()
     test_format_string()
     test_string_array()
+    test_string_match()
 
 if __name__ == '__main__':
     main()
