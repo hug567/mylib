@@ -1,29 +1,13 @@
 ## 1、主机配置：
 
+- 搭建TFTP服务器：[tftp.md](man_cmd/net/tftp.md)
+
 ```bash
 # 机创建tun/tap设备：
 sudo apt install uml-utilities bridge-utils              # 安装依赖
 sudo ip tuntap add dev tap0 mode tap                     # 创建tap设备
-sudo ifconfig tap0 192.168.1.10 netmask 255.255.255.0    # 配置ip
+sudo ifconfig tap0 192.168.1.1 netmask 255.255.255.0     # 配置ip
 sudo ip tuntap del dev tap0 mode tap                     # 删除tap设备
-
-# 主机安装TFTP工具：
-sudo apt install tftp-hpa tftpd-hpa xinetd               # 安装依赖
-sudo /etc/init.d/tftpd-hpa start                         # 启动服务
-sudo systemctl start tftpd-hpa.service                   # 启动服务
-
-# 默认目录：/srv/tfpt
-sudo vim /etc/default/tftpd-hpa                          # 查看配置文件
-#--------------------------------------------------#
-TFTP_DIRECTORY="/var/lib/tftpboot"                       # 拉取uImage目录
-#--------------------------------------------------#
-sudo /etc/init.d/tftpd-hpa restart                       # 重启TFTP服务
-
-# 主机tftp测试：
-tftp localhost                                           # 连接至本地
-get <file>                                               # 获取文件
-status                                                   # 查看状态
-quit                                                     # 退出tftp服务
 
 # 修改网络配置：
 #sudo vim /etc/network/interfaces
@@ -89,12 +73,12 @@ setenv ipaddr 192.168.1.13
 setenv ethaddr 00:04:9f:04:d2:35
 setenv gatewayip 192.168.1.1
 setenv netmask 255.255.255.0
-setenv serverip 192.168.1.10
+setenv serverip 192.168.1.1
 setenv bootargs "root=/dev/mmcblk0 rw console=ttyAMA0"
 saveenv
 
 # u-boot验证网络：
-ping 192.168.1.10           # host 192.168.1.10 is alive
+ping 192.168.1.1           # host 192.168.1.1 is alive
 
 # u-boot常用命令：
 help / ?                    # 打印所有命令信息
@@ -106,34 +90,41 @@ printenv                    # 打印环境变量
 
 #### 2.3.2、制作linux镜像：
 
-```c
-sudo apt install u-boot-tools    //安装mkimage工具
+```bash
+# 安装mkimage工具
+sudo apt install u-boot-tools
 
-// 制作linux uImage:
+# 制作linux uImage:
 mkimage -A arm -O linux -T kernel -C none -a 0x60003000 -e 0x60003040 -d arch/arm/boot/zImage uImage
 mkimage -A arm64 -O linux -T kernel -C none -a 0x60003000 -e 0x60003040 -d arch/arm64/boot/Image.gz uImage
 
-// 拷贝镜像至tftp目录:
+# 拷贝镜像至tftp目录:
 sudo cp uImage /var/lib/tftproot
 sudo cp vexpress-v2p-ca9.dtb /var/lib/tftproot
 ```
 
 #### 2.3.3、手动启动linux内核：
 
-```c
-/* 启动u-boot: */
+```bash
+# 启动u-boot: 
 qemu-system-arm -M vexpress-a9 -m 256M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
 qemu-system-aarch64 -M virt -m 1024M -cpu cortex-a57 -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
 
-/* 下载并启动镜像： */
+# 查看物理内存起始地址和大小
+bdinfo
+
+# 下载并启动镜像：
 tftp 0x60003000 uImage
 tftp 0x60500000 vexpress-v2p-ca9.dtb
 bootm 0x60003000 - 0x60500000
+# u-boot 2019.1
+tftpboot 0x60003000 uImage
+tftpboot 0x60500000 vexpress-v2p-ca9.dtb
 
-// 下载aarch64镜像：
+# 下载aarch64镜像：
 tftp 0x60003000 uImage
 tftp 0x61000000 qemu-arm64.dtb
-bootm 0x60003000 - 0x61000000               // 需计算各组件大小，保证不互相覆盖
+bootm 0x60003000 - 0x61000000               # 需计算各组件大小，保证不互相覆盖
 ```
 
 ## 3、u-boot 64字节头：
