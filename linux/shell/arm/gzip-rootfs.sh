@@ -1,12 +1,7 @@
 #!/bin/bash
 
-#base_dir="${HOME}/code/linux"
-base_dir="${PWD}"
-#busybox_dir="${base_dir}/busybox-1.27.2"
 busybox_dir="$HOME/code/busybox-1.35.0/build-arm"
-rootfs_dir="${base_dir}/rootfs"
 
-cd ${base_dir}
 rm -rf rootfs rootfs.cpio rootfs.cpio.gz
 mkdir rootfs
 cd rootfs
