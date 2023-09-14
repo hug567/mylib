@@ -8,7 +8,7 @@
 # 创建虚拟网卡
 VIR_TAP=$(ifconfig -a | grep tap)
 if [ "x$VIR_TAP" = "x" ]; then
-    log_info "Will create tap0 with ip 192.168.0.100"
+    echo "Will create tap0 with ip 192.168.0.100"
     sudo ip tuntap add dev tap0 mode tap
     sudo ifconfig tap0 192.168.0.100 netmask 255.255.255.0
 fi
@@ -29,6 +29,8 @@ qemu-system-arm \
     -kernel arch/arm/boot/zImage \
     -dtb arch/arm/boot/dts/vexpress-v2p-ca9.dtb \
     -initrd rootfs.cpio.gz \
+    -device virtio-net-device,netdev=net0 \
+    -netdev tap,id=net0,script=no,downscript=no,ifname=tap0 \
     -append "rdinit=/linuxrc console=ttyAMA0"
 
 #qemu-system-aarch64 \
