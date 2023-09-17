@@ -2,11 +2,11 @@
 
 ## 1、ubuntu：
 
-- 已验证：ubuntu 22.04、ubuntu16.04
+- 已验证：ubuntu 22.04、ubuntu 20.04、ubuntu16.04
 
 ```bash
 # 安装tftp
-sudo apt install tftp-hpa tftpd-hpa xinetd
+sudo apt install tftpd-hpa xinetd
 # 创建tftp根目录
 cd ~/temp; mkdir tftpboot; chmod 777 tftpboot
 # 编辑配置文件
@@ -22,6 +22,7 @@ TFTP_OPTIONS="-l -c -s"
 /* ------------------------------------------------------------ */
 # 重启tftp
 sudo service tftpd-hpa restart
+sudo systemctl restart tftpd-hpa
 
 # 测试连接：
 cd ~

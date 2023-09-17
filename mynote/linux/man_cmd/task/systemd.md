@@ -1,9 +1,11 @@
-# systemctl：
+# 1、systemctl：
 
 ```bash
+systemctl --help                           # 查看帮助
 systemctl start xxx                        # 启动服务
 systemctl researt xxx                      # 重启服务
-systemctl staop xxx                        # 停止服务
+systemctl stop xxx                         # 停止服务
+systemctl -a                               # 查看所有unit
 systemctl list-units                       # 列出单元
 systemctl daemon-reload                    # 修改服务文件后重新加载
 systemctl is-active xxx                    # 查看是否是开机自启
@@ -11,8 +13,8 @@ systemctl enable xxx                       # 使能开机自启
 systemctl disable xxx                      # 关闭开机自启
 systemctl list-timers                      # 列出所有定时任务
 systemctl list-jobs                        # 列出活动任务
-# 列出服务依赖
-systemctl list-dependencies xxx
+systemctl status xxx                       # 查看unit状态
+systemctl list-dependencies xxx            # 列出服务依赖
 
 # 重新加载service文件：
 sudo systemctl daemon-reload
@@ -37,7 +39,7 @@ ExecStart=/bin/bash -c '\
         '
 ```
 
-# journalctl：
+# 2、journalctl：
 
 ```bash
 journalctl -u xxx                          # 查看service启动日志
@@ -47,7 +49,7 @@ journalctl -k -p err                       # 查看err及以上级别日志
 journalctl -k -f                           # 实时显示内核日志
 ```
 
-# systemd-analyze：
+# 3、systemd-analyze：
 
 ```bash
 systemd-analyze blame                                  # 查看各服务启动时间

@@ -2,7 +2,7 @@
 
 ```bash
 # 安装
-sudo apt install unrar
+sudo apt install rar unrar
 
 unrar
 	e                      # 提取文件到当前文件
@@ -15,8 +15,11 @@ unrar
 # 解压文件，子目录文件也提取到当前目录
 unrar e file.rar
 # 解压文件，保留子目录结构
-unrar x file.tar
+unrar x file.rar
 # 解压到指定目录
-unrar x file.tar dir
+unrar x file.rar dir
+
+# 解压rar文件
+rar x file.rar
 ```
 
