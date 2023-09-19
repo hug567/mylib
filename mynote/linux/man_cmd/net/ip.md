@@ -36,7 +36,7 @@ ip route list
 ip route show table all
 
 sudo ip link set dev eno1 up/down                           # 启动/关闭网卡
-sudo ip addr add dev eno1 192.168.1.26/24                   # 设置ip
+sudo ip addr add dev eno1 192.168.1.26/24                   # 设置ip (或：为同一网卡新增不同ip)
 sudo ip addr del dev eno1 192.168.1.26/24                   # 删除ip
 sudo ip route add default via 192.168.1.1 dev eno1          # 添加路由
 
