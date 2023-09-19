@@ -49,6 +49,9 @@ sudo ip link set dev ens33 mtu 1500                         # 设置MTU
 sudo ip link set eth0 down
 sudo ip link set eth0 name eth1
 sudo ip link set eth1 up
+
+# 查看ARP缓存(MAC表)
+ip neighbor show
 ```
 
 
