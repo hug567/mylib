@@ -60,7 +60,7 @@ root::0:0:root:/root:/bin/sh
 find . | cpio -o --format=newc > ../rootfs.cpio
 cd ..
 gzip -c rootfs.cpio > rootfs.cpio.gz
-mkimage -A arm -O linux -T ramdisk -C none -a 0x62000000 -e 0x62000040 -d rootfs.cpio.gz rootfs.ub
+mkimage -A arm -O linux -T ramdisk -C none -a 0x42000000 -e 0x42000040 -d rootfs.cpio.gz rootfs.ub
 ```
 
 # 3、编译linux：
@@ -72,7 +72,7 @@ cd build-aarch64
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j3
 make -C ../ O=`pwd` ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs
-mkimage -A arm -O linux -T kernel -C none -a 0x60003000 -e 0x60003040 -d arch/arm/boot/zImage uImage
+mkimage -A arm -O linux -T kernel -C none -a 0x40003000 -e 0x40003040 -d arch/arm64/boot/Image.gz uImage
 ```
 
 # 4、启动：
@@ -87,20 +87,20 @@ sudo ip tuntap add dev tap0 mode tap
 sudo ifconfig tap0 192.168.0.1 netmask 255.255.255.0
 sudo ip tuntap del dev tap0 mode tap
 # u-boot启动linux：
-qemu-system-aarch64 -M virt -cpu cortex-a57 -m 256M -kernel ./u-boot -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no
+qemu-system-aarch64 -M virt -cpu cortex-a57 -m 256M -kernel ./u-boot -nographic -device virtio-net-device,netdev=net0 -netdev tap,id=net0,script=no,downscript=no,ifname=tap0
 # u-boot设置参数：
 setenv ipaddr 192.168.0.10
-setenv ethaddr 00:04:9f:04:d2:35
 setenv gatewayip 192.168.0.1
 setenv netmask 255.255.255.0
 setenv serverip 192.168.0.1
 setenv bootargs "rdinit=/linuxrc console=ttyAMA0"
 saveenv
 # u-boot下载镜像到内存：
-tftpboot 0x60003000 uImage
-tftpboot 0x61000000 vexpress-v2p-ca9.dtb
-tftpboot 0x62000000 rootfs.ub
+tftpboot 0x40003000 uImage
+tftpboot 0x41000000 vexpress-v2f-1xv7-ca53x2.dtb
+tftpboot 0x41000000 foundation-v8.dtb
+tftpboot 0x42000000 rootfs.ub
 # u-boot启动linux：
-bootm 0x60003000 0x62000000 0x61000000
+bootm 0x40003000 0x42000000 0x41000000
 ```
 
