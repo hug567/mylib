@@ -145,9 +145,7 @@ install_base_file() {
 }
 
 make_rootfs() {
-    if [ -d rootfs ]; then
-        rm -rf rootfs
-    fi
+    rm -rf rootfs rootfs.cpio rootfs.cpio.gz
     mkdir rootfs
     cd rootfs
 
@@ -160,7 +158,7 @@ make_rootfs() {
 
     find . | cpio -o --format=newc > ../rootfs.cpio
     cd ..
-    gzip -c rootfs.cpio > rootfs.gzip
+    gzip -c rootfs.cpio > rootfs.cpio.gz
 }
 
 main() {

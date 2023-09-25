@@ -24,7 +24,7 @@ function make_rootfs() {
 
 function qemu_run() {
     local image="arch/arm64/boot/Image"
-    local rootfs="rootfs.gzip"
+    local rootfs="rootfs.cpio.gz"
 
     check_files_exist $image $rootfs
 
