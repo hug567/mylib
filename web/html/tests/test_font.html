@@ -1,0 +1,38 @@
+<!--
+  练习：字体字形
+  时间：2023-09-26
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>test_font</title>  <!-- 网页标题 -->
+    </head>
+    <body>
+      <b>这是一段加粗的文本</b>  <!-- 加粗 -->
+      <br/>
+      <i>这是一段斜体的文本</i>  <!-- 斜体 -->
+      <br/>
+      <b><i>这是一段加粗并且斜体的文本</i></b>  <!-- 加粗和斜体 -->
+      <br/>
+      <p style="font-weight: bold; font-style: italic;">    <!-- 段落设置加粗和斜体 -->
+        这是处于段落中的文本，段落的字体属性为加粗和斜体
+      </p>
+      <p>
+        文本上标，如：m<sup>2</sup>  <!-- 文本上标 -->
+      </p>
+      <p>
+        文本下标，如：A<sub>0</sup>  <!-- 文本下标 -->
+      </p>
+      <!-- 段落设置多种格式 -->
+      <p style="font-family: Arial, Helvetica, sans-serif; font-size: 20pt; color:green">
+        这是处于段落中的文本，设置了多种字体：Arial, Helvetica, sans-serif，字体大小：20pt，和字体颜色：绿色，
+      </p>
+      <p>  <!-- 只对段落中的部分文本设置格式 -->
+        这是一段处于段落中的文本，但是只对段落中的
+        <span style="font-family: Arial, Helvetica, sans-serif; font-size: 20pt; color:green;
+                     font-weight: bold; font-style: italic;">特定文本</span>
+        设置丰富的格式
+      </p>
+    </body>
+</html>
