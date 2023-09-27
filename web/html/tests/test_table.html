@@ -1,0 +1,69 @@
+<!--
+  练习：表格
+  时间：2023-09-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>test_table</title>  <!-- 网页标题 -->
+    </head>
+    <body>
+      <p>以下是一个表格：</p>
+      <!--创建表格-->
+      <table style="width: 500px; height: 100px; text-align: center;" border="1" cellspacing="0">
+        <tr>  <!--表格中的一行-->
+          <th>Name</th>  <!--表头-->
+          <th>Age</th>  <!--表头-->
+          <th>Height</th>  <!--表头-->
+          <th>Weifht</th>  <!--表头-->
+        </tr>
+        <tr>  <!--表格中的一行，每行列数需相同-->
+          <td style="width: 20%;">Tom</td>  <!--单元格-->
+          <td>20</td>  <!--单元格-->
+          <td>183</td>  <!--单元格-->
+          <td>70</td>  <!--单元格-->
+        </tr>
+        <tr>  <!--表格中的一行，每行列数需相同-->
+          <td>Jerry</td>  <!--单元格-->
+          <td>18</td>  <!--单元格-->
+          <td>175</td>  <!--单元格-->
+          <td>45</td>  <!--单元格-->
+        </tr>
+      </table>
+
+      <p>合并单元格的列：</p>
+      <table style="width: 300px; text-align: center;" border="1" cellspacing="0">
+        <tr>
+          <th colspan="2">Name</th>
+        </tr>
+        <tr>
+          <td>First</td>
+          <td>Last</td>
+        </tr>
+        <tr>
+          <td>Huang</td>
+          <td>Xing</td>
+        </tr>
+        <tr>
+          <td colspan="2">Tom</td>
+        </tr>
+      </table>
+
+      <p>合并单元格的行：</p>
+      <!--设置单元格背景，可设置真个表格或单个单元格，可设置颜色或图片-->
+      <table style="width: 300px; text-align: center; background-color: #ffff00;" border="1" cellspacing="0">
+        <tr>
+          <th >x</th>
+          <th >y</th>
+        </tr>
+        <tr>
+          <td>1.0</td>
+          <td rowspan="2">5.3</td>
+        </tr>
+        <tr>
+          <td>2.7</td>
+        </tr>
+      </table>
+    </body>
+</html>

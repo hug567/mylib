@@ -1,0 +1,10 @@
+/* 设置段落的默认样式 */
+p {
+    margin-left: 24pt;
+}
+
+/* 设置段落的新样式类 */
+p.italic {
+    font-style: italic;
+    color: green;
+}
