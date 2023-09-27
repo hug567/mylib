@@ -1,0 +1,37 @@
+<!--
+  练习：显示图像
+  时间：2023-09-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>test_image</title>  <!-- 网页标题 -->
+    </head>
+    <body>
+      <p>  <!-- 显示图片 -->
+        显示图片：<br/>
+        <img src="images/flower.png" alt="flower.png"/><br/>
+        动态图片：<br/>
+        <img src="images/cute.gif" alt="cute.gif"/><br/>
+        来自网络的图片：<br/>
+        <img src="https://lmg.jj20.com/up/allimg/4k/s/02/2109250006343S5-0-lp.jpg" alt="2109250006343S5-0-lp.jpg"/><br/>
+        图片中心对齐：<br/>
+        <div style="text-align: center;">
+          <img src="images/flower.png" alt="flower.png"/><br/>
+        </div>
+        图片右对齐：<br/>
+        <img src="images/flower.png" alt="flower.png" style="float: right;"/><br/>
+      </p>
+      <p>  <!-- 图片与文本对齐 -->
+        图片与文本顶部对齐：<img src="images/flower.png" alt="flower.png" style="vertical-align: text-top;"/><br/>
+        图片与文本中心对齐：<img src="images/flower.png" alt="flower.png" style="vertical-align: middle;"/><br/>
+        图片与文本底部对齐：<img src="images/flower.png" alt="flower.png" style="vertical-align: text-bottom;"/><br/>
+        图片与文本基线对齐：<img src="images/flower.png" alt="flower.png" style="vertical-align: baseline;"/><br/>
+      </p>
+      <p>
+        指定图片宽度100：<img src="images/flower.png" alt="flower.png" width="100"/><br/>  <!-- 只指定宽度，将等比例缩放 -->
+        指定图片高度150：<img src="images/flower.png" alt="flower.png" height="150"/><br/>  <!-- 只指定高度，将等比例缩放 -->
+      </p>
+    </body>
+</html>
