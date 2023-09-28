@@ -3,8 +3,47 @@ p {
     margin-left: 24pt;
 }
 
-/* 设置段落的新样式类 */
+/* 
+ * 设置段落的新样式类, 
+ 引用方式：<p class="italic">xxx</p>
+ */
 p.italic {
     font-style: italic;
     color: green;
+}
+
+/* 默认链接样式 */
+a {
+    background-color: #befff7;
+}
+
+/* 
+ * CSS伪类
+ *   a:link：链接未被访问或
+ *   a:hover：鼠标指向链接
+ *   a:active：链接被激活(鼠标单击)
+ *   a:visited：链接被访问过
+ * 注：最新版本Chrome似乎已不支持，Edge浏览器支持
+ */
+a:link {
+    color:#ff0000;
+}
+a:hover {
+    color: #d83f31;
+}
+a:active {
+    color: #00ff00;
+}
+a:visited {
+    color: #0000ff;
+}
+
+/* 通用样式类，可用于支持样式规则包含的属性的所有元素 */
+.bold {
+    font-weight: bold;
+}
+
+/* 指定多个选择符 */
+h1, h2 {
+    text-align: center;
 }
