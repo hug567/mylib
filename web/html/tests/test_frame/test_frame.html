@@ -1,0 +1,24 @@
+<!--
+  练习：框架集
+  时间：2023-10-04
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>test_frame</title>  <!-- 网页标题 -->
+    </head>
+      <!--
+        框架集指定各网页分布样式；
+        指定没有边框；
+        框架集frameset可以嵌套；
+    -->
+    <frameset rows="80,*" frameborder="0" border="0">
+        <frame src="navigate.html" name="navigate" />  <!--导航栏高度为80-->
+        <!--
+            定义一个框架，名称是main，默认显示的页面是main.html
+            也可指定显示其他页面
+        -->
+        <frame src="main.html" name="main" />  <!--剩余部分为主体内容-->
+    </frameset>
+</html>
