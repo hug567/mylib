@@ -17,4 +17,7 @@ sudo apt --only-upgrade install xxx   # 仅更新指定软件包，若未安装�
 
 # 查看包信息(版本、依赖等)
 apt show xxx
+# 安装指定版本
+apt-cache madison xxx
+sudo apt install xxx=x.y.z
 ```

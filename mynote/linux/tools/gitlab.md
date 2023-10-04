@@ -101,3 +101,26 @@ https://10.110.0.3:9003
 Perferences -> Localization -> Language -> Chinese, Simplified - 简体中文 (98% translated) -> Save changes
 ```
 
+## 4、Gitlab升级：
+
+```bash
+# ubuntu 22.04 (gitlab-ce 16.4.1-ce.0)
+# 跳过自动备份
+sudo touch /etc/gitlab/skip-auto-backup
+# 更新源信息
+sudo apt update
+# 查看可升级的版本，gitlab-ce或gitlab-ee
+apt list --upgradable | grep gitlab
+# 升级至gitlab最新版本
+sudo apt install gitlab-ce
+
+# 升级到指定版本
+sudo apt update
+apt-cache madison gitlab-ce | grep 16.3
+sudo apt install gitlab-ce=16.3.0-ce.0
+
+# 重启gitlab
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+```
+
