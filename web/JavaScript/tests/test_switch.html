@@ -1,0 +1,37 @@
+<!--
+  练习：JavaScript中switch-case语句
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_switch</title>
+  </head>
+  <body>
+    <!--JavaScript脚本-->
+    <script>
+      function numberComp(num) {
+        //JavaScript中的switch-case语句
+        switch(num) {
+          case 0:
+            document.write("num is: 0<br>");
+            break;
+          case 1:
+            document.write("num is: 1<br>");
+            break;
+          case 2:
+            document.write("num is: 2<br>");
+            break;
+          default:
+            document.write("unsupported num: " + num + "<br>");
+        }
+      }
+
+      numberComp(2);
+      numberComp(1);
+      numberComp(0);
+      numberComp(5);
+    </script>
+  </body>
+</html>

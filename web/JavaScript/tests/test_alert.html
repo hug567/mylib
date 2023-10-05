@@ -1,0 +1,33 @@
+<!--
+  练习：JavaScript弹出窗口
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_alert</title>
+  </head>
+  <body>
+    <!--JavaScript脚本-->
+    <script>
+      //JavaScript弹出窗口
+      alert("这是一个JavaScript弹出窗口！");
+
+      //获取用户点击的是确认还是取消
+      if (confirm("请点击确认或取消！")) {
+        document.write("你点击的是：确认<br>");
+      } else {
+        document.write("你点击的是：取消<br>");
+      }
+
+      //提示用户
+      var name = prompt("请输入姓名：", "");
+      if (name) {
+        document.write("你输入的姓名是：" + name + "<br>");
+      } else {
+        document.write("你没有输入姓名<br>");
+      }
+    </script>
+  </body>
+</html>

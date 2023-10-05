@@ -1,0 +1,35 @@
+<!--
+  练习：点击链接时执行JavaScript脚本
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_click</title>
+  </head>
+  <body>
+    <a id="reload">打印输出<br></a>
+
+    <!--JavaScript脚本-->
+    <script>
+      window.onload = initAll;
+      //加载页面时执行
+      function initAll() {
+        if (document.getElementById) {
+          //点击链接时执行JavaScript函数
+          document.getElementById("reload").onclick = printMsg;
+        }
+      }
+
+      function printMsg() {
+        document.write("while:---------------------------<br>");
+        var i = 0;
+        while (i < 5) {
+          document.write("i = " + i + "<br>");
+          i++;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!--
+  练习：JavaScript函数
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_function</title>
+  </head>
+  <body>
+    <!--JavaScript脚本-->
+    <script>
+      //没有参数和返回值的函数
+      function printName() {
+        document.write("My name is Tom!<br>");
+      }
+
+      //有单个参数
+      function printAge(age) {
+        document.write("My age is: " + age + "<br>");
+      }
+
+      //有多个参数
+      function printPosition(pos, id) {
+        document.write("My position is: " + pos + ", id is: " + id + "<br>");
+      }
+
+      //有返回值
+      function getSalarySum(base, sub) {
+        return base + sub;
+      }
+
+      //调用函数
+      printName();
+      printAge(29);
+      printPosition("engineer", 12345);
+      document.write("My salary is: " + getSalarySum(10, 20) + "<br>");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!--
+  练习：JavaScript数组
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_array</title>
+  </head>
+  <body>
+    <!--JavaScript脚本-->
+    <script>
+      //字符串数组
+      var students = new Array("Tom", "Jerry", "Bob");
+      for (var i = 0; i < 3; i++) {  //数组下标从0开始
+        document.write("student name: " + students[i] + "<br>");
+      }
+
+      //数字数组
+      var ages = new Array(18, 20, 25, 19, 31);
+      for (var i = 0; i < 5; i++) {
+        document.write("age: " + ages[i] + "<br>");
+      }
+
+      //先声明数组，再赋值
+      var scores = new Array(3);
+      scores[0] = 85;
+      scores[1] = 97;
+      scores[2] = 93;
+      for (var i = 0; i < scores.length; i++) {  //数组长度：scores.length
+        document.write("score: " + scores[i] + "<br>");
+      }
+    </script>
+  </body>
+</html>

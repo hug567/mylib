@@ -1,0 +1,30 @@
+<!--
+  练习：JavaScript中if语句
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_if</title>
+  </head>
+  <body>
+    <!--JavaScript脚本-->
+    <script>
+      function numberComp(num) {
+        //JavaScript中的if语句
+        if (num < 10) {
+          document.write("num(" + num + ") < 10<br>");
+        } else if (num >= 10 && num < 20) {
+          document.write("10 <= num(" + num + ") < 20<br>");
+        } else {
+          document.write("num(" + num + ") >= 20<br>");
+        }
+      }
+
+      numberComp(4);
+      numberComp(16);
+      numberComp(33);
+    </script>
+  </body>
+</html>

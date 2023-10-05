@@ -1,0 +1,34 @@
+<!--
+  练习：JavaScript中try-throw-catch语句
+  时间：2023-10-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>test_switch</title>
+  </head>
+  <body>
+    <!--JavaScript脚本-->
+    <script>
+      function isNumber(num) {
+        //JavaScript中的try-throw-catch语句
+        try {
+          //判断是否不是数字，is not a number
+          if (isNaN(num)) {
+            //抛出异常
+            throw new Error("num is not a number: " + num + "<br>");
+          }
+          document.write("num is a number: " + num + "<br>");
+        }
+        //捕获异常
+        catch(errMsg) {
+          document.write(errMsg.message + "<br>");
+        }
+      }
+
+      isNumber(2);
+      isNumber("hello");
+    </script>
+  </body>
+</html>
