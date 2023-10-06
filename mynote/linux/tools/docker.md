@@ -1,4 +1,6 @@
-# 1、Ubuntu 18.04安装docker：
+# 1、安装docker：
+
+- 已验证：ubuntu 18.04、ubuntu 20.04
 
 ```shell
 dpkg -l | grep docker                                       # 查看是否安装了docker
@@ -31,7 +33,6 @@ docker info
 sudo systemctl start docker                                 # 启动docker
 sudo systemctl daemon-reload                                # 重启docker守护进程
 sudo systemctl restart docker.service                       # 重启docker服务
-
 ```
 
 # 2、docker常用命令：
