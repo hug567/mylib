@@ -41,6 +41,10 @@ sudo update-alternatives --config python
 ```shell
 # 查询包：https://pypi.org/
 
+# 安装pip3
+# ubuntu 16.04
+sudo apt install python3-pip
+
 # 升级pip
 python -m pip install --upgrade pip
 
@@ -51,6 +55,10 @@ pip/pip3 list
 sudo pip/pip3 install xxx
 # 安装指定版本
 sudo pip3 install conan==1.60.1
+# 源码安装python包
+sudo python3 setup.py install
+# 安装whl文件
+pip3 install Django-2.2-py3-none-any.whl
 
 # 卸载包
 sudo pip3 unstall conan
