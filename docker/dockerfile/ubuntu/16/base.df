@@ -1,0 +1,27 @@
+# create myjenkins docker image
+# build image:
+#     cd mylib/docker/dockerfile/ubuntu/16/
+#     docker build -t myubuntu16:v0.1 -f base.df ./
+# 2023-16-06
+
+# pull ubuntu 16.04: docker pull ubuntu:16.04
+FROM ubuntu:16.04
+
+# using http://...
+COPY sources.list /etc/apt/
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG user=hx
+ARG passwd=hx2023
+# Add new user, grant permissions to sudo , set user password
+RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
+    adduser ${user} sudo && \
+    echo "${user}:${passwd}" | chpasswd
+
+RUN apt update
+RUN apt-get -y install apt-utils && \
+    apt-get -y install sudo vim git zsh tmux iputils-ping net-tools
+
+# Set default login user
+USER hx

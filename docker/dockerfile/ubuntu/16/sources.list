@@ -1,0 +1,17 @@
+# ubuntu 16.04 - 2023.07.04
+deb     http://mirrors.cloud.tencent.com/ubuntu/ xenial           main restricted universe multiverse
+deb     http://mirrors.cloud.tencent.com/ubuntu/ xenial-updates   main restricted universe multiverse
+deb     http://mirrors.cloud.tencent.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb     http://mirrors.cloud.tencent.com/ubuntu/ xenial-security  main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ xenial           main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ xenial-updates   main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ xenial-security  main restricted universe multiverse
+
+# http://mirrors.cloud.tencent.com
+# http://mirrors.tuna.tsinghua.edu.cn
+# http://mirrors.163.com
+# http://mirrors.aliyun.com
+# http://mirrors.huaweicloud.com
+# http://repo.huaweicloud.com
+# http://mirrors.ustc.edu.cn
