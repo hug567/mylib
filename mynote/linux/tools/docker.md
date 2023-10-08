@@ -154,4 +154,15 @@ cd .../dockerfile/
 docker build -t <jenkins:v1.0> ./
 # 指定dockfile文件构建image
 docker build -t <jenkins:v1.0> -f <jenkins.df> ./
+
+# 安装语言环境locale
+sudo apt install locales
+sudo locale-gen en_US.UTF-8
+sudo update-locale
+# 安装后需重新启动容器，或安装后制作镜像，启动新镜像
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+locale
+locale -a
 ```
