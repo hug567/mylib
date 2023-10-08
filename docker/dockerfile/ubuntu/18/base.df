@@ -1,0 +1,37 @@
+# create myjenkins docker image
+# build image:
+#     cd mylib/docker/dockerfile/ubuntu/18/
+#     docker build -t myubuntu18:v0.1 -f base.df ./
+# 2023-10-08
+
+# pull ubuntu 18.04: docker pull ubuntu:18.04
+FROM ubuntu:18.04
+
+# using http://...
+COPY sources.list /etc/apt/
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG user=hx
+ARG passwd=0427
+# Add new user, grant permissions to sudo , set user password
+RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
+    adduser ${user} sudo && \
+    echo "${user}:${passwd}" | chpasswd
+
+RUN apt update
+RUN apt-get -y install apt-utils && \
+    apt-get -y install sudo locales vim git zsh tmux iputils-ping net-tools && \
+    locale-gen en_US.UTF-8 && \
+    update-locale
+
+# Set time zone
+#RUN apt-get -y install systemd
+#RUN timedatectl set-timezone "Asia/Shanghai"
+
+# Set default login user
+USER ${user}
+
+COPY --chown=${user}:${user} homefiles/ /home/${user}/
+
+RUN echo "[ -f ~/.myshell/main.sh ] && source ~/.myshell/main.sh" >> ~/.bashrc

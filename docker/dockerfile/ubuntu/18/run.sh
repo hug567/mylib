@@ -8,5 +8,7 @@ docker run \
     -v /home/hx/temp:/home/hx/temp \
     -v /home/hx/tools:/home/hx/tools \
     -v /home/hx/workspace:/home/hx/workspace \
-    -it myubuntu16:v0.1 \
+    -v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro \
+    --hostname DockerUbuntu18 \
+    -it myubuntu18:v0.1 \
     /bin/bash

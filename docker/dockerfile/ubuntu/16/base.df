@@ -13,7 +13,7 @@ COPY sources.list /etc/apt/
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG user=hx
-ARG passwd=hx2023
+ARG passwd=0427
 # Add new user, grant permissions to sudo , set user password
 RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
     adduser ${user} sudo && \
@@ -21,7 +21,12 @@ RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
 
 RUN apt update
 RUN apt-get -y install apt-utils && \
-    apt-get -y install sudo vim git zsh tmux iputils-ping net-tools
+    apt-get -y install sudo locales vim git zsh tmux iputils-ping net-tools
+
+RUN locale-gen en_US.UTF-8 && \
+    update-locale
+
+# 时区配置
 
 # Set default login user
 USER hx
