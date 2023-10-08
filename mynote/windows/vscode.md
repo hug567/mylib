@@ -34,11 +34,11 @@ clang-format
 
 #### 5）、设置竖直参考线：
 
-```c
-Ctrl + Shift + P -> Open Settings
-
-"editor.rulers": [120], /* 列宽竖线 */
-
+```bash
+Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
+#---------------------------------------------#
+"editor.rulers": [120],
+#---------------------------------------------#
 ```
 
 #### 6）、保存时删除行尾空格：
@@ -49,6 +49,12 @@ Ctrl + Shift + P -> Preferences: Open Settings (UI)
 /* 或： */
 Ctrl + Shift + P -> Preferences: Open Settings (JSON)
                  -> 添加："files.trimTrailingWhitespace": true,
+```
+
+#### 7）、设置字体大小：
+
+```bash
+Ctrl+Shift+P -> Preferences: Open Settings (UI) -> Editor: Font Size -> 16
 ```
 
 ## 2、编译调试C语言：
