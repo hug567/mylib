@@ -1,0 +1,26 @@
+.box_center {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.box_left {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: -420px;
+    transform: translate(0, -50%);
+}
+
+.box_right {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    left: 420px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
