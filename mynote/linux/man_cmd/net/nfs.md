@@ -28,6 +28,6 @@ mkdir share
 # 挂载主机目录：qemu linux-5.10
 mount -t nfs -o nolock,vers=4 192.168.0.100:/home/hx/share /share
 # zynq7020/petalinux 2019.1
-mount -t nfs -o nolock,vers=3 10.110.0.3:/home/hx/share /home/root/nfs/
+mount -t nfs -o nolock,vers=3 192.168.0.13:/home/hx/share /home/root/share/
 ```
 

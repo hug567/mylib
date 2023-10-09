@@ -170,21 +170,21 @@ Ctrl + Alt + ], when: editorFocus  //终端：聚焦到终端 (workbench.action.
 
 ## 4、vscode连接linux主机：
 
-vscode安装插件：remote-ssh
+- vscode安装插件：remote-ssh
 
 ```shell
 Ctrl + Shift + P -> Remote-SSH: Add New SSH Host...
                  -> Remote-SSH: Connect to Host...
-                 -> Remote-SSH: Connect Crrent Window to Host...
+                 -> Remote-SSH: Connect Current Window to Host...
 ```
 
-windows免密码登录linux主机，在cmd中执行：
+- windows免密码登录linux主机，在cmd中执行：
 
 ```c
 ssh-keygen -t rsa
 ```
 
-复制文件中C:\Users\Administrator\.ssh\id_rsa.pub的内容在linux机器中的 ~/.ssh/authorized_keys 文件中。
+- 复制文件中C:\Users\Administrator\.ssh\id_rsa.pub的内容到linux机器中的 ~/.ssh/authorized_keys 文件中
 
 ## 5、常用代码风格设置：
 
