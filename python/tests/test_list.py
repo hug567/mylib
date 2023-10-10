@@ -22,6 +22,7 @@ def test_define_list():
     # access the last student with index -1
     print("last student:", students[-1])
 
+# 遍历列表
 def test_traverse_list():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 

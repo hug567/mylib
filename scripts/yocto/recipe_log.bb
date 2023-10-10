@@ -27,5 +27,6 @@ python() {
         "S = %s" % d.getVar("S", True), "\n",
         "B = %s" % d.getVar("B", True), "\n",
         "D = %s" % d.getVar("D", True), "\n",
+        "SRC_URI = %s" % d.getVar("SRC_URI", True), "\n",
     )
 }
