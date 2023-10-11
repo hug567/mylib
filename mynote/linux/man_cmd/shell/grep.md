@@ -25,4 +25,8 @@ ps aux | grep -E "sshd|httpd"                                # 逻辑或，匹�
 
 # 查找指定文件中的字符，注意不加-r
 grep -n "text" $(fine . -name "kernel.log")
+# grep排除指定类型文件
+grep --exclude='*.map' -nr "row-cols-1"
+# grep排除指定目录
+grep --exclude-dir='dist' -nr "row-cols-1"
 ```
