@@ -42,5 +42,8 @@ rg "xxx" dir/                                # 在指定目录下搜索
 
 # 查找指定文件，若find结果为空，将搜索所有文件
 rg -e "text" $(find . -name kernel.log)
+
+# 跨行搜索
+rg -e "struct filename \*\ngetname\(const char" --multiline ./
 ```
 

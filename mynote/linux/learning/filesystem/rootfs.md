@@ -1,10 +1,13 @@
 # 1、挂载根文件系统：
 
 ```c
+//注册根文件系统
+
+//挂载根文件系统
 start_kernel()
     vfs_caches_init_early();
 	vfs_caches_init();
-		mnt_init()
+		mnt_init()  //fs/namespace.c
             init_mount_tree()
                 mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", NULL);
                 root.mnt = mnt;
