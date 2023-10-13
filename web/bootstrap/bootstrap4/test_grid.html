@@ -68,5 +68,29 @@
             <div class="col" style="background-color: #d2ee82;">col</div>
         </div>
     </div>
+    <!--auto：根据内容自动变动宽度-->
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-2" style="background-color: #679cfd;">1/3</div>
+            <div class="col col-md-auto" style="background-color: #ff9470;">2/3</div>
+            <div class="col col-lg-2" style="background-color: #679cfd;">3/3</div>
+        </div>
+    </div>
+    <!--同一行左右两个元素不同宽度-->
+    <div class="container">
+        <div class="row">
+            <div class="col-4" style="background-color: #c9f29b;">col-4</div>
+            <div class="col-8" style="background-color: #ede99d;">col-8</div>
+        </div>
+    </div>
+    <!--指定一行最多列数，多个元素从左往右顺序排列-->
+    <div class="container">
+        <div class="row row-cols-3">  <!--一行最多3个元素-->
+            <div class="col" style="background-color: #e3ba8f;">1</div>
+            <div class="col" style="background-color: #d2ee82;">2</div>
+            <div class="col" style="background-color: #fffc7f;">3</div>
+            <div class="col" style="background-color: #ede7e1;">4</div>
+        </div>
+    </div>
 </body>
 </html>
