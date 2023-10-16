@@ -30,6 +30,11 @@ function test_func_ret_or_cmp() {
     if ! __return_false || [ "$name" == "Bob" ]; then
         echo "not return false or my name is Bob"
     fi
+
+    # 同时判断两个函数的返回值
+    if __return_false || __return_true; then
+        echo "At least one of the two conditions is true"
+    fi
 }
 
 function __my_age() {
