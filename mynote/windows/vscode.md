@@ -39,16 +39,30 @@ Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
 #---------------------------------------------#
 "editor.rulers": [120],
 #---------------------------------------------#
+
+# 设置多条参考线：
+#---------------------------------------------#
+"editor.rulers": [80,120],
+#---------------------------------------------#
 ```
 
 #### 6）、保存时删除行尾空格：
 
-```c
+```bash
 Ctrl + Shift + P -> Preferences: Open Settings (UI)
                  -> 选中Files: Trim Trailing Whitespace
-/* 或： */
+# 或：
 Ctrl + Shift + P -> Preferences: Open Settings (JSON)
-                 -> 添加："files.trimTrailingWhitespace": true,
+#---------------------------------------------#
+"files.trimTrailingWhitespace": true,
+#---------------------------------------------#
+
+#显示行位空格：
+Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
+#---------------------------------------------#
+# 可设置：all, boundary, none, selection, trailing
+"editor.renderWhitespace": "trailing",
+#---------------------------------------------#
 ```
 
 #### 7）、设置字体大小：
@@ -192,26 +206,34 @@ ssh-keygen -t rsa
 
 ```bash
 Ctr + Shift + P -> Preferences: Color Theme -> Monokai
-// 或
-Ctr + Shift + P -> Preferences: Open User Settings (JSON) -> "workbench.colorTheme": "Monokai",
+# 或
+Ctr + Shift + P -> Preferences: Open User Settings (JSON)
+#---------------------------------------------#
+"workbench.colorTheme": "Monokai",
+#---------------------------------------------#
 ```
 
 #### 2）、设置tab：
 
-```c
-使用空格缩进：Ctrl+Shift+P -> Indent Using Spaces -> 4
-使用tab缩进：Ctrl+Shift+P -> Indent Using Tabs -> 4
+```bash
+# 使用空格缩进：
+Ctrl+Shift+P -> Indent Using Spaces -> 4
+# 使用tab缩进：
+Ctrl+Shift+P -> Indent Using Tabs -> 4
 
-// 显示tab
+# 显示tab
 文件 -> 首选项 -> 设置 -> Editor: Render Control Characters -> 勾选
-// 或
-Ctr + Shift + P -> Preferences: Open User Settings (JSON) -> "editor.renderControlCharacters": true,
+# 或
+Ctr + Shift + P -> Preferences: Open User Settings (JSON)
+#---------------------------------------------#
+"editor.renderControlCharacters": true,
+#---------------------------------------------#
 ```
 
 #### 3）、设置空格、tab颜色：
 
 ```c
-F:\Program Files\Microsoft VS Code\resources\app\extensions\theme-monokai\themes\monokai-color-theme.json
+//F:\Program Files\Microsoft VS Code\resources\app\extensions\theme-monokai\themes\monokai-color-theme.json
 "editorWhitespace.foreground":"#464741",          //#808080（灰色）
 ```
 
