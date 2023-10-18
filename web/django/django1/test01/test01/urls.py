@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index),
+    url(r'^index', views.index),
+    url(r'^test_form.html$', views.test_form),
+    url(r'^test_form_filename$', views.test_form_filename),
+    url(r'^test_ajax_read.html$', views.test_ajax_read),
 ]

@@ -1,0 +1,49 @@
+<!--
+    练习：提交表单后自动跳转
+    实现：表单中增加Button按钮，使用JavaScript脚本监听按钮的"click"事件
+    时间：2023-10-18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script>
+        function fmReadFile() {
+            event.preventDefault()
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm">
+            <h6>Form表单：</h6>
+            <form action="test_form_filename" method="post" onsubmit="fmReadFile">
+                {% csrf_token %}
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">文件</div>
+                            </div>
+                            <input type="text" class="form-control" value="/etc/os-release" name="Filename">
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <button type="submit" id="idSubmitButton" class="btn btn-primary mb-2">读取</button>
+                    </div>
+                </div>
+            </form>
+            <h6>文件内容：</h6>
+            <textarea rows="15" cols="100">{{djFileContent}}</textarea>
+        </div>
+
+        
+    </div>
+</body>
+</html>

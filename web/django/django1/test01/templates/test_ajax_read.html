@@ -1,0 +1,60 @@
+<!--
+    练习：Ajax读取服务器数据
+    时间：2023-10-18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_ajax_read</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script>
+        window.addEventListener("load", initAll, false);
+        var xhr = false;
+
+        function initAll() {
+            document.getElementById("idReadFile").addEventListener("click", getNewFile, false);
+        }
+
+        function getNewFile(evt) {
+            makeRequest(this.href);
+            evt.preventDefault();
+        }
+
+        function makeRequest(url) {
+            document.getElementById("idDebugLogWindow").value += url
+            xhr = new XMLHttpRequest;
+            xhr.addEventListener("readystatechange", showContents, false);
+            xhr.open("GET", url, true);
+            xhr.send(null);
+        }
+
+        function showContents() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    var outMsg = xhr.responseText;
+                }
+            } else {
+                var outMsg = "There was a problem with";
+            }
+            document.getElementById("updateArea").innerHTML = outMsg;
+            document.getElementById("idDebugLogWindow").value += "hello world\n"
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm">
+            <p>读取文件：<a id="idReadFile" href="/etc/os-rlelase">/etc/os-rlelase</a></p>
+            <h6>文件内容：</h6>
+            <textarea rows="15" cols="100">{{djFileContent}}</textarea>
+        </div>
+        <div id="updateArea"></div>
+        <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+    </div>
+</body>
+</html>
