@@ -12,36 +12,47 @@
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script>
+        //加载页面时执行钩子：initAll
         window.addEventListener("load", initAll, false);
         var xhr = false;
+        var g_count = 0;
 
         function initAll() {
+            //监听idReadFile的click事件，执行钩子：getNewFile
             document.getElementById("idReadFile").addEventListener("click", getNewFile, false);
         }
 
         function getNewFile(evt) {
             makeRequest(this.href);
+            //阻止默认动作
             evt.preventDefault();
         }
 
         function makeRequest(url) {
-            document.getElementById("idDebugLogWindow").value += url
+            document.getElementById("idDebugLogWindow").value += url + "\n";
+            //创建XMLHttpRequest对象
             xhr = new XMLHttpRequest;
+            //设置readystatechange事件的处理函数：showContents，每当xhr.readyState发生变化时，均执行这个函数
             xhr.addEventListener("readystatechange", showContents, false);
+            //创建一个Http请求
             xhr.open("GET", url, true);
+            //发送请求
             xhr.send(null);
         }
 
         function showContents() {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    var outMsg = xhr.responseText;
+            if (xhr.readyState == 4) {  //xhr对象完成初始化
+                if (xhr.status == 200) {  //一切正常
+                    var outMsg = xhr.responseText;  //获取相应数据
                 }
             } else {
                 var outMsg = "There was a problem with";
             }
-            document.getElementById("updateArea").innerHTML = outMsg;
-            document.getElementById("idDebugLogWindow").value += "hello world\n"
+            //向文本区域idDebugLogWindow输出内容
+            document.getElementById("idDebugLogWindow").value += "hello world: " + g_count + "\n";
+            g_count++;
+            //向文本区域idFileContent输出内容
+            document.getElementById("idFileContent").value = outMsg;
         }
     </script>
 </head>
@@ -49,12 +60,14 @@
 <body>
     <div class="container">
         <div class="col-sm">
-            <p>读取文件：<a id="idReadFile" href="/etc/os-rlelase">/etc/os-rlelase</a></p>
+            <p>读取文件：<a id="idReadFile" href="/index.html">index.html</a></p>
             <h6>文件内容：</h6>
-            <textarea rows="15" cols="100">{{djFileContent}}</textarea>
+            <textarea rows="15" cols="100" id="idFileContent">{{djFileContent}}</textarea>
         </div>
-        <div id="updateArea"></div>
-        <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        <div class="col-sm">
+            <p>调试窗口：</p>
+            <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        </div>
     </div>
 </body>
 </html>
