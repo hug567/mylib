@@ -7,12 +7,12 @@
 ```c
 int register_filesystem(struct file_system_type * fs)  //fs/filesystems.c
 ```
-- 所有注册的文件系统，已链表形式存储在file_systems中：
+- 所有注册的文件系统，以链表形式存储在全局变量file_systems中：
 ```c
 static struct file_system_type *file_systems;  //fs/filesystems.c
 ```
 
-- 读取cat /proc/filesystems可查看所有已注册的文件系统：
+- 读取/proc/filesystems可查看所有已注册的文件系统：
 
 ```bash
 cat /proc/filesystems

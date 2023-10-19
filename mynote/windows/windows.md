@@ -1,6 +1,6 @@
 ## 1、powershell
 
-```shell
+```bash
 echo $pshome                     # 查看powershell home目录
 echo $profile                    # 查看powershell配置文件
 test-path $profile               # 测试配置文件是否存在
@@ -11,7 +11,7 @@ mklink /j leetcode_0026.c G:\MyProgram\Git\mylib\c\leetcode\leetcode_0026.c
 
 ## 2、Linux挂载Windows目录：
 
-```shell
+```bash
 # 1. Windows目录设置共享:
 文件夹右键 -> 属性 -> 共享 -> ......
 
@@ -27,7 +27,7 @@ sudo umount ~/share
 
 ## 3、Windows挂载linux目录：
 
-```shell
+```bash
 Ubuntu使能NFS：
 	1. 安装NFS server：sudo apt install rpcbind nfs-kernel-server
 	2. 查看共享目录：showmount -e
