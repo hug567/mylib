@@ -21,3 +21,12 @@ def test_form_filename(request):
 def test_ajax_read(request):
     context = {}
     return render(request, 'test_ajax_read.html', context)
+
+def test_ajax_form(request):
+    context = {}
+    return render(request, 'test_ajax_form.html', context)
+
+def test_ajax_submit(request):
+    context = {}
+    print("[hx-debug] Enter test_ajax_submit")
+    return render(request, 'test_ajax_form.html', context)

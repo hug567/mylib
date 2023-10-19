@@ -1,0 +1,49 @@
+<!--
+    练习：Django中Ajax提交表单
+    时间：2023-10-19
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_ajax_form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        //document.getElementById("idDebugLogWindow").value += "javascript\n";
+
+        //$(document).ready(function(){
+            $("#idButton").click(function(){
+                //document.getElementById("idDebugLogWindow").value += "isButton click\n";
+                var formdata = new FormData();
+                formdata.append('name', 'Tom');
+                $.ajax({
+                    url: "/test_ajax_submit/",
+                    method: post,
+                    data: formdata,
+                    success: function(data) {
+                        //document.getElementById("idDebugLogWindow").value += "Enter ajax success function\n";
+                        console.log(data),
+                    },
+                });
+            });
+        //});
+    </script>
+</head>
+
+<body>
+    <div class="container"><br>
+        <div class="col-sm">
+            <button type="submit" class="btn btn-primary mb-2" id="idButton">Submit</button>
+        </div>
+
+        <div class="col-sm">
+            <p><br>调试窗口：</p>
+            <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        </div>
+    </div>
+</body>
+</html>

@@ -20,8 +20,10 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
-    url(r'^index', views.index),
+    url(r'^index.html$', views.index),
     url(r'^test_form.html$', views.test_form),
     url(r'^test_form_filename$', views.test_form_filename),
     url(r'^test_ajax_read.html$', views.test_ajax_read),
+    url(r'^test_ajax_form.html$', views.test_ajax_form),
+    url(r'test_ajax_submit/', views.test_ajax_submit),
 ]
