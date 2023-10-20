@@ -11,6 +11,9 @@ function save_buffer() {
     if [ ! -d $vim_tmp_dir ]; then
         return
     fi
+    if [ ! -f $new_file ]; then
+        touch $new_file
+    fi
     tmux save-buffer $new_file
     local size=$(ls -l $new_file | awk '{print$5}')
     if [ $size -eq 0 -o $size -gt 10485760 ]; then
