@@ -18,30 +18,51 @@ shmem_get_tree(fc)
 			fc->root = dget(sb->s_root)
     			sb->s_root = d_make_root(inode);
 
-shmem_fill_super(sb, fc)
-
 //挂载根文件系统
 start_kernel()
     vfs_caches_init_early();
 	vfs_caches_init();
 		mnt_init()  //fs/namespace.c
             init_mount_tree()
-            	//rootfs_fs_type不需要注册到file_systems链表中，只在初始化时挂载一次，直接挂载即可(fd3e007f6c6a0)
-                mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", NULL);
-					fc = fs_context_for_mount(type, flags);
-						alloc_fs_context(fs_type, NULL, sb_flags, 0, FS_CONTEXT_FOR_MOUNT);	
-							fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL_ACCOUNT);
-					mnt = fc_mount(fc);  //mnt: struct vfsmount
-						return vfs_create_mount(fc);
-							mnt->mnt.mnt_root = dget(fc->root);  //NULL (struct dentry *mnt_root)
-							return &mnt->mnt;  //&(struct mount *mnt)->(struct vfsmount mnt)
-                root.mnt = mnt;
-				//根目录项：[init_mount_tree:3812] root.dentry: 0xffff1002c28040c0
-				root.dentry = mnt->mnt_root;  //dentry->d_name.name = "/"
-				set_fs_pwd(current->fs, &root);
-                set_fs_root(current->fs, &root);
 
-//vfs信息存储在task_struct的fs成员中：
+init_mount_tree()
+    //rootfs_fs_type不需要注册到file_systems链表中，只在初始化时挂载一次，直接挂载即可(fd3e007f6c6a0)
+    mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", NULL);
+        fc = fs_context_for_mount(type, flags);
+        mnt = fc_mount(fc);  //mnt: struct vfsmount
+            vfs_get_tree(fc);
+                fc->ops->get_tree(fc); -> shmem_get_tree(fc);
+                    get_tree_nodev(fc, shmem_fill_super);
+                        vfs_get_super(fc, vfs_get_independent_super, fill_super);
+                            sb = sget_fc(fc, test, set_anon_super_fc);
+                                s = alloc_super(fc->fs_type, fc->sb_flags, user_ns);
+                                    //struct spuber_block *
+                                    s = kzalloc(sizeof(struct super_block),  GFP_USER);
+                            fill_super(sb, fc); -> shmem_fill_super(sb, fc);
+                                inode = shmem_get_inode(sb, ...);
+                                    inode = new_inode(sb);
+                                        inode = new_inode_pseudo(sb);
+                                            inode = alloc_inode(sb);
+                                                //struct inode *
+                                                inode = kmem_cache_alloc(inode_cachep, GFP_KERNEL);
+                                sb->s_root = d_make_root(inode);  //struct dentry
+                                    res = d_alloc_anon(root_inode->i_sb);
+                                        __d_alloc(sb, NULL);
+                                            //struct dentry *
+                                            dentry = kmem_cache_alloc(dentry_cache, GFP_KERNEL);
+                                            name = &slash_name;
+                                                const struct qstr slash_name = QSTR_INIT("/", 1);
+                                            dname = dentry->d_iname;
+                                            memcpy(dname, name->name, name->len);
+                            fc->root = dget(sb->s_root);
+            vfs_create_mount(fc);
+                mnt->mnt.mnt_root = dget(fc->root);
+				return &mnt->mnt;  //&(struct mount *mnt)->(struct vfs_mount mnt)
+    root.dentry = mnt->mnt_root;  //根目录项：dentry->d_name.name = "/"
+    set_fs_pwd(current->fs, &root);
+    set_fs_root(current->fs, &root);  //vfs信息存储在task_struct的fs成员中
+
+//task_struct中的fs
 struct task_struct {
     struct fs_struct *fs;
 }
