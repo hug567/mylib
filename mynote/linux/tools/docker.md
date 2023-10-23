@@ -33,6 +33,11 @@ docker info
 sudo systemctl start docker                                 # 启动docker
 sudo systemctl daemon-reload                                # 重启docker守护进程
 sudo systemctl restart docker.service                       # 重启docker服务
+
+# docker守护进程操作
+sudo /etc/init.d/docker start
+sudo /etc/init.d/docker stop
+sudo /etc/init.d/docker restart
 ```
 
 # 2、docker常用命令：
