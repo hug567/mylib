@@ -1,5 +1,6 @@
 import os
 from django.shortcuts import render
+from django.http import HttpResponse
 
 def index(request):
     context = {}
@@ -24,9 +25,15 @@ def test_ajax_read(request):
 
 def test_ajax_form(request):
     context = {}
+    print("[hx-debug] Enter test_ajax_form")
     return render(request, 'test_ajax_form.html', context)
 
+# 响应ajax请求
 def test_ajax_submit(request):
     context = {}
     print("[hx-debug] Enter test_ajax_submit")
-    return render(request, 'test_ajax_form.html', context)
+    if request.POST:
+        name = request.POST["Name"]
+        print("[hx-debug] name: " + name)
+    # 返回请求数据
+    return HttpResponse("get name from web: " + name)

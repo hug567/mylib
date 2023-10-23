@@ -13,31 +13,40 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        //document.getElementById("idDebugLogWindow").value += "javascript\n";
-
-        //$(document).ready(function(){
+        //ajax提交信息至服务器，依赖jQuery
+        $(function(){
             $("#idButton").click(function(){
-                //document.getElementById("idDebugLogWindow").value += "isButton click\n";
-                var formdata = new FormData();
-                formdata.append('name', 'Tom');
+                document.getElementById("idDebugLogWindow").value += "idButton click\n";
                 $.ajax({
                     url: "/test_ajax_submit/",
-                    method: post,
-                    data: formdata,
-                    success: function(data) {
-                        //document.getElementById("idDebugLogWindow").value += "Enter ajax success function\n";
-                        console.log(data),
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': "{{ csrf_token }}",  //django的要求
+                        "Name":"Tom",
+                    },
+                    //data：服务器返回的数据
+                    success: function(data, status, xhr) {
+                        var contentType = xhr.getResponseHeader('Content-Type');
+                        document.getElementById("idDebugLogWindow").value += "data: [" + data + "]\n";
                     },
                 });
             });
-        //});
+        });
     </script>
+    <style>
+        /* bootstrap4按钮点击后恢复原样 */
+        .btn:focus {
+            outline: none;
+            box-shadow: none;
+            background: #007bff;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container"><br>
         <div class="col-sm">
-            <button type="submit" class="btn btn-primary mb-2" id="idButton">Submit</button>
+            <button type="submit" class="btn btn-primary mb-2" id="idButton" onclick="ocButton()">Submit</button>
         </div>
 
         <div class="col-sm">
