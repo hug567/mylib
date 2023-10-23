@@ -1,0 +1,43 @@
+<!--
+  练习：JavaScript按钮事件
+  时间：2023-10-20
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test_button</title>
+
+    <!--JavaScript脚本-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        //点击按钮后调用的钩子函数(不依赖jQuery)
+        function fnButton1Click() {
+            document.getElementById("idDebugLogWindow").value += "Button1 click\n";
+        }
+
+        //依赖jQuery
+        $(function(){
+            $("#idButton2").click(function(){
+                document.getElementById("idDebugLogWindow").value += "Button2 click\n";
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <!--点击按钮后，将调用钩子函数fnButtonClick()-->
+    <button onclick="fnButton1Click()">Button1</button>
+    <button id="idButton2">Button2</button>
+
+    <div>
+        <p><br>调试窗口：<button  onclick="fnButtonClearClick()">清空</button></p>
+        <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        <script>
+            function fnButtonClearClick() {
+                document.getElementById("idDebugLogWindow").value = "";
+            }
+        </script>
+    </div>
+</body>
+</html>

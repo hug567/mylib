@@ -345,6 +345,14 @@ git push origin HEAD:branch
 # 追踪已普通提交的二进制文件
 git lfs track <files>
 git lfs migrate import --no-rewrite <files> -m "lfs track"
+
+# 使用了git lfs的仓库迁移到新地址
+git clone --bare https://gitlab.rhosoon.com:9003/zynq7020/yocto.git
+cd yocto.git
+git lfs fetch --all
+git remote add gitea http://192.168.99.221:3000/Rhosoon_RD/yocto.git
+git lfs push --all gitea
+git push --mirror gitea
 ```
 
 ## 4、tig：
