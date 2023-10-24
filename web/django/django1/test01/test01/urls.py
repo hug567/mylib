@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^test_form_filename$', views.test_form_filename),
     url(r'^test_ajax_read.html$', views.test_ajax_read),
     url(r'^test_ajax_form.html$', views.test_ajax_form),
-    # 响应ajax请求
+    # 响应前端ajax请求
     url(r'test_ajax_submit/', views.test_ajax_submit),
 ]

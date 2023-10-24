@@ -36,6 +36,7 @@
     read()
     write()
     sleep()
+    access()
 
 #include <pthread.h>
     pthread_create()
