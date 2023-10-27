@@ -1,0 +1,30 @@
+<!--
+  练习：JavaScript窗口事件
+  时间：2023-10-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test_window_event</title>
+    <!--JavaScript脚本-->
+    <script>
+        window.addEventListener('resize', windowResize);
+        var count = 0;
+
+        function windowResize() {
+            count++;
+            document.getElementById("idDebugLogWindow").value += "窗口大小改变: " + count + "\n";
+        }
+    </script>
+</head>
+<body>
+    <p><br>调试窗口：<button onclick="fnButtonClearClick()">清空</button></p>
+    <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+    <script>
+        function fnButtonClearClick() {
+            document.getElementById("idDebugLogWindow").value = "";
+        }
+    </script>
+</body>
+</html>

@@ -7,6 +7,8 @@
 wsl -l -v
 # 关闭运行的linux(关闭虚拟机进程Vmmem)
 wsl --shutdown
+# 更新wsl
+wsl --update
 # 设置wsl2运行linux发行版
 wsl --set-version Ubuntu-18.04 2
 

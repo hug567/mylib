@@ -1,0 +1,33 @@
+<!--
+  练习：JavaScript批量创建html按钮元素
+  时间：2023-10-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test_alert</title>
+    <!--JavaScript脚本-->
+    <script>
+        window.onload = initAll;
+
+        function createButton(name) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.innerHTML = name;
+
+            var container = document.getElementById('container');
+            container.appendChild(button);
+        }
+
+        function initAll() {
+            for (var i = 0; i < 10; i++) {
+                createButton("button" + i);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
