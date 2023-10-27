@@ -37,3 +37,11 @@ def test_ajax_submit(request):
         print("[hx-debug] name: " + name)
     # 返回请求数据
     return HttpResponse("get name from web: " + name)
+
+def test_ajax_loop_read(request):
+    context = {}
+    return render(request, 'test_ajax_loop_read.html', context)
+
+def test_ajax_loop_read_date(request):
+    date_str = os.popen("date ").read().strip()
+    return HttpResponse(date_str)

@@ -24,7 +24,12 @@ urlpatterns = [
     url(r'^test_form.html$', views.test_form),
     url(r'^test_form_filename$', views.test_form_filename),
     url(r'^test_ajax_read.html$', views.test_ajax_read),
+
     url(r'^test_ajax_form.html$', views.test_ajax_form),
     # 响应前端ajax请求
     url(r'test_ajax_submit/', views.test_ajax_submit),
+
+    url(r'^test_ajax_loop_read.html$', views.test_ajax_loop_read),
+    # ajax将请求的读取时间接口
+    url(r'test_ajax_loop_read_date/', views.test_ajax_loop_read_date),
 ]

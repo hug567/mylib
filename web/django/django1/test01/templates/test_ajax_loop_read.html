@@ -1,0 +1,42 @@
+<!--
+    练习：Django中使用Ajax循环从服务器读取数据
+    时间：2023-10-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_ajax_loop_read</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        //将按指定间隔无限循环执行，依赖jQuery
+        setInterval(function() {
+            //ajax提交请求
+            $.ajax({
+                url: "/test_ajax_loop_read_date/",
+                type: 'GET',
+                data: {
+                    'csrfmiddlewaretoken': "{{ csrf_token }}",  //django的要求
+                },
+                //data：服务器返回的数据
+                success: function(data, status, xhr) {
+                    document.getElementById("idDebugLogWindow").value += data + "\n";
+                },
+            });
+        }, 3000);  //循环等待的时间(ms)
+    </script>
+</head>
+
+<body>
+    <div class="container"><br>
+        <div class="col-sm">
+            <p><br>调试窗口：</p>
+            <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        </div>
+    </div>
+</body>
+</html>
