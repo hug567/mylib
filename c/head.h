@@ -21,6 +21,8 @@
     strlen()
     strcmp()
     strncmp()
+    strcpy()
+    strncpy()
     strerror()
     memset()
     memcpy()
@@ -37,6 +39,11 @@
     write()
     sleep()
     access()
+    unlink()
+
+#include <signal.h>
+    struct sigaction
+    sigaction()
 
 #include <pthread.h>
     pthread_create()
@@ -46,7 +53,19 @@
 
 #include <sys/socket.h>
     socket()
+    bind()
+    listen()
+    accept()
+
+#include <sys/un.h>
+    struct sockaddr_un
 
 #include <sys/socket.h>
 #include <netinet/in.h>
     struct sockaddr_in
+
+#include <netinet/tcp.h>
+    struct tcp_info
+
+#include <netinet/in.h>
+    #define IPPROTO_TCP

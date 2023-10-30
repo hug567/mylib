@@ -9,3 +9,9 @@ hi cOperators ctermfg=227
 syn keyword cKeywords u8 u16 u32 u64 s8 s16 s32 s64
 syn keyword cKeywords U8 U16 U32 U64 S8 S16 S32 S64 typeof
 hi cKeywords ctermfg=198
+" tab显示宽度
+set tabstop=8
+set softtabstop=8
+set shiftwidth=8
+" 使用tab缩进
+set noexpandtab
