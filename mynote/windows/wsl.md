@@ -35,6 +35,22 @@ sudo /etc/init.d/docker restart
 sudo service docker start/stop/restart
 ```
 
+- 其他可用的apt源：
+
+```bash
+# ubuntu 18
+deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic           main universe restricted multiverse
+deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic-security  main universe restricted multiverse
+deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic-updates   main universe restricted multiverse
+deb     https://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe restricted multiverse
+deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic           main universe restricted multiverse
+deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic-security  main universe restricted multiverse
+deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic-updates   main universe restricted multiverse
+deb-src https://mirrors.cloud.tencent.com/ubuntu/ bionic-backports main universe restricted multiverse
+deb     https://mirrors.cloud.tencent.com/docker-ce/linux/ubuntu/ bionic stable
+deb-src https://mirrors.cloud.tencent.com/docker-ce/linux/ubuntu/ bionic stable
+```
+
 # 2、wsl中ubuntu 18：
 
 ```bash
@@ -50,3 +66,7 @@ PasswordAuthentication yes
 sudo service ssh start  # start/restart/stop
 ```
 
+# 3、FAQ
+
+## 1)、wsl2网络：
+- wsl2网络受VPN软件影响，如OpenVPN，需卸载VPN软件后重启Windows；

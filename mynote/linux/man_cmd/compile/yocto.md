@@ -128,8 +128,9 @@ SRC_URI = "file://${TOPDIR}/../packages/netplan_0.101.tar.gz \
 SRCREV = "3e522b7255310bdecca6c781137741dfc4abc021"
 
 # 从本地拉取git仓库，修改的代码需提交commit
-SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file" # 默认是当前分支
-SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file;branch=xxx"
+SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file" # 默认分支是master
+SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file;branch=xxx" # 指定分支
+SRC_URI = "git:///home/hx/repo/all-repos/mytest;protocol=file;usehead=1" # 不checkout，使用当前HEAD
 SRCREV = "${AUTOREV}"
 PV = "1.0"
 
