@@ -20,6 +20,8 @@ tar
 tar -xvf file.tar.gz
 # 解压单个目录
 tar -zxvf file.tar.gz dir01/dir02
+# 解压.tar.bz2文件
+tar -jxvf file.tar.bz2
 
 # 解压到指定目录
 tar -xvf file.tar.gz -C dir
