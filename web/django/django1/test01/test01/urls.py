@@ -32,4 +32,7 @@ urlpatterns = [
     url(r'^test_ajax_loop_read.html$', views.test_ajax_loop_read),
     # ajax将请求的读取时间接口
     url(r'test_ajax_loop_read_date/', views.test_ajax_loop_read_date),
+
+    url(r'^test_login.html$', views.test_login),
+    url(r'test_login_ajax/', views.test_login_ajax),
 ]

@@ -45,3 +45,17 @@ def test_ajax_loop_read(request):
 def test_ajax_loop_read_date(request):
     date_str = os.popen("date ").read().strip()
     return HttpResponse(date_str)
+
+# 练习：登录界面
+def test_login(request):
+    context = {}
+    return render(request, 'test_login.html', context)
+
+def test_login_ajax(request):
+    if request.POST:
+        username = request.POST["Username"]
+        password = request.POST["Password"]
+        ret = "Username: " + username + ", Password: " + password
+    else:
+        ret = "not get POST request"
+    return HttpResponse(ret)
