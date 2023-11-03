@@ -1,0 +1,51 @@
+<!--
+    练习：Django中Ajax提交表单
+    时间：2023-10-19
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_ajax_jump</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        //ajax提交信息至服务器，依赖jQuery
+        $(function(){
+            $("#idButton").click(function(){
+                //document.getElementById("idDebugLogWindow").value += "idButton click\n";
+                $.ajax({
+                    url: "/test_ajax_jump_ajax/",
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': "{{ csrf_token }}",  //django的要求
+                    },
+                    //data：服务器返回的数据
+                    success: function(data, status, xhr) {
+                        //跳转至指定页面
+                        window.location.href = "index.html";
+                    },
+                });
+            });
+        });
+    </script>
+    <style>
+        /* bootstrap4按钮点击后恢复原样 */
+        .btn:focus {
+            outline: none;
+            box-shadow: none;
+            background: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"><br>
+        <div class="col-sm">
+            <button type="submit" class="btn btn-primary mb-2" id="idButton" onclick="ocButton()">跳转至: index.html</button>
+        </div>
+</body>
+</html>

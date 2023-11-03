@@ -1,6 +1,8 @@
 import os
+import json
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 def index(request):
     context = {}
@@ -50,12 +52,56 @@ def test_ajax_loop_read_date(request):
 def test_login(request):
     context = {}
     return render(request, 'test_login.html', context)
-
 def test_login_ajax(request):
+    dict = {}
     if request.POST:
         username = request.POST["Username"]
         password = request.POST["Password"]
-        ret = "Username: " + username + ", Password: " + password
+        if username == "admin" and password == "admin":
+            dict["Username"] = username
+            dict["Password"] = password
+            dict["Jump"] = "index.html"
+        else:
+            dict["Info"] = "Username or Password error"
     else:
-        ret = "not get POST request"
-    return HttpResponse(ret)
+        dict["Info"] = "not get POST request"
+    # 返回JSON字典, js中解析：JSON.parse()
+    return HttpResponse(json.dumps(dict))
+
+# 练习：ajax页面跳转
+def test_ajax_jump(request):
+    context = {}
+    return render(request, 'test_ajax_jump.html', context)
+def test_ajax_jump_ajax(request):
+    if request.POST:
+        href = "index.html"
+    else:
+        href = "not get POST request"
+    return HttpResponse(href)
+
+# 练习：通过session识别用户
+def test_session(request):
+    context = {}
+    return render(request, 'test_session.html', context)
+def test_session_login(request):
+    dict = {}
+    if request.POST:
+        username = request.POST["Username"]
+        password = request.POST["Password"]
+        if username == "admin" and password == "hello":
+            dict["Jump"] = "index.html"
+            # 通过标记session判断当前用户已登录
+            request.session['is_login'] = True
+            request.session['user1'] = username
+            request.session.set_expiry(None)
+        else:
+            dict["Info"] = "Username or Password error"
+    else:
+        dict["Info"] = "Error: not get POST request"
+    return HttpResponse(json.dumps(dict))
+# 普通页面，访问前通过session判断是否已登录
+def test_session_page(request):
+    status = request.session.get('is_login')
+    if not status:
+        return render(request, 'test_session.html')
+    return render(request, 'test_session_page.html')

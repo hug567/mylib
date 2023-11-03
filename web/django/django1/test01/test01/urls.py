@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from . import views
+#from session import views as session_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,4 +36,13 @@ urlpatterns = [
 
     url(r'^test_login.html$', views.test_login),
     url(r'test_login_ajax/', views.test_login_ajax),
+
+    # ajax页面跳转
+    url(r'^test_ajax_jump.html$', views.test_ajax_jump),
+    url(r'test_ajax_jump_ajax/', views.test_ajax_jump_ajax),
+
+    # 通过session识别用户
+    url(r'^test_session.html$', views.test_session),
+    url(r'test_session_login/', views.test_session_login),
+    url(r'test_session_page.html$', views.test_session_page),
 ]
