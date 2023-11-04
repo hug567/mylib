@@ -126,7 +126,9 @@ STATICFILES_DIRS = [
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_COOKIE_HTTPONLY = True
 # session失效实现：6h
-#SESSION_COOKIE_AGE=21600 # 6h
+SESSION_COOKIE_AGE=21600 # 6h
 # 关闭浏览器后使session过期，需下面两项都设置
 SESSION_EXPIRE_AR_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = True
+# 未登录将跳转的页面
+LOGIN_URL = "test_session.html"

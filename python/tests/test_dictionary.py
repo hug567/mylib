@@ -70,3 +70,19 @@ phone = {
         }
     }
 print(phone)
+
+# 字典中是否存在指定键值
+def test_key_exist():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+    stu = {'name':'Tom', 'age':18}
+
+    if 'name' in stu:
+        print("name:", stu['name'])
+
+    if 'height' not in stu:
+        print("no height in stu:", stu)
+
+def main():
+    test_key_exist()
+
+main()
