@@ -77,6 +77,17 @@ help <cmd>
 ```bash
 # 查看mmc设备信息
 mmc info
+# 列出mmc分区
+mmc part
+# mmc设备读写
+mmc read/write/erase
+```
+
+### nand：
+
+```bash
+nand info
+nand read/wirte/erase.chip/bad
 ```
 
 ### net：
