@@ -14,3 +14,19 @@ django-admin startapp helloworld
 django-admin startproject helloworld
 ```
 
+# 3、创建用户：
+
+```bash
+django-admin startproject helloworld
+cd helloworld
+python3 manage.py migrate  # 将创建db.sqlite3
+
+python3 manage.py shell
+from django.contrib.auth.models import User
+user = User.objects.create_user('admin', None, 'admin')
+user.save()
+Ctrl + D  # 退出python shell
+
+# 或：先手动执行migeate创建db.sqlite3，再动态创建User
+```
+
