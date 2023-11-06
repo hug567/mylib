@@ -24,8 +24,39 @@
 
 <body>
     <div class="container">
+        <br><br>
         <div>普通页面，已通过session判断当前已登录</div>
+        <br><br>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-2">
+                <button id="idButtonLogout" type="submit" class="btn btn-primary btn-block mb-2 rounded-pill shadow-sm">Logout</button>
+            </div>
+            <div class="col"></div>
+        </div>
     </div>
+
+    <script>
+        $(function(){
+            $("#idButtonLogout").click(function(){
+                $.ajax({
+                    url: '/test_session_logout/',
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': "{{ csrf_token }}",
+                    },
+                    success: function(data, status, xhr) {
+                        var json = JSON.parse(data);
+                            if ('Jump' in json) {
+                                window.location.href = json.Jump;
+                            } else {
+                                alert(json.Info);
+                            }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

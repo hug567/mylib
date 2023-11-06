@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 @login_required
 def homepage(request):
@@ -87,35 +89,42 @@ def test_ajax_jump_ajax(request):
 # 练习：通过session识别用户
 def test_session(request):
     context = {}
+    if not User.objects.filter(username='admin').exists():
+        # 创建用户
+        User.objects.create_user('admin', None, 'admin')
     return render(request, 'test_session.html', context)
 def test_session_login(request):
     dict = {}
     if request.POST:
         username = request.POST["Username"]
         password = request.POST["Password"]
-        if username == "admin" and password == "hello":
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
             dict["Jump"] = "index.html"
-            # 通过标记session判断当前用户已登录
-            request.session['is_login'] = True
-            request.session['user1'] = username
             # 关闭浏览器session就失效
             request.session.set_expiry(0)
-            #return redirect("index.html")
         else:
             dict["Info"] = "Username or Password error"
     else:
         dict["Info"] = "Error: not get POST request"
     return HttpResponse(json.dumps(dict))
+# 退出登录
+def test_session_logout(request):
+    dict = {}
+    if request.POST:
+        logout(request)
+        dict["Jump"] = "test_session.html"
+    else:
+        dict["Info"] = "Error: not get POST request"
+    return HttpResponse(json.dumps(dict))
 # 普通页面，访问前通过session判断是否已登录
-#@login_required(login_url='index.html')  # 使用装饰器判断用户是否登录
+# 使用装饰器判断用户是否登录
 @login_required
 def test_session_page(request):
-    #status = request.session.get('is_login')
-    #if status:
-    #    print("[hx-debug][test_session_page] already login")
-    #else:
-    #    print("[hx-debug][test_session_page] does not login")
-    #if not status:
-    #    # 重定向到登录界面
-    #    return redirect("test_session.html")
+    user = authenticate(username='admin', password='admin')
+    if user is not None:
+        print("[hx-debug] user exist")
+    else:
+        print("[hx-debug] user does not exist")
     return render(request, 'test_session_page.html')

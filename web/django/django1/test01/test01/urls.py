@@ -44,5 +44,6 @@ urlpatterns = [
     # 通过session识别用户
     url(r'^test_session.html$', views.test_session),
     url(r'test_session_login/', views.test_session_login),
+    url(r'test_session_logout/', views.test_session_logout),
     url(r'^test_session_page.html$', views.test_session_page),
 ]
