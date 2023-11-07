@@ -1,0 +1,79 @@
+<!--
+    练习：flask中ajax提交表单
+    时间：2023-11-07
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_ajax_form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <!-- jquery脚本需放在bootstrap脚本之前 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <style>
+        /* bootstrap4按钮点击后恢复原样 */
+        .btn:focus {
+            outline: none;
+            box-shadow: none;
+            background: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"><br>
+        <div class="col-sm">
+            <button type="submit" class="btn btn-primary mb-2" id="idButton01">Submit01</button>
+            <button type="submit" class="btn btn-primary mb-2" id="idButton02">Submit02</button>
+        </div>
+        <script>
+            //ajax提交信息至服务器，依赖jQuery
+            $(function(){
+                $("#idButton01").click(function(){
+                    document.getElementById("idDebugLogWindow").value += "idButton01 click\n";
+                    $.ajax({
+                        url: "/test_ajax_submit_01/",
+                        type: 'POST',
+                        data: {
+                            "Name":"Tom",
+                        },
+                        //data：服务器返回的数据
+                        success: function(data, status, xhr) {
+                            document.getElementById("idDebugLogWindow").value += "data: [" + data + "]\n";
+                        },
+                    });
+                });
+                $("#idButton02").click(function(){
+                    document.getElementById("idDebugLogWindow").value += "idButton02 click\n";
+                    $.ajax({
+                        url: "/test_ajax_submit_02/",
+                        type: 'POST',
+                        data: {
+                            "Name":"Jerry",
+                        },
+                        //data：服务器返回的数据
+                        success: function(data, status, xhr) {
+                            document.getElementById("idDebugLogWindow").value += "data: [" + data + "]\n";
+                            //解析flask返回的json数据
+                            var json = JSON.parse(data);
+                            if ('Log' in json) {
+                                document.getElementById("idDebugLogWindow").value += "Log: [" + json.Log + "]\n";
+                            } else {
+                                document.getElementById("idDebugLogWindow").value += "No log in data\n";
+                            }
+                        },
+                    });
+                });
+            });
+        </script>
+
+        <div class="col-sm">
+            <p><br>调试窗口：</p>
+            <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        </div>
+    </div>
+</body>
+</html>
