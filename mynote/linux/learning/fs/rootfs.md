@@ -11,6 +11,8 @@ rootfs_init_fs_context(fc)
 
 static const struct fs_context_operations shmem_fs_context_ops = {
     .get_tree = shmem_get_tree,
+    .parse_monolithic = shmem_parse_options,
+    .parse_param = shmem_parse_one,
 };
 shmem_get_tree(fc)
 	get_tree_nodev(fc, shmem_fill_super)
@@ -36,7 +38,7 @@ init_mount_tree()
                         vfs_get_super(fc, vfs_get_independent_super, fill_super);
                             sb = sget_fc(fc, test, set_anon_super_fc);
                                 s = alloc_super(fc->fs_type, fc->sb_flags, user_ns);
-                                    //struct spuber_block *
+                                    //struct spuber_block * 
                                     s = kzalloc(sizeof(struct super_block),  GFP_USER);
                             fill_super(sb, fc); -> shmem_fill_super(sb, fc);
                                 inode = shmem_get_inode(sb, ...);
