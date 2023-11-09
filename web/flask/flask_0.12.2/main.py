@@ -38,3 +38,8 @@ def test_ajax_submit_02():
     #data['Log'] = "Enter test_ajax_submit_02"
     # 返回json数据
     return json.dumps(data)
+
+# 练习：flask模板
+@app.route('/test_template.html')
+def test_template():
+    return render_template('test_template.html')

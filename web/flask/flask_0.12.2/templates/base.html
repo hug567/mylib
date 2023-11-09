@@ -1,0 +1,31 @@
+<!--
+    练习：flask模板
+    时间：2023-11-08
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 模板标题 -->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <!-- jquery脚本需放在bootstrap脚本之前 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h1>这是flask模板base.html文件中的内容</h1>
+
+    <!--
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    -->
+
+    <!-- 模板可扩展内容 -->
+    {% block content %}{% endblock %}
+</body>
+</html>
