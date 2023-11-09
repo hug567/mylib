@@ -11,7 +11,8 @@ Private Sub PrintControlInfo(ByVal ctrl As Object)
     LogInfo ("caption: " & ctrl.Caption & ", left: " & ctrl.Left & ", width: " & ctrl.Width & "，top: " & ctrl.Top & "， height: " & ctrl.Height)
 End Sub
 
-Private Sub MyAlignCommandBar()
+' 打开当前代码文件后，先运行一次此函数，将在菜单栏添加自定义命令
+Private Sub MyAlignCommandBarInit()
 '    Dim ctrlId As Integer: ctrlId = 0
     Dim cbar As Object
     Dim newCommandBarName As String
@@ -28,10 +29,18 @@ Private Sub MyAlignCommandBar()
     ' 新建命令栏
     Set newCommandBar = PowerPoint.Application.CommandBars.Add(Name:=newCommandBarName, Position:=msoBarFloating, Temporary:=True)
     newCommandBar.Visible = True
+    'newCommandBar.Name = "xxx"
+    'newCommandBar.Position = msoBarTop
+    'newCommandBar.Left = 400
+    LogInfo ("newCommandBar Position: " & newCommandBar.Position)
+    LogInfo ("newCommandBar Left: " & newCommandBar.Left)
+    LogInfo ("newCommandBar Top: " & newCommandBar.Top)
+    LogInfo ("newCommandBar Width: " & newCommandBar.Width)
+    LogInfo ("newCommandBar Height: " & newCommandBar.Height)
 
     Dim newCtrl As Object
     ' 新建按钮
-    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton, Id:=1)
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
     With newCtrl
         .Visible = True
         .Caption = "左对齐"
@@ -44,9 +53,8 @@ Private Sub MyAlignCommandBar()
     End With
     Call PrintControlInfo(newCtrl)
 
-
     ' 新建按钮
-    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton, Id:=2)
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
     With newCtrl
         .Visible = True
         .Caption = "右对齐"
@@ -111,6 +119,91 @@ Private Sub MyAlignCommandBar()
         .OnAction = "MyAlignHorizonTouch"
     End With
 
+    ' 新建按钮：同宽
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "同宽"
+        .Style = msoButtonCaption
+        .OnAction = "MySameWidth"
+    End With
+
+    ' 新建按钮：同高
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "同高"
+        .Style = msoButtonCaption
+        .OnAction = "MySameHeight"
+    End With
+
+    ' 新建按钮：同宽高
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "同宽高"
+        .Style = msoButtonCaption
+        .OnAction = "MySameWidthHeight"
+    End With
+
+    ' 新建按钮：与页面左对齐
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面左对齐"
+        .Style = msoButtonCaption
+        .OnAction = "MyAlignLeftWithPage"
+    End With
+
+    ' 新建按钮：与页面右对齐
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面右对齐"
+        .Style = msoButtonCaption
+        .OnAction = "MyAlignRightWithPage"
+    End With
+
+    ' 新建按钮：与页面顶端对齐
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面顶端对齐"
+        .Style = msoButtonCaption
+        .OnAction = "MyAlignTopWithPage"
+    End With
+
+    ' 新建按钮：与页面底端对齐
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面底端对齐"
+        .Style = msoButtonCaption
+        .OnAction = "MyAlignBottomWithPage"
+    End With
+
+    ' 新建按钮：与页面水平居中
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面水平居中"
+        .Style = msoButtonCaption
+        .OnAction = "MyAlignHorizonCenterWithPage"
+    End With
+
+    ' 新建按钮：与页面垂直居中
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面垂直居中"
+        .Style = msoButtonCaption
+        .OnAction = "MyAlignVerticalCenterWithPage"
+    End With
+
+'与页面同宽
+'与页面同高
+'与页面同宽高
+
     LogInfo ("ctrl count: " & newCommandBar.Controls.Count)
     LogInfo ("ctrl left: " & newCommandBar.Controls(1).Left)
     LogInfo ("ctrl left: " & newCommandBar.Controls(2).Left)
@@ -121,6 +214,7 @@ End Sub
 Public Sub MyAlignLeft()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignLeft")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -133,6 +227,7 @@ Public Sub MyAlignLeft()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
         LogInfo ("shape[" & i & "].left: " & sRange(i).Left)
@@ -146,6 +241,7 @@ End Sub
 Public Sub MyAlignRight()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignRight")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -158,6 +254,7 @@ Public Sub MyAlignRight()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
         LogInfo ("shape[" & i & "].right: " & sRange(i).Left + sRange(i).Width)
@@ -167,10 +264,11 @@ Public Sub MyAlignRight()
         sRange(i).Left = sRange(1).Left + sRange(1).Width - sRange(i).Width
     Next
 End Sub
-
+' 顶端对齐
 Public Sub MyAlignTop()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignTop")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -183,6 +281,7 @@ Public Sub MyAlignTop()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
         LogInfo ("shape[" & i & "].Top: " & sRange(i).Top)
@@ -196,6 +295,7 @@ End Sub
 Public Sub MyAlignBottom()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignBottom")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -208,19 +308,20 @@ Public Sub MyAlignBottom()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
-    For i = 1 To sRange.Count
-        LogInfo ("shape[" & i & "].bottom: " & sRange(i).Top + sRange(i).Height)
-    Next
-    ' 所有形状与第一个形状底端对齐: ti = t1 + h1 - hi
+    LogInfo ("shape[1].bottom: " & sRange(1).Top + sRange(1).Height)
+    ' 所有形状与第一个形状底端对齐: t(i) = t(1) + h(1) - h(i)
     For i = 2 To sRange.Count
         sRange(i).Top = sRange(1).Top + sRange(1).Height - sRange(i).Height
+        LogInfo ("shape[" & i & "].bottom: " & sRange(i).Top + sRange(i).Height)
     Next
 End Sub
 
 Public Sub MyAlignVertical()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignVertical")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -233,6 +334,7 @@ Public Sub MyAlignVertical()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
         LogInfo ("shape[" & i & "].vertical: " & sRange(i).Left + sRange(i).Width / 2)
@@ -246,6 +348,7 @@ End Sub
 Public Sub MyAlignHorizon()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignHorizon")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -258,19 +361,22 @@ Public Sub MyAlignHorizon()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
 '        LogInfo ("shape[" & i & "].horizon: " & sRange(i).Top + sRange(i).Height / 2)
     Next
     ' 所有形状与第一个形状水平居中: ti = t1 + h1 / 2 - hi / 2
     For i = 2 To sRange.Count
-'        sRange(i).Top = sRange(1).Top + sRange(1).Height / 2 - sRange(i).Height / 2
+        sRange(i).Top = sRange(1).Top + sRange(1).Height / 2 - sRange(i).Height / 2
     Next
 End Sub
 
+' 竖直紧挨
 Public Sub MyAlignVerticalTouch()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignVerticalTouch")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -283,19 +389,22 @@ Public Sub MyAlignVerticalTouch()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
-'        LogInfo ("shape[" & i & "].Top: " & sRange(i).Top & ", bottom: " & sRange(i).Top + sRange(i).Height)
+        LogInfo ("shape[" & i & "].Top: " & sRange(i).Top & ", bottom: " & sRange(i).Top + sRange(i).Height)
     Next
-    ' 所有形状竖直紧挨: ti = t(i-1) + h(i-1)
+    ' 所有形状竖直紧挨: t(i) = t(i-1) + h(i-1)
     For i = 2 To sRange.Count
-'        sRange(i).Top = sRange(i - 1).Top + sRange(i - 1).Height
+        sRange(i).Top = sRange(i - 1).Top + sRange(i - 1).Height
     Next
 End Sub
 
+' 水平紧挨
 Public Sub MyAlignHorizonTouch()
     Dim sRange As Object
 
+    LogInfo ("Run MyAlignHorizonTouch")
     ' 未选中任何形状
     If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
         LogError ("Does not select any shape")
@@ -308,12 +417,154 @@ Public Sub MyAlignHorizonTouch()
         LogError ("Select shape count less than 2")
         Exit Sub
     End If
+    LogInfo ("Select shape count: " & sRange.Count)
 
     For i = 1 To sRange.Count
         LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
     Next
-    ' 所有形状水平紧挨: li = l(i-1) + w(i-1)
+    ' 所有形状水平紧挨: l(i) = l(i-1) + w(i-1)
     For i = 2 To sRange.Count
         sRange(i).Left = sRange(i - 1).Left + sRange(i - 1).Width
+    Next
+End Sub
+
+' 同宽
+Public Sub MySameWidth()
+    Dim sRange As Object
+
+    LogInfo ("Run MySameWidth")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+
+    ' 选中形状少于2个
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    If sRange.Count < 2 Then
+        LogError ("Select shape count less than 2")
+        Exit Sub
+    End If
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+    ' 与第一个形状同宽：shape(i).width = shape(1).width
+    For i = 2 To sRange.Count
+        sRange(i).Width = sRange(1).Width
+    Next
+End Sub
+
+' 同高
+Public Sub MySameHeight()
+    Dim sRange As Object
+
+    LogInfo ("Run MySameHeight")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+
+    ' 选中形状少于2个
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    If sRange.Count < 2 Then
+        LogError ("Select shape count less than 2")
+        Exit Sub
+    End If
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+    ' 与第一个形状同高：shape(i).height = shape(1).height
+    For i = 2 To sRange.Count
+        sRange(i).Height = sRange(1).Height
+    Next
+End Sub
+
+' 同宽高
+Public Sub MySameWidthHeight()
+    Dim sRange As Object
+
+    LogInfo ("Run MySameWidthHeight")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+
+    ' 选中形状少于2个
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    If sRange.Count < 2 Then
+        LogError ("Select shape count less than 2")
+        Exit Sub
+    End If
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+    ' 与第一个形状同高：shape(i).width = shape(1).width, shape(i).height = shape(1).height
+    For i = 2 To sRange.Count
+        sRange(i).Width = sRange(1).Width
+        sRange(i).Height = sRange(1).Height
+    Next
+End Sub
+
+' 与页面水平居中
+Public Sub MyAlignHorizonCenterWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignHorizonCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+    
+    ' 所有形状与页面水平居中对齐：shape.top = (page.height - shape.height) / 2
+    For i = 1 To sRange.Count
+        sRange(i).Top = (pageHeight - sRange(i).Height) / 2
+    Next
+End Sub
+
+' 与页面垂直居中
+Public Sub MyAlignVerticalCenterWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignVerticalCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+
+    ' 所有形状与页面水平垂直对齐：shape.left = (page.width - shape.width) / 2
+    For i = 1 To sRange.Count
+        sRange(i).Left = (pageWidth - sRange(i).Width) / 2
     Next
 End Sub

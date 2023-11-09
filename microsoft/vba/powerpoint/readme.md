@@ -10,6 +10,6 @@
 菜单栏 -> 开发工具 -> Visual Basic -> 右键“VBAProject” -> 插入 -> 模块
 
 # 添加的自定义按钮位置：
-菜单栏 -> 加载项
+执行脚本中函数：MyAlignCommandBarInit()，添加的自定义命令在：菜单栏 -> 加载项
 ```
 
