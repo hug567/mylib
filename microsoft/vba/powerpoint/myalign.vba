@@ -200,15 +200,39 @@ Private Sub MyAlignCommandBarInit()
         .OnAction = "MyAlignVerticalCenterWithPage"
     End With
 
-'与页面同宽
-'与页面同高
-'与页面同宽高
+    ' 新建按钮：与页面同宽
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面同宽"
+        .Style = msoButtonCaption
+        .OnAction = "MySameWidthWithPage"
+    End With
+
+    ' 新建按钮：与页面同高
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面同高"
+        .Style = msoButtonCaption
+        .OnAction = "MySameHeightWithPage"
+    End With
+
+    ' 新建按钮：与页面同宽高
+    Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
+    With newCtrl
+        .Visible = True
+        .Caption = "与页面同宽高"
+        .Style = msoButtonCaption
+        .OnAction = "MySameWidthHeightWithPage"
+    End With
 
     LogInfo ("ctrl count: " & newCommandBar.Controls.Count)
-    LogInfo ("ctrl left: " & newCommandBar.Controls(1).Left)
-    LogInfo ("ctrl left: " & newCommandBar.Controls(2).Left)
+    LogInfo ("ctrl1 left: " & newCommandBar.Controls(1).Left)
+    LogInfo ("ctrl2 left: " & newCommandBar.Controls(2).Left)
 '    LogInfo ("ctrl top: " & newCommandBar.Controls(1).Top)
 '    LogInfo ("ctrl top: " & newCommandBar.Controls(2).Top)
+    LogInfo ("Finish MyAlignCommandBarInit ......")
 End Sub
 
 Public Sub MyAlignLeft()
@@ -513,6 +537,118 @@ Public Sub MySameWidthHeight()
     Next
 End Sub
 
+' 与页面左对齐
+Public Sub MyAlignLeftWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignHorizonCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+    
+    ' 所有形状与页面左对齐：shape.left = 0
+    For i = 1 To sRange.Count
+        sRange(i).Left = 0
+    Next
+End Sub
+
+' 与页面右对齐
+Public Sub MyAlignRightWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignHorizonCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+    
+    ' 所有形状与页面左对齐：shape.left = page.width - shape.width
+    For i = 1 To sRange.Count
+        sRange(i).Left = pageWidth - sRange(i).Width
+    Next
+End Sub
+
+' 与页面顶端对齐
+Public Sub MyAlignTopWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignHorizonCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+    
+    ' 所有形状与页面左对齐：shape.Top = 0
+    For i = 1 To sRange.Count
+        sRange(i).Top = 0
+    Next
+End Sub
+
+' 与页面底端对齐
+Public Sub MyAlignBottomWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignHorizonCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+    
+    ' 所有形状与页面左对齐：shape.Top = page.height - shape.height
+    For i = 1 To sRange.Count
+        sRange(i).Top = pageHeight - sRange(i).Height
+    Next
+End Sub
+
 ' 与页面水平居中
 Public Sub MyAlignHorizonCenterWithPage()
     Dim sRange As Object
@@ -566,5 +702,90 @@ Public Sub MyAlignVerticalCenterWithPage()
     ' 所有形状与页面水平垂直对齐：shape.left = (page.width - shape.width) / 2
     For i = 1 To sRange.Count
         sRange(i).Left = (pageWidth - sRange(i).Width) / 2
+    Next
+End Sub
+
+' 与页面同宽
+Public Sub MySameWidthWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignVerticalCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+
+    ' 所有形状与页面同宽：shape.width = page.width
+    For i = 1 To sRange.Count
+        sRange(i).Width = pageWidth
+    Next
+End Sub
+
+' 与页面同高
+Public Sub MySameHeightWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignVerticalCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+
+    ' 所有形状与页面同宽：shape.height = page.height
+    For i = 1 To sRange.Count
+        sRange(i).Height = pageHeight
+    Next
+End Sub
+
+' 与页面同宽高
+Public Sub MySameWidthHeightWithPage()
+    Dim sRange As Object
+
+    LogInfo ("Run MyAlignVerticalCenterWithPage")
+    ' 未选中任何形状
+    If PowerPoint.ActiveWindow.Selection.Type = ppSelectionNone Then
+        LogError ("Does not select any shape")
+        Exit Sub
+    End If
+    
+    Set sRange = PowerPoint.ActiveWindow.Selection.ShapeRange
+    LogInfo ("Select shape count: " & sRange.Count)
+
+    For i = 1 To sRange.Count
+        LogInfo ("shape[" & i & "].left: " & sRange(i).Left & ", right: " & sRange(i).Left + sRange(i).Width)
+    Next
+
+    pageWidth = ActivePresentation.PageSetup.SlideWidth
+    pageHeight = ActivePresentation.PageSetup.SlideHeight
+    LogInfo ("page width: " & pageWidth & ", page height: " & pageHeight)
+
+    ' 所有形状与页面同宽：shape.width = page.width, shape.height = page.height
+    For i = 1 To sRange.Count
+        sRange(i).Width = pageWidth
+        sRange(i).Height = pageHeight
     Next
 End Sub
