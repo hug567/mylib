@@ -8,7 +8,8 @@ End Function
 
 Private Sub PrintControlInfo(ByVal ctrl As Object)
     LogInfo ("id: " & ctrl.Id & ", index: " & ctrl.Index)
-    LogInfo ("caption: " & ctrl.Caption & ", left: " & ctrl.Left & ", width: " & ctrl.Width & "，top: " & ctrl.Top & "， height: " & ctrl.Height)
+    LogInfo ("caption: " & ctrl.Caption & ", left: " & ctrl.Left & ", width: " _
+                    & ctrl.Width & "，top: " & ctrl.Top & "， height: " & ctrl.Height)
 End Sub
 
 ' 打开当前代码文件后，先运行一次此函数，将在菜单栏添加自定义命令
@@ -27,11 +28,12 @@ Private Sub MyAlignCommandBarInit()
     Next
 
     ' 新建命令栏
-    Set newCommandBar = PowerPoint.Application.CommandBars.Add(Name:=newCommandBarName, Position:=msoBarFloating, Temporary:=True)
-    newCommandBar.Visible = True
-    'newCommandBar.Name = "xxx"
-    'newCommandBar.Position = msoBarTop
-    'newCommandBar.Left = 400
+    Set newCommandBar = CommandBars.Add(Name:=newCommandBarName, Position:=msoBarFloating)
+    With newCommandBar
+        .Visible = True
+        .Protection = msoBarNoChangeDock
+    End With
+
     LogInfo ("newCommandBar Position: " & newCommandBar.Position)
     LogInfo ("newCommandBar Left: " & newCommandBar.Left)
     LogInfo ("newCommandBar Top: " & newCommandBar.Top)
@@ -39,21 +41,17 @@ Private Sub MyAlignCommandBarInit()
     LogInfo ("newCommandBar Height: " & newCommandBar.Height)
 
     Dim newCtrl As Object
-    ' 新建按钮
+    ' 新建按钮：左对齐
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
     With newCtrl
-        .Visible = True
         .Caption = "左对齐"
         .Style = msoButtonCaption
         .OnAction = "MyAlignLeft"
-'        .Left = 1592
-        .Width = 4000
-'        .Top = -8
-        .Height = 23
+        .Visible = True
     End With
-    Call PrintControlInfo(newCtrl)
+    'Call PrintControlInfo(newCtrl)
 
-    ' 新建按钮
+    ' 新建按钮：右对齐
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
     With newCtrl
         .Visible = True
@@ -61,7 +59,6 @@ Private Sub MyAlignCommandBarInit()
         .Style = msoButtonCaption
         .OnAction = "MyAlignRight"
     End With
-    Call PrintControlInfo(newCtrl)
 
     ' 新建按钮
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
@@ -71,7 +68,6 @@ Private Sub MyAlignCommandBarInit()
         .Style = msoButtonCaption
         .OnAction = "MyAlignTop"
     End With
-    Call PrintControlInfo(newCtrl)
 
     ' 新建按钮
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
@@ -81,7 +77,6 @@ Private Sub MyAlignCommandBarInit()
         .Style = msoButtonCaption
         .OnAction = "MyAlignBottom"
     End With
-    Call PrintControlInfo(newCtrl)
 
     ' 新建按钮
     Set newCtrl = newCommandBar.Controls.Add(Type:=msoControlButton)
@@ -228,10 +223,6 @@ Private Sub MyAlignCommandBarInit()
     End With
 
     LogInfo ("ctrl count: " & newCommandBar.Controls.Count)
-    LogInfo ("ctrl1 left: " & newCommandBar.Controls(1).Left)
-    LogInfo ("ctrl2 left: " & newCommandBar.Controls(2).Left)
-'    LogInfo ("ctrl top: " & newCommandBar.Controls(1).Top)
-'    LogInfo ("ctrl top: " & newCommandBar.Controls(2).Top)
     LogInfo ("Finish MyAlignCommandBarInit ......")
 End Sub
 
