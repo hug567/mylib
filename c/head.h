@@ -11,6 +11,8 @@
 
 #include <stdlib.h>
     atoi()
+    atol()
+    atoll()
     malloc()
     free()
     exit()
