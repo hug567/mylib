@@ -62,7 +62,6 @@
 #include <sys/un.h>
     struct sockaddr_un
 
-#include <sys/socket.h>
 #include <netinet/in.h>
     struct sockaddr_in
 
@@ -71,3 +70,6 @@
 
 #include <netinet/in.h>
     #define IPPROTO_TCP
+
+#include <arpa/inet.h>
+    inet_addr()
