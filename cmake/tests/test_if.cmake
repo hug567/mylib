@@ -42,9 +42,15 @@ endfunction()
 
 function(test_if_basic)
     message("${CMAKE_CURRENT_FUNCTION}: --------------------------------------")
+    # true: 1 ON TRUE'non-zero number'
+    # false: 0 OFF FALSE IGNORE NOTFOUND x-NOTFOUND 'empty tring'
     set(var01 1)
     if(${var01})
         message("if condition is true: var01 = ${var01}")
+    endif()
+    set(var02 Y)
+    if("x${var02}" STREQUAL "xY")
+        message("if condition is true: var02 = ${var02}")
     endif()
 
     if(DEFINED ENV{PATH})
