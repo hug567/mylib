@@ -1,0 +1,47 @@
+<!--
+    练习：flask登录
+    时间：2023-11-21
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 模板标题 -->
+    <title>test_login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <!-- jquery脚本需放在bootstrap脚本之前 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center py-5">
+            <h3 class="display-4">test_logout</h3>
+        </div>
+        <button id="idButtonLogout" type="submit" value="{{nextURL}}" \
+            class="btn btn-primary btn-block mb-2 rounded-pill shadow-sm  col-md-4 mx-auto">Logout</button>
+    </div>
+    <script>
+        $(function(){
+            $("#idButtonLogout").click(function(){
+                $.ajax({
+                    url: '/mylogout_submit/',
+                    type: 'POST',
+                    data: {},
+                    success: function(data, status, xhr) {
+                        var json = JSON.parse(data);
+                        if ('Jump' in json) {
+                            window.location.href = json.Jump;
+                        } else {
+                            alert(json.Info);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -4,15 +4,70 @@
 
 import json
 from flask import Flask, render_template, request
+from flask_login import LoginManager, login_user, logout_user, login_required
+from user import User
 
+# 默认加载tempates目录中的html，也可自定义
+# app=Flask（__name__，template_folder='xxx' ）
 app = Flask(__name__)
 
+app.secret_key = 'admin'  # 设置表单交互密钥
+login_manager = LoginManager()  # 实例化登录管理对象
+login_manager.init_app(app)  # 初始化应用
+login_manager.login_view = 'mylogin'  # 设置用户登录视图函数 endpoint
+
+@login_manager.user_loader  # 定义获取登录用户的方法
+def load_user(user_id):
+    return User.get(user_id)
+
+#- 登录页面 --------------------------------------------------------------------#
+@app.route('/test_login.html')
+def mylogin():
+    return render_template('test_login.html')
+# 登录页面ajax提交
+@app.route('/mylogin_submit/', methods=['POST'])
+def mylogin_submit():
+    print("[hx-debug] Enter mylogin_submit")
+    dict = {}
+    if request.method == 'POST':
+        username = request.form.get('Username')
+        password = request.form.get('Password')
+        print("username: %s, password: %s" % (username, password))
+        user = User.get(1)
+        if user is not None:
+            print("user 1 name: %s" % user.username)
+            print("user 1 password_hash: %s" % user.password_hash)
+            if username == user.username and user.verify_password(password):
+                login_user(user)
+                dict["Jump"] = "index.html"
+                return json.dumps(dict)
+    dict["Info"] = "Username or Password error"
+    return json.dumps(dict)
+
+#- 登出页面 --------------------------------------------------------------------#
+@app.route('/test_logout.html')
+def mylogout():
+    return render_template('test_logout.html')
+# 登出页面ajax提交
+@app.route('/mylogout_submit/', methods=['POST'])
+def mylogout_submit():
+    print("[hx-debug] Enter mylogout_submit")
+    dict = {}
+    if request.method == 'POST':
+        logout_user()
+        dict["Jump"] = "test_login.html"
+        return json.dumps(dict)
+    dict["Info"] = "Logout failed"
+    return json.dumps(dict)
+
+#------------------------------------------------------------------------------#
 @app.route('/')
 @app.route('/index.html')
+@login_required # 需登录才能访问
 def index():
     return render_template('index.html')
 
-# 练习：ajax提交表单
+#- ajax提交表单 ----------------------------------------------------------------#
 @app.route('/test_ajax_form.html')
 def test_ajax_form():
     return render_template('test_ajax_form.html')
@@ -39,7 +94,9 @@ def test_ajax_submit_02():
     # 返回json数据
     return json.dumps(data)
 
-# 练习：flask模板
+#- flask模板 -------------------------------------------------------------------#
 @app.route('/test_template.html')
 def test_template():
     return render_template('test_template.html')
+
+#------------------------------------------------------------------------------#

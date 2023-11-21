@@ -5,6 +5,7 @@
 # 时间：2023-01-31
 ################################################################################
 import os
+import sys
 
 # number, string, list,...
 
@@ -22,8 +23,19 @@ def test_print_string():
     # 不带分隔符
     print("[2] num = ", num, sep='')
 
+# 格式化输出
+def test_print_format():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+    name = "Tom"
+    age = 18
+    # 格式化输出字符串
+    print("name: %s" % name)
+    # 格式化输出多个变量
+    print("name: %s, age: %d" % (name, age))
+
 def main():
     test_print_string()
+    test_print_format();
 
 if __name__ == '__main__':
     main()
