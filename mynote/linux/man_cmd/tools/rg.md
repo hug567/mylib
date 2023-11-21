@@ -45,5 +45,8 @@ rg -e "text" $(find . -name kernel.log)
 
 # 跨行搜索
 rg -e "struct filename \*\ngetname\(const char" --multiline ./
+
+# 排除单个目录
+rg -e "CONFIG_CMD_PART" -g "\!configs"
 ```
 
