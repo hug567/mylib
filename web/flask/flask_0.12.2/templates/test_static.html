@@ -1,0 +1,23 @@
+<!--
+    练习：flask使用本地js、css等静态文件
+    时间：2023-11-22
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 模板标题 -->
+    <title>test_static</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 使用本地静态js/css文件 -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mystyle.css') }}">
+    <script src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+</head>
+
+<body>
+    <div style="color: white;">
+        test_static.html
+    </div>
+</body>
+</html>
