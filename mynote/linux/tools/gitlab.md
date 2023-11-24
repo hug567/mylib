@@ -17,6 +17,10 @@ external_url 'http://192.168.124.27:9002'
 sudo gitlab-ctl reconfigure
 # 重启gitlab
 sudo gitlab-ctl restart
+
+# 停止gitlab
+sudo gitlab-ctl stop
+sudo systemctl disable gitlab-runsvdir.service
 ```
 ## 2、配置gitlab：
 ### 1)、密码设置：

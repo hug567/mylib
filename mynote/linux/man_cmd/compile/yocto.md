@@ -197,6 +197,17 @@ build/downloads/git2/disk.sda.code.linux-qemu.poky.build-aarch64.......linux-yoc
 tmp/work/qemuarm64-poky-linux/linux-yocto/5.15.32+gitAUTOINC+meta_machine-r0/temp/log.task_order
 ```
 
+## 5)、更新rootfs：
+
+```bash
+# 打包rootfs时删除文件，如在petalinux-user-image.bbappend中：
+remove_alternative_files () {
+    rm -rf ${IMAGE_ROOTFS}/usr/lib/opkg
+}
+
+ROOTFS_POSTPROCESS_COMMAND += "remove_alternative_files;"
+```
+
 # 4、sysroot：
 
 - recipe-sysroot：目标架构sysroot

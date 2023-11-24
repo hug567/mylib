@@ -8,6 +8,7 @@ dtc -I dts -O dtb -o output.dtb input.dts
 
 ```bash
 dtc -I dtb -O dts -o output.dts input.dtb
+dtc -I dtb -O dts -o system.dts system.dtb
 ```
 
 # 3、读取dts值：
