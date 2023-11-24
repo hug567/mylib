@@ -1,7 +1,7 @@
 # 1、安装：
 
 ```bash
-sudo apt install python3-flask
+sudo apt install python3-flask python3-flask-login
 flask --version
 ```
 
