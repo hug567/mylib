@@ -18,6 +18,7 @@ function test_let() {
     echo "var1 = $var1"
 }
 
+# expr加法
 function expr_add() {
     echo "$FUNCNAME:-----------------------------"
     local var1=1
@@ -33,6 +34,7 @@ function expr_add() {
     echo "$var1 + $var2 = $(expr $var1 + $var2)"
 }
 
+# expr减法
 function expr_sub() {
     echo "$FUNCNAME:-----------------------------"
     local var1=5
@@ -48,6 +50,7 @@ function expr_sub() {
     echo "$var1 - $var2 = $(expr $var1 - $var2)"
 }
 
+# expr乘法
 function expr_mul() {
     echo "$FUNCNAME:-----------------------------"
     local var1=5
@@ -63,6 +66,7 @@ function expr_mul() {
     echo "$var1 * $var2 = $(expr $var1 \* $var2)"
 }
 
+# expr除法
 function expr_div() {
     echo "$FUNCNAME:-----------------------------"
     local var1=5
@@ -78,6 +82,7 @@ function expr_div() {
     echo "$var1 / $var2 = $(expr $var1 / $var2)"
 }
 
+# expr求余
 function expr_mod() {
     echo "$FUNCNAME:-----------------------------"
     local var1=5
@@ -102,7 +107,7 @@ function test_expr() {
     expr_mod
 }
 
-# square brackets
+# 方括号数学计算
 function test_square() {
     echo "$FUNCNAME:-----------------------------"
 
@@ -113,8 +118,8 @@ function test_square() {
     echo "1 % 2 = $[1 % 2]"
 }
 
-# float calculation
-function test_bc() {
+# float浮点数计算
+function test_bc_float() {
     echo "$FUNCNAME:-----------------------------"
 
     echo " 1.2 + 3.4 = $(echo "scale=4; 1.2 + 3.4" | bc)"
@@ -125,7 +130,7 @@ function test_bc() {
     echo " 3 / 2 = $(echo "scale=4; 3 / 2" | bc)"
 }
 
-# support: + - * / % ++ -- & | ~ && || << >> **
+# 双圆括号数学计算: + - * / % ++ -- & | ~ && || << >> **
 function test_brackets() {
     echo "$FUNCNAME:-----------------------------"
     local var=
@@ -140,7 +145,7 @@ function main() {
     test_let
     test_expr
     test_square
-    test_bc
+    test_bc_float
     test_brackets
 }
 

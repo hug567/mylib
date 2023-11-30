@@ -17,11 +17,13 @@ function test_from_decimal() {
     echo "$num = $(echo "obase=2;$num" | bc)" # default ibase=10
 }
 
+# 十六进制转换为其他进制
 function test_from_hexadecimal() {
     echo "$FUNCNAME:-----------------------------"
     local num=0x14
-    local num2=ffff
+    local num2=ffff # 十六进制数没有0x前缀
 
+    # 16 -> 10
     echo "to decimal:-----"
     echo "$num = $(printf %d $num)"
     echo "$num = $(($num))"
