@@ -20,10 +20,12 @@ function test_from_decimal() {
 function test_from_hexadecimal() {
     echo "$FUNCNAME:-----------------------------"
     local num=0x14
+    local num2=ffff
 
     echo "to decimal:-----"
     echo "$num = $(printf %d $num)"
     echo "$num = $(($num))"
+    echo "0x$num2 = $((0x$num2))"
     echo "0xef = $((0xef))"
     echo "0xff = $((16#ff))"
 
