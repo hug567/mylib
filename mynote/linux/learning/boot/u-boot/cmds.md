@@ -97,6 +97,23 @@ nand read/wirte/erase.chip/bad
 ping 192.168.0.1
 ```
 
+### sf：操作spi/qspi flash
+
+```bash
+sf probe
+
+# 从flash偏移<offset>开始的地方，读入内存<addr>开始的地址，长度为<len>
+sf read <addr> <offset> <len>
+
+# 把内存<addr>处的数据写入flash偏移<offset>开始的地方，长度为<len>
+sf write <addr> <offset> <len>
+
+# 擦除flash偏移<offset>开始的地方，长度为[len]，以块对齐
+sf erase <offset> [len]
+
+sf update <addr> <offset> <len>
+```
+
 
 
 
