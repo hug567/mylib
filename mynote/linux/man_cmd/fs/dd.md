@@ -31,5 +31,16 @@ dd if=boot.img of=/dev/fd0 bs=1440k
 
 # 有可能修复磁盘
 dd if=/dev/sda of=/dev/sda
+
+# 大文件刷写进多个连续的mtd分区:
+cat /proc/mtd
+# mtd0: 0x50_0000
+dd if=BOOT-MKPART.BIN bs=4096 count=1280 of=/dev/mtdblock0
+# mtd1: 0x2_0000
+dd if=BOOT-MKPART.BIN bs=4096 skip=1280 count=32 of=/dev/mtdblock1
+# mtd2: 0xa8_0000，足够容纳文件剩余部分
+dd if=BOOT-MKPART.BIN bs=4096 skip=1312 of=/dev/mtdblock2
+# 最后执行一下sync
+sync
 ```
 
