@@ -54,6 +54,13 @@ sudo ip link set eth1 up
 ip neighbor show
 ```
 
+# 3、路由：
+
+```bash
+# 路由设置指定ip走指定网卡：
+sudo ip route add 192.168.99.221/32 via 10.110.0.3 dev eno1
+```
+
 
 
 
