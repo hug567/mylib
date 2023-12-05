@@ -59,6 +59,8 @@ ip neighbor show
 ```bash
 # 路由设置指定ip走指定网卡：
 sudo ip route add 192.168.99.221/32 via 10.110.0.3 dev eno1
+# 删除一个默认路由：
+sudo ip route del default via 192.168.99.1 dev wlx502b731c5285
 ```
 
 

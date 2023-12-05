@@ -5,6 +5,8 @@ sudo netplan --debug apply
 
 # 配置文件位置：
 /etc/netplan/*.yaml
+# 查看当前配置：
+netplan get
 ```
 
 # 2、有线网络：
@@ -23,6 +25,21 @@ network:
       nameservers:
         addresses:
         - 192.168.1.1
+
+# 一个网卡设置多个ip：
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    eno1:
+      dhcp4: false
+      addresses:
+      - 10.110.0.3/24
+      - 192.168.0.13/24
+      gateway4: 10.110.0.1
+      nameservers:
+        addresses:
+        - 10.110.0.1
 ```
 
 ## 2)、dhcp：
@@ -71,6 +88,36 @@ network:
 ## 2)、dhcp：
 
 ```bash
+network:
+  version: 2
+  renderer: NetworkManager
+  wifis:
+    wlx502b73089fc9:
+      dhcp4: true
+      access-points:
+        'TP-LINK_9128':
+          password: 'Hx123poi'
 
+# 多个无线网卡分别连接不同wifi：
+network:
+  version: 2
+  renderer: NetworkManager
+  wifis:
+    wlx502b73089fc9:
+      optional: true
+      dhcp4: true
+      access-points:
+        "TP-LINK_9128":
+          auth:
+            key-management: "psk"
+            password: "Hx123poi"
+    wlx502b731c5285:
+      optional: true
+      dhcp4: true
+      access-points:
+        "rhosoon_network":
+          auth:
+            key-management: "psk"
+            password: "rhosoon_network"
 ```
 
