@@ -63,6 +63,17 @@ sudo ip route add 192.168.99.221/32 via 10.110.0.3 dev eno1
 sudo ip route del default via 192.168.99.1 dev wlx502b731c5285
 ```
 
+# 4、ipv6：
+
+```bash
+# 查看网卡ipv6地址：
+ip -6 addr show
+# 查看ipv6路由表：
+ip -6 route show
+# 添加ipv6默认路由：
+sudo ip -6 route add default dev wlx82771688de0a
+```
+
 
 
 
