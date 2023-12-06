@@ -30,3 +30,15 @@ python() {
         "SRC_URI = %s" % d.getVar("SRC_URI", True), "\n",
     )
 }
+
+do_rm_work () {
+    :
+}
+
+do_clean () {
+    :
+}
+
+do_cleansstate () {
+    :
+}
