@@ -6,10 +6,10 @@ function test_entry_dir() {
 
     echo "PWD = $PWD"
 
-    pushd /tmp
+    pushd /tmp/vim > /dev/null
     echo "PWD = $PWD"
-    ls -l vim_tmp.txt
-    popd
+    ls -l paste.txt
+    popd > /dev/null
 
     echo "PWD = $PWD"
 }

@@ -26,6 +26,7 @@
     strcpy()
     strncpy()
     strerror()
+    strstr()
     memset()
     memcpy()
 
