@@ -1,0 +1,17 @@
+# Debain 12 2023-12-09
+deb     https://mirrors.aliyun.com/debian/          bookworm main non-free non-free-firmware contrib
+deb     https://mirrors.aliyun.com/debian-security/ bookworm-security main
+deb     https://mirrors.aliyun.com/debian/          bookworm-updates main non-free non-free-firmware contrib
+deb     https://mirrors.aliyun.com/debian/          bookworm-backports main non-free non-free-firmware contrib
+deb-src https://mirrors.aliyun.com/debian/          bookworm main non-free non-free-firmware contrib
+deb-src https://mirrors.aliyun.com/debian-security/ bookworm-security main
+deb-src https://mirrors.aliyun.com/debian/          bookworm-updates main non-free non-free-firmware contrib
+deb-src https://mirrors.aliyun.com/debian/          bookworm-backports main non-free non-free-firmware contrib
+
+# http://mirrors.163.com/ubuntu/
+# http://mirrors.aliyun.com/ubuntu/
+# http://mirrors.huaweicloud.com/ubuntu/
+# http://repo.huaweicloud.com/ubuntu/
+# http://mirrors.cloud.tencent.com/ubuntu/
+# http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+# http://mirrors.ustc.edu.cn/ubuntu/
