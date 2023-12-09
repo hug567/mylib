@@ -52,6 +52,7 @@ docker
 	-v <host_dir>:<container_dir>                           # 映射host目录到容器
 	--net=host                                              # 使用host网络
 	--name=<xxx>                                            # 启动容器时指定名称
+	--hostname <myubuntu>                                   # 启动容器是指定hostname
 ```
 
 ## 2）、启动退出：
@@ -147,6 +148,13 @@ docker logs 33654069bce5
 docker logs 33654069bce5 -f
 # 查看末尾10行日志
 docker logs 33654069bce5 -n 10
+```
+
+## 7）、nfs：
+
+```bash
+# docker中通过nfs挂载主机目录：
+
 ```
 
 # 3、dockfile：
