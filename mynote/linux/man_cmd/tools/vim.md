@@ -112,6 +112,8 @@ shift + *                            //搜索单词
 
 //4空格缩进替换为tab缩进，需执行多次，直到没有4空格缩进
 :%s/^\(\t\)*    /\1\t/gc
+//搜索替换路径时避免输入转义字符\/
+:%s#/home/rhosoon/repo/test04/yocto/build/tmp/hosttools#/home/rhosoon/test05/hosttools#gc
 ```
 
 ### 7）、显示比较：
