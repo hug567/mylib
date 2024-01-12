@@ -46,4 +46,7 @@ urlpatterns = [
     url(r'test_session_login/', views.test_session_login),
     url(r'test_session_logout/', views.test_session_logout),
     url(r'^test_session_page.html$', views.test_session_page),
+
+    # 上传文件
+    url(r'^test_upload.html$', views.test_upload),
 ]

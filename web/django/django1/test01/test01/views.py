@@ -128,3 +128,8 @@ def test_session_page(request):
     else:
         print("[hx-debug] user does not exist")
     return render(request, 'test_session_page.html')
+
+# 练习：上传文件
+def test_upload(request):
+    context = {}
+    return render(request, 'test_upload.html', context)
