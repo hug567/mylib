@@ -16,20 +16,24 @@
 
 <body>
     <div class="container"><br>
+        <!--
         <div class="input-group">
+            <div class="custom-file"></div>
             <input type="file"/>
         </div>
-        <!--<div class="input-group mb-3">-->
+        -->
+        <div class="input-group mb-3">
             <!--<div class="input-group-prepend">
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>-->
-            <!--<div class="custom-file">-->
-              <!--<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" for="inputGroupFile01">kernel image</label>-->
-              <input type="file" id="idInputFile" accept="kernel image"/>
-              <!--<input type="button" id="idInputButtob" value="Upload"/>-->
-            <!--</div>-->
-        <!--</div>-->
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+              <label class="custom-file-label" for="inputGroupFile01">kernel image</label>
+              <!--<input type="file" id="idInputFile" accept="kernel image"/>-->
+              <!--<input type="button" id="idInputButton" value="Upload"/>-->
+            </div>
+        </div>
+
         <div class="col-sm">
             <p><br>调试窗口：</p>
             <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
