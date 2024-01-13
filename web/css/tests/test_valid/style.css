@@ -1,0 +1,31 @@
+/*
+ * css :valid/:invalid选择器：有效或无效时应用指定样式
+ */
+
+/* 1、后代选择器：以空格分隔，B是A的后代时才应用的样式 */
+/*.offspring-div .offspring-p {
+    background-color: yellow;
+}*/
+
+/* 2、子元素选择器：以 > 分隔，B是A的直接子元素时才应用的样式 */
+/*.sub-div > .sub-p {
+    background-color: #ffc107;
+}*/
+
+/* 3、相邻兄弟选择器：以 + 分隔，B是A的直接相邻兄弟时才应用的样式 */
+/*.adjacent-div + .adjacent-p {
+    background-color: #ff9470;
+}*/
+
+/* 4、后续兄弟选择器：以 ~ 分隔，B是A的后续兄弟时才应用的样式 */
+/*.follow-div ~ .follow-p {
+    background-color: #e5eecc;
+}*/
+
+.myinput:valid {
+    background-color: #96b97d;
+}
+
+.myinput:invalid {
+    background-color: #ef4040;
+}

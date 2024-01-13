@@ -1,0 +1,59 @@
+<!--
+  练习：css组合选择符
+  时间：2024-01-13
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>test_comb_selector</title>  <!-- 网页标题 -->
+        <link rel="stylesheet" type="text/css" href="style.css"/>  <!--引入CSS样式表-->
+    </head>
+    <body>
+        <h3>1、后代选择器：空格</h3>
+        <div class="offspring-div">
+            <p class="offspring-p">后代选择器：p是div的直接后代，应用了后代选择器样式</p>
+            <span><p class="offspring-p">后代选择器：p是div的多层后代，也应用了后代选择器样式</p></span>
+        </div>
+        <p class="offspring-p">对比：p不是div的后代</p>
+
+        <h3>2、子元素选择器：></h3>
+        <div class="sub-div">
+            <p class="sub-p">子元素选择器：p是div的直接子元素，应用了子元素选择器样式</p>
+            <span><p class="sub-p">对比：p是div的多层后代，但不是直接子元素，没有应用子元素选择器样式</p></span>
+        </div>
+
+        <h3>3、相邻兄弟选择器：+</h3>
+        <div class="adjacent-div">
+            div内部元素，未应用相邻兄弟选择器样式
+        </div>
+        <p class="adjacent-p">相邻兄弟选择器：p是div的第一个相邻兄弟，应用了相邻兄弟选择器样式</p>
+        <p class="adjacent-p">对比：p是div第二个相邻兄弟，不是第一个，没有应用相邻兄弟选择器样式</p>
+
+        <h3>4、后续兄弟选择器：~</h3>
+        <div class="follow-div">
+            div内部元素，未应用后续兄弟选择器样式
+        </div>
+        <p class="follow-p">后续兄弟选择器：p是div的第一个后续兄弟，应用了后续兄弟选择器样式</p>
+        <p class="follow-p">后续兄弟选择器：p是div的第二个后续兄弟，也应用了后续兄弟选择器样式</p>
+        <span><p class="follow-p">对比：p是div后续兄弟的子元素，不是后续兄弟，没有应用后续兄弟选择器样式</p></span>
+
+        <h3>5、组合多样式选择器：</h3>
+        <div class="follow01-div">A：未应用样式
+            <div class="follow02-div">B：未应用样式</div>
+            <p class="follow01-p">C：A的子元素B，B的后续兄弟元素C，C应用指定样式 (follow01-div follow02-div ~ follow01-p)</p>
+        </div>
+
+        <h3>6、两个不同选择器有相同属性：</h3>
+        <div>
+            <div class="sub01-div">
+                <p class="sub01-p">sub01-div > sub01-p, 背景色是：#ff90bc</p>
+            </div>
+        </div>
+        <div>
+            <div class="adjacent01-div"></div>
+            <p class="adjacent01-p">adjacent01-div > adjacent01-p, 背景色是：#ff90bc</p>
+        </div>
+    </body>
+</html>
+

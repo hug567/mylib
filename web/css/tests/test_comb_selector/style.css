@@ -1,0 +1,37 @@
+/*
+ * css组合选择符：
+ *   1、后代选择器：以空格分隔
+ *   2、子元素选择器：以 > 分隔
+ *   3、相邻兄弟选择器：以 + 分隔
+ *   4、普通兄弟选择器：以 ~ 分隔
+ */
+
+/* 1、后代选择器：以空格分隔，B是A的后代时才应用的样式 */
+.offspring-div .offspring-p {
+    background-color: yellow;
+}
+
+/* 2、子元素选择器：以 > 分隔，B是A的直接子元素时才应用的样式 */
+.sub-div > .sub-p {
+    background-color: #ffc107;
+}
+
+/* 3、相邻兄弟选择器：以 + 分隔，B是A的直接相邻兄弟时才应用的样式 */
+.adjacent-div + .adjacent-p {
+    background-color: #ff9470;
+}
+
+/* 4、后续兄弟选择器：以 ~ 分隔，B是A的后续兄弟时才应用的样式 */
+.follow-div ~ .follow-p {
+    background-color: #e5eecc;
+}
+
+/* 5、组合后代选择器：A的子元素B，B的后续兄弟元素C，C应用的样式 */
+.follow01-div .follow02-div ~ .follow01-p {
+    background-color: #9bb8cd;
+}
+
+/* 6、两个不同组合的选择器有相同属性，可以写在一起，用逗号分隔： */
+.sub01-div > .sub01-p, .adjacent01-div + .adjacent01-p {
+    background-color: #ff90bc;
+}
