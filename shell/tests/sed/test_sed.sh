@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# 字符串替换
 function test_sed_replace() {
     echo "$FUNCNAME:-----------------------------"
 
