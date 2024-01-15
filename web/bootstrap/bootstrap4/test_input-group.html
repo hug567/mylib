@@ -6,13 +6,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>test_input-group</title>
+    <title>[bootstrap] test_input-group</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script>
+        window.onload = initAll;
+
+        function createButton(name) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.innerHTML = name;
+
+            var container = document.getElementById('idDivContainer');
+            container.appendChild(button);
+        }
+
+        function createInputFile(parent) {
+            var p1 = document.createElement('p');
+            p1.innerText = "xxxxxx";
+            p1.style.backgroundColor = '#ff9470';
+            parent.appendChild(p1);
+
+            var divInputGroup = document.createElement('div');
+            divInputGroup.classList.add('input-group');
+            parent.appendChild(divInputGroup);
+            var divCustomFile = document.createElement('div');
+            divInputGroup.classList.add('custom-file');
+            divInputGroup.appendChild(divCustomFile);
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.classList.add('custom-file-input');
+            input.id = "inputGroupFile01";
+            divCustomFile.appendChild(input);
+        }
+
+        function initAll() {
+            /*
+            for (var i = 0; i < 10; i++) {
+                createButton("button" + i);
+            }
+            */
+            var divParent  = document.getElementById('idDivContainer');
+
+            /**/
+            var divRow1 = document.createElement('div');
+            divRow1.classList.add("row");
+            divRow1.classList.add("mb-3");
+            divParent.appendChild(divRow1);
+
+            var divColmd1 = document.createElement('div');
+            divColmd1.classList.add("col-md");
+            divRow1.appendChild(divColmd1);
+            createInputFile(divColmd1);
+
+            var divColmd2 = document.createElement('div');
+            divColmd2.classList.add("col-md");
+            divRow1.appendChild(divColmd2);
+            createInputFile(divColmd2);
+
+            var divColmd3 = document.createElement('div');
+            divColmd3.classList.add("col-md");
+            divRow1.appendChild(divColmd3);
+            createInputFile(divColmd3);
+
+            /*
+            var p1 = document.createElement('p');
+            p1.innerText = "xxxxxx";
+            p1.style.backgroundColor = '#ff9470';
+            divColmd1.appendChild(p1);
+
+            var p2 = document.createElement('p');
+            p2.innerText = "yyyyyy";
+            p2.style.backgroundColor = '#c9f29b';
+            divParent.appendChild(p2);
+            */
+        }
+    </script>
 </head>
 <body>
-    <div class="container" style="background-color: #ecd9dd;">class: container
+    <div class="container" id="idDivContainer" style="background-color: #ecd9dd;">class: container
         <!--
         <div class="mb-0" style="background-color: #ff9470;">(下边距) class: mb-0</div>
         <div class="mb-1" style="background-color: #c9f29b;">(下边距) class: mb-1</div>
@@ -22,6 +95,7 @@
         <div class="mb-5" style="background-color: #ba44e5;">(下边距) class: mb-5</div>
         <div><p>----------------------</p></div>
         -->
+        <!--
         <div>无类input-group:</div>
         <div>
             <input type="text" class="form-control"/>
@@ -33,6 +107,7 @@
                 <input type="file" class="custom-file-input"/>
             </div>
         </div>
+        -->
     </div>
 </body>
 </html>

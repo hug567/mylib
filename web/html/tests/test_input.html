@@ -1,0 +1,63 @@
+<!--
+  练习：html input标签
+  时间：2024-01-15
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>[html] test_input</title>  <!-- 网页标题 -->
+</head>
+
+<body>
+  <!--
+    input标签常用属性：
+      type: button, file, text, ......
+      value:
+  -->
+
+  <div>
+    <h4>1、input button:</h4>
+    <input type="button" value="按钮" id="idInputButton01"/>
+    <script>
+      document.getElementById("idInputButton01").onclick=function(event){
+        alert("按钮按下")
+        logInfo("idInputButton01 click\n");
+      }
+    </script>
+  </div>
+
+  <div>
+    <h4>2、input file:</h4>
+    <!-- value: 用户已选择的文件 -->
+    <input type="file" id="idInputFile01" textContent="sss" name="xxx" style="background-color: #c1f2b0;"/>
+    <!--<label for="idInputFile01">please select file...</label>-->
+    <script>
+      document.getElementById("idInputFile01").onclick=function(event){
+        logInfo("idInputFile01 click\n");
+        //按钮按下时清除input的value，则连续选择相同文件，也会触发onchange事件
+        document.getElementById("idInputFile01").value = "";
+      }
+      document.getElementById("idInputFile01").onchange=function(event){
+        filename = document.getElementById("idInputFile01").value;
+        logInfo("filename: " + filename + "\n");
+      }
+    </script>
+  </div>
+
+  <div>
+    <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
+    <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+    <script>
+      function logInfo(log) {
+        document.getElementById("idDebugLogWindow").value += log;
+      }
+
+      document.getElementById("idButtonDebugLogWindow").onclick=function(event){
+        document.getElementById("idDebugLogWindow").value = "";
+      }
+    </script>
+  </div>
+</body>
+</html>
+
