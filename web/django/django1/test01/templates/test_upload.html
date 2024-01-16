@@ -18,34 +18,74 @@
     <div class="container"><br>
         <div class="row mb-3">
             <div class="col-md">
+                {% csrf_token %}
                 <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                      <span class="input-group-text" id="inputGroupFileAddon">Upload</span>
                     </div>
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01">
-                      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                      <input type="file" class="custom-file-input" id="inputGroupFile"
+                        aria-describedby="inputGroupFileAddon">
+                      <label class="custom-file-label" for="inputGroupFile" id="inputFileLabel">Choose file</label>
                     </div>
                 </div>
             </div>
             <div class="col-md">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                    </div>
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01">
-                      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div class="col-sm">
-            <p><br>调试窗口：</p>
+        <script>
+            $(function(){
+                $("#inputGroupFile").click(function(){
+                    document.getElementById("inputGroupFile").value = "";
+                });
+                $("#inputGroupFile").change(function(){
+                    var fpath = document.getElementById("inputGroupFile").value;
+                    var fname = fpath.split('\\').pop();
+                    document.getElementById("inputFileLabel").innerHTML = fname;
+                    logInfo("file name: " + fname + "\n");
+
+                    var formData = new FormData();
+                    var fileInfo = $('#inputGroupFile')[0].files[0];
+                    if (fileInfo == undefined) {
+                        alert("Does not select file");
+                        return false;
+                    }
+                    //var csrfData = $('input[name=csrfmiddlewaretoken]').val();
+                    //formData.append('csrfmiddlewaretoken', csrfData);
+                    formData.append('file', fileInfo);
+                    $.ajax({
+                        url: "/test_ajax_upload/",
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{ csrf_token }}",
+                            'file': fileInof,
+                        },
+                        processData: false,
+                        contentType: false,
+                        //headers: {
+                        //    'X-CSRFToken': $.cookie('csrftoken'),
+                        //},
+                        success: function(callback) {
+                            logInfo("Upload file success\n")
+                        },
+                    });
+                });
+            });
+        </script>
+
+        <div>
+            <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
             <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+            <script>
+                function logInfo(log) {
+                    document.getElementById("idDebugLogWindow").value += log;
+                }
+
+                document.getElementById("idButtonDebugLogWindow").onclick=function(event){
+                    document.getElementById("idDebugLogWindow").value = "";
+                }
+            </script>
         </div>
     </div>
 </body>

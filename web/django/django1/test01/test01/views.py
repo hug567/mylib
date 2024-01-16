@@ -133,3 +133,8 @@ def test_session_page(request):
 def test_upload(request):
     context = {}
     return render(request, 'test_upload.html', context)
+def test_ajax_upload(request):
+    print("[hx-debug] Enter test_upload_ajax")
+    if request.method == 'POST':
+        file_obj = request.FILES.get('file')
+        return HttpResponse("ajax upload file success")

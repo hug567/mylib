@@ -49,4 +49,5 @@ urlpatterns = [
 
     # 上传文件
     url(r'^test_upload.html$', views.test_upload),
+    url(r'test_ajax_upload/', views.test_ajax_upload),
 ]
