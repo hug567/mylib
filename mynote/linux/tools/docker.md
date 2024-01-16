@@ -112,6 +112,7 @@ docker rm <CONTAINER ID>                                    # 删除指定容器
 docker rm $(docker ps -aq)                                  # 删除所有容器
 
 # 进入已启动的容器
+docker attach <CONTAINER ID>
 docker exec -it <CONTAINER ID> bash
 # docker启动centos
 docker run -it centos:latest /bin/bash
