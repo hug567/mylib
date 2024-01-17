@@ -134,7 +134,20 @@ def test_upload(request):
     context = {}
     return render(request, 'test_upload.html', context)
 def test_ajax_upload(request):
+    dict = {}
+    dict["Upload"] = "failed"
     print("[hx-debug] Enter test_upload_ajax")
     if request.method == 'POST':
+        print("[hx-debug] get POST request")
         file_obj = request.FILES.get('file')
-        return HttpResponse("ajax upload file success")
+        if file_obj is None:
+            print("[hx-debug] file_obj is None")
+            return HttpResponse(json.dumps(dict))
+        print("[hx-debug] file name: " + file_obj.name)
+        file_name = file_obj.name
+        file_path = os.path.join("/tmp", file_name)
+        with open(file_path, 'wb') as f:
+            for chunk in file_obj.chunks():
+                f.write(chunk)
+        dict["Upload"] = "success"
+    return HttpResponse(json.dumps(dict))
