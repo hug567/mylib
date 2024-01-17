@@ -51,6 +51,20 @@
         }
         document.write("<br>");
       }
+      //在定义二维数组时赋初值，可以每行长度不同
+      var studentInfo = new Array(
+        new Array("Tom", "Jerry", "Bob"),
+        new Array(18, 19),
+        new Array("Anhui", "Jiangsu", "Shanghai", "Zhejiang"),
+      );
+      //遍历定义时已赋值的二维数组
+      for (var i = 0; i < studentInfo.length; i++) {
+        document.write("studentInfo[" + i + "]: ");
+        for (var j = 0; j < studentInfo[i].length; j++) {
+          document.write(studentInfo[i][j] + " ");
+        }
+        document.write("<br>");
+      }
     </script>
   </body>
 </html>
