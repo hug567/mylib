@@ -96,6 +96,8 @@
                                     if (percent == 100) {
                                         setTimeout(function(){
                                             document.getElementById("idProgressBar").innerHTML = 'upload: 100%';
+                                            //blur(): 模糊对象的内容以便使其看起来失去焦点
+                                            document.getElementById("idInputGroupFile").blur();
                                         }, 1000);
                                     }
                                 }, false);
