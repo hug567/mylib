@@ -31,10 +31,13 @@
     <button id="idButton2">Button2</button>
 
     <div>
-        <p><br>调试窗口：<button  onclick="fnButtonClearClick()">清空</button></p>
-        <textarea rows="15" cols="100" id="idDebugLogWindow"></textarea>
+        <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
+        <textarea rows="100" cols="100" id="idDebugLogWindow"></textarea>
         <script>
-            function fnButtonClearClick() {
+            function logInfo(log) {
+                document.getElementById("idDebugLogWindow").value += log;
+            }
+            document.getElementById("idButtonDebugLogWindow").onclick=function(event){
                 document.getElementById("idDebugLogWindow").value = "";
             }
         </script>
