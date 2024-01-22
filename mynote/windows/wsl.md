@@ -1,6 +1,6 @@
 # 1、WSL运行docker：
 
-- 安装wsl2：启动或关闭Windows功能 -> 适用于Linux的Windows子系统 -> 虚拟机平台
+- 安装wsl2：启动或关闭Windows功能 -> 适用于Linux的Windows子系统 + 虚拟机平台 -> 确定
 
 ```bash
 # 查看当前安全的linux发行版
@@ -33,6 +33,17 @@ sudo /etc/init.d/docker start
 sudo /etc/init.d/docker restart
 # 或
 sudo service docker start/stop/restart
+```
+
+- 命令行安装wsl发行版：
+
+```bash
+# 安装或更新wsl
+wsl --update
+# 查看发行部
+wsl --list --online
+# 安装发行版
+wsl --install Ubuntu-18.04
 ```
 
 - 其他可用的apt源：
