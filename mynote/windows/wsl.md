@@ -11,6 +11,8 @@ wsl --shutdown
 wsl --update
 # 设置wsl2运行linux发行版
 wsl --set-version Ubuntu-18.04 2
+# 启动linux发行版
+wsl -d Ubuntu-18.04
 
 # wsl卡住，以管理员身份运行powershell/cmd
 netsh winsock reset  # 然后重启
@@ -77,7 +79,24 @@ PasswordAuthentication yes
 sudo service ssh start  # start/restart/stop
 ```
 
-# 3、FAQ
+# 3、wsl2修改内存和swap大小：
+
+```bash
+# 关闭wsl：
+wsl --shutdown
+# 创建文件：
+C:\Users\rhosoon\.wslconfig
+# 增加配置：
+#------------------------------------------------------#
+[wsl2]
+memory=2.5G
+swap=8G
+localhostForwarding=true
+#------------------------------------------------------#
+# 重启wsl
+```
+
+# 4、FAQ
 
 ## 1)、wsl2网络：
 - wsl2网络受VPN软件影响，如OpenVPN，需卸载VPN软件后重启Windows；
