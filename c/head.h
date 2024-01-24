@@ -16,6 +16,7 @@
     malloc()
     free()
     exit()
+    system()
 
 #include <string.h>
     size_t
@@ -50,6 +51,7 @@
 
 #include <pthread.h>
     pthread_create()
+    pthread_join()
 
 #include <sys/ioctl.h>
     ioctl()
