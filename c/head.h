@@ -44,6 +44,7 @@
     sleep()
     access()
     unlink()
+    fork()
 
 #include <signal.h>
     struct sigaction
@@ -76,3 +77,7 @@
 
 #include <arpa/inet.h>
     inet_addr()
+
+#include <sys/wait.h>
+    wait()
+    waitpid()
