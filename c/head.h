@@ -81,3 +81,9 @@
 #include <sys/wait.h>
     wait()
     waitpid()
+
+#include <sys/stat.h>
+    stat()
+
+#include <sys/file.h>
+    flock()
