@@ -7,6 +7,40 @@ sudo apt install openssh-client openssh-server
 ssh user@192.168.0.101
 # 指定端口连接
 ssh -p1000 user@192.168.0.101
+
+# 清除已知用户：
+# linux:
+ssh-keygen -f $HOME/.ssh/known_hosts -R 192.168.0.2
+# windows:
+cd C:\Users\rhosoon\.ssh
+ssh-keygen -f known_hosts -R 192.168.0.2
+```
+
+- 跳板机登录：
+
+```bash
+# ssh通过跳板机登录内部机器
+ssh hx@172.22.195.55 -J rhosoon@192.168.99.143    # ssh 内部机器 -J 跳板机
+# 通过跳板机登录时指定端口
+ssh hx@172.22.195.55 -p 22 -J rhosoon@192.168.99.143:22
+# 经过多个跳板机
+ssh hx@172.22.195.55 -p 22 -J user1@192.168.0.1:22,user2@192.168.1.1:22
+
+# 写在配置文件中：
+vim ~/.ssh/config
+#------------------------------------------------#
+Host 172.22.195.55
+    HostName 172.22.195.55
+    Port 22
+    User hx
+    ProxyJump rhosoon@192.168.99.143:22
+#------------------------------------------------#
+# 连接：
+ssh hx@172.22.195.55
+ssh 172.22.195.55
+# scp拷贝文件：
+scp file.txt hx@172.22.195.55:~
+scp hx@172.22.195.55:~/file.txt ./
 ```
 
 # 2、ssh-keygen：
