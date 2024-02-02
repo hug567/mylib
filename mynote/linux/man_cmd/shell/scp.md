@@ -14,7 +14,7 @@ scp -r dir user@192.168.0.101:~
 scp hx@10.110.0.3:~/temp/tftpboot/\{BOOT.BIN,image.ub\} .
 # scp通过跳板机拷贝文件到远端
 scp -P 22 -o 'ProxyJump rhosoon@192.168.99.143 -p 22' get_tag.sh hx@172.22.195.55:~
-# scp通过跳板机从远端拷贝文件
+# scp通过跳板机从远端拷贝文件到本地
 scp -P 22 -o 'ProxyJump rhosoon@192.168.99.143 -p 22' hx@172.22.195.55:~/get_tag.sh ./
 ```
 

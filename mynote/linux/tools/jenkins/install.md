@@ -41,3 +41,88 @@ ssh -p1000 user@192.168.0.101
 Dashboard -> 系统管理 -> 凭据 -> 域 -> 添加凭据
 ```
 
+# 2、使用：
+
+## 1)、安装插件：
+
+```bash
+Dashboard -> Manage Jenkins -> Available plugins
+# 安装插件：选中 -> 安装
+SSH Agent
+SSH Server
+SSH Build Agents
+# 确认安装：
+Installed plugins -> ssh
+
+# 启用SSH Server：
+Dashboard -> Manage Jenkins -> Security -> SSH Server -> 随机选取 -> 保存
+```
+
+## 2）、添加凭据：
+
+```bash
+Dashboard -> Manage Jenkins -> 凭据管理 -> 全局 -> Add Credentials
+# New credentials：
+类型：Username with password
+用户名：hx
+密码：********
+-> Create
+```
+
+## 3）、添加节点：
+
+- 子节点配置：
+
+```bash
+# 进入jenkins docker，生成ssh秘钥，并发送到子节点：
+ssh-keygen -t rsa -C "jenkins docker main"
+ssh-copy-id hx@10.110.0.3
+# 登录一次子节点，并复制.ssh到/var/jenkins_home
+ssh hx@10.110.0.3
+cp -r ~/.ssh/ /var/jenkins_home/
+
+# 在子节点机器中安装java：
+sudo apt install openjdk-11-jdk
+java --version
+# 在子节点机器中创建工作目录，注意远程用户访问权限：
+mkdir -p ~/code/jenkins/workspace
+```
+
+- 添加子节点：
+
+```bash
+Dashboard -> Manage Jenkins -> Nodes -> New Node -> 节点名称：main -> 选中“固定节点” -> Create
+# 节点配置：
+名字：main
+Number of executors： 1
+远程工作目录：~/code/jenkins/workspace
+启动方式：Lauch agents via SSH
+主机：10.110.0.3
+Credentials: hx            # 上一步添加的凭据
+
+```
+
+## 4）、添加新任务：
+
+```bash
+Dashboard -> 新建Item -> “test01” -> 流水线 -> 确定 -> 保存
+# 测试任务：
+配置 -> 流水线 -> Pipeline script
+#------------------------------------#
+pipeline {
+    agent {
+        label "main"
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                sh 'whoami; uname -a; pwd; cat /etc/os-release'
+            }
+        }
+    }
+}
+#------------------------------------#
+保存 -> 立即构建
+```
+
