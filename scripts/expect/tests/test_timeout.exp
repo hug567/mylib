@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+
+# expect timeout
+# 2024.02.02
+
+set timeout 5
+
+# 注：写在一行不生效
+expect {
+    "xxxxxxx" {}
+    timeout { puts "expect timeout"; exit 1 }
+}
+
+puts "finish cur script"

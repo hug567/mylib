@@ -1,0 +1,54 @@
+#!/bin/expect
+
+set timeout 10
+
+spawn sudo picocom -b 115200 /dev/ttyUSB0
+expect {
+    "password for" {send "hx2023\r"; exp_continue}
+    "Terminal ready" {}
+    timeout {exit 1}
+}
+
+send "\r"
+expect {
+    "zynq7020 login" {send "root\r"; exp_continue}
+    "Password:" {send "root\r"; exp_continue}
+    "root@zynq7020:" {}
+    timeout {exit 1}
+}
+
+send "uname -a\r"
+expect {
+    "xilinx" {exp_continue}
+    "root@zynq7020" {}
+    timeout {exit 1}
+}
+
+set timeout 200
+send "restart\r"
+expect {
+    "load code bin file success" {}
+    timeout {puts "[expect] wait for loading code bin file timeout"; exit 1}
+}
+
+set timeout 10
+send "\r"
+expect {
+    "zynq7020 login" {send "root\r"; exp_continue}
+    "Password:" {send "root\r"; exp_continue}
+    "root@zynq7020:" {}
+    timeout {exit 1}
+}
+
+send "cat /etc/repoinfo\r"
+expect {
+    "root@zynq7020:" {send "exit\r"; exp_continue}
+    "zynq7020 login" {}
+    timeout {exit 1}
+}
+
+sleep 3
+send "\001\021"
+expect "Thanks for using picocom"
+
+interact

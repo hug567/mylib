@@ -4,8 +4,12 @@
 # 2023.04.26
 
 proc test_send_ascii {} {
+    # send Ctrl-A
+    send "\001"
     # send Ctrl-C
     send "\003"
+    # send Ctrl-Q
+    send "\021"
 }
 
 proc main {} {
