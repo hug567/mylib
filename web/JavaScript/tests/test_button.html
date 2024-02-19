@@ -36,9 +36,11 @@
         <script>
             function logInfo(log) {
                 document.getElementById("idDebugLogWindow").value += log;
+                document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
             }
             document.getElementById("idButtonDebugLogWindow").onclick=function(event){
                 document.getElementById("idDebugLogWindow").value = "";
+                document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
             }
         </script>
     </div>

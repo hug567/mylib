@@ -6,7 +6,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>test_for</title>
+    <title>[js] test_string</title>
   </head>
   <body>
     <!--JavaScript脚本---------------------------------------------------------->
@@ -19,8 +19,22 @@
             document.write("str1 + str2 = [" + str3 + "]<br>")
         }
 
+        //字符串转数字
+        function test_str2num() {
+          document.write("test_string: ----------------------------" + "<br>")
+
+          var strInt = "1234";
+          var numInt = parseInt(strInt) + 1;
+          document.write("strInt: "+ strInt + ", numInt + 1 = " + numInt + "<br>")
+
+          var strFloat = "567.8900"
+          var numFloat = parseFloat(strFloat) + 2.1;
+          document.write("strFlot: " + strFloat + ", numFloat: " + numFloat + ", numFloat + 2.1 = " + numFloat + "<br>")
+        }
+
       function main() {
         test_connect();
+        test_str2num();
       }
 
       main();
