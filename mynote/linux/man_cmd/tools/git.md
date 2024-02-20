@@ -362,6 +362,15 @@ git lfs fetch --all
 git remote add gitea http://192.168.99.221:3000/Rhosoon_RD/yocto.git
 git lfs push --all gitea
 git push --mirror gitea
+
+# 取消已追踪的文件，改为提交为普通文件
+git lfs pull
+git lfs ls-files
+git lfs prune
+git lfs untrack <file>
+git status
+git add .
+git commit -m "Untrack files"
 ```
 
 ## 4、tig：
