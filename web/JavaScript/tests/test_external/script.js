@@ -9,3 +9,6 @@ function writeMessage() {
     //获取指定id的元素，并改变元素的属性
     document.getElementById("helloMessage").innerHTML = "Hello World!";
 }
+
+//在js文件中定义一个全局变量
+var gName = "Tom";

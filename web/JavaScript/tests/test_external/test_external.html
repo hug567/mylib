@@ -6,12 +6,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>test_external</title>
+    <title>[js] test_external</title>
     <!--引入外部JavaScript脚本-->
     <script src="script.js"></script>
   </head>
   <body>
     <!--定义一个空的一级标题，但定义了标题的id，可以通过JavaScript脚本修改标题的内容-->
     <h1 id="helloMessage"></h1>
+
+    <script>
+      //html中通过script块引用js文件中的全局变量
+      document.write("gName: " + gName + "<br>");
+    </script>
   </body>
 </html>

@@ -19,7 +19,8 @@ sudo systemctl status jenkins
 
 # 下载docker镜像：https://www.jenkins.io/download/
 docker pull jenkins/jenkins:lts-jdk11
-# 运行jenkins镜像
+# 运行jenkins镜像：
+# 将home和root目录映射到本机中，即使重新启动新的docker容器，配置好的原jenkins系统仍然存在：
 docker run -u root --rm -d -p 8080:8080 -p 50000:50000 -v /home/hx/code/jenkins/home:/var/jenkins_home -v /home/hx/code/jenkins/root:/root -v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts-jdk11
 ```
 ## 2)、配置：
