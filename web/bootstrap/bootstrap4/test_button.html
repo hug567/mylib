@@ -1,0 +1,109 @@
+<!--
+    练习：bootstrap自定义按钮形状
+    时间：2024-02-24
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[bootstrap] test_button</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css"> <!--bootstrap 4.6.2-->
+    <link rel="stylesheet" href="static/css/bootstrap-icons.min.css"> <!--bootstrap-icons 1.9.1-->
+    <script src="static/js/jquery.min.js"></script> <!--jquery 3.7.1-->
+    <script src="static/js/popper.min.js"></script> <!--popper 1.5.0-->
+    <script src="static/js/bootstrap.min.js"></script> <!--bootstrap 4.6.2-->
+    <style>
+        .icon-green {
+            color: #3bb54a;
+        }
+
+        /*
+            .box {
+                background-color: white;
+                width: 50%;
+                height: 100px;
+                border: 1px solid gray;
+                border-left: 4px solid gray;
+            }
+
+            button>span {
+                color: black;
+                font-weight: bold;
+                position: absolute;
+                left: 12px;
+                z-index: 1;
+                top: 15px;
+
+            }
+
+            button {
+                cursor: pointer;
+                background-image: url();
+                width: 50px;
+                height: 50px;
+                background-color: transparent;
+                border: none;
+                font-size: 1.2em;
+                border-radius: 7px;
+
+            }
+
+            button:focus {
+                outline: 0;
+            }
+
+            button::before,
+            button::after {
+                content: '';
+                position: absolute;
+                top: 7px;
+                left: 7px;
+                border-color: transparent;
+                border-style: solid;
+            }
+
+            button::after {
+                border-width: 1.3em;
+                border-left-color: yellow;
+                border-top-color: yellow;
+            }
+            */
+
+        .row {
+            position: relative;
+            min-height: 100px;
+        }
+
+        .triangle {
+            display: block;
+            width: 50px;
+            height: 50px;
+            font-size: 21px;
+        }
+
+        .triangle::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to left top, #ffffff 49%, transparent 50%);
+        }
+
+        i {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <button>xx</button>
+        </div>
+    </div>
+</body>
+</html>

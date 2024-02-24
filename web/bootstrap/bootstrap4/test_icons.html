@@ -30,19 +30,58 @@
         <div>check2: <i class="bi bi-check2 icon-green"></i></div>
         <div>check2-square: <i class="bi bi-check2-square icon-green"></i></div>
 
-        <div class="row" style="background-color: #e3ba8f;">
-            <div>
-                <i class="bi bi-caret-up-fill icon-green" style="font-size: 30px;"></i>
+        <style>
+            .mycaretup {
+                position: relative;
+                /*bottom: 0;*/
+                top: -14px;
+            }
+            .mycaretdown {
+                position: relative;
+                /*top: 0;*/
+                top: -14px;
+            }
+            .nopm {
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+
+        <br>
+        <div>两个图标上下排列且紧挨：</div>
+        <div class="col vcenter-item nopm" style="background-color: #bae4e5;">
+            <div class="row nopm" style="height: 17px;">
+                <i class="bi bi-caret-up-fill icon-green mycaretup nopm" style="font-size: 30px;"></i>
             </div>
-            <div>
-                <i class="bi bi-caret-down-fill icon-green" style="font-size: 30px;"></i>
+            <div class="row nopm" style="height: 17px;">
+                <i class="bi bi-caret-down-fill icon-green mycaretdown nopm" style="font-size: 30px;"></i>
             </div>
         </div>
 
+        <br>
         <div>
-            <button class="btn btn-info">
-                <span class="glyphicon glyphicon-fullscreen">xxx</span>
+            <button class="btn btn-secondry">
+                <i class="bi bi-caret-up-fill icon-green mycaretup nopm" style="font-size: 30px;"></i>
             </button>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col align-self-start" style="background-color: #3bb54a;">
+              One of three columns
+            </div>
+            <div class="col align-self-center" style="background-color: #e3ba8f;">
+              One of three columns
+            </div>
+            <div class="col align-self-end" style="background-color: #3bb54a;">
+              One of three columns
+            </div>
+        </div>
+
+        <br>
+        <div class="col" style="background-color: #3bb54a;">
+            <div class="row" style="background-color: #e3ba8f;">1</div>
+            <div class="row" style="background-color: #c9f29b;">2</div>
         </div>
     </div>
 </body>

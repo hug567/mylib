@@ -1,0 +1,58 @@
+<!--
+  练习：svg基本形状
+  时间：2024-02-24
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[svg] test_base</title>  <!-- 网页标题 -->
+</head>
+<body>
+    <!--
+        width: svg图像宽度
+        height: svg图像高度
+    -->
+    <div>矩形：</div>
+    <svg  width="220" height="270" version="1.1" xmlns="http://www.w3.org/2000/svg" style="background-color: #e3ba8f;">
+        <!--矩形
+            x: 左上角横轴坐标
+            y: 左上角纵轴坐标
+            rx: 横轴圆角半径
+            ry: 纵轴圆角半径
+            width: 宽度
+            height: 高度
+            stroke: 颜色
+            stroke-width: 宽度
+            fill: 填充
+        -->
+        <rect x="10" y="10" width="200" height="120" stroke="black" fill="transparent" stroke-width="1" />
+        <rect x="10" y="140" rx="10" ry="10" width="200" height="120" stroke="red" fill="transparent" stroke-width="2" />
+    </svg>
+
+    <div>圆形椭圆：</div>
+    <svg width="200" height="210" version="1.1" xmlns="http://www.w3.org/2000/svg" style="background-color: #fbe7ef;">
+        <!--圆形椭圆：
+            cx: 圆心横轴坐标
+            cy: 圆心纵轴坐标
+            r: 圆形半径
+            rx: 椭圆横轴半径
+            ry: 椭圆纵轴半径
+        -->
+        <circle cx="100" cy="50" r="45" stroke="blue" fill="transparent" stroke-width="1" />
+        <ellipse cx="100" cy="150" rx="45" ry="20" stroke="red" fill="transparent" stroke-width="1" />
+    </svg>
+
+    <div>线条：</div>
+    <svg width="200" height="250" version="1.1" xmlns="http://www.w3.org/2000/svg" style="background-color: #bae4e5;">
+        <line x1="10" x2="50" y1="110" y2="150" stroke="orange" fill="transparent" stroke-width="5" />
+        <polyline points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145" stroke="orange"
+            fill="transparent" stroke-width="5" />
+
+        <polygon points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180" stroke="green"
+            fill="transparent" stroke-width="5" />
+
+        <path d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5" />
+    </svg>
+</body>
+</html>
