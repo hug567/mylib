@@ -13,6 +13,7 @@ grep
   -P                                     # 匹配Perl正则表达式
   -h                                     # 不显示文件名
   -i                                     # 不区分大小写
+  -l                                     # 只打印文件名
 ```
 
 # 2、常见用法：
@@ -31,4 +32,7 @@ grep --exclude='*.map' -nr "row-cols-1"
 grep --exclude=\*.{map,md,html} -nr "input-group"
 # grep排除指定目录
 grep --exclude-dir='dist' -nr "row-cols-1"
+
+# grep只打印匹配的文件名
+grep -rl "text"
 ```
