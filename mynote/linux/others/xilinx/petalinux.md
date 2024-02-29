@@ -77,6 +77,9 @@ petalinux-build -x distclean
 petalinux-build
 # 清除工程构建与生成的启动镜像
 petalinux-build -x mrproper
+
+# 构建指定工程的指定任务
+petalinux-build -c gdb -x do_install
 ```
 
 # 4、petalinux-package：
