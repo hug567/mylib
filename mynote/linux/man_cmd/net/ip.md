@@ -28,6 +28,10 @@ sudo apt install iproute2
 ```bash
 # 显示所有网卡
 ip a
+# 设置ip
+ip addr add dev eno1 192.168.0.13/24
+# 删除ip
+ip addr del dev eno1 192.168.0.13/24
 
 # 列出路由
 ip route
