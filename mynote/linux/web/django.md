@@ -12,6 +12,8 @@ sudo apt install python3-django
 django-admin startapp helloworld
 # django 1.11.11
 django-admin startproject helloworld
+# 将创建新目录helloworld
+cd helloworld
 ```
 
 # 3、创建用户：
