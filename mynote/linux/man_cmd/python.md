@@ -87,3 +87,28 @@ pydoc modules
 pydoc2 modules
 pydoc3 modules
 ```
+
+# 6、python包导入：
+
+- python将目录视为包，包导入将计算机中的目录变为python的命名空间，子目录和文件对应命名空间中的属性；
+- python已导入的模块记录在内置sys.modules字典中；
+- python搜索模块路径有：程序主目录、PATHONPATH目录、标准连接库目录、.pth文件目录，存储在sys.path列表中；
+  - 程序主目录：包含程序顶层脚本的目录，python首先在主目录中搜索，主目录中的模块默认自动导入；
+  - PATHONPATH目录：配置在环境变量PATHONPATH中的目录；
+  - 标准库目录：python标准库目录，安装python库时自动创建；
+  - .pth文件：路径文件，文件中每一行是一个有效目录；
+- 查看搜索路径：
+
+```python
+import sys
+print(sys.path)
+```
+
+- 导入子目录模块dir1/dir2/mod.py，子目录dir1、dir2中必须有\_\_init\_\_.py文件，文件可以为空：
+
+```python
+import dir1.dir2.mod
+from dir1.dir2.mod import mod_fun
+```
+
+- python导入目录时，会默认执行目录下的\_\_init\_\_.py文件；

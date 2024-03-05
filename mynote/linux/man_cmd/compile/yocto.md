@@ -208,6 +208,22 @@ remove_alternative_files () {
 ROOTFS_POSTPROCESS_COMMAND += "remove_alternative_files;"
 ```
 
+## 6)、增加主机端工具：
+
+- 在layer配置文件中增加HOSTTOOLS，如：
+
+```bash
+# 先在主机中安装相关工具：
+sudo apt install python3-django expect
+
+# meta/conf/bitbake.conf
+# project-spec/meta-user/conf/petalinuxbsp.conf
+HOSTTOOLS += "django-admin expect"
+
+# hosttools所在目录
+ls build/tmp/hosttools
+```
+
 # 4、sysroot：
 
 - recipe-sysroot：目标架构sysroot
