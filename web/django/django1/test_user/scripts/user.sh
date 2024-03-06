@@ -10,7 +10,7 @@ function create_superuser() {
     local email="root@example.com"
 
     if [ -f db.sqlite3 ]; then
-        return
+        rm  -rf db.sqlite3
     fi
     python3 manage.py migrate
 

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'test_user',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE=21600
+SESSION_EXPIRE_AR_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
+LOGIN_URL = "login.html"

@@ -1,0 +1,71 @@
+
+<!--
+    练习：django实现用户登录
+    时间：2023-03-06
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        /* bootstrap4按钮点击后恢复原样 */
+        .btn:focus {
+            outline: none;
+            box-shadow: none;
+            background: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-5 mx-auto">
+                <br><br><br><br>
+                <div class="d-flex justify-content-center py-5">
+                    <h3 class="display-4">TEST LOGIN</h3>
+                </div>
+                <div class="form-group mb-3">
+                    <input id="idInputUsername" type="text" placeholder="Username" class="form-control rounded-pill border-0 shadow-sm px-4">
+                </div>
+                <div class="form-group mb-3">
+                    <input id="idInputPassword" type="password" placeholder="Password" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                </div>
+                <button id="idButtonLogin" type="submit" class="btn btn-primary btn-block mb-2 rounded-pill shadow-sm">Login</button>
+            </div>
+        </div>
+        <script>
+            $(function(){
+                $("#idButtonLogin").click(function(){
+                    $.ajax({
+                        url: '/mylogin_submit/',
+                        type: 'POST',
+                        data: {
+                            'csrfmiddlewaretoken': "{{ csrf_token }}",
+                            'Username': $("#idInputUsername").val(),
+                            'Password': $("#idInputPassword").val(),
+                            'nextURL': $("#idButtonLogin").val(),
+                        },
+                        success: function(data, status, xhr) {
+                            //解析返回的json字典
+                            var json = JSON.parse(data);
+                            if ('Jump' in json) {
+                                window.location.href = json.Jump;
+                            } else {
+                                alert(json.Info);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
