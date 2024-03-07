@@ -109,7 +109,7 @@ python() {
 bbnote "[hx-debug] S = ${S}"
 ```
 
-### 1.2)、xx
+### 1.2)、poky 2.2.2：
 
 ```bash
 # poky 2.2.2: meta-poky/conf/distro/poky.conf
@@ -182,9 +182,10 @@ STAGING_DIR_NATIVE = .../netplan/0.101-r0/recipe-sysroot-native
 STAGING_DIR_TARGET = .../netplan/0.101-r0/recipe-sysroot
 STAGING_INCDIR = .../netplan/0.101-r0/recipe-sysroot/usr/include
 STAGING_LIBDIR = .../netplan/0.101-r0/recipe-sysroot/usr/lib
-TOPDIR = .../poky/build-aarch64
-TMPDIR = .../poky/build-aarch64/tmp
+TOPDIR = .../poky/build
+TMPDIR = .../poky/build/tmp
 DL_DIR ?= "${BSPDIR}/downloads"    # local.conf
+DEPLOY_DIR_IMAGE = .../build/tmp/deploy/images/plnx-zynq7
 ```
 
 ## 4）、相关目录：
@@ -222,6 +223,35 @@ HOSTTOOLS += "django-admin expect"
 
 # hosttools所在目录
 ls build/tmp/hosttools
+```
+
+## 7)、recipe间依赖：
+
+```bash
+# newrecipe.bb完全依赖oldrecipe.bb，可在newrecipe.bb文件中加上：
+RDEPENDS_${PN} += "oldrecipe"
+```
+
+## 8)、插入自定义任务：
+
+```bash
+# 在recipe的各任务间插入自定义任务，如：
+addtask my_deploy after do_install
+addtask do_deploy before do_build after do_compile
+```
+
+## 9)、recipe中读取环境变量：
+
+```bash
+# yocto默认会过滤环境变量，若需要保留特定的环境变量，需在BB_ENV_EXTRAWHITE中声明：
+# 声明后就可以在recipe中获取到指定的环境变量的值了：
+export MYNEWWNVVAR="hello"
+export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE MYNEWENVVAR"
+
+# 例：
+do_configure() {
+    echo "MYNEWWNVVAR = ${MYNEWWNVVAR}"
+}
 ```
 
 # 4、sysroot：

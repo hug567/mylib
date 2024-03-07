@@ -68,7 +68,7 @@ Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
 #### 7）、设置字体大小：
 
 ```bash
-Ctrl+Shift+P -> Preferences: Open Settings (UI) -> Editor: Font Size -> 16
+Ctrl+Shift+P -> Preferences: Open Settings (UI) -> Editor: Font Size -> 16/17
 ```
 
 ## 2、编译调试C语言：
