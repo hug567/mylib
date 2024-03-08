@@ -33,6 +33,9 @@ grep --exclude=\*.{map,md,html} -nr "input-group"
 # grep排除指定目录
 grep --exclude-dir='dist' -nr "row-cols-1"
 
+# grep搜索指定类型文件
+grep -nr "dist" --include="*.bb"
+
 # grep只打印匹配的文件名
 grep -rl "text"
 ```

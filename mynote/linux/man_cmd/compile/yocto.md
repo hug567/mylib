@@ -116,8 +116,9 @@ bbnote "[hx-debug] S = ${S}"
 bb.note("[hx-debug] S = %s" % d.getVar('S', True))
 ```
 
-
 ## 2）、receipe语法：
+
+- recipe中的shell代码是用sh执行的，不是用bash执行，注意二者之间的语法区别：
 
 ```bash
 # 从本地或者github下载代码
