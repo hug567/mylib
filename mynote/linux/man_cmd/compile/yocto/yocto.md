@@ -255,6 +255,17 @@ do_configure() {
 }
 ```
 
+## 10)、变体：
+
+```bash
+# recipe中根据MACHINE的不同，变量赋予不通的值：
+MYVAR="hello"
+MYVAR_plnx-zynq7="world"
+# MACHINE="plnx-zynq7"时，MYVAR="world"
+# 其他时候，MYVAR="hello"
+# MACHINE可通过环境变量设置，待验证？
+```
+
 # 4、sysroot：
 
 - recipe-sysroot：目标架构sysroot
