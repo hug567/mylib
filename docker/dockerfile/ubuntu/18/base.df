@@ -13,7 +13,7 @@ COPY sources.list /etc/apt/
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG user=hx
-ARG passwd=0427
+ARG passwd=hx2023
 # Add new user, grant permissions to sudo , set user password
 RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
     adduser ${user} sudo && \
