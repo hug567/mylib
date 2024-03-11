@@ -27,28 +27,38 @@ targets
 connect -url tcp:127.0.0.1:3121
 targets
 
-# 下载fsbl：
+# 下载fsbl并运行：
 targets -set -nocase -filter {name =~ "arm*#0"}
-dow "/home/hx/repo/test02/yocto/images/linux/zynq_fsbl.elf"
+dow "/home/hx/jtag-zynq/zynq_fsbl.elf"
+con; after 5000; stop
 
 # 运行初始化脚本：
 targets 1
-source /home/hx/repo/test02/yocto/project-spec/hw-description/ps7_init.tcl
+source /home/hx/jtag-zynq/ps7_init.tcl
+source /opt/Xilinx/SDK/2017.4/data/PS/7series/data/zynqconfig/code/ps7_init.tcl
 ps7_init
 
-# 下载dtb和u-boot：
+# 下载dtb：
 targets -set -nocase -filter {name =~ "arm*#0"}
-dow -data  "/home/hx/repo/test02/yocto/images/linux/system.dtb" 0x100000
-dow "/home/hx/repo/test02/yocto/images/linux/u-boot.elf"
+set deviceTreeOffset 0x100000
+dow -data "/home/hx/jtag-zynq/system.dtb" ${deviceTreeOffset}
+
+# 下载u-boot：
+targets -set -nocase -filter {name =~ "arm*#0"}
+dow "/home/hx/jtag-zynq/u-boot.elf"
+
+# 下载linux镜像到内存
+dow -data "/home/hx/jtag-zynq/image-mkpart.ub" 0x10000000
+
 # 运行u-boot：
 con
 
+# 去串口查看是否运行了u-boot，若u-boot成功启动，在u-boot中启动linux镜像：
+bootm 0x10000000
+
+# 退出
 exit
 ```
 
-- 下载镜像到内存：
 
-```bash
-dow -data  "image.ub" 0x10000000
-```
 

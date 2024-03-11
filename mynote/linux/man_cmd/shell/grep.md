@@ -30,8 +30,11 @@ grep -n "text" $(fine . -name "kernel.log")
 grep --exclude='*.map' -nr "row-cols-1"
 # grep排除多个类型文件
 grep --exclude=\*.{map,md,html} -nr "input-group"
+
 # grep排除指定目录
 grep --exclude-dir='dist' -nr "row-cols-1"
+# grep排除多个目录
+grep --exclude-dir='data' --exclude-dir='gnu' -nr "u-boot"
 
 # grep搜索指定类型文件
 grep -nr "dist" --include="*.bb"
