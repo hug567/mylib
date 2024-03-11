@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+# 在linux中通过JTAG刷写zynq7000flash
+# 串口操作
+# 2024-03-11
+
+set resfile [lindex $argv 0]
+
+set timeout 10
+
+# spawn：启动新进程进行交互式运行，后续命令都是和spawn创建的进程交互
+spawn sudo
+
+expect {
+    "password:" {send "root\r"; exp_continue}
+    "root@mkpart" {}
+    timeout {exit 1}
+}
+
+send "cd /home/root\r"
+expect {
+    "root@mkpart" {}
+    timeout {exit 1}
+}
+
+send "ls -1\r"
+expect {
+    "test01" {sleep 1; send "ls -1\r"; exp_continue}
+    "test02" {puts "\[hx-debug(1)\] find file: test02"}
+    timeout {exit 1}
+}
+
+puts "\[hx-debug(1)\] will sleep 10s"
+sleep 10
+
+send "exit\r"
+expect {
+    "closed" {puts "\[hx-debug(1)\] ssh connection is closed"}
+    timeout {exit 1}
+}
+
+interact

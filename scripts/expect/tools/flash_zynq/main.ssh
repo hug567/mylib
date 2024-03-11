@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+# expect同时创建多个ssh连接, 二者互不影响
+# 2024-03-11
+
+cur_dir=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+
+${cur_dir}/xsct.exp /home/hx/jtag-zynq &
+${cur_dir}/uart.exp /home/hx/jtag-zynq &

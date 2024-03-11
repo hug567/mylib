@@ -1,0 +1,287 @@
+#!/usr/bin/expect -f
+# 在linux中通过JTAG刷写zynq7000flash
+# xsct通过jtag下载镜像并运行
+# 2024-03-11
+
+set resfile [lindex $argv 0]
+
+set timeout 10
+
+proc clean_expect_buffer {} {
+    sleep 1
+    expect -re ".*"
+}
+
+proc print_enter {} {
+    #sleep 1
+    #send "targets\r"
+    #expect {
+    #    "*APU*" {exp_continue}
+    #    "*xc7z020*" {exp_continue}
+    #    "*xsct*" {}
+    #    timeout {exit 12}
+    #}
+    send_user "\r"
+    expect {
+        "*xsct*" {}
+        timeout {exit 12}
+    }
+    #sleep 1
+}
+
+proc print_targets {} {
+    clean_expect_buffer
+    send "targets\r"
+    expect {
+        "xc7z020" {exp_continue}
+        "xsct" {}
+        timeout {exit 12}
+    }
+    #sleep 1
+}
+
+# spawn：启动新进程进行交互式运行，后续命令都是和spawn创建的进程交互
+spawn /opt/Xilinx/SDK/2017.4/bin/xsct
+expect {
+    #"*Xilinx Software Commandline Tool*" {exp_continue}
+    "xsct" {}
+    timeout {exit 12}
+}
+
+#puts "\[INFO\] will connect to device"
+#send "\r"
+clean_expect_buffer
+send "connect -url tcp:127.0.0.1:3121
+"
+expect {
+    #-re "*connect*" {exp_continue}
+    "tcfcan" {exp_continue}
+    "xsct" {}
+    timeout {exit 12}
+}
+#expect {
+#    #-re "*connect*" {exp_continue}
+#    -re ".*Stopped.*" {exp_continue}
+#    -re ".*xsct.*" {}
+#    timeout {}
+#}
+#expect "connect"
+#expect "tcfcan"
+#expect "xsct"
+#expect "xsct"
+#expect {
+#    "*Stopped*" {exp_continue}
+#    "*xsct*" {sleep 1}
+#    timeout {}
+#}
+#sleep 5
+
+#interact
+#exit 0
+
+#print_enter
+#print_targets
+
+##send "\r"
+#sleep 1
+#expect -re ".*"
+#send "targets
+#"
+#expect {
+##    "targets" { send ""; exp_continue }
+#    ".*APU.*" {exp_continue}
+#    "4  xc7z020" {exp_continue}
+#    "xsct" {}
+#    timeout { exit 12 }
+#}
+##expect "APU"
+##expect "xc7z020"
+##expect "xsct"
+#
+#sleep 1
+#expect -re ".*"
+#send "targets
+#"
+#expect {
+##    "*APU*" {exp_continue}
+#    "targets" { send ""; exp_continue }
+#    "4  xc7z020" { send ""; exp_continue }
+#    "xsct" {}
+#    timeout { exit 12 }
+#}
+##print_enter
+print_targets
+
+#puts "\[INFO\] will download fsbl"
+#send "\r"
+#sleep 1
+#send "targets -set -nocase -filter {name =~ \"arm*#0\"}\r"
+clean_expect_buffer
+send "targets 2
+"
+#send_user "targets 2\r"
+expect {
+    -re ".*xsct%.*" {}
+    timeout {exit 12}
+}
+expect "xsct"
+
+#puts "(hx-debug) finish"
+#interact
+#exit 0
+
+print_targets
+
+clean_expect_buffer
+#print_enter
+#print_targets
+#send "dow \"$resfile/zynq_fsbl.elf\"\r"
+send "dow \"$resfile/zynq_fsbl.elf\"\r"
+expect {
+    ".*zynq_fsbl.elf.*" {exp_continue}
+    "*Successfully downloaded*" {exp_continue}
+    "xsct" {}
+    timeout {exit 12}
+}
+
+#interact
+#exit 0
+
+#puts "\[INFO\] will run fsbl"
+clean_expect_buffer
+send "con; after 5000; stop\r"
+expect {
+    "ARM Cortex-A9 MPCore #0*Stopped at*Suspended" {exp_continue}
+    "*xsct*" {}
+    timeout {exit 12}
+}
+
+#interact
+#exit 0
+
+#puts "\[INFO\] will run ps7_init"
+clean_expect_buffer
+send "targets 1\r"
+expect {
+    "*xsct*" {}
+    timeout {exit 12}
+}
+print_targets
+clean_expect_buffer
+send "source $resfile/ps7_init.tcl\r"
+expect {
+    "*xsct*" {}
+    timeout {exit 12}
+}
+clean_expect_buffer
+send "ps7_init\r"
+expect {
+    "*xsct*" {}
+    timeout {exit 12}
+}
+
+#interact
+#exit 0
+
+#puts "\[INFO\] will download dtb"
+clean_expect_buffer
+#send "targets -set -nocase -filter {name =~ \"arm*#0\"}\r"
+send "targets 2\r"
+expect {
+    "*xsct*" {}
+    timeout {exit 12}
+}
+print_targets
+clean_expect_buffer
+send "dow -data \"$resfile/system.dtb\" 0x100000\r"
+expect {
+    "*Successfully downloaded*" {exp_continue}
+    "*xsct*" {}
+    timeout {exit 12}
+}
+
+#interact
+#exit 0
+
+#puts "\[INFO\] will download u-boot"
+#send "targets -set -nocase -filter {name =~ \"arm*#0\"}\r"
+#expect {
+#    "xsct%" {}
+#    timeout {exit 12}
+#}
+clean_expect_buffer
+send "dow \"$resfile/u-boot.elf\"\r"
+expect {
+    "Successfully downloaded" {exp_continue}
+    "xsct" {}
+    timeout {exit 12}
+}
+sleep 10
+
+#puts "\[INFO\] will download linux-image"
+clean_expect_buffer
+send "dow -data \"$resfile/image-mkpart.ub\" 0x10000000\r"
+expect {
+    "Successfully downloaded" {exp_continue}
+    "xsct" {}
+    timeout {exit 12}
+}
+sleep 15
+
+#puts "\[INFO\] will run u-boot"
+clean_expect_buffer
+send "con\r"
+expect {
+    "*xsct*" {}
+    timeout {exit 12}
+}
+
+clean_expect_buffer
+send "exit\r"
+sleep 5
+send "\r"
+sleep 5
+
+#------------------------------------------------------------------------------#
+
+clean_expect_buffer
+spawn sudo picocom -b 115200 /dev/ttyUSB0
+expect {
+    "password for" {send "hx2023\r"; exp_continue}
+    "Terminal ready" {}
+    timeout {exit 1}
+}
+
+clean_expect_buffer
+send "\r\r\r"
+expect {
+    "Zynq> " {}
+    timeout {exit 12}
+}
+
+clean_expect_buffer
+send "bootm 0x10000000\r"
+expect {
+    "mkpart login:" {send "root\r"; exp_continue}
+    "Password:" {send "root\r"; exp_continue}
+    "root@mkpart:" {}
+    timeout {exit 12}
+}
+
+send "\r\r\r"
+# send Ctrl-A
+send "\001"
+# send Ctrl-Q
+send "\021"
+sleep 3
+
+#------------------------------------------------------------------------------#
+clean_expect_buffer
+spawn zynq
+expect {
+    "root@mkpart:" {}
+    timeout {exit 12}
+}
+send "\r\r\r"
+
+interact
