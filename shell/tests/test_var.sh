@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 判断变量是否为空
-function var_is_null() {
+function test_var_is_null() {
     echo "$FUNCNAME:-----------------------------"
 
     local var1=
@@ -21,8 +21,21 @@ function var_is_null() {
     fi
 }
 
+# bash内置变量
+function test_builtin_var() {
+    echo "$FUNCNAME:-----------------------------"
+
+    echo "FUNCNAME = $FUNCNAME"
+    echo "LINENO = $LINENO"
+    echo "BASH_LINENO[*] = ${BASH_LINENO[*]}"
+    echo "BASH_SOURCE[*] = ${BASH_SOURCE[*]}"
+    echo "BASH_SOURCE[0] = ${BASH_SOURCE[0]}"
+    echo "BASH_VERSION = $BASH_VERSION"
+}
+
 function main() {
-    var_is_null
+    test_var_is_null
+    test_builtin_var
 }
 
 main
