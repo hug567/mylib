@@ -1,0 +1,110 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+
+proc scp_from_windows {} {
+    set user "Administrator"
+    set ip "10.110.0.2"
+    set file "/E:/fpga_project/vivado_2016.2/ku_x2/ku_x2.sdk/cpu1_app/bootimage/cpu1.bin"
+    set password "RhoHx2023,01"
+    set dst_dir "/tmp"
+    spawn scp $user@$ip:$file $dst_dir
+    expect {
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r" }
+        timeout { exit 127 }
+    }
+    expect "*100%*"
+    exec sh -c {md5sum /tmp/cpu1.bin}
+    sleep 1
+}
+
+proc init_ssh_to_zynq {} {
+    set user "root"
+    set ip "192.168.0.2"
+    set password "root"
+    spawn ssh $user@$ip
+    expect {
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r"; exp_continue }
+        "*Host key verification failed*" {
+            exec sh -c {ssh-keygen -f "/home/hx/.ssh/known_hosts" -R "192.168.0.2"}
+            exp_continue
+        }
+        "*Original contents retained as*" {
+            spawn ssh $user@$ip
+            exp_continue
+        }
+        "*root@*#*" { send "exit\r"; exp_continue }
+        "*closed*" { }
+        timeout { exit 127 }
+    }
+}
+
+proc mount_sd_part {} {
+    set user "root"
+    set ip "192.168.0.2"
+    set password "root"
+    spawn ssh $user@$ip
+    expect {
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r"; exp_continue }
+        "*root@*#*" { }
+        timeout { exit 127 }
+    }
+
+    send "mount-sdpart\r"
+    expect {
+        "*root@mkpart*" { }
+        timeout { exit 127 }
+    }
+
+    send "exit\r"
+    expect {
+        "*closed*" { }
+        timeout { exit 127 }
+    }
+    sleep 1
+}
+
+proc scp_to_zynq {} {
+    set user "root"
+    set ip "192.168.0.2"
+    set file "/tmp/cpu1.bin"
+    set password "root"
+    set dst_dir "/run/media/mmcblk0p3/apps"
+    spawn scp $file $user@$ip:$dst_dir
+    expect {
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r"; exp_continue }
+        "*100%*" { }
+        timeout { exit 127 }
+    }
+    sleep 1
+}
+
+proc reboot_zynq {} {
+    set user "root"
+    set ip "192.168.0.2"
+    set password "root"
+    spawn ssh $user@$ip
+    expect {
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r"; exp_continue }
+        "*root@mkpart*" { }
+        timeout { exit 127 }
+    }
+
+    send "reboot\r"
+    sleep 1
+}
+
+proc main {} {
+    scp_from_windows
+    init_ssh_to_zynq
+    mount_sd_part
+    scp_to_zynq
+    reboot_zynq
+}
+
+main
