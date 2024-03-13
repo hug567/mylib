@@ -11,7 +11,7 @@ minicom
 ```bash
 # 打开串口
 sudo minicom -D /dev/ttyUSB0
-# 推出minicom
+# 退出minicom
 Ctrl+A -> X -> Enter
 # 查看命令
 Ctrl+A -> Z
