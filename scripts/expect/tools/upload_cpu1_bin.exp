@@ -53,9 +53,9 @@ proc mount_sd_part {} {
         timeout { exit 127 }
     }
 
-    send "mount-sdpart\r"
+    send "sh -c 'if \[ -f /usr/bin/mount-sdpart \]; then mount-sdpart; fi'\r"
     expect {
-        "*root@mkpart*" { }
+        "*root@*#*" { }
         timeout { exit 127 }
     }
 
@@ -91,7 +91,7 @@ proc reboot_zynq {} {
     expect {
         "*yes/no*" { send "yes\r"; exp_continue}
         "*password*" { send "$password\r"; exp_continue }
-        "*root@mkpart*" { }
+        "*root*#*" { }
         timeout { exit 127 }
     }
 
@@ -104,7 +104,7 @@ proc main {} {
     init_ssh_to_zynq
     mount_sd_part
     scp_to_zynq
-    reboot_zynq
+    #reboot_zynq
 }
 
 main
