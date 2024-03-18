@@ -15,7 +15,16 @@ proc scp_from_windows {} {
         timeout { exit 127 }
     }
     expect "*100%*"
-    exec sh -c {md5sum /tmp/cpu1.bin}
+    sleep 1
+
+    set file "/E:/fpga_project/vivado_2016.2/ku_x2/ku_x2.sdk/cpu1_app/Debug/cpu1_app.elf"
+    spawn scp $user@$ip:$file $dst_dir
+    expect {
+        "*yes/no*" { send "yes\r"; exp_continue}
+        "*password*" { send "$password\r" }
+        timeout { exit 127 }
+    }
+    expect "*100%*"
     sleep 1
 }
 
@@ -99,12 +108,24 @@ proc reboot_zynq {} {
     sleep 1
 }
 
+proc check_file_md5 {} {
+    puts "-----------------------------------------------------------"
+    spawn md5sum /tmp/cpu1.bin
+    expect {
+        "/tmp/cpu1.bin" {}
+        timeout { exit 127 }
+    }
+    puts "-----------------------------------------------------------"
+    sleep 1
+}
+
 proc main {} {
     scp_from_windows
     init_ssh_to_zynq
     mount_sd_part
     scp_to_zynq
     #reboot_zynq
+    check_file_md5
 }
 
 main
