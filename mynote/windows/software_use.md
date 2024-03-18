@@ -16,9 +16,12 @@ kill <PID>                                                           # 终止转
 # 以管理员身份打开powershell:
 # 远程主机设置端口转发
 netsh interface portproxy add v4tov4 listenport=1234 connectaddress=192.168.0.1 connectport=80
-netsh interface portproxy show all                                   # 查看所有端口转发
-netsh interface portproxy delete v4tov4 listenport=1234              # 删除转发的端口
-http://101.45.92.102:1234                                            # 本机打开远程主机映射端口
+# 查看所有端口转发
+netsh interface portproxy show all
+# 删除转发的端口
+netsh interface portproxy delete v4tov4 listenport=1234 listenaddress=192.168.99.143
+# 本机打开远程主机映射端口
+http://101.45.92.102:1234
 ```
 
 ### 3)、ssh设置端口转发：需可ssh连接远程主机

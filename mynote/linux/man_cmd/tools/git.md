@@ -230,7 +230,25 @@ git revert HEAD                                //撤销最近一次提交
 git revert <commit>                            //撤销指定commit提交
 ```
 
-### 2.6、合并分支：
+### 2.6、查看差异：
+
+```bash
+# 查看当前修改差异
+git diff
+# 查看已add但未commit的差异
+git diff --cached
+git diff --staged
+# 查看两个分支间的差异
+git diff <branch1> <branch2>
+# 查看两个分支文件上的差异
+git diff --stat <branch1> <branch2>
+# 查看当前修改与指定分支的差异
+git diff <branch2>
+# 查看当前修改与指定分支上指定文件的差异
+git diff <branch2> <file>
+```
+
+### 2.7、合并分支：
 
 ```bash
 # 切换至目标分支main
@@ -239,7 +257,7 @@ git co main
 git merge dev
 ```
 
-### 2.7、设置忽略
+### 2.8、设置忽略
 
 ```c
 .gitignore                                     //会被提交至git仓库
@@ -256,7 +274,7 @@ cscope.*
 /subdir/**/*.elf
 ```
 
-### 2.8、stash暂存
+### 2.9、stash暂存
 
 ```c
 git stash save "title"                         //自定义stash标题
@@ -276,7 +294,7 @@ git stash drop stash@{1}
 git stash store -m "New message" af8fdeee49a03d1b4609f294635e7f0d622e03db
 ```
 
-### 2.9、制作patch
+### 2.10、制作patch
 
 ```shell
 # 制作patch
@@ -289,7 +307,9 @@ git apply --check <patch>                        # 检查patch是否有冲突
 git am <patch>                                   # 应用patch
 git am --abort                                   # 撤销应用patch
 ```
-### 2.10、tag操作：
+
+### 2.11、tag操作：
+
 ```bash
 # 查看所有tag
 git tag

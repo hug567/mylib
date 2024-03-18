@@ -10,10 +10,16 @@ route
 # 列出当前网关
 route
 route -n
+
 # 添加默认网关
 sudo route add default gw 192.168.1.1
+# 添加静态路由：指定网段172.22.195.0/24网络包从指定网络设备wlx502b731c5285收发
+sudo route add -net 172.22.195.0/24 dev wlx502b731c5285
+
 # 删除网关
 sudo route del default gw 192.168.1.1
+# 删除指定路由
+sudo route del -net 172.22.195.0/24 dev wlx502b731c5285
 ```
 
 # 3、路由概念：
@@ -34,9 +40,8 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 ## 3.2、字段含义：
 ```bash
 Destination: 目标ip，为default(0.0.0.0)时，表示对应的网关是默认网关，所有包都发送到这个网关；
-Gateway：网关，0.0.0.0表示跟对应Destination在同一网段的ip通信，不经过网关；
+Gateway：网关，0.0.0.0表示跟对应Destination在同一网段的ip通信，不经过默认网关；
 Genmask：掩码，默认路由设置为0.0.0.0，Destination是主机时需设置为255.255.255.255；
-Iface：网卡名；
 Flags：标志
 	U：路由是可用的（Up）
 	H：是一个主机路由
@@ -45,6 +50,7 @@ Flags：标志
 	D：由路由的后台程序动态安装
 	M：由路由的后台程序修改
 	I：拒绝路由
+Iface：网卡名；
 ```
 
 ## 3.3、路由类型：
