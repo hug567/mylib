@@ -216,6 +216,30 @@ function test_string_cmp() {
     fi
 }
 
+# 浮点数比较
+#   大于：[ $(expr $a \> $b) -eq 1 ]
+#   等于：[ $(expr $a == $b) -eq 1 ]
+function test_cmp_float() {
+    echo "$FUNCNAME:-----------------------------"
+    local var1=
+    local var2=
+
+    var1=10.5
+    var2=10
+    if [ $(expr $var1 \> $var2) -eq 1 ]; then
+        echo "float compare: $var1 > $var2"
+    fi
+
+    var1=10.5
+    var2=10.50
+    if [ $(expr $var1 == $var2) -eq 1 ]; then
+        echo "float compare: $var1 == $var2"
+    else
+        echo "float compare: $var1 != $var2"
+    fi
+    echo "$(expr $var1 == $var2) "
+}
+
 function main() {
     test_para_num $*
     test_pwd
@@ -225,6 +249,7 @@ function main() {
     test_num_cmp
     test_num_cmp_02
     test_string_cmp
+    test_cmp_float
 }
 
 main $*
