@@ -42,9 +42,11 @@
     read()
     write()
     sleep()
+    usleep()
     access()
     unlink()
     fork()
+    pipe()
 
 #include <signal.h>
     struct sigaction
