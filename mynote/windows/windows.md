@@ -27,22 +27,35 @@ sudo umount ~/share
 
 ## 3、Windows挂载linux目录：
 
+### 1)、ubunt安装samba：
 ```bash
-Ubuntu使能NFS：
-	1. 安装NFS server：sudo apt install rpcbind nfs-kernel-server
-	2. 查看共享目录：showmount -e
-	3. 添加共享目录：sudo vim /etc/exports
-	4. 重启NFS：sudo service protmap restart
-	                 sudo service nfs-kernel-server restart
+# 安装samba：
+sudo apt install samba
+# 在配置文件末尾添加：
+sudo vim /etc/samba/smb.conf
+#-----------------------------------------------#
+[samba]
+  comment = samba home direction
+  path=/disk/sda
+  browseable = yes
+  writeable = yes
+  available = yes
+  valid users = hx
+  write list = hx
+  directory mask = 0755
+  create mask = 0755
+#-----------------------------------------------#
+# 重启smbd：
+sudo systemctl restart smbd
+# 设置密码：
+sudo smbpasswd -a hx
+```
 
-Windows挂载linux目录：
-	1. 控制面板 -> 程序和功能 -> 启用或关闭Windows功能 -> NFS服务 -> NFS客户端/管理工具 -> 确认
-	2. Win+R -> cmd -> mount -h
-	3. 此电脑 -> 右键 -> 映射网络驱动器：
-	   驱动器：I:
-	   文件夹：\\192.168.1.27\home\hx\share
-	   勾选：登录时重新连接
-	   勾选：使用其他凭据
+### 2)、windows映射网络驱动器：
+
+```bash
+此电脑 -> 右键 -> 映射网络驱动器(N)...
+文件夹：\\10.110.0.3\samba -> 完成
 ```
 
 ## 4、网卡连不上无线网络：
@@ -76,3 +89,15 @@ ActiveDnsProbeHostV6		REG_SZ		dns.alidns.com
 ```
 
 - 修改后重启电脑；
+
+## 5、win10时间显示秒数：
+
+```bash
+# 打开注册表：
+Win+R -> regedit
+# 打开添加注册表项：
+HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+# 添加DWORD类型值，并修改数据值为：1
+ShowSecondsInSystemClock    REG_DWORD    0x00000001 (1)
+# 最后重启电脑
+```

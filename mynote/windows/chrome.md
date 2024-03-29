@@ -14,6 +14,9 @@ Ctrl+W                          # 关闭当前页面
 - 创建注册表项：
 
 ```bash
+# 打开注册表：
+Win+R -> regedit
+
 # Chrome:
 计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome
 RSAKeyUsageForLocalAnchorsEnabled            REG_DWORD            0x00000000 (0)
@@ -22,5 +25,5 @@ RSAKeyUsageForLocalAnchorsEnabled            REG_DWORD            0x00000000 (0)
 计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge
 ```
 
-- 浏览器中确认Policy: [chrome://policy/](chrome://policy/)
+- 设置后重启浏览器，确认Policy: [chrome://policy/](chrome://policy/)
 
