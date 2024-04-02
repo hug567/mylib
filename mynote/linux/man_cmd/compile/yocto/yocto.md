@@ -266,6 +266,15 @@ MYVAR_plnx-zynq7="world"
 # MACHINE可通过环境变量设置，待验证？
 ```
 
+## 11)、强制构建：
+
+```bash
+# 不cache产物：
+BB_DONT_CACHE="1"
+# 每次构建时均强制执行指定任务，如：
+do_configure[nostamp] = "1"
+```
+
 # 4、sysroot：
 
 - recipe-sysroot：目标架构sysroot

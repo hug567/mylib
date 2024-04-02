@@ -184,10 +184,11 @@ git commit --amend --author="Huang Xing <huangxing567@163.com>"
 ```C
 //----------撤销更改------------------------------------------------------//
 git reset --mixed HEAD^                        //撤销最近一条commit，撤销add
+git reset --mixed ea00ac6^                     //撤销指定commit以来所有的提交，撤销add
 git reset --soft HEAD                          //撤销最近一条commit，不撤销add
 git reset --hard HEAD~1                        //删除最近一条commit
-git reset HEAD                                 //撤销所有文件add
-git reset HEAD <file>                          //撤销指定文件的add
+git reset HEAD                                 //撤销当前所有文件add
+git reset HEAD <file>                          //撤销当前指定文件的add
 /* 回退至指定commit： */
 git log --before="2019-7-1"                    //查看指定日期前的提交
 git log --before "2020-05-04" --oneline --pretty="%h %ad %s %cr" --date=format:"[%Y-%m-%d %H:%M:%S]"
@@ -298,6 +299,7 @@ git stash store -m "New message" af8fdeee49a03d1b4609f294635e7f0d622e03db
 
 ```shell
 # 制作patch
+git format-patch -1                              # 最新一个commit生产patch
 git format-patch -1 <ID>                         # 指定commit生成patch
 git format-patch <ID>                            # 生成指定commit以来的patch (不包含该patch)
 git format-patch <ID1>...<ID2>                   # 生成两个commit之间的patch (包含两个commit)
