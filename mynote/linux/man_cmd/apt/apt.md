@@ -3,9 +3,12 @@
 ```bash
 apt-cache search xxx                  # 搜索软件包
 apt-cache depends xxx                 # 查看软件包依赖
+apt-cache rdepends xxx                # 查看软件包xxx被哪些包依赖
 apt-cache madison vim                 # 查看软件有哪些版本
 
 apt download xxx                      # 下载deb包
+# 下载软件包及其所有依赖
+apt download $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends gcc-mipsel-linux-gnu | grep -v i386 | grep "^\w")
 apt list --installed                  # 显示已安装的包
 
 sudo apt update                       # 更新镜像源

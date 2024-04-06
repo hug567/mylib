@@ -154,6 +154,8 @@ PROVIDES = "virtual/bootloader"
 do_rm_work() {
     :
 }
+# 或
+do_rm_work[noexec] = "1"
 ```
 
 ## 3）、常见变量：
