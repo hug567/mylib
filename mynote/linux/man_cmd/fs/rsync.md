@@ -3,14 +3,14 @@
 ```bash
 rsync     # 文件同步
     -r    # 递归处理子目录
-    -l    # 处理软连接
+    -l    # 保留软连接
     -H    # 保留硬连接
 ```
 
 # 2、常用方式：
 
 ```bash
-rsync -rl name@192.168.0.1:~/dir ./     # 同步远端目录到本地
+rsync -rlH user@192.168.0.1:~/dir ./     # 同步远端目录到本地
 
 # rsync指定端口
 rsync -e 'ssh -p 1000' -rl name@192.168.0.1:~/dir ./
