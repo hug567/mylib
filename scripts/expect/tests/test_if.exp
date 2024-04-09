@@ -1,15 +1,19 @@
 #!/usr/bin/expect -f
 
-puts "string: ---------------------------------"
-set str  "hello"
-if {$str == "hello"} {
-    puts "str is equal to hello"
-} else {
-    puts "str is not equal to hello"
+proc test_str_cmp {} {
+    puts "test_str_cmp: ---------------------------"
+
+    set str "hello"
+    if {$str == "hello"} {
+        puts "str is equal to hello"
+    } else {
+        puts "str is not equal to hello"
+    }
 }
 
 proc test_num_cmp {} {
     puts "test_num_cmp: ---------------------------"
+
     set var 5
     if {$var == 5} {
         puts "$var is equal to 5"
@@ -26,6 +30,7 @@ proc test_num_cmp {} {
 }
 
 proc main {} {
+    test_str_cmp
     test_num_cmp
 }
 

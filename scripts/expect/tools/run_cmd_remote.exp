@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+# 通过expect脚本在远端执行shell命令
+
+set timeout 10
+
+proc run_cmd_remote { cmd } {
+    set user root
+    set ip 192.168.0.2
+    set password root
+
+    puts "cmd: \[$cmd\]"
+    exec sh -c { export PS1="[host] $ " }
+    sleep 1
+    spawn ssh $user@$ip "$cmd"
+    expect {
+        "root*password" { send "$password\r" }
+        "Are you sure you want to continue connecting" { send "yes\r"; exp_continue }
+        timeout { exit 127 }
+    }
+    expect {
+        "*\[host\]* $ " {}
+        timeout { exit 127 }
+    }
+}
+
+proc main {} {
+    run_cmd_remote "ls -l /"
+    run_cmd_remote "cp -r /usr/bin/iq200 /home/root; sync"
+    run_cmd_remote "/usr/sbin/restart"
+}
+
+main

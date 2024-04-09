@@ -13,6 +13,7 @@
     atoi()
     atol()
     atoll()
+    atof()
     malloc()
     free()
     exit()

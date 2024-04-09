@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+# expect字符串相关
+# 2024-04-07
+
+# expect字符串中需转义的字符
+proc test_escape_char {} {
+    puts "test_escape_char: ------------------------------------"
+
+    # 中括号
+    puts "bracket: \[xxx\]"
+}
+
+proc main {} {
+    test_escape_char
+}
+
+main
