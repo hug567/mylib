@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+# expect转字符
+# 2024-04-10
+
+proc test_escape {} {
+    puts "test_escape: ----------------------------"
+
+    # 中括号
+    puts "bracket: \[xxx\]"
+
+    # 回车
+    puts "   carriage return: 111\r222"
+
+    # 换行
+    puts "line feed: 333\n444"
+
+    # 右斜杠
+    puts "right slash: \\\ "
+    puts "right slash: \\\x"
+
+    # 美元符号
+    puts "doller: \$"
+
+    # 双引号
+    puts "Double quotation marks: \""
+}
+
+proc main {} {
+    test_escape
+}
+
+main
