@@ -92,6 +92,9 @@ sudo docker commit <CONTAINER ID> <huangxing/myopensuse:latest>
 docker save -o <myopensuse.tar> <huangxing/myopensuse:latest>
 # 从文件加载Image
 docker load -i <myopensuse.tar>
+
+# 查看容器启动日志：
+docker logs <ID>
 ```
 
 ## 4）、容器操作：

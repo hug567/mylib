@@ -22,6 +22,9 @@ docker pull jenkins/jenkins:lts-jdk11
 # 运行jenkins镜像：
 # 将home和root目录映射到本机中，即使重新启动新的docker容器，配置好的原jenkins系统仍然存在：
 docker run -u root --rm -d -p 8080:8080 -p 50000:50000 -v /home/hx/code/jenkins/home:/var/jenkins_home -v /home/hx/code/jenkins/root:/root -v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts-jdk11
+
+# 若容器启动失败，查看启动日志：
+docker logs <ID>
 ```
 ## 2)、配置：
 ```bash
@@ -62,11 +65,15 @@ Dashboard -> Manage Jenkins -> Security -> SSH Server -> 随机选取 -> 保存
 ## 2）、添加凭据：
 
 ```bash
+# 在jenkins中添加子节点的凭据：
 Dashboard -> Manage Jenkins -> 凭据管理 -> 全局 -> Add Credentials
 # New credentials：
+#-------------------------------------------#
 类型：Username with password
 用户名：hx
 密码：********
+描述：10.110.0.3
+#-------------------------------------------#
 -> Create
 ```
 
@@ -81,6 +88,8 @@ ssh-copy-id hx@10.110.0.3
 # 登录一次子节点，并复制.ssh到/var/jenkins_home
 ssh hx@10.110.0.3
 cp -r ~/.ssh/ /var/jenkins_home/
+# 或添加新的机器时：
+cp ~/.ssh/known_hosts /var/jenkins_home
 
 # 在子节点机器中安装java：
 sudo apt install openjdk-11-jdk
@@ -93,14 +102,16 @@ mkdir -p ~/code/jenkins/workspace
 
 ```bash
 Dashboard -> Manage Jenkins -> Nodes -> New Node -> 节点名称：main -> 选中“固定节点” -> Create
+#-------------------------------------------#
 # 节点配置：
 名字：main
 Number of executors： 1
-远程工作目录：~/code/jenkins/workspace
+远程工作目录：~/code/jenkins/workspace         # 重要：上面添加的凭据所属的用户，需可访问整个远程工作目录
 启动方式：Lauch agents via SSH
 主机：10.110.0.3
-Credentials: hx            # 上一步添加的凭据
-
+Credentials: hx                             # 上一步添加的凭据
+#-------------------------------------------#
+-> 保存 -> 刷新状态
 ```
 
 ## 4）、添加新任务：
@@ -118,7 +129,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                sh 'whoami; uname -a; pwd; cat /etc/os-release'
+                sh 'whoami; uname -a; pwd; ifconfig -a; cat /etc/os-release'
             }
         }
     }

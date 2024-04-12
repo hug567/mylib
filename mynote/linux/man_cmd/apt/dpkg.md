@@ -12,4 +12,7 @@ dpkg-deb -b extract package.deb       # 将extrace目录打包成deb包
 dpkg -l | grep xxx                    # 列出deb包，获取deb名称
 sudo dpkg -r xxx                      # 卸载deb包
 sudo dpkg -P xxx                      # 卸载deb包，并删除配置文件
+
+# 安装当前目录下所有deb包
+echo "$(ls *.deb)" | while read deb; do sudo dpkg -i $deb; done
 ```
