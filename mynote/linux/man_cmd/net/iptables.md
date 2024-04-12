@@ -31,13 +31,20 @@ iptables
     --sport <port>         # 源端口
 ```
 
+- SNAT：Source Network Address Translation，源地址转换，根据指定条件修改数据包的源IP地址；
+  - SNAT转换地址的过程中，网关服务器会根据之前建立的 SNAT映射，将响应数据包正确返回局域网中的源主机；只要连接的第一个包被SNAT处理了，这连接及对应数据流的其他包会自动的被进行 SNAT 处理;
+  - Internet中的服务器其实不知道局域网PC的IP地址，其中间的转换完全由网关主机完成，可起到内网保护的作用；
+  - SNAT 策略用在nat表的POSTROUTING链；
+- DNAT：Destination Network Address Translation，目标地址转换；
+  - 用来修改目标IP地址和目标端口，用在 nat 表的PREROUTING链和OUTPUT链中；
+
 # 2、常见用法：
 
 ```bash
 # 查看nat规则
 sudo iptables -L -t nat --line-number
 # 删除nat规则：1
-iptables -t nat -D POSTROUTING 1
+sudo iptables -t nat -D POSTROUTING 1
 ```
 
 # 3、相关概念：
@@ -58,3 +65,55 @@ POSTROUTIONG           # 发送到网卡接口之前
 - REJECT：拒绝并回传拒绝包；
 - LOG：记录；
 - DROP：丢弃，不相应；
+
+# 4、内网访问外网：
+
+## 1）、环境介绍：
+
+- 共有2台机器：
+- A机器有两个网卡：
+
+  - 可访问外网网卡：192.168.100.252；
+  - 可访问内网网卡：192.168.99.106；
+- B机器只有一个网卡：
+  - 可访问内网网卡：192.168.99.141；
+
+
+
+## 2）、A机器配置：
+
+```bash
+# 在A机器中打开转发：
+sudo vim /etc/sysctl.conf
+#-------------------------------------------#
+net.ipv4.ip_forward = 1
+net.ipv6.conf.all.forwarding=1
+#-------------------------------------------#
+sudo sysctl -p
+# 确认转发已打开：
+sudo sysctl -a | grep 'net.ipv4.ip_forward'
+# 值为1表示打开了转发：
+net.ipv4.ip_forward = 1
+
+# 表链策略设为ACCEPT：
+sudo iptables -I FORWARD -s 192.168.99.141 -j ACCEPT
+sudo iptables -I FORWARD -d 192.168.99.141 -j ACCEPT
+# 添加SANT转发规则：
+sudo iptables -t nat -A POSTROUTING -s 192.168.99.141 -j SNAT --to 192.168.100.252
+```
+
+## 3）、B机器配置：
+
+```bash
+# 添加默认网关：192.168.99.106
+sudo route add default gw 192.168.99.106
+# 增加A机器访问外网的DNS：
+sudo vim /etc/resolv.conf
+#-------------------------------------------#
+nameserver 192.168.100.1
+#-------------------------------------------#
+
+# 测试：
+ping baidu.com
+sudo apt update
+```

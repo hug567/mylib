@@ -21,19 +21,19 @@ ARP：Address Resolution Protocol，地址解析协议，询问目标IP对应的
 
 ```bash
 # 监听来自或发放指定地址的所有包
-tcpdump -i eth1 -nn 'src or dst 10.42.0.23'
+sudo tcpdump -i eth1 -nn 'src or dst 10.42.0.23'
 
 # 监听来自或发放指定地址的icmp(ping)包
-tcpdump -i eth1 -nn 'icmp and src or dst 10.42.0.23'
+sudo tcpdump -i eth1 -nn 'icmp and src or dst 10.42.0.23'
 # 只监听来自指定ip的icmp request包
-tcpdump -i eth1 -nn 'icmp[icmptype] == icmp-echo and src 10.42.0.23'
+sudo tcpdump -i eth1 -nn 'icmp[icmptype] == icmp-echo and src 10.42.0.23'
 # 只监听来自指定ip的icmp reply包
-tcpdump -i eth1 -nn 'icmp[icmptype] == icmp-echoreply and src 10.42.0.23'
+sudo tcpdump -i eth1 -nn 'icmp[icmptype] == icmp-echoreply and src 10.42.0.23'
 # 只监听指定id(1234)的icmp报文
-tcpdump -i eth1 -nn 'icmp[4:2]=1234 and src 10.42.0.23 and dst 10.42.0.21'
+sudo tcpdump -i eth1 -nn 'icmp[4:2]=1234 and src 10.42.0.23 and dst 10.42.0.21'
 
 # 监听来自或发放指定地址的arp包
-tcpdump -i eth1 -nn 'arp and src or dst 10.42.0.23'
+sudo tcpdump -i eth1 -nn 'arp and src or dst 10.42.0.23'
 ```
 
 # 3、打印含义：
