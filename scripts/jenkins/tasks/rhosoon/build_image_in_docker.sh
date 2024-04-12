@@ -1,7 +1,7 @@
 #!/bin/bash
 # 2024-04-10
 
-WORK_DIR="/mnt/sdb/jenkins/source_code/test01"
+WORK_DIR="/mnt/sdb/jenkins/source_code"
 IMAGES_DIR="/mnt/sdb/jenkins/images"
 LOGFMT="build_image_in_docker"
 

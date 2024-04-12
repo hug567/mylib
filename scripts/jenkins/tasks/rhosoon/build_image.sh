@@ -1,9 +1,10 @@
 #!/bin/bash
 # 2024-04-10
 
-WORK_DIR="/mnt/sdb/jenkins/source_code/test01"
-CUR_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
 LOGFMT="build_image"
+WORK_DIR="/mnt/sdb/jenkins/source_code"
+CUR_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+export PATH="$HOME/tools/git-repo:$PATH"
 
 function log_with_level() {
     local level=$1
@@ -30,11 +31,15 @@ function repo_download_code() {
         mkdir -p $work_dir
     fi
     cd $work_dir
+    log_info "will clean dir $work_dir"
     rm -rf $(ls -1A)
+    log_info "will download code to dir $work_dir"
     repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git --repo-url=http://192.168.99.221:3000/Rhosoon_RD/git-repo.git --repo-rev=main --no-clone-bundle
     repo sync
     repo forall -c 'git lfs pull'
     repo start main --all
+    repo status | cat
+    log_info "finish download code to dir $work_dir"
 }
 
 function delete_old_docker_container() {
@@ -95,7 +100,6 @@ function main() {
     repo_download_code $WORK_DIR
     cp $CUR_DIR/build_image_in_docker.sh /tmp/docker
     launch_docker
-    #build_all_platform
 }
 
 main $*
