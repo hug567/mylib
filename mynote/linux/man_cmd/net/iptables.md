@@ -27,6 +27,11 @@ iptables
     -n                     # 使用数字格式打印ip地址和端口
     -p <protocol>          # 协议类型：tcp/udp/icmp... 或 all
     -t <table>             # 指定转换表：filter/nat/mangle/raw/security
+                               # filter: INPUT, OUTPUT, FORWARD
+                               # nat: PREROUTING, INPUT, OUTPUT, POSTROUTING
+                               # raw: PREROUTING, OUTPUT
+                               # security: INPUT, OUTPUT, FORWARD
+    -v                     # 查看详细信息
     --dport <port>         # 目的端口
     --sport <port>         # 源端口
 ```
@@ -42,9 +47,14 @@ iptables
 
 ```bash
 # 查看nat规则
-sudo iptables -L -t nat --line-number
-# 删除nat规则：1
+sudo iptables -L -t nat -n -v --line-number
+# 查看过滤规则：INPUT, OUTPUT, FORWARD
+sudo iptables -L -t filter -n -v --line-number
+
+# 删除nat表路由后规则：1
 sudo iptables -t nat -D POSTROUTING 1
+# 删除filter表转发规则：1
+sudo iptables -t filter -D FORWARD 1
 ```
 
 # 3、相关概念：
