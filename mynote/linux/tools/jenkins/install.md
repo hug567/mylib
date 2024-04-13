@@ -79,7 +79,7 @@ Dashboard -> Manage Jenkins -> 凭据管理 -> 全局 -> Add Credentials
 
 ## 3）、添加节点：
 
-- 子节点配置：
+- jenkins host机器中配置：
 
 ```bash
 # 进入jenkins docker，生成ssh秘钥，并发送到子节点：
@@ -90,7 +90,11 @@ ssh hx@10.110.0.3
 cp -r ~/.ssh/ /var/jenkins_home/
 # 或添加新的机器时：
 cp ~/.ssh/known_hosts /var/jenkins_home
+```
 
+- 子节点机器配置：
+
+```bash
 # 在子节点机器中安装java：
 sudo apt install openjdk-11-jdk
 java --version
@@ -98,7 +102,15 @@ java --version
 mkdir -p ~/code/jenkins/workspace
 ```
 
-- 添加子节点：
+- ubuntu18新机器作为jenkins子节点需配置：
+
+```bash
+/etc/apt/sources.list
+/etc/netplan/01-network-manager-all.yaml
+sudo apt install openjdk-11-jdk docker.io openssh-server
+```
+
+- jenkins网页中添加子节点：
 
 ```bash
 Dashboard -> Manage Jenkins -> Nodes -> New Node -> 节点名称：main -> 选中“固定节点” -> Create
