@@ -27,15 +27,28 @@ function build_petalinux() {
     local project=$1
     local platform=$2
     local work_dir=$WORK_DIR
+    local script=
 
     log_info "will build $platform $project -----------------------------------"
     cd $work_dir/$project
+    log_info "pwd: $(pwd)"
+    if [ ! -f config.project ]; then
+        log_err "current is not in yocto dir"
+        exit 1
+    fi
     rm -rf build
     git clean -fdx
-    if [ "$platform" = "default" ]; then
-        ../build.sh
+
+    if [[ $project =~ ^ramfs* ]]; then
+        script="./build.sh"
     else
-        ../build.sh $platform
+        script="../build.sh"
+    fi
+
+    if [ "$platform" = "default" ]; then
+        $script
+    else
+        $script $platform
     fi
     return $?
 }

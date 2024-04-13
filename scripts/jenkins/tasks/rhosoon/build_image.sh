@@ -24,6 +24,36 @@ function log_err() {
     log_with_level "ERROR" "$*"
 }
 
+function run_cmd_and_check() {
+    local cmd="$*"
+    local ret=
+
+    $cmd
+    ret=$?
+    if [ $ret -ne 0 ]; then
+        log_info "run cmd failed: [$cmd]"
+        exit $ret
+    fi
+}
+
+function run_until_success() {
+    local max_times=$1
+    local cmd="${@:2}"
+    local i=
+    local ret=
+
+    for i in $(seq 1 $max_times); do
+        log_info "run cmd($i): [$cmd]"
+        $cmd
+        ret=$?
+        if [ $ret -eq 0 ]; then
+            return 0
+        fi
+    done
+    log_error "run cmd with times $i failed: [$cmd]"
+    exit $ret
+}
+
 function repo_download_code() {
     local work_dir=$1
 
@@ -34,11 +64,11 @@ function repo_download_code() {
     log_info "will clean dir $work_dir"
     rm -rf $(ls -1A)
     log_info "will download code to dir $work_dir"
-    repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git --repo-url=http://192.168.99.221:3000/Rhosoon_RD/git-repo.git --repo-rev=main --no-clone-bundle
-    repo sync
-    repo forall -c 'git lfs pull'
-    repo start main --all
-    repo status | cat
+    run_until_success 10 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git --repo-url=http://192.168.99.221:3000/Rhosoon_RD/git-repo.git --repo-rev=main --no-clone-bundle"
+    run_until_success 10 "repo sync"
+    run_until_success 10 "repo forall -c 'git lfs pull'"
+    run_until_success 10 "repo start main --all"
+    run_until_success 10 "repo status | cat"
     log_info "finish download code to dir $work_dir"
 }
 
