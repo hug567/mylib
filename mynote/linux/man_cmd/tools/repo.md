@@ -46,6 +46,7 @@ repo forall -c <shell cmd>                  # 在所有仓库中执行制定shel
     -v    # 显示shell命令错误信息
 
 # 更改默认分支
-repo init -m top.xml -b <branch>
+repo init -m <top.xml> -b <branch>
+repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git -b huangxing/test
 repo sync
 ```

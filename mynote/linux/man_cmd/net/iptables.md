@@ -55,6 +55,10 @@ sudo iptables -L -t filter -n -v --line-number
 sudo iptables -t nat -D POSTROUTING 1
 # 删除filter表转发规则：1
 sudo iptables -t filter -D FORWARD 1
+# 设置filter表FORWARD规则默认行为为ACCEPT：
+# filter表规则有：INPUT、OUTPUT、FORWARD
+# 规则行为有：ACCEPT、DROP
+sudo iptables -P FORWARD ACCEPT
 ```
 
 # 3、相关概念：
@@ -108,6 +112,8 @@ net.ipv4.ip_forward = 1
 # 表链策略设为ACCEPT：
 sudo iptables -I FORWARD -s 192.168.99.141 -j ACCEPT
 sudo iptables -I FORWARD -d 192.168.99.141 -j ACCEPT
+# 或将FORWARD链默认规则改为ACCEPT：
+sudo iptables -P FORWARD ACCEPT
 # 添加SANT转发规则：
 sudo iptables -t nat -A POSTROUTING -s 192.168.99.141 -j SNAT --to 192.168.100.252
 ```
