@@ -86,11 +86,21 @@ function delete_old_docker_container() {
     done
 }
 
+function delete_container_by_name() {
+    local name=$1
+    local id=
+
+    id=$(docker ps -a | grep "$name" | head -n 1 | awk '{print$1}')
+    if [ "$id" != "" ]; then
+        log_info "will stop and rm container: $name/$id"
+        docker stop $id
+        docker rm $id
+    fi
+}
+
 function launch_docker() {
     local image="rhosoon_ubuntu_18:v0.5"
     local name="rhosoon_docker_$(date '+%Y%m%d%H%M%S')"
-
-    delete_old_docker_container
 
     log_info "will launch docker with name: $name"
     PS1="[host] $ "
@@ -118,16 +128,21 @@ expect <<EOF
         timeout { puts "docker build timeout"; exit 127 }
     }
     expect {
+        "ERROR: Failed to build project" { puts "build images failed"; exit 127 }
         "finish building all images in docker" {}
         timeout { puts "docker build timeout"; exit 127 }
     }
 EOF
 
-    delete_old_docker_container
+    delete_container_by_name $name
 }
 
 function main() {
-    repo_download_code $WORK_DIR
+    local download_code=$1
+
+    if [ "$download_code" = "true" ]; then
+        repo_download_code $WORK_DIR
+    fi
     cp $CUR_DIR/build_image_in_docker.sh /tmp/docker
     launch_docker
 }

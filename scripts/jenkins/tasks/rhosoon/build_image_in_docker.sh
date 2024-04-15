@@ -90,7 +90,7 @@ function build_ramfs() {
         log_err "build $platform ramfs/yocto-ramfs failed"
         exit 1
     fi
-    cp $image_dir/image-ramfs.ub $plat_image_dir
+    cp $image_dir/image-ram.ub $plat_image_dir
 }
 
 function build_one_platform() {

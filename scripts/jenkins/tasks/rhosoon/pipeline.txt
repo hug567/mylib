@@ -1,0 +1,13 @@
+pipeline {
+    agent {
+        label "node05"
+    }
+
+    stages {
+        stage('stage01') {
+            steps {
+                sh '~/code/mylib/scripts/jenkins/tasks/rhosoon/build_image.sh'
+            }
+        }
+    }
+}
