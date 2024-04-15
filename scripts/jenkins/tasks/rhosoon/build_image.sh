@@ -43,14 +43,14 @@ function run_until_success() {
     local ret=
 
     for i in $(seq 1 $max_times); do
-        log_info "run cmd($i): [$cmd]"
-        $cmd
+        log_info "will run cmd($i): [bash -c \"$cmd\"]"
+        bash -c "${cmd}"
         ret=$?
         if [ $ret -eq 0 ]; then
             return 0
         fi
     done
-    log_error "run cmd with times $i failed: [$cmd]"
+    log_err "run cmd with times $i failed: [bash -c \"$cmd\"]"
     exit $ret
 }
 
