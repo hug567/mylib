@@ -111,6 +111,7 @@ expect <<EOF
         --user rhosoon -w /home/rhosoon \
         -v /mnt/sdb:/mnt/sdb \
         -v /opt/pkg:/opt/pkg \
+        -v /opt/jenkins:/opt/jenkins \
         -v /tmp/docker:/tmp/docker \
         -v ${HOME}/repo:/home/rhosoon/repo \
         -v ${HOME}/code:/home/rhosoon/code \
@@ -140,6 +141,9 @@ EOF
 function main() {
     local download_code=$1
 
+    log_info "host net: -------------------------------------------------------"
+    ifconfig -a
+    log_info "-----------------------------------------------------------------"
     if [ "$download_code" = "true" ]; then
         repo_download_code $WORK_DIR
     fi
