@@ -56,12 +56,18 @@ Ctrl + Shift + P -> Preferences: Open Settings (JSON)
 #---------------------------------------------#
 "files.trimTrailingWhitespace": true,
 #---------------------------------------------#
+```
 
-#显示行位空格：
+
+- 显示行尾空格：
+```bash
 Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
 #---------------------------------------------#
 # 可设置：all, boundary, none, selection, trailing
+# 显示行尾空格：
 "editor.renderWhitespace": "trailing",
+# 显示行首和行尾空格：
+"editor.renderWhitespace": "boundary",
 #---------------------------------------------#
 ```
 
@@ -199,6 +205,17 @@ ssh-keygen -t rsa
 ```
 
 - 复制文件中C:\Users\Administrator\.ssh\id_rsa.pub的内容到linux机器中的 ~/.ssh/authorized_keys 文件中
+
+- vscode添加远程主机：
+
+```bash
+远程资源管理器 -> ssh -> 打开ssh配置文件 -> C:\Users\huangxing\.ssh\config
+#---------------------------------------------#
+Host 10.110.0.3
+    HostName 10.110.0.3
+    User hx
+#---------------------------------------------#
+```
 
 ## 5、常用代码风格设置：
 
