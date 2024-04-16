@@ -2,7 +2,7 @@
 # 2024-04-10
 
 LOGFMT="build_image"
-WORK_DIR="/mnt/sdb/jenkins/source_code"
+WORK_DIR="/opt/jenkins/source_code"
 CUR_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
 export PATH="$HOME/tools/git-repo:$PATH"
 

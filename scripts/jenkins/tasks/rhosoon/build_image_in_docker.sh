@@ -1,8 +1,8 @@
 #!/bin/bash
 # 2024-04-10
 
-WORK_DIR="/mnt/sdb/jenkins/source_code"
-IMAGES_DIR="/mnt/sdb/jenkins/images"
+WORK_DIR="/opt/jenkins/source_code"
+IMAGES_DIR="/opt/jenkins/images"
 LOGFMT="build_image_in_docker"
 
 function log_with_level() {
