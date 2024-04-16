@@ -73,9 +73,9 @@ Settings -> Power -> Blank screen -> Never               //取消锁屏
 sudo apt remove qemu
 sudo apt autoremove
 sudo apt install pkg-config libglib2.0-dev libpixman-1-dev bison flex
-wget 
-tar -xvf 
-cd 
+wget ...
+tar -xvf ...
+cd ...
 ./configure
 make -j4
 sudo make install
@@ -83,6 +83,8 @@ qemu-img --version
 ```
 
 ### 8、安装Linux硬盘划分参考：
+
+- grub和boot loader不能安装在同一分区；
 
 ```c
 磁盘大小：20G
@@ -94,5 +96,14 @@ qemu-img --version
   grub    1M
   /boot   1G
   /       19G
+```
+
+- 500G推荐划分：数据全放在/mnt/sda分区，重装系统不影响数据
+
+```bash
+grub           1M
+/boot          1G
+/              150G
+/mnt/sda       剩余
 ```
 

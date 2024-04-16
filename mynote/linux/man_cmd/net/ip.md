@@ -61,6 +61,8 @@ ip neighbor show
 # 3、路由：
 
 ```bash
+# 添加默认路由：
+sudo ip route add default via 10.110.0.3
 # 路由设置指定ip走指定网卡：
 sudo ip route add 192.168.99.221/32 via 10.110.0.3 dev eno1
 # 删除一个默认路由：

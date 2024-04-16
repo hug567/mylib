@@ -203,3 +203,27 @@ sudo vim /etc/hosts
 ping gitlab.rhosoon.com
 ```
 
+## 6、设置dns：
+
+### 1）、临时设置dns：
+
+```bash
+sudo vim /etc/resolv.conf
+#---------------------------------------------------------#
+nameserver 192.168.100.1
+#---------------------------------------------------------#
+```
+
+## 2）、永久设置dns：
+
+```bash
+sudo vim /etc/systemd/resolved.conf
+#---------------------------------------------------------#
+DNS=8.8.8.8 192.168.100.1
+#---------------------------------------------------------#
+sudo systemctl restart systemd-resolved
+sudo systemctl enable systemd-resolved
+sudo mv /etc/resolv.conf /etc/resolv.conf.bak
+sudo ln -s /run/systemd/resolve/resolv.conf /etc/
+```
+

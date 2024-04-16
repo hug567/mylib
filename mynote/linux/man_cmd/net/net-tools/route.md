@@ -7,16 +7,16 @@ route
 # 2、常见用法：
 
 ```bash
-# 列出当前网关
+# 列出当前路由
 route
 route -n
 
-# 添加默认网关
+# 添加默认路由
 sudo route add default gw 192.168.1.1
 # 添加静态路由：指定网段172.22.195.0/24网络包从指定网络设备wlx502b731c5285收发
 sudo route add -net 172.22.195.0/24 dev wlx502b731c5285
 
-# 删除网关
+# 删除默认路由
 sudo route del default gw 192.168.1.1
 # 删除指定路由
 sudo route del -net 172.22.195.0/24 dev wlx502b731c5285
