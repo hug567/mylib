@@ -126,7 +126,7 @@ expect <<EOF
     sleep 5
     send "\rPS1='\[\\\u@\\\h\] \\\w $ '\r"
     expect {
-        "\[rhosoon@" { send "/tmp/docker/build_image_in_docker.sh ${platform}\r"}
+        "\[rhosoon@" { send "/tmp/docker/build_image_in_docker.sh ${platform} ${use_for}\r"}
         timeout { puts "docker build timeout"; exit 127 }
     }
     expect {
@@ -143,10 +143,12 @@ function main() {
     local download_code=$1
     local repo_branch=$2
     local platform=$3
+    local use_for=$4
 
     log_info "download_code: $download_code"
     log_info "repo_branch: $repo_branch"
     log_info "platform: $platform"
+    log_info "use_for: $use_for"
 
     log_info "host net: -------------------------------------------------------"
     ifconfig -a
@@ -155,7 +157,7 @@ function main() {
         repo_download_code $WORK_DIR $repo_branch
     fi
     cp $CUR_DIR/build_image_in_docker.sh /tmp/docker
-    launch_docker $platform
+    launch_docker $platform $use_for
 }
 
 main $*

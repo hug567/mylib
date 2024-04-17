@@ -95,26 +95,35 @@ function build_ramfs() {
 
 function build_one_platform() {
     local platform=$1
-    local images_dir=$2
+    local use_for=$2 # all/yocto/ramfs/mkpart
+    local images_dir=$3
     local plat_images_dir=$images_dir/$platform
 
     log_info "will build platform: $platform ----------------------------------"
     if [ ! -d $plat_images_dir ]; then
         mkdir -p $plat_images_dir
     fi
-    build_yocto $platform $plat_images_dir
-    build_mkpart $platform $plat_images_dir
-    build_ramfs $platform $plat_images_dir
+    if [ "$use_for" = "yocto" ]; then
+        build_yocto $platform $plat_images_dir
+    elif [ "$use_for" = "ramfs" ]; then
+        build_ramfs $platform $plat_images_dir
+    elif [ "$use_for" = "mkpart" ]; then
+        build_mkpart $platform $plat_images_dir
+    else
+        build_yocto $platform $plat_images_dir
+        build_ramfs $platform $plat_images_dir
+        build_mkpart $platform $plat_images_dir
+    fi
 }
 
 # default, QQF, s300, ...
 function build_all_platforms() {
-    local work_dir=$1
+    local use_for=$1
     local images_dir=$2
 
-    build_one_platform "default" $images_dir
-    build_one_platform "QQF" $images_dir
-    build_one_platform "s300" $images_dir
+    build_one_platform "default" $use_for $images_dir
+    build_one_platform "QQF" $use_for $images_dir
+    build_one_platform "s300" $use_for $images_dir
 }
 
 function print_host_info() {
@@ -127,6 +136,7 @@ function print_host_info() {
 
 function main() {
     local platform=$1
+    local use_for=$2
     local work_dir=$WORK_DIR
     local images_date=$(date '+%Y%m%d_%H%M%S')
     local images_dir=$IMAGES_ROOT_DIR/$images_date
@@ -137,10 +147,10 @@ function main() {
     log_info "work_dir: $work_dir"
     if [ "$platform" = "" -o "$platform" = "all" ]; then
         log_info "will build all platform images"
-        build_all_platforms
+        build_all_platforms $use_for $images_dir
     else
         log_info "will only build one platform images: $platform"
-        build_one_platform $platform $images_dir
+        build_one_platform $platform $use_for $images_dir
     fi
     log_info "images: http://${myip}:9008/$images_date"
     log_info "finish building all images in docker"
