@@ -2,7 +2,7 @@
 # 2024-04-10
 
 WORK_DIR="/opt/jenkins/source_code"
-IMAGES_DIR="/opt/jenkins/images"
+IMAGES_ROOT_DIR="/opt/jenkins/images"
 LOGFMT="build_image_in_docker"
 
 function log_with_level() {
@@ -128,7 +128,9 @@ function print_host_info() {
 function main() {
     local platform=$1
     local work_dir=$WORK_DIR
-    local images_dir=$IMAGES_DIR/$(date '+%Y%m%d_%H%M%S')
+    local images_date=$(date '+%Y%m%d_%H%M%S')
+    local images_dir=$IMAGES_ROOT_DIR/$images_date
+    local myip=$(ifconfig | grep 10.110.0 | head -n 1 | awk '{print$2}')
 
     print_host_info
     cd $work_dir
@@ -140,7 +142,7 @@ function main() {
         log_info "will only build one platform images: $platform"
         build_one_platform $platform $images_dir
     fi
-    log_info "images_dir: $images_dir"
+    log_info "images: http://${myip}:9008/$images_date"
     log_info "finish building all images in docker"
 }
 
