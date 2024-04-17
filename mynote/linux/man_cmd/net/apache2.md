@@ -1,7 +1,7 @@
 # 1、搭建文件服务器：
 
 ```bash
-# ubuntu 22.04
+# ubuntu 18.04/22.04
 sudo apt install apache2
 sudo mkdir /disk/sda/apache2
 

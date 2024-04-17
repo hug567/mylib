@@ -5,10 +5,18 @@ sudo apt install git                                     //安装git
 git --version                                            //查看git版本
 git config --global user.name "Huang Xing"               //设置用户名
 git config --global user.email huangxing567@163.com      //设置邮箱
+
 ssh-keygen -t rsa -C "huangxing567@163.com"              //配置SSH Key
 cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
 
 git config --global credential.helper store              //长期缓存账号密码
+```
+
+## 1.1）、基本操作：
+
+```bash
+# 下载代码时使用代理：
+git clone -c http.proxy="http://127.0.0.1:10809" https://github.com/transcode-open/apt-cyg.git
 ```
 
 ## 2、常用操作：
@@ -319,6 +327,7 @@ git tag
 git tag -l "v1.8.5*"
 # 创建标签
 git tag v1.4
+# 创建tag时写message，会保存tag的创建时间
 git tag -a v1.4 -m "my version 1.4"
 # 推送标签到远端
 git push origin v1.4
