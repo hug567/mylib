@@ -56,6 +56,7 @@ function run_until_success() {
 
 function repo_download_code() {
     local work_dir=$1
+    local repo_branch=$2
 
     if [ ! -d $work_dir ]; then
         mkdir -p $work_dir
@@ -64,11 +65,10 @@ function repo_download_code() {
     log_info "will clean dir $work_dir"
     rm -rf $(ls -1A)
     log_info "will download code to dir $work_dir"
-    run_until_success 10 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git --repo-url=http://192.168.99.221:3000/Rhosoon_RD/git-repo.git --repo-rev=main --no-clone-bundle"
-    run_until_success 10 "repo sync"
-    run_until_success 10 "repo forall -c 'git lfs pull'"
-    run_until_success 10 "repo start main --all"
-    run_until_success 10 "repo status | cat"
+    run_until_success 5 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git -b $repo_branch"
+    run_until_success 5 "repo sync"
+    run_until_success 5 "repo forall -c 'git lfs pull'"
+    run_until_success 5 "repo status | cat"
     log_info "finish download code to dir $work_dir"
 }
 
@@ -99,6 +99,7 @@ function delete_container_by_name() {
 }
 
 function launch_docker() {
+    local platform=$1
     local image="rhosoon_ubuntu_18:v0.5"
     local name="rhosoon_docker_$(date '+%Y%m%d%H%M%S')"
 
@@ -125,7 +126,7 @@ expect <<EOF
     sleep 5
     send "\rPS1='\[\\\u@\\\h\] \\\w $ '\r"
     expect {
-        "\[rhosoon@" { send "/tmp/docker/build_image_in_docker.sh\r"}
+        "\[rhosoon@" { send "/tmp/docker/build_image_in_docker.sh ${platform}\r"}
         timeout { puts "docker build timeout"; exit 127 }
     }
     expect {
@@ -140,15 +141,21 @@ EOF
 
 function main() {
     local download_code=$1
+    local repo_branch=$2
+    local platform=$3
+
+    log_info "download_code: $download_code"
+    log_info "repo_branch: $repo_branch"
+    log_info "platform: $platform"
 
     log_info "host net: -------------------------------------------------------"
     ifconfig -a
-    log_info "-----------------------------------------------------------------"
+    log_info "host net: -------------------------------------------------------"
     if [ "$download_code" = "true" ]; then
-        repo_download_code $WORK_DIR
+        repo_download_code $WORK_DIR $repo_branch
     fi
     cp $CUR_DIR/build_image_in_docker.sh /tmp/docker
-    launch_docker
+    launch_docker $platform
 }
 
 main $*

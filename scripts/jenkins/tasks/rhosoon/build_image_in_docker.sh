@@ -55,77 +55,92 @@ function build_petalinux() {
 
 function build_yocto() {
     local platform=$1
-    local plat_image_dir=$2
-    local image_dir=$WORK_DIR/yocto/images/linux
+    local plat_images_dir=$2
+    local images_dir=$WORK_DIR/yocto/images/linux
 
     if ! build_petalinux yocto $platform; then
         log_err "build $platform yocto failed"
         exit 1
     fi
-    cp $image_dir/BOOT.BIN $plat_image_dir
-    cp $image_dir/image.ub $plat_image_dir
-    cp $image_dir/rootfs.tar.bz2 $plat_image_dir
+    cp $images_dir/BOOT.BIN $plat_images_dir
+    cp $images_dir/image.ub $plat_images_dir
+    cp $images_dir/rootfs.tar.bz2 $plat_images_dir
 }
 
 function build_mkpart() {
     local platform=$1
-    local plat_image_dir=$2
-    local image_dir=$WORK_DIR/ramfs/yocto-mkpart/images/linux
+    local plat_images_dir=$2
+    local images_dir=$WORK_DIR/ramfs/yocto-mkpart/images/linux
 
     if ! build_petalinux ramfs/yocto-mkpart $platform; then
         log_err "build $platform ramfs/yocto-mkpart failed"
         exit 1
     fi
-    cp $image_dir/BOOT-MKPART.BIN $plat_image_dir
-    cp $image_dir/image-mkpart.ub $plat_image_dir
+    cp $images_dir/BOOT-MKPART.BIN $plat_images_dir
+    cp $images_dir/image-mkpart.ub $plat_images_dir
 }
 
 function build_ramfs() {
     local platform=$1
-    local plat_image_dir=$2
-    local image_dir=$WORK_DIR/ramfs/yocto-ramfs/images/linux
+    local plat_images_dir=$2
+    local images_dir=$WORK_DIR/ramfs/yocto-ramfs/images/linux
 
     build_petalinux ramfs/yocto-ramfs $platform
     if ! build_petalinux ramfs/yocto-ramfs $platform; then
         log_err "build $platform ramfs/yocto-ramfs failed"
         exit 1
     fi
-    cp $image_dir/image-ram.ub $plat_image_dir
+    cp $images_dir/image-ram.ub $plat_images_dir
 }
 
 function build_one_platform() {
     local platform=$1
     local images_dir=$2
-    local plat_image_dir=$images_dir/$platform
+    local plat_images_dir=$images_dir/$platform
 
     log_info "will build platform: $platform ----------------------------------"
-    if [ ! -d $plat_image_dir ]; then
-        mkdir -p $plat_image_dir
+    if [ ! -d $plat_images_dir ]; then
+        mkdir -p $plat_images_dir
     fi
-    build_yocto $platform $plat_image_dir
-    build_mkpart $platform $plat_image_dir
-    build_ramfs $platform $plat_image_dir
+    build_yocto $platform $plat_images_dir
+    build_mkpart $platform $plat_images_dir
+    build_ramfs $platform $plat_images_dir
 }
 
 # default, QQF, s300, ...
-function build_all_platform() {
-    local work_dir=$WORK_DIR
-    local images_dir=$IMAGES_DIR/$(date '+%Y%m%d_%H%M%S')
-
-    log_info "will build all platform images"
-    cd $work_dir
-    log_info "pwd: $(pwd)"
-    log_info "os-release: -----------------------------------------------------"
-    cat /etc/os-release
-    ls -la /
+function build_all_platforms() {
+    local work_dir=$1
+    local images_dir=$2
 
     build_one_platform "default" $images_dir
     build_one_platform "QQF" $images_dir
     build_one_platform "s300" $images_dir
 }
 
+function print_host_info() {
+    log_info "host info: ------------------------------------------------------"
+    cat /etc/os-release
+    ls -la /
+    ifconfig -a
+    log_info "host info: ------------------------------------------------------"
+}
+
 function main() {
-    build_all_platform
+    local platform=$1
+    local work_dir=$WORK_DIR
+    local images_dir=$IMAGES_DIR/$(date '+%Y%m%d_%H%M%S')
+
+    print_host_info
+    cd $work_dir
+    log_info "work_dir: $work_dir"
+    if [ "$platform" = "" -o "$platform" = "all" ]; then
+        log_info "will build all platform images"
+        build_all_platforms
+    else
+        log_info "will only build one platform images: $platform"
+        build_one_platform $platform $images_dir
+    fi
+    log_info "images_dir: $images_dir"
     log_info "finish building all images in docker"
 }
 
