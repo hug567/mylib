@@ -17,6 +17,20 @@ def test_find():
     if str1.find(" is") >= 0:
         print("find \'name is\' in str \'" + str1 + "\'")
 
+    # 没查找到子串时，返回-1
+    ret = str1.find("xxx")
+    print("no sub string, find() will return:", ret)
+
+    # 有多个子串，只返回第一个字串的起始下标，从0开始
+    ret = str1.find("m")
+    print("with multi sub string, find() will return:", ret)
+
+    # 查找字符中的所有字串，打印每个子串在字符串中的起止索引
+    str2="Your xxx name is Bob xxx"
+    ret = re.finditer('xxx', str2)
+    for sub in ret:
+        print(sub.span()[0], sub.span()[1])
+
 #使用正则表达式搜索
 def test_search():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
