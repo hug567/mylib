@@ -92,6 +92,8 @@ test_func_ret() {
     fi
 }
 
+# 返回真假的函数中不能有echo等打印语句，若必须调用，则可以将打印相关的语句提取
+# 到一个子函数中，在当前函数中调用提取的子函数
 function _greater_10() {
     local num=$1
     if [ $num -gt 10 ]; then
@@ -139,6 +141,16 @@ function test_pass_ret() {
 
     if __pass_true -a ! __pass_false; then
         echo "__pass_true and ! __pass_false"
+    fi
+}
+
+function __func_ret_bool() {
+    local flag=$1
+
+    if [ "$flag" == "a" ]; then
+        return 0
+    else
+        return 1
     fi
 }
 

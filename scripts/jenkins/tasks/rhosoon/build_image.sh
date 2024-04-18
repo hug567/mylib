@@ -36,6 +36,66 @@ function run_cmd_and_check() {
     fi
 }
 
+function download_code() {
+    local repo_dir=$1
+    local remote_url="http://192.168.99.221:3000/Rhosoon_RD/manifest.git"
+
+    if [ -d $repo_dir ]; then
+        rm -rf $repo_dir
+        mkdir -p $repo_dir
+    fi
+    git clone $remote_url -b main $repo_dir &> /dev/null
+}
+
+function there_is_same_tag() {
+    local repo_dir=$1
+    local maybe_tag=$2
+    local tag=
+    local all_tags=
+
+    cd $repo_dir
+    all_tags=$(git tag)
+    echo "$all_tags" | while read tag; do
+        if [ "$tag" == "$maybe_tag" ]; then
+            echo "$tag"
+            return
+        fi
+    done
+}
+
+function is_tag() {
+    local repo_dir=$1
+    local maybe_tag=$2
+    local same_tag=
+
+    same_tag=$(there_is_same_tag $repo_dir $maybe_tag)
+    if [ "$same_tag" != "" ]; then
+        return 0
+    fi
+    return 1
+}
+
+function tag_to_commit() {
+    local tag=$1
+    local repo_dir="/tmp/manifest"
+    local commit=
+    local commit_short=
+    local same_tag=
+
+    download_code $repo_dir
+    if ! is_tag $repo_dir $tag; then
+        return
+    fi
+
+    cd $repo_dir
+    commit_short=$(git log --oneline --decorate | grep "tag:" | grep $tag | awk '{print$1}')
+    if [ "$commit_short" == "" ]; then
+        return
+    fi
+    commit=$(git show $commit_short | head -n 1 | awk '{print$NF}')
+    echo -n "$commit"
+}
+
 function run_until_success() {
     local max_times=$1
     local cmd="${@:2}"
@@ -56,16 +116,21 @@ function run_until_success() {
 
 function repo_download_code() {
     local work_dir=$1
-    local repo_branch=$2
+    local repo_revision=$2
+    local tag_commit=
 
     if [ ! -d $work_dir ]; then
         mkdir -p $work_dir
+    fi
+    tag_commit=$(tag_to_commit $repo_revision)
+    if [ "$tag_commit" != "" ]; then
+        repo_revision=$tag_commit
     fi
     cd $work_dir
     log_info "will clean dir $work_dir"
     rm -rf $(ls -1A)
     log_info "will download code to dir $work_dir"
-    run_until_success 5 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git -b $repo_branch"
+    run_until_success 5 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git -b $repo_revision"
     run_until_success 5 "repo sync"
     run_until_success 5 "repo forall -c 'git lfs pull'"
     run_until_success 5 "repo status | cat"
@@ -141,12 +206,12 @@ EOF
 
 function main() {
     local download_code=$1
-    local repo_branch=$2
+    local repo_revision=$2
     local platform=$3
     local use_for=$4
 
     log_info "download_code: $download_code"
-    log_info "repo_branch: $repo_branch"
+    log_info "repo_revision: $repo_revision"
     log_info "platform: $platform"
     log_info "use_for: $use_for"
 
@@ -154,7 +219,7 @@ function main() {
     ifconfig -a
     log_info "host net: -------------------------------------------------------"
     if [ "$download_code" = "true" ]; then
-        repo_download_code $WORK_DIR $repo_branch
+        repo_download_code $WORK_DIR $repo_revision
     fi
     cp $CUR_DIR/build_image_in_docker.sh /tmp/docker
     launch_docker $platform $use_for
