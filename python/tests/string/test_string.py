@@ -12,6 +12,8 @@ def test_define_string():
 
     str01 = "Huang Xing"
     print("str01:", str01)
+    # 字符串长度
+    print("str01 length:", len(str01))
     # access single char
     print("str01[0]:", str01[0])
     # cut string: start from 1, end before 5 (string index start from 0)

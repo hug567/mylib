@@ -9,7 +9,11 @@ import sys
 import shutil
 
 def learning_file():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
     file_name = 'rfile.txt'
+    if not os.path.exists(file_name):
+        return
 
     # 读取文件
     with open(file_name) as file_obj:
@@ -61,6 +65,8 @@ def check_file_exist(fname):
 
 # 创建和删除文件
 def create_delete_file():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
     # 需先有目录
     fname="/tmp/python_test.txt"
     # 创建文件
@@ -80,6 +86,8 @@ def check_dir_exist(dname):
 
 # 创建和删除目录
 def create_delete_dir():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
     dname = "/tmp/python_test/test01/test01_01"
     check_dir_exist(dname)
     if not os.path.exists(dname):
@@ -90,10 +98,26 @@ def create_delete_dir():
     shutil.rmtree("/tmp/python_test")
     check_dir_exist(dname)
 
+# 重命名文件
+def test_rename_file():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    fname = "/tmp/test_python.txt"
+    new_fname = "/tmp/test_python_new.txt"
+    if not os.path.exists(fname):
+        file = open(fname, 'w')
+        file.close()
+    if os.path.exists(new_fname):
+        os.remove(new_fname)
+    # 重命名文件
+    print("will rename file from", fname, "to", new_fname)
+    os.rename(fname, new_fname)
+
 def main():
     learning_file()
     create_delete_file()
     create_delete_dir()
+    test_rename_file()
 
 if __name__ == '__main__':
     main()

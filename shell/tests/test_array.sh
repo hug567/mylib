@@ -97,12 +97,44 @@ function test_array_append() {
     echo "array size: ${#arr01[@]}"
 }
 
+# 二维数组：使用一维数组模拟二维数组
+function test_two_dim_array() {
+    echo "$FUNCNAME:-----------------------------"
+
+    local i=
+    local j=
+    local index_0=
+    local index_1=
+    local index_2=
+    local arr=(
+      1 2 3
+      4 5 6
+      7 8 9
+      3 5 8
+    )
+    local len=${#arr[@]}
+    local col_num=3
+    local row_num=$(expr $len / $col_num)
+    echo "len: $len, row_num: $row_num"
+
+    for (( i = 0; i < $row_num; i++ )); do
+        echo "arr line $i: ----------"
+        index_0=$(expr $i \* $col_num + 0)
+        index_1=$(expr $i \* $col_num + 1)
+        index_2=$(expr $i \* $col_num + 2)
+        echo "arr[$i][0]: ${arr[$index_0]}"
+        echo "arr[$i][1]: ${arr[$index_1]}"
+        echo "arr[$i][2]: ${arr[$index_2]}"
+    done
+}
+
 function main() {
     test_array
     test_array_delete
     test_array_local_access
     test_associated_array
     test_array_append
+    test_two_dim_array
 }
 
 main

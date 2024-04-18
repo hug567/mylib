@@ -4,6 +4,7 @@
 
 import sys
 
+# 判断字符串是否为空
 def test_str_empty():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 

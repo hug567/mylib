@@ -81,10 +81,23 @@ def test_modify_list():
     ages.remove(25)
     print("after remove by value, ages:", ages)
 
+# 判断列表是否为空
+def test_list_empty():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    name = []
+    if len(name) == 0:
+        print("way1: list name is empty")
+    if not name:
+        print("way2: list name is empty")
+    if name == []:
+        print("way3: list name is empty")
+
 def main():
     test_define_list()
     test_traverse_list()
     test_modify_list()
+    test_list_empty()
 
 if __name__ == '__main__':
     main()

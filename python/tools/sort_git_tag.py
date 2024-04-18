@@ -2,9 +2,7 @@
 # 找出最新commit上最新的tag
 # 2024-04-17
 
-import os
 import re
-import sys
 import subprocess
 
 def run_shell_return_result(cmd):
@@ -27,24 +25,37 @@ def get_tag_create_time(tag):
     tag_time = run_shell_return_result(cmd)[0]
     return tag_time
 
-def sort_git_tag():
+def get_latest_tag():
     cmd = 'git log --oneline --decorate | head -n 1'
     latest_commit = run_shell_return_result(cmd)[0]
     print(latest_commit)
+
+    tag_dict = {}
     tag_match = re.finditer('tag: ', latest_commit)
     for sub in tag_match:
         end_index=sub.span()[1]
-        #print("end_index:", end_index)
         start_with_tag=latest_commit[end_index:]
         all_tags = run_shell_return_result('git tag')
         for one_tag in all_tags:
             if start_with_tag.find(one_tag) == 0:
-                print("tag:", one_tag)
                 tag_time = get_tag_create_time(one_tag)
-                print("tag_time:", tag_time)
+                tag_dict[one_tag] = tag_time
+                print("tag: [", one_tag, "] tag_time: [", tag_time, "]")
+
+    sorted_tag = dict(sorted(tag_dict.items(), key=lambda x:x[1], reverse=True))
+    print("sorted tag by time:", sorted_tag)
+    latest_tag = ""
+    for key, val in sorted_tag.items():
+        latest_tag = key
+        break
+    return latest_tag
 
 def main():
-    sort_git_tag()
+    latest_tag = get_latest_tag()
+    if len(latest_tag) > 0:
+        print("latest_tag:", latest_tag)
+    else:
+        print("no tag in latest commit")
 
 if __name__ == '__main__':
     main()
