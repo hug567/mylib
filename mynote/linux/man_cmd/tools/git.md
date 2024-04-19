@@ -255,6 +255,8 @@ git diff --stat <branch1> <branch2>
 git diff <branch2>
 # 查看当前修改与指定分支上指定文件的差异
 git diff <branch2> <file>
+# 查看两个tag指定文件的差异
+git diff <v0.0.1> <v0.0.2> <default.xml>
 ```
 
 ### 2.7、合并分支：

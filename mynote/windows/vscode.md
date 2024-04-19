@@ -75,6 +75,29 @@ Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
 
 ```bash
 Ctrl+Shift+P -> Preferences: Open Settings (UI) -> Editor: Font Size -> 16/17
+#---------------------------------------------#
+    "editor.fontSize": 17,
+#---------------------------------------------#
+```
+
+#### 8）、自动选择编码方式：
+
+```bash
+# 打开文件时自动选择编码方式：
+Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Files: Auto guess Encoding -> 选中
+#---------------------------------------------#
+    "files.autoGuessEncoding": true,
+#---------------------------------------------#
+```
+
+#### 9）、文件默认保持打开状态：
+
+```bash
+# 打开文件后默认保持打开状态，打开新的文件不会关闭当前文件：
+Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench  Editor: Enable Preview -> 取消勾选
+#---------------------------------------------#
+    "workbench.editor.enablePreview": false,
+#---------------------------------------------#
 ```
 
 ## 2、编译调试C语言：
@@ -226,7 +249,7 @@ Ctr + Shift + P -> Preferences: Color Theme -> Monokai
 # 或
 Ctr + Shift + P -> Preferences: Open User Settings (JSON)
 #---------------------------------------------#
-"workbench.colorTheme": "Monokai",
+    "workbench.colorTheme": "Monokai",
 #---------------------------------------------#
 ```
 
@@ -243,7 +266,7 @@ Ctrl+Shift+P -> Indent Using Tabs -> 4
 # 或
 Ctr + Shift + P -> Preferences: Open User Settings (JSON)
 #---------------------------------------------#
-"editor.renderControlCharacters": true,
+    "editor.renderControlCharacters": true,
 #---------------------------------------------#
 ```
 
