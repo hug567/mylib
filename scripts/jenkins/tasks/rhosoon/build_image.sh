@@ -165,7 +165,7 @@ function delete_container_by_name() {
 
 function launch_docker() {
     local platform=$1
-    local image="rhosoon_ubuntu_18:v0.5"
+    local image="rhosoon_ubuntu_18:v0.7"
     local name="rhosoon_docker_$(date '+%Y%m%d%H%M%S')"
 
     log_info "will launch docker with name: $name"
