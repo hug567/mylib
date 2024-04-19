@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 # sh判断变量是否为空
 test_string_empty() {
@@ -17,6 +17,12 @@ test_string_empty() {
         echo "var2 is empty"
     else
         echo "var2 is not empty: ${var2}"
+    fi
+
+    # 判断字符串不为空
+    local var3="123"
+    if [ "${var3}" != "" ]; then
+        echo "var3 is not empty: $var3"
     fi
 }
 

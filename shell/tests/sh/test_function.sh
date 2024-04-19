@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 # sh的函数不需要function关键字声明
 test_return() {
