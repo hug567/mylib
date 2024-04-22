@@ -338,20 +338,23 @@ git tag -d v1.4
 # 删除远端仓库中的标签
 git push origin :refs/tags/v1.4
 
+# 创建tag并签名：----------------------------------#
 # 生成gpg key：
 gpg --full-generate-key
-# (1) RSA and RSA (default)
-# 0 = key does not expire
-# Is this correct? (y/N) y
-# Real name: HuangXing
-# Email address: huangxing@rhosoon.com
-# Comment:
-# Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
-# 设置密码
+#------------------------------------------------#
+(1) RSA and RSA (default)
+0 = key does not expire
+Is this correct? (y/N) y
+Real name: HuangXing
+Email address: huangxing@rhosoon.com
+Comment:
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+Passphrase: xxx  # 需要连续输入两次
 # gpg: revocation certificate stored as '/home/hx/.gnupg/openpgp-revocs.d/D64BF234D1861EF0718B367A4ACA75DC99B1ADE9.rev'
+#------------------------------------------------#
 # 查看生成的private key：
 gpg --list-secret-keys --keyid-format=long
-# 查看生成的public key：（需要pub行rsa4096后面的字符串：4A************E9）
+# 查看生成的public key：（需要src行rsa4096后面的字符串(16个字符)：4A************E9）
 gpg --list-keys --keyid-format=long
 # 导出gpg public key，可设置到git网站中：
 gpg --armor --export 4A************E9
@@ -360,7 +363,9 @@ git config --global user.signingkey 4A************E9
 # 设置环境变量：
 export GPG_TTY=$(tty)
 # 给tag签名，也可给commit签名：
-git tag -s v2.35 -m "Add tag v2.35"
+git tag -s v2.35 -m "Add new tag v2.35"
+# 查看tag的签名：
+git tag -v v2.35
 ```
 
 ## 3、git lfs：

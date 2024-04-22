@@ -1,6 +1,6 @@
 # 1、WSL运行docker：
 
-- 安装wsl2：启动或关闭Windows功能 -> 适用于Linux的Windows子系统 + 虚拟机平台 -> 确定
+- 安装wsl2：控制面板 -> 程序和功能 -> 启动或关闭Windows功能 -> 适用于Linux的Windows子系统 + 虚拟机平台 -> 确定
 
 ```bash
 # 查看当前安全的linux发行版

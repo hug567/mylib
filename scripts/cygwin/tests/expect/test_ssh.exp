@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+
+set timeout 10
+
+set user root
+set ip 192.168.0.2
+set port 22
+set password root
+
+spawn ssh -p$port $user@$ip
+expect {
+    "*yes/no*" { send "yes\r"; exp_continue}
+    "*password*" { send "$password\r" }
+    timeout { exit 127 }
+}
+
+interact
