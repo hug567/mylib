@@ -130,7 +130,7 @@ function repo_download_code() {
     log_info "will clean dir $work_dir"
     rm -rf $(ls -1A)
     log_info "will download code to dir $work_dir"
-    run_until_success 5 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git -b $repo_revision"
+    run_until_success 5 "repo init -u http://192.168.99.221:3000/Rhosoon_RD/manifest.git -b $repo_revision --no-repo-verify"
     run_until_success 5 "repo sync"
     run_until_success 5 "repo forall -c 'git lfs pull'"
     run_until_success 5 "repo status | cat"

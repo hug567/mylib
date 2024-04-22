@@ -116,7 +116,7 @@ function build_one_platform() {
     fi
 }
 
-# default, QQF, s300, ...
+# default, QQE, QQF, s300, ...
 function build_all_platforms() {
     local use_for=$1
     local images_dir=$2
