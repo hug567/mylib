@@ -122,6 +122,7 @@ function build_all_platforms() {
     local images_dir=$2
 
     build_one_platform "default" $use_for $images_dir
+    build_one_platform "QQE" $use_for $images_dir
     build_one_platform "QQF" $use_for $images_dir
     build_one_platform "s300" $use_for $images_dir
 }
