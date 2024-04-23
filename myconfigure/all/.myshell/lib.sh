@@ -1,52 +1,50 @@
-#!/usr/bin/bash
-
-function is_linux() {
+is_linux() {
     local kernel=$(uname -s)
-    if [ "$kernel" == "Linux" ]; then
+    if [ "$kernel" = "Linux" ]; then
         return 0 # true
     fi
     return 1 # false
 }
 
-function is_ubuntu() {
+is_ubuntu() {
     if ! is_linux; then
         return 1
     fi
     local dis=$(cat /etc/os-release | grep "Ubuntu")
-    if [ -n "$dis" ]; then
+    if [ -n "${dis}" ]; then
         return 0
     fi
     return 1
 }
 
-function __ubuntu_version() {
+__ubuntu_version() {
     local ver=$1
     if ! is_ubuntu; then
         return 1
     fi
     local version=$(cat /etc/os-release | grep "$ver")
-    if [ -n "$version" ]; then
+    if [ -n "${version}" ]; then
         return 0
     fi
     return 1
 }
 
-function is_ubuntu_18_04() {
+is_ubuntu_18_04() {
     __ubuntu_version "18.04"
     return $?
 }
 
-function is_ubuntu_20_04() {
+is_ubuntu_20_04() {
     __ubuntu_version "20.04"
     return $?
 }
 
-function is_ubuntu_22_04() {
+is_ubuntu_22_04() {
     __ubuntu_version "22.04"
     return $?
 }
 
-function __cur_shell() {
+__cur_shell() {
     local shell=$1
     local cmd=""
     local PATH_OLD=""
@@ -64,30 +62,36 @@ function __cur_shell() {
     return $ret
 }
 
-function is_bash() {
-    __cur_shell "bash"
-    return $?
-}
-
-function is_linux_bash() {
-    if is_linux -a is_bash; then
+is_bash() {
+    if [ "${BASH_VERSION}" != "" ]; then
         return 0
-    else
-       return 1
     fi
+    return 1
 }
 
-function is_zsh() {
-    __cur_shell "zsh"
-    return $?
+is_linux_bash() {
+    if ! is_linux; then
+        return 1
+    fi
+    if ! is_bash; then
+        return 1
+    fi
+    return 0
 }
 
-function is_ash() {
+is_zsh() {
+    if [ "${ZSH_VERSION}" != "" ]; then
+        return 0
+    fi
+    return 1
+}
+
+is_ash() {
     __cur_shell "/ash"
     return $?
 }
 
-function is_windows_nt() {
+is_windows_nt() {
     local kernel=$(uname -s)
     if [[ "$kernel" =~ "NT" ]]; then
         return 0
@@ -96,7 +100,7 @@ function is_windows_nt() {
     fi
 }
 
-function is_gitbash() {
+is_gitbash() {
     if ! is_windows_nt; then
         return 1
     fi
@@ -111,7 +115,7 @@ function is_gitbash() {
     return 0
 }
 
-function is_mobaxterm() {
+is_mobaxterm() {
     if ! is_windows_nt; then
         return 1
     fi
@@ -122,7 +126,7 @@ function is_mobaxterm() {
     return 0
 }
 
-function is_opensuse() {
+is_opensuse() {
     if ! is_linux; then
         return 1
     fi
@@ -133,7 +137,7 @@ function is_opensuse() {
     return 1
 }
 
-function __opensuse_version() {
+__opensuse_version() {
     local ver=$1
     if ! is_opensuse; then
         return 1
@@ -145,12 +149,12 @@ function __opensuse_version() {
     return 1
 }
 
-function is_opensuse_15_3() {
+is_opensuse_15_3() {
     __opensuse_version "15.3"
     return $?
 }
 
-function is_fedora() {
+is_fedora() {
     if ! is_linux; then
         return 1
     fi
@@ -161,7 +165,7 @@ function is_fedora() {
     return 1
 }
 
-function __fedora_version() {
+__fedora_version() {
     local ver=$1
     if ! is_fedora; then
         return 1
@@ -173,12 +177,12 @@ function __fedora_version() {
     return 1
 }
 
-function is_fedora_35() {
+is_fedora_35() {
     __fedora_version "35"
     return $?
 }
 
-function is_in_docker() {
+is_in_docker() {
     if ! is_linux; then
         return 1
     fi
@@ -189,7 +193,7 @@ function is_in_docker() {
     fi
 }
 
-function path_existed() {
+path_existed() {
     local tmp_path=$1
     local pathes=""
     local p=""
@@ -207,7 +211,7 @@ function path_existed() {
     return 1
 }
 
-function add_path() {
+add_path() {
     local tmp_path=$1
     if [ ! -d "$tmp_path" ]; then
         return
@@ -219,7 +223,7 @@ function add_path() {
     export PATH="$tmp_path:$PATH"
 }
 
-function source_file() {
+source_file() {
     local file=$1
     if [ -f $file -o -L $file ]; then
         source $file

@@ -1,5 +1,6 @@
 #!/usr/bin/zsh
 
+# zsh中字符串分割
 function test_split_string() {
     echo "[test_split_string]:-----------------------------"
 

@@ -1,10 +1,20 @@
-#!/bin/bash
+prepare() {
+    local cur_dir=
 
-cur_dir=$(cd $(dirname $BASH_SOURCE[0]); pwd)
-source $cur_dir/../lib.sh
+    if [ "${BASH_VERSION}" != "" ]; then
+        cur_dir=$(cd $(dirname $BASH_SOURCE[0]); pwd)
+    elif [ "${ZSH_VERSION}" != "" ]; then
+        cur_dir=$(cd $(dirname ${PWD}/${ZSH_ARGZERO}); pwd)
+    else
+        echo "current is not bash or zsh"
+        exit 1
+    fi
+    echo "cur_dir: $cur_dir"
+    source $cur_dir/../lib.sh
+}
 
-function test_kernel() {
-    echo "$FUNCNAME:-----------------------------"
+test_kernel() {
+    echo "test_kernel:---------------------------------------------------------"
     if is_linux; then
         echo "current os is linux"
     else
@@ -18,8 +28,8 @@ function test_kernel() {
     fi
 }
 
-function test_linux_distro() {
-    echo "$FUNCNAME:-----------------------------"
+test_linux_distro() {
+    echo "test_linux_distro:---------------------------------------------------"
     if is_ubuntu; then
         echo "current os is ubuntu"
     elif is_opensuse; then
@@ -45,8 +55,8 @@ function test_linux_distro() {
     fi
 }
 
-function test_shell() {
-    echo "$FUNCNAME:-----------------------------"
+test_shell() {
+    echo "test_shell:----------------------------------------------------------"
     if is_bash; then
         echo "current shell is bash"
     elif is_zsh; then
@@ -62,8 +72,8 @@ function test_shell() {
     fi
 }
 
-function test_gitbash() {
-    echo "$FUNCNAME:-----------------------------"
+test_gitbash() {
+    echo "test_gitbash:--------------------------------------------------------"
 
     if is_gitbash; then
         echo "current is gitbash"
@@ -74,13 +84,14 @@ function test_gitbash() {
     fi
 }
 
-function test_add_path()
-{
-    echo "$FUNCNAME:-----------------------------"
+test_add_path() {
+    echo "test_add_path:-------------------------------------------------------"
     add_path "/usr/bin"
+    echo "${PATH}"
 }
 
-function main() {
+main() {
+    prepare
     test_kernel
     test_linux_distro
     test_shell
