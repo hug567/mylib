@@ -116,7 +116,7 @@ function build_one_platform() {
     fi
 }
 
-# default, QQE, QQF, s300, ...
+# default, QQE, QQF, S300, ...
 function build_all_platforms() {
     local use_for=$1
     local images_dir=$2
@@ -124,7 +124,7 @@ function build_all_platforms() {
     build_one_platform "default" $use_for $images_dir
     build_one_platform "QQE" $use_for $images_dir
     build_one_platform "QQF" $use_for $images_dir
-    build_one_platform "s300" $use_for $images_dir
+    build_one_platform "S300" $use_for $images_dir
 }
 
 function print_host_info() {
