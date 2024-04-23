@@ -96,11 +96,22 @@ function test_sub_exist() {
     fi
 }
 
+# 判断字符是否为空
+function test_str_empty() {
+    echo "$FUNCNAME:-----------------------------------------------------------"
+
+    local str1=
+    if [ "${str1}" == "" ]; then
+        echo "str1 is empty"
+    fi
+}
+
 function main() {
     test_string_cut
     test_string_length
     test_string_split
     test_sub_exist
+    test_str_empty
 }
 
 main
