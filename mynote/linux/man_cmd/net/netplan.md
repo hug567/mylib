@@ -45,7 +45,12 @@ network:
 ## 2)、dhcp：
 
 ```bash
-
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    eno1:
+      dhcp4: true
 ```
 
 ## 3)、桥接：
@@ -63,6 +68,42 @@ network:
       interfaces:
          - ens33
 ```
+
+## 4）、路由/网关：
+
+```bash
+# 默认路由：
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    ens33:
+      addresses:
+        - 192.168.100.2/24
+      nameservers:
+        addresses: 
+          - 192.168.100.1
+      routes:
+        - to: defalult
+          via: 192.168.100.1
+
+# 特定网段路由：
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    ens33:
+      addresses:
+        - 192.168.100.2/24
+      nameservers:
+        addresses: 
+          - 192.168.100.1
+      routes:
+        - to: 192.168.99.0、24
+          via: 192.168.99.1
+```
+
+
 
 # 3、无线网络：
 

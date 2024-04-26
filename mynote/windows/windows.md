@@ -101,3 +101,10 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced
 ShowSecondsInSystemClock    REG_DWORD    0x00000001 (1)
 # 最后重启电脑
 ```
+
+## 6、win10允许被ping：
+
+- 控制面板 -> Windows Defender 防火墙 -> 高级设置
+  - 入站规则：核心网络诊断 - ICMP 回显请求(ICMPv4-In) -> 允许
+  - 出栈规则：核心网络诊断 - ICMP 回显请求(ICMPv4-Out) -> 允许
+
