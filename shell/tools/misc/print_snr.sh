@@ -3,7 +3,7 @@
 # 2024-04-27
 
 LINE_OLD=""
-DEFAULT_COL_SIZE=150
+DEFAULT_COL_SIZE=130
 
 function usage() {
     echo "Usage: $0 [col_size]        print snr, col size can be specified"
