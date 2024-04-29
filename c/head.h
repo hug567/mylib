@@ -65,21 +65,21 @@
     bind()
     listen()
     accept()
+    sendto()
 
 #include <sys/un.h>
     struct sockaddr_un
 
 #include <netinet/in.h>
+    #define IPPROTO_TCP
     struct sockaddr_in
 
 #include <netinet/tcp.h>
     struct tcp_info
 
-#include <netinet/in.h>
-    #define IPPROTO_TCP
-
 #include <arpa/inet.h>
     inet_addr()
+    htons()
 
 #include <sys/wait.h>
     wait()

@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
 	}
 	init_all_modules(test);
 
+	/* 此处getopt的返回值需存储在int变量中，不能存储在char变量中 */
 	while ((ret = getopt(argc, argv, OPT_STR)) != -1) {
 		switch (ret) {
 		case 'h':
