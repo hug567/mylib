@@ -108,3 +108,6 @@ ShowSecondsInSystemClock    REG_DWORD    0x00000001 (1)
   - 入站规则：核心网络诊断 - ICMP 回显请求(ICMPv4-In) -> 允许
   - 出栈规则：核心网络诊断 - ICMP 回显请求(ICMPv4-Out) -> 允许
 
+## 7、允许应用通过防火墙：
+
+- 控制面板 -> Windows Defender 防火墙 -> 允许应用或功能通过Windows Defender防火墙 -> 选中应用，勾选“专用”和“公用” -> 确定

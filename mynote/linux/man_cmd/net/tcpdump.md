@@ -22,6 +22,8 @@ ARP：Address Resolution Protocol，地址解析协议，询问目标IP对应的
 ```bash
 # 监听来自或发放指定地址的所有包
 sudo tcpdump -i eth1 -nn 'src or dst 10.42.0.23'
+# 指定端口
+sudo tcpdump -i eth1 -nn 'src or dst 10.42.0.23 and port 4003'
 
 # 监听来自或发放指定地址的icmp(ping)包
 sudo tcpdump -i eth1 -nn 'icmp and src or dst 10.42.0.23'

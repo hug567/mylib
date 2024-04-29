@@ -11,6 +11,9 @@ netsh
 
 ```bash
 netsh interface
+
+# 查看路由
+netsh interface ipv4 show route
 ```
 
 ## 2）、网桥相关：
