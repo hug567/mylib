@@ -3,7 +3,7 @@
 ```bash
 sudo apt install iproute2
 
-# 安装的命令：
+# 安装的命令：dpkg -L iproute2 | grep bin
 /bin/ip
 /bin/ss
 /sbin/bridge

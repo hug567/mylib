@@ -138,6 +138,11 @@ zc                                   //折叠关闭
 :set fileformat=unix                 //设置文件格式为unix
 :set wrap                            //自动换行
 :set nowrap                          //不自动换行
+    
+//设置文件以gbk编码显示
+:e ++enc=gbk
+//打开文件时指定显示的编码
+vim text.c -c "e ++enc=gbk"
 ```
 
 ### 8）、多行注释：

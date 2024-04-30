@@ -28,6 +28,10 @@ ip.src == 192.168.0.1 and ip.dst == 192.168.1.1
 - v4.2.3：
 
 ```bash
+# 过滤条件组合
+and
+not
+
 # 指定ip
 host 192.168.0.2
 # 指定ip和端口
@@ -39,13 +43,16 @@ src host 192.168.0.2
 # 指定目的ip
 dst host 192.168.0.2
 
-# 捕获icmp(ping)包
-icmp
-
 # 指定MAC地址
 ether host 00:0a:35:00:1e:53
+
 # 捕获ARP包
 arp
-ether proto 0x0806
+# 捕获icmp(ping)包
+icmp
+# 捕获UDP包
+udp
+# 捕获TCP包
+tcp
 ```
 
