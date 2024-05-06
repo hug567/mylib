@@ -19,7 +19,7 @@ netsh interface portproxy add v4tov4 listenport=1234 connectaddress=192.168.0.1 
 # 查看所有端口转发
 netsh interface portproxy show all
 # 删除转发的端口
-netsh interface portproxy delete v4tov4 listenport=1234 listenaddress=192.168.99.143
+netsh interface portproxy delete v4tov4 listenport=1234
 # 本机打开远程主机映射端口
 http://101.45.92.102:1234
 ```
@@ -33,8 +33,9 @@ http://localhost:1234                                                # 本机浏
 
 ### 4)、Windows安装ssh:
 
-```shell
-# 在线安装：
+- 在线安装：
+
+```bash
 设置 -> 应用 -> 应用和功能 -> 可选功能 -> 添加功能 -> OpenSSH 服务器 -> 安装
 设置 -> 应用 -> 应用和功能 -> 系统组件 -> 可选功能 -> 添加功能 -> OpenSSH 服务器 -> 安装
 
@@ -45,8 +46,11 @@ Set-Service -Name sshd -StartupType 'Automatic'               # 设置sshd自启
 Get-Service sshd                                              # 查看sshd状态
 Stop-Service sshd                                             # 关闭sshd服务
 Restart-Service sshd                                          # 重启sshd服务
+```
 
-# 离线安装：
+- 离线安装：
+
+```bash
 https://github.com/PowerShell/Win32-OpenSSH/releases          # 下载opensSSH
 C:\Program Files\OpenSSH                                      # 解压到安装目录
 # 启动ssh-agnet
@@ -69,6 +73,10 @@ PasswordAuthentication no
 #       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
 Restart-Service sshd                                          # 重启sshd服务
 ```
+
+- 常见问题：
+  - 1）、问题：OpenSSH SSH Server 服务无法启动，发生系统错误1067；
+    - 解决： 删除目录C:\ProgramData\ssh，卸载OpenSSH Server后重装；
 
 ## 2、gitbash
 
