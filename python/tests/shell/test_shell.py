@@ -24,6 +24,8 @@ def run_shell_realtime_output(cmd):
         print(output[-1])
     # wait for the shell cmd to finish
     p.wait()
+    # 返回shell命令执行结果，0：成功，!0：失败
+    return p.returncode
 
 # 运行shell命令后结果在python函数中返回
 def run_shell_return_result(cmd):
@@ -70,12 +72,27 @@ def test_run_shell_return_result():
         print(line)
     #print(output[0]) # 第一行
 
+def test_run_shell_and_check_success():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    cmd = "ls /"
+    ret = run_shell_realtime_output(cmd)
+    print("run shell cmd: [" + cmd + "], return value:", ret)
+    if not ret:
+        print("run shell cmd: [" + cmd + "] success")
+
+    cmd = "ls /xx"
+    ret = run_shell_realtime_output(cmd)
+    print("run shell cmd: [" + cmd + "], return value:", ret)
+    if ret:
+        print("run shell cmd: [" + cmd + "] failed")
 
 def main():
     test_os_system()
     test_os_popen()
     test_subprocess()
     test_run_shell_return_result()
+    test_run_shell_and_check_success()
 
 if __name__ == '__main__':
     main()

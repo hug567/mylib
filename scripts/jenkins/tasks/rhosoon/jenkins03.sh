@@ -17,7 +17,7 @@ function run_jenkins_docker() {
         -v $HOME/code/jenkins/home:/var/jenkins_home \
         -v $HOME/code/jenkins/root:/root \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        myjenkins:v0.2
+        myjenkins:v0.3
         #jenkins/jenkins:lts-jdk11
 }
 
