@@ -25,6 +25,9 @@ function print_to_tail() {
     else
         old_len=${#LINE_OLD}
         new_len=${#new}
+        if [ $new_len -lt 8 ]; then
+            new_len=8
+        fi
         total_len=$(expr $old_len + $new_len)
         if [ $total_len -gt $col_size ]; then
             need_cr=0
