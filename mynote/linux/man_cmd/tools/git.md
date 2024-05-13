@@ -283,6 +283,12 @@ cscope.*
 
 //忽略某个目录下的所有指定类型文件
 /subdir/**/*.elf
+
+//忽略已提交的文件
+git rm <file>
+vim .gitignore
+git add .gitignore  //设置忽略文件
+git commit -m "Delete and ignore files"
 ```
 
 ### 2.9、stash暂存
