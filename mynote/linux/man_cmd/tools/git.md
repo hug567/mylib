@@ -311,7 +311,7 @@ git stash drop stash@{1}
 git stash store -m "New message" af8fdeee49a03d1b4609f294635e7f0d622e03db
 ```
 
-### 2.10、制作patch
+### 2.10、patch操作：
 
 ```shell
 # 制作patch
