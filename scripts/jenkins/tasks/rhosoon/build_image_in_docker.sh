@@ -45,11 +45,7 @@ function build_petalinux() {
         script="../build.sh"
     fi
 
-    if [ "$platform" = "default" ]; then
-        $script
-    else
-        $script $platform
-    fi
+    $script $platform
     return $?
 }
 
@@ -116,12 +112,11 @@ function build_one_platform() {
     fi
 }
 
-# default, QQE, QQF, S300, ...
+# QQE, QQF, S300, ...
 function build_all_platforms() {
     local use_for=$1
     local images_dir=$2
 
-    build_one_platform "default" $use_for $images_dir
     build_one_platform "QQE" $use_for $images_dir
     build_one_platform "QQF" $use_for $images_dir
     build_one_platform "S300" $use_for $images_dir
