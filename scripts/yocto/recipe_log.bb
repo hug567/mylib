@@ -31,14 +31,12 @@ python() {
     )
 }
 
-do_rm_work () {
-    :
-}
+# 强制执行指定任务
+do_fetch[nostamp] = "1"
+do_configure[nostamp] = "1"
+do_compile[nostamp] = "1"
 
-do_clean () {
-    :
-}
-
-do_cleansstate () {
-    :
-}
+# 忽略执行指定任务
+do_rm_work[noexec] = "1"
+do_clean[noexec] = "1"
+do_cleansstate[noexec] = "1"
