@@ -9,7 +9,6 @@ usage() {
     log_info "$0 <file> <start> <line>   dump file line <start> with <line>"
 }
 
-
 main() {
     if [ $# -lt 2 -o $# -gt 3 ]; then
         usage
