@@ -1,0 +1,16 @@
+# sudo cp -r usr/bin/myservice /usr/sbin
+# sudo cp myservice.service /lib/systemd/system
+# sudo systemctl enable myservice
+# sudo systemctl start myservice
+# journalctl -u myservice
+
+[Unit]
+Description=My Service
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /usr/sbin/myservice/main.sh
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
