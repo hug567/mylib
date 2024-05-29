@@ -60,3 +60,25 @@ systemd-analyze dump > systemd_dump.log                # 输出全部单元状�
 systemd-analyze log-level                              # 打印systemd日志级别
 systemd-analyze log-target                             # 打印systemd日志输出目标
 ```
+
+# 4、新增任务：
+
+```bash
+touch my_service.service
+#----------------------------------------------#
+[Unit]
+Description=My Service
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /usr/sbin/myservice/main.sh
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+#----------------------------------------------#
+sudo cp my_service.service /lib/systemd/system
+sudo systemctl enable my_service
+sudo systemctl start my_service
+```
+

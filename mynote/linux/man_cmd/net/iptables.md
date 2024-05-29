@@ -53,8 +53,10 @@ sudo iptables -L -t filter -n -v --line-number
 
 # 删除nat表路由后规则：1
 sudo iptables -t nat -D POSTROUTING 1
+
 # 删除filter表转发规则：1
 sudo iptables -t filter -D FORWARD 1
+
 # 设置filter表FORWARD规则默认行为为ACCEPT：
 # filter表规则有：INPUT、OUTPUT、FORWARD
 # 规则行为有：ACCEPT、DROP
