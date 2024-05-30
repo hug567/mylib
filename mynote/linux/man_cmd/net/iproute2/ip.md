@@ -27,7 +27,10 @@ sudo apt install iproute2
 
 ```bash
 # 显示所有网卡
-ip a
+ip a/address
+# 显示指定网卡信息：
+ip a show dev eno1
+ip address show dev eno1
 # 设置ip
 ip addr add dev eno1 192.168.0.13/24
 # 删除ip

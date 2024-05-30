@@ -15,4 +15,7 @@ crontab -r    # 删除所有定时任务
 
 # 例：
 0 * * * * echo "$(date) > /tmp/crontab.log"     # 每小时的第0分钟执行echo命令
+
+# 每5分钟执行一次脚本
+*/5 * * * * /usr/sbin/crontab/main.sh
 ```
