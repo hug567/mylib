@@ -7,6 +7,10 @@ sudo netplan --debug apply
 /etc/netplan/*.yaml
 # 查看当前配置：
 netplan get
+
+# 常见renderer：
+renderer: NetworkManager
+renderer: networkd                  # systemd-networkd
 ```
 
 # 2、有线网络：

@@ -27,7 +27,7 @@ sudo umount ~/share
 
 ## 3、Windows挂载linux目录：
 
-### 1)、ubunt安装samba：
+### 1)、ubuntu安装samba：
 ```bash
 # 安装samba：
 sudo apt install samba

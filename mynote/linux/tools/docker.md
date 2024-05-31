@@ -1,6 +1,6 @@
 # 1、安装docker：
 
-- 已验证：ubuntu 18.04、ubuntu 20.04
+- 已验证：ubuntu 18.04、ubuntu 20.04、ubuntu 22.04
 
 ```shell
 dpkg -l | grep docker                                       # 查看是否安装了docker
