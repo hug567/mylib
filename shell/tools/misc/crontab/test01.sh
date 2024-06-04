@@ -46,10 +46,10 @@ function add_default_route() {
     local ip="10.110.0.3"
     local ret=
 
-    ret=$(route -n | grep "10.110.0.3")
+    ret=$(ip route show | grep "10.110.0.3" | awk '{print$3}')
     if [ "${ret}" == "" ]; then
         log_info "will add default route to: ${ip}"
-        route add default gw 10.110.0.3
+        ip route add default via ${ip}
     fi
 }
 
@@ -69,18 +69,19 @@ function stop_net_card() {
     local name="enxaca0004390dc"
     local ret=
 
-    ret=$(ifconfig enxaca0004390dc | head -n 1 | grep UP)
+    ret=$(ip a show dev ${name} | head -n 1 | grep UP)
     if [ "${ret}" != "" ]; then
         log_info "will stop net card ${name}"
-        ifconfig ${name} down
+        ip link set ${name} down
     fi
 }
 
 function main() {
+    export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     log_info "Enter $0"
+    stop_net_card
     add_default_route
     set_dns_ip
-    stop_net_card
     limit_log_file_size
 }
 

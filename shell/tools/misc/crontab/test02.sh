@@ -59,6 +59,7 @@ function set_static_ip() {
 }
 
 function main() {
+    export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     log_info "Enter $0"
     set_static_ip
 }
