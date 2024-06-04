@@ -31,6 +31,10 @@ ip a/address
 # 显示指定网卡信息：
 ip a show dev eno1
 ip address show dev eno1
+# 启动网卡：
+sudo ip link set eno1 up
+# 停止网卡：
+sudo ip link set eno1 down
 # 设置ip
 ip addr add dev eno1 192.168.0.13/24
 # 删除ip
@@ -45,7 +49,8 @@ ip route show table all
 sudo ip link set dev eno1 up/down                           # 启动/关闭网卡
 sudo ip addr add dev eno1 192.168.1.26/24                   # 设置ip (或：为同一网卡新增不同ip)
 sudo ip addr del dev eno1 192.168.1.26/24                   # 删除ip
-sudo ip route add default via 192.168.1.1 dev eno1          # 添加路由
+sudo ip route add default via 192.168.1.1                   # 添加默认路由
+sudo ip route add default via 192.168.1.1 dev eno1          # 添加默认路由
 
 ip link help                                                # 查看link命令帮助
 sudo ip link set dev ens33 address 11:22:33:44:55:66        # 设置MAC地址
