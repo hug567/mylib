@@ -59,7 +59,8 @@ function set_static_ip() {
 }
 
 function main() {
-    export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    # crontab default PATH: /usr/bin:/bin
+    export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin"
     log_info "Enter $0"
     set_static_ip
 }
