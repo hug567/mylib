@@ -12,7 +12,9 @@ bitbake -c cleanall <target>                 # 清除指定target的所有输出
 bitbake -c listtasks <target>                # 显示指定target的可执行任务
 bitbake -s                                   # 显示所有可执行的包
 bitbake -e <target>                          # 显示指定target当前执行环境
-bitbake -g <target>                          # 显示指定任务的所有依赖
+bitbake -g <target>                          # 显示指定任务的所有依赖，保存在文件task-depends.dot中
+	sudo apt install graphviz                    # 查看图形化的依赖关系
+	dot -Tpng task-depends.dot -o task-depends.png
 bitbake -b <xx.bb>                           # 直接执行指定bb文件
 bitbake -v <target>                          # 打印一些调试信息
 bitbake -vDDD <target>                       # 打印一些调试信息，可以跟多个D
@@ -45,13 +47,11 @@ bitbake-layer show-appends
 ```bash
 # 创建layer
 cd poky
-source oe-init-build-env
-cd ..
+source oe-init-build-env    # 自动进入了build目录
+cd ..                       # 推出build目录，进入上一级目录
 bitbake-layers create-layer meta-qemu
-
 # 添加layer
-cd build
-bitbake-layers add-layer ../meta-qemu
+bitbake-layers add-layer meta-qemu
 
 # 查看使能的layer
 bitbake-layers show-layers

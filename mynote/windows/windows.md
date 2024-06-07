@@ -1,15 +1,4 @@
-## 1、powershell
-
-```bash
-echo $pshome                     # 查看powershell home目录
-echo $profile                    # 查看powershell配置文件
-test-path $profile               # 测试配置文件是否存在
-
-# Windows创建软连接:
-mklink /j leetcode_0026.c G:\MyProgram\Git\mylib\c\leetcode\leetcode_0026.c
-```
-
-## 2、Linux挂载Windows目录：
+## 1、Linux挂载Windows目录：
 
 ```bash
 # 1. Windows目录设置共享:
@@ -25,7 +14,7 @@ sudo mount -t cifs -o username=Administrator,password=****,gid=1000,uid=1000 //1
 sudo umount ~/share
 ```
 
-## 3、Windows挂载linux目录：
+## 2、Windows挂载linux目录：
 
 ### 1)、ubuntu安装samba：
 ```bash
@@ -58,7 +47,7 @@ sudo smbpasswd -a hx
 文件夹：\\10.110.0.3\samba -> 完成
 ```
 
-## 4、网卡连不上无线网络：
+## 3、网卡连不上无线网络：
 
 - 休眠一下电脑再启动；
 
@@ -90,7 +79,7 @@ ActiveDnsProbeHostV6		REG_SZ		dns.alidns.com
 
 - 修改后重启电脑；
 
-## 5、win10时间显示秒数：
+## 4、win10时间显示秒数：
 
 ```bash
 # 打开注册表：
@@ -102,12 +91,12 @@ ShowSecondsInSystemClock    REG_DWORD    0x00000001 (1)
 # 最后重启电脑
 ```
 
-## 6、win10允许被ping：
+## 5、win10允许被ping：
 
 - 控制面板 -> Windows Defender 防火墙 -> 高级设置
   - 入站规则：核心网络诊断 - ICMP 回显请求(ICMPv4-In) -> 允许
   - 出栈规则：核心网络诊断 - ICMP 回显请求(ICMPv4-Out) -> 允许
 
-## 7、允许应用通过防火墙：
+## 6、允许应用通过防火墙：
 
 - 控制面板 -> Windows Defender 防火墙 -> 允许应用或功能通过Windows Defender防火墙 -> 选中应用，勾选“专用”和“公用” -> 确定
