@@ -1,6 +1,8 @@
 # 1、iw：
 
 ```bash
+# 扫描所有wifi信号：
+sudo iw dev wlx502b73089fc9 scan | grep SSID:
 ```
 
 # 2、iwlist：

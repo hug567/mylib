@@ -69,6 +69,8 @@ ip neighbor show
 # 3、路由：
 
 ```bash
+# 查看路由：
+ip route show
 # 添加默认路由：
 sudo ip route add default via 10.110.0.3
 # 路由设置指定ip走指定网卡：
