@@ -40,3 +40,11 @@ do_compile[nostamp] = "1"
 do_rm_work[noexec] = "1"
 do_clean[noexec] = "1"
 do_cleansstate[noexec] = "1"
+
+#------------------------------------------------------------------------------#
+# 2024-06-06 poky master
+python() {
+    bb.note("S = %s" % d.getVar('S'))
+    bb.note("B = %s" % d.getVar('B'))
+    bb.note("D = %s" % d.getVar('D'))
+}
