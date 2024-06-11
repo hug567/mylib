@@ -82,3 +82,9 @@ sudo systemctl enable my_service
 sudo systemctl start my_service
 ```
 
+# 5、systemd-networkd：
+
+```bash
+# 有线网卡配置进来
+```
+

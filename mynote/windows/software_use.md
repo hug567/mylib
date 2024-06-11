@@ -53,6 +53,7 @@ Restart-Service sshd                                          # 重启sshd服务
 ```bash
 https://github.com/PowerShell/Win32-OpenSSH/releases          # 下载opensSSH
 C:\Program Files\OpenSSH                                      # 解压到安装目录
+# 将OpenSSH路径添加到系统路径
 # 启动ssh-agnet
 服务 -> OpenSSH Authentication Agent -> 启动类型改为“手动” -> 右键设置启动
 # 报错：packet_write_wait: Connection to 10.151.150.233 port 22: Broken pipe
