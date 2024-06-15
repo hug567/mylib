@@ -13,7 +13,7 @@ mount    # 挂载分区
 # 2、常用方式：
 
 ```bash
-mount /dev/sda /var     #
+mount /dev/sda /var     # 挂载磁盘/dev/sda到目录/var
 
 # 挂载ext4镜像文件
 mkdir mount_dir
@@ -29,6 +29,5 @@ sudo mount -o loop file.ext4 mount_dir
 # 查看u盘设备及文件系统类型
 sudo fdisk -l
 # 挂载u盘(fat32)
-
 ```
 
