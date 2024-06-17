@@ -39,7 +39,7 @@ sudo nmcli con add type ethernet con-name ens160 ifname ens160
 # 设置静态ip：
 sudo nmcli connection modify ens160 ipv4.addresses 192.168.99.50/24
 sudo nmcli connection modify ens160 ipv4.gateway 192.168.99.1
-sudo nmcli connection modify ens160 ipv4.dns "192.168.99.1"
+sudo nmcli connection modify ens160 ipv4.dns 192.168.99.1
 sudo nmcli connection modify ens160 ipv4.method manual
 sudo nmcli connection modify ens160 connection.autoconnect yes
 sudo nmcli connection up ens160
