@@ -168,6 +168,9 @@ function launch_docker() {
     local image="rhosoon_ubuntu_18:v0.7"
     local name="rhosoon_docker_$(date '+%Y%m%d%H%M%S')"
 
+    if [ -f /tmp/docker ]; then
+        rm -rf /tmp/docker
+    fi
     log_info "will launch docker with name: $name"
     PS1="[host] $ "
     echo $PS1
