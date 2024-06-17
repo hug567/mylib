@@ -4,7 +4,16 @@ SCRIPT_DIR=$(cd $(dirname $BASH_SOURCE[0]); pwd)
 source $SCRIPT_DIR/.myshell/lib.sh
 
 # needs to be overwritten unconditionally
-OVERWRITTEN_FILES=(
+GIT_BASH_FILES=(
+    .myshell
+    .gitconfig
+    .vimrc
+    .vim
+    .minttyrc
+    copy_configs.sh
+)
+
+LINUX_FILES=(
     .myshell
     .zshrc
     .oh-my-zsh
@@ -22,13 +31,15 @@ NOT_EXIST_FILES=(
     .profile
 )
 
-# only gitbash needed config files
-GITBASH_FILES=(
-    .minttyrc
-)
-
 function usage() {
     echo "Usage: $0 <home>       copy configures to home dir"
+}
+
+function is_git_bash() {
+    if [ -f /git-bash.exe ]; then
+        return 0
+    fi
+    return 1
 }
 
 function copy_files() {
@@ -42,6 +53,7 @@ function copy_files() {
 function copy_not_exist_files() {
     local dst=$1
     local fname=
+    local f=
 
     for f in ${NOT_EXIST_FILES[@]}; do
         fname=$(basename $f)
@@ -53,17 +65,14 @@ function copy_not_exist_files() {
 
 function copy_need_overwritten_files() {
     local dst=$1
+    local files="${LINUX_FILES[@]}"
+    local f=
 
-    for f in ${OVERWRITTEN_FILES[@]}; do
-        rm -rf $dst/$f
-        copy_files $SCRIPT_DIR/$f $dst
-    done
-}
-
-function copy_gitbash_files() {
-    local dst=$1
-
-    for f in ${GITBASH_FILES[@]}; do
+    if is_git_bash; then
+        echo "current is git bash"
+        files="${GIT_BASH_FILES[@]}"
+    fi
+    for f in ${files[@]}; do
         rm -rf $dst/$f
         copy_files $SCRIPT_DIR/$f $dst
     done
@@ -74,9 +83,6 @@ function copy_configures() {
 
     copy_need_overwritten_files $dst
     copy_not_exist_files $dst
-    if is_gitbash; then
-        copy_gitbash_files $dst
-    fi
 }
 
 function main() {
