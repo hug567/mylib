@@ -1,5 +1,5 @@
 <!--
-    练习：echarts在同一页面显示多个图标
+    练习：echarts在同一页面显示多个图表
     源码：https://github.com/apache/echarts.git
     时间：2024-06-17
 -->
@@ -18,76 +18,95 @@
 
 <body>
   <script>
-    var myChart;
-    $(document).ready(function () {
-      /*
-          console.log("Enter ready\n");
-          console.log("Enter ready 2\n");
-          myChart = echarts.init(document.getElementById('myChart-line'));
-          myChart.setOption({
-              title: {
-                  text: '折线图标题'
-              },
-              xAxis: {
-                  type: 'category',
-                  data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-              },
-              yAxis: {
-                  type: 'value'
-              },
-              series: [{
-                  data: [120, 200, 150, 80, 70, 110, 130],
-                  type: 'line'
-              }]
-          });
-          */
-      //import * as echarts from 'echarts';
+    var myChart01;
+    var myChart02;
+    var myChart03;
 
-      myChart = echarts.init(document.getElementById('idDivChart01'));
+    function createChart01() {
+      myChart01 = echarts.init(document.getElementById('idDivChart01'));
       var option = {
         xAxis: {
           type: 'category',
-          data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+          data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            data: [42, 19, 12, 64, 30, 92, 47, 84, 90, 51, 17, 86, 38, 22, 85, 12, 29, 78, 67, 8, 14, 77, 21, 97],
             type: 'line'
           }
         ],
       };
 
-      option && myChart.setOption(option);
+      option && myChart01.setOption(option);
+    }
 
-    });
+    function createChart02() {
+      myChart02 = echarts.init(document.getElementById('idDivChart02'));
+      var option = {
+        xAxis: {
+          type: 'category',
+          data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: [8, 19, 13, 80, 92, 21, 58, 30, 16, 75, 74, 66, 26, 26, 30, 4, 15, 28, 25, 41, 45, 99, 84, 59],
+            type: 'line'
+          }
+        ],
+      };
 
-    $(function () {
-      $("#idButton").click(function () {
-        var newData = new Array(150, 23, 360);
-        myChart.setOption({series: [{data: newData,}]});
-      });
+      option && myChart02.setOption(option);
+    }
+
+    function createChart03() {
+      myChart03 = echarts.init(document.getElementById('idDivChart03'));
+      var option = {
+        xAxis: {
+          type: 'category',
+          data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: [1, 66, 26, 80, 2, 55, 70, 33, 28, 0, 85, 36, 86, 24, 90, 27, 33, 82, 86, 51, 15, 31, 77, 77],
+            type: 'line'
+          }
+        ],
+      };
+
+      option && myChart03.setOption(option);
+    }
+
+    $(document).ready(function () {
+      createChart01();
+      createChart02();
+      createChart03();
     });
   </script>
 
   <div class="container">
-    <br>
-    <button type="submit" class="btn btn-primary" id="idButton">按钮</button>
-    <br><br>
-    <div id="idDivChart01" style="height: 400px; background-color: #fccfcf;"></div>
-    <div id="idDivChart02" style="height: 400px; background-color: #84f3b6;"></div>
+    <duiv><h3>echarts在同一页面显示多个图表：</h3></duiv>
+    <div id="idDivChart01" style="height: 200px;"></div>
+    <div id="idDivChart02" style="height: 200px;"></div>
+    <div id="idDivChart03" style="height: 200px;"></div>
 
     <div>
-      <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
+      <p><br>调试窗口：<button id="idClearDebugLogWindow">清除</button></p>
       <textarea rows="10" cols="100" id="idDebugLogWindow"></textarea>
       <script>
         function logInfo(log) {
           document.getElementById("idDebugLogWindow").value += log;
           document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
         }
-        document.getElementById("idButtonDebugLogWindow").onclick = function (event) {
+        document.getElementById("idClearDebugLogWindow").onclick = function (event) {
           document.getElementById("idDebugLogWindow").value = "";
           document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
         }

@@ -24,3 +24,10 @@ Get-Process | Sort-Object CPU -Descending | Select-Object -First 20
 Get-Process | Sort-Object WS -Descending | Select-Object -First 20
 ```
 
+# 3、查看文件md5值：
+
+```bash
+# 需在powershell中执行：
+Get-FileHash <file> -Algorithm MD5 | FOrmat-List
+```
+

@@ -14,5 +14,8 @@ mklink
 mklink D:\link D:\sourcefile
 # 建立目录符号链接
 mklink /d D:\link D:\sourcedir
+
+# 跨盘创建目录软链接，C:\Xilink为创建的软链接：
+mklink /j C:\Xilinx D:\ProgramFiles\Vivado2016.2
 ```
 
