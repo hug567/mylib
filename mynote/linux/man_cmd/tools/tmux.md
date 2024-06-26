@@ -111,8 +111,8 @@ export TREM=xterm-256color
 
 ```c
 //下载tmux：https://github.com/xnng/my-git-bash/tree/master/tmux
-//将bin目录下所有文件复制到： C：\Program Files\Git\usr\bin
-//将share目录下所有文件复制到： C：\Program Files\Git\usr\share
+//将bin目录下所有文件复制到： C:\Program Files\Git\usr\bin
+//将share目录下所有文件复制到： C:\Program Files\Git\usr\share
 ```
 
 ## 8、tmux插件：
