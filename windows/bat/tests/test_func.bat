@@ -14,7 +14,7 @@ call :printParams var1
 
 ::调用带返回值函数
 call :funcWithReturnVal
-echo func return value: %return%
+@echo func return value: %return%
 
 ::暂停
 pause
@@ -24,19 +24,19 @@ exit
 ::---------------------------------------------------------------------------::
 ::定义函数，放在脚本最后
 :myFunc
-    echo Enter custom function
-goto:eof
+    @echo Enter custom function
+@goto:eof
 
 ::带参数的函数
 :printParams
     ::定义变量
     set var1=%~1
     ::引用变量
-    echo parma 1: %var1%
-goto:eof
+    @echo parma 1: %var1%
+@goto:eof
 
 ::带返回值的函数
 :funcWithReturnVal
     set return=returnVal
-goto:eof
+@goto:eof
 ::---------------------------------------------------------------------------::
