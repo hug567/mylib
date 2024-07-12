@@ -63,9 +63,10 @@ exit                                                        # 退出并停止容
 Ctrl-P + Ctrl-Q                                             # 退出容器(不停止)
 ```
 
-## 3）、镜像操作：
+## 3）、镜像拉取：
 
 ```bash
+# 镜像下载
 docker search opensuse                                      # 搜索镜像
 docker pull opensuse                                        # 拉取镜像
 docker pull ubuntu:16.04
@@ -75,6 +76,22 @@ docker pull ubuntu:22.04
 docker pull fedora:35
 docker pull opensuse/leap:15.3
 
+# docker使用代理拉取镜像
+sudo vim /lib/systemd/system/docker.service
+#--------------------------------------------------------#
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:7890"
+Environment="HTTPS_PROXY=http://127.0.0.1:7890"
+#--------------------------------------------------------#
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+# 拉取镜像：
+docker pull etherpad/etherpad
+```
+
+## 4）、镜像文件：
+
+```bash
 # 镜像操作
 docker images -h                                            # 查看image命令帮助
 docker images                                               # 查看本地docker镜像
@@ -97,7 +114,7 @@ docker load -i <myopensuse.tar>
 docker logs <ID>
 ```
 
-## 4）、容器操作：
+## 5）、容器操作：
 
 ```bash
 # 只查看启动的容器
@@ -131,7 +148,7 @@ docker rename <CONTAINER ID> <new_name>
 docker rename <CONTAINER NAMES> <new_name>
 ```
 
-## 5)、文件操作：
+## 6)、文件操作：
 
 ```shell
 # 从容器中拷贝文件到host:
@@ -143,7 +160,7 @@ docker cp ~/.tmux.conf <CONTAINER ID>:/root
 docker cp ~/.tmux.conf <CONTAINER NAME>:/root
 ```
 
-## 6)、 日志：
+## 7)、 日志：
 
 ```bash
 # 查看指定容器日志
@@ -154,7 +171,7 @@ docker logs 33654069bce5 -f
 docker logs 33654069bce5 -n 10
 ```
 
-## 7）、nfs：
+## 8）、nfs：
 
 ```bash
 # docker中通过nfs挂载主机目录：

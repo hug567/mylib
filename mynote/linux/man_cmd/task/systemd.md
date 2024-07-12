@@ -65,6 +65,7 @@ systemd-analyze log-target                             # 打印systemd日志输�
 
 ```bash
 touch my_service.service
+vim my_service.service
 #----------------------------------------------#
 [Unit]
 Description=My Service
@@ -85,6 +86,6 @@ sudo systemctl start my_service
 # 5、systemd-networkd：
 
 ```bash
-# 有线网卡配置进来
+# 有线网卡配置
 ```
 
