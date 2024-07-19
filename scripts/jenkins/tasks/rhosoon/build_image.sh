@@ -168,9 +168,6 @@ function launch_docker() {
     local image="rhosoon_ubuntu_18:v0.7"
     local name="rhosoon_docker_$(date '+%Y%m%d%H%M%S')"
 
-    if [ -f /tmp/docker ]; then
-        rm -rf /tmp/docker
-    fi
     log_info "will launch docker with name: $name"
     PS1="[host] $ "
     echo $PS1
@@ -194,7 +191,7 @@ expect <<EOF
     sleep 5
     send "\rPS1='\[\\\u@\\\h\] \\\w $ '\r"
     expect {
-        "\[rhosoon@" { send "/tmp/docker/build_image_in_docker.sh ${platform} ${use_for}\r"}
+        "\[rhosoon@" { send "/tmp/docker/build_image_in_docker.sh ${platform} ${use_for} ${repo_revision}\r"}
         timeout { puts "docker build timeout"; exit 127 }
     }
     expect {
@@ -224,8 +221,10 @@ function main() {
     if [ "$download_code" = "true" ]; then
         repo_download_code $WORK_DIR $repo_revision
     fi
+    rm -rf /tmp/docker
+    mkdir -p /tmp/docker
     cp $CUR_DIR/build_image_in_docker.sh /tmp/docker
-    launch_docker $platform $use_for
+    launch_docker $platform $use_for $repo_revision
 }
 
 main $*

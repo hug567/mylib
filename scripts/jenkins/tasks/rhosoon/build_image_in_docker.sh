@@ -93,7 +93,9 @@ function build_one_platform() {
     local platform=$1
     local use_for=$2 # all/yocto/ramfs/mkpart
     local images_dir=$3
-    local plat_images_dir=$images_dir/$platform
+    local repo_version=$4
+    local dir_name="rhosoon_linux_${platform}_$(date +%Y%m%d)_${repo_version}"
+    local plat_images_dir=$images_dir/$dir_name
 
     log_info "will build platform: $platform ----------------------------------"
     if [ ! -d $plat_images_dir ]; then
@@ -116,10 +118,11 @@ function build_one_platform() {
 function build_all_platforms() {
     local use_for=$1
     local images_dir=$2
+    local repo_version=$3
 
-    build_one_platform "QQE" $use_for $images_dir
-    build_one_platform "QQF" $use_for $images_dir
-    build_one_platform "S300" $use_for $images_dir
+    build_one_platform "QQE" $use_for $images_dir $repo_version
+    build_one_platform "QQF" $use_for $images_dir $repo_version
+    build_one_platform "S300" $use_for $images_dir $repo_version
 }
 
 function print_host_info() {
@@ -133,6 +136,7 @@ function print_host_info() {
 function main() {
     local platform=$1
     local use_for=$2
+    local repo_version=$3
     local work_dir=$WORK_DIR
     local images_date=$(date '+%Y%m%d_%H%M%S')
     local images_dir=$IMAGES_ROOT_DIR/$images_date
@@ -143,10 +147,10 @@ function main() {
     log_info "work_dir: $work_dir"
     if [ "$platform" = "" -o "$platform" = "all" ]; then
         log_info "will build all platform images"
-        build_all_platforms $use_for $images_dir
+        build_all_platforms $use_for $images_dir $repo_version
     else
         log_info "will only build one platform images: $platform"
-        build_one_platform $platform $use_for $images_dir
+        build_one_platform $platform $use_for $images_dir $repo_version
     fi
     log_info "images: http://${myip}:9008/$images_date"
     log_info "finish building all images in docker"
