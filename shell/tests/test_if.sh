@@ -71,10 +71,35 @@ function test_if_elif() {
     __my_age 23
 }
 
+function _usage() {
+    echo "Enter usage function"
+}
+
+function _param_num_and_help() {
+    echo "param num: $#"
+    echo "first param: ${1}"
+
+    # 多个判断，或
+    if [ "${1}" == "-h" -o $# -ne 1  ]; then
+        _usage
+    else
+        echo "param num is right"
+    fi
+}
+
+function test_param_num_and_help() {
+    echo "$FUNCNAME:-----------------------------"
+
+    _param_num_and_help -h
+    _param_num_and_help a b
+    _param_num_and_help c
+}
+
 function main() {
     test_func_ret_and_cmp
     test_func_ret_or_cmp
     test_if_elif
+    test_param_num_and_help
 }
 
 main
