@@ -1,5 +1,6 @@
 # 1、搭建jenkins：
 ## 1)、安装：
+- 本机安装：
 ```bash
 # 中文文档
 https://www.jenkins.io/zh/doc/
@@ -16,9 +17,16 @@ sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sour
 sudo apt update
 sudo apt install jenkins
 sudo systemctl status jenkins
+```
 
+- docker安装（推荐）：
+
+```bash
 # 下载docker镜像：https://www.jenkins.io/download/
 docker pull jenkins/jenkins:lts-jdk11
+# 创建jenkins数据存储目录：
+cd /home/hx/code
+mkdir -p jenkins/home jenkins/root
 # 运行jenkins镜像：
 # 将home和root目录映射到本机中，即使重新启动新的docker容器，配置好的原jenkins系统仍然存在：
 docker run -u root --rm -d -p 8080:8080 -p 50000:50000 -v /home/hx/code/jenkins/home:/var/jenkins_home -v /home/hx/code/jenkins/root:/root -v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts-jdk11
@@ -82,14 +90,16 @@ Dashboard -> Manage Jenkins -> 凭据管理 -> 全局 -> Add Credentials
 - jenkins host机器中配置：
 
 ```bash
-# 进入jenkins docker，生成ssh秘钥，并发送到子节点：
+# 进入jenkins docker，第一次进入是需使用exec
+docker exec -it <container ID> bash
+# 生成ssh秘钥，并发送到子节点：
 ssh-keygen -t rsa -C "jenkins docker main"
 ssh-copy-id hx@10.110.0.3
 # 登录一次子节点，并复制.ssh到/var/jenkins_home
 ssh hx@10.110.0.3
 cp -r ~/.ssh/ /var/jenkins_home/
 # 或添加新的机器时：
-cp ~/.ssh/known_hosts /var/jenkins_home
+cp ~/.ssh/known_hosts /var/jenkins_home/.ssh/
 ```
 
 - 子节点机器配置：

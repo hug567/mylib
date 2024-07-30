@@ -1,5 +1,7 @@
 # 1、ssh：
 
+## 1）、常见用法：
+
 ```bash
 sudo apt install openssh-client openssh-server
 
@@ -16,7 +18,7 @@ cd C:\Users\rhosoon\.ssh
 ssh-keygen -f known_hosts -R 192.168.0.2
 ```
 
-- 跳板机登录：
+## 2）、跳板机登录：
 
 ```bash
 # ssh通过跳板机登录内部机器

@@ -1,6 +1,8 @@
 # Xilinx SDK常用操作：
 
-# 1、常用快捷键：
+# 1、常用操作：
+
+## 1）、常用快捷键：
 
 ```bash
 # 查看所有快捷键：
@@ -11,6 +13,18 @@ Ctrl+/                   # 注释或取消注释
 Ctrl+D                   # 删除光标所在行
 Ctrl+鼠标左键单击          # 跳转至函数或变量定义处
 Ctrl+L                   # 跳转到指定行
+```
+
+## 2）、设置字体：
+
+```bash
+Window -> Preferences -> General -> Appearance -> Colors and Fonts -> Text Font -> Edit -> Apply
+```
+
+## 3）、显示列宽提示线：
+
+```bash
+Window -> Preferences -> General -> Editors -> Text Editors -> Show print margin -> Print margin column: 80 -> OK
 ```
 
 # 2、打开窗口：
