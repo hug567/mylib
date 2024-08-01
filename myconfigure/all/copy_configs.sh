@@ -32,7 +32,10 @@ NOT_EXIST_FILES=(
 )
 
 function usage() {
-    echo "Usage: $0 <home>       copy configures to home dir"
+    echo "Usage: $0 <home> <environment>      copy configures to home dir"
+    echo "   eg: $0 \$HOME linux"
+    echo "   eg: $0 \$HOME gitbash"
+    echo "   eg: $0 \$HOME mobaxterm"
 }
 
 function is_git_bash() {
@@ -86,16 +89,20 @@ function copy_configures() {
 }
 
 function main() {
-    if [ $# != 1 ]; then
+    local dst=
+    local abs_dst=
+
+    if [ "$1" == "-h" -o $# != 2 ]; then
         usage
         exit 1
     fi
-    local dst=$(cd $1; pwd)
-    if [ ! -d $dst ]; then
-        echo "$dst does not exist"
+    local dst="${1}"
+    if [ "${dst}" == "" -o  ! -d "${dst}" ]; then
+        echo "dir [${dst}] does not exist"
         exit 1
     fi
-    copy_configures $dst
+    local abs_dst=$(cd ${dst}; pwd)
+    copy_configures $dst ${environment}
 }
 
 main $*

@@ -87,6 +87,7 @@
 
 #include <sys/stat.h>
     stat()
+    fstat()
 
 #include <sys/file.h>
     flock()
