@@ -30,3 +30,12 @@ Setting -> Configuration -> SSH -> (取消勾选)Automatically switch to SSH-bro
 Setting -> Configuration -> Misc -> Allow multiple instances of MobaXterm -> OK
 ```
 
+# 3、安装软件：
+
+```bash
+# 若国内下载速度慢，可设置代理：
+apt install tmux
+apt install sshpass
+apt install expect
+```
+
