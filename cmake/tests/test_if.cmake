@@ -48,9 +48,14 @@ function(test_if_basic)
     if(${var01})
         message("if condition is true: var01 = ${var01}")
     endif()
+    # 判断字符串相等
     set(var02 Y)
     if("x${var02}" STREQUAL "xY")
         message("if condition is true: var02 = ${var02}")
+    endif()
+    # 判断字符串不等
+    if(NOT "x${var02}" STREQUAL "xX")
+        message("var01(${var01}) is not equal X")
     endif()
 
     if(DEFINED ENV{PATH})
