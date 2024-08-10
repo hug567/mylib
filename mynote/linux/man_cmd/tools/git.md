@@ -185,6 +185,11 @@ git rebase --continue
 git commit -s --author="Huang Xing <huangxing567@163.com>"
 //已提交的commit修改作者
 git commit --amend --author="Huang Xing <huangxing567@163.com>"
+
+//git添加空目录：在空目录中创建.gitkeep文件后创建commit
+touch .gitkeep
+git add .
+git commit -s "Add empty folder"
 ```
 
 ### 2.5、撤销操作

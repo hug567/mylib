@@ -133,6 +133,7 @@ docker rm $(docker ps -aq)                                  # 删除所有容器
 
 # 进入已启动的容器
 docker attach <CONTAINER ID>
+# 进入容器伪终端
 docker exec -it <CONTAINER ID> bash
 # docker启动centos
 docker run -it centos:latest /bin/bash
@@ -146,6 +147,9 @@ docker run --user hx -w /home/hx -it myubuntu:v1.0 /bin/bash
 # 重命名容器
 docker rename <CONTAINER ID> <new_name>
 docker rename <CONTAINER NAMES> <new_name>
+
+# 查看容器信息
+docker inspect <CONTAINER ID>
 ```
 
 ## 6)、文件操作：
