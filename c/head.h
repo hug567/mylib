@@ -49,6 +49,12 @@
     fork()
     pipe()
 
+#include <time.h>
+    struct tm
+    time()
+    localtime()
+    localtime_r()
+
 #include <signal.h>
     struct sigaction
     sigaction()

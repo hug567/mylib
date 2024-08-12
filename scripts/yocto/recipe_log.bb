@@ -22,12 +22,14 @@ bbnote "[hx-debug] S = ${S}"
 # poky 2.2.2: meta-poky/conf/distro/poky.conf
 bb.note("[hx-debug] S = %s" % d.getVar('S', True))
 
+# hx-debug
 python() {
     bb.note("\n[hx-debug]:\n",
         "S = %s" % d.getVar("S", True), "\n",
         "B = %s" % d.getVar("B", True), "\n",
         "D = %s" % d.getVar("D", True), "\n",
         "PV = %s" % d.getVar("PV", True), "\n",
+        "PN = %s" % d.getVar("PN", True), "\n",
         "WORKDIR = %s" % d.getVar("WORKDIR", True), "\n",
         "SRC_URI = %s" % d.getVar("SRC_URI", True), "\n",
     )
