@@ -24,5 +24,21 @@ python() {
     hpath = os.path.join(hdir, "system.hdf")
     d.setVar('HDF_PATH', hpath) # 编译recpie前修改变量HDF_PATH的值
 }
+
+python() {
+    machine = d.getVar('RHOSOONMACHINE', True)
+    if machine == "S300BT":
+        d.appendVar('SRC_URI', ' file://S300BT/system-user.dtsi')
+    else:
+        d.appendVar('SRC_URI', ' file://system-user.dtsi')
+}
+
+# 常用变量操作函数：
+d.getVar()
+d.setVar()
+d.delVar()
+d.appendVar()
+d.prependVar()
+d.renameVar()
 ```
 

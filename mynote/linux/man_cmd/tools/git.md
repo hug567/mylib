@@ -225,7 +225,7 @@ git clean -fdx                                 //删除未追踪与.gitignore忽
 //撤销第1个commit中指定文件的修改
 git reset HEAD^ <files>
 git reset HEAD~1 <files>
-git commit --amend
+git commit --amend / git commit --amend --no-edit
 
 //撤销第2个commit中指定文件的修改
 git reset HEAD~2 <files>
