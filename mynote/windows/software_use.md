@@ -38,6 +38,7 @@ http://localhost:1234                                                # 本机浏
 ```bash
 设置 -> 应用 -> 应用和功能 -> 可选功能 -> 添加功能 -> OpenSSH 服务器 -> 安装
 设置 -> 应用 -> 应用和功能 -> 系统组件 -> 可选功能 -> 添加功能 -> OpenSSH 服务器 -> 安装
+设置 -> 系统 -> 可选功能 -> ......
 
 # 以管理员身份运行powershell:
 Start-Service sshd                                            # 启动sshd

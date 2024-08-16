@@ -43,6 +43,18 @@ ssh 172.22.195.55
 # scp拷贝文件：
 scp file.txt hx@172.22.195.55:~
 scp hx@172.22.195.55:~/file.txt ./
+
+# 通过跳板机访问内部机器，先在~/.ssh/config中配置：
+#------------------------------------------------#
+Host antenna
+    User root
+    Hostname 192.168.0.2
+    ProxyCommand ssh rhosoon@192.168.99.50 -W %h:%p B
+#------------------------------------------------#
+# 拷贝文件到内部机器：
+scp file antenna:~
+# 从内部机器拷贝文件到本地：
+scp antenna:/etc/repoinfo ./
 ```
 
 # 2、ssh-keygen：
