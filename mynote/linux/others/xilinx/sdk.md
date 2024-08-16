@@ -27,6 +27,26 @@ Window -> Preferences -> General -> Appearance -> Colors and Fonts -> Text Font 
 Window -> Preferences -> General -> Editors -> Text Editors -> Show print margin -> Print margin column: 80 -> OK
 ```
 
+## 4）、显示空格和tab：
+
+```bash
+Window -> Preferences -> General -> Editors -> Text Editors -> Show whitespace characters -> OK
+```
+
+## 5）、多列编辑：
+
+```bash
+# 进入和退出多列编辑模式
+Shift + Alt + A
+```
+
+## 6）、修改默认编码：
+
+```bash
+Window -> Preferences -> General -> Workspace -> Text file encoding -> Other -> UTF-8 -> OK
+Window -> Preferences -> General -> Content Types -> Text -> Default encoding: -> utf-8 -> Update -> OK
+```
+
 # 2、打开窗口：
 
 ```bash

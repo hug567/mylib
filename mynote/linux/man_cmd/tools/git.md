@@ -222,7 +222,7 @@ git clean -f                                   //删除未追踪的文件
 git clean -fd                                  //删除未追踪的文件及目录
 git clean -fdx                                 //删除未追踪与.gitignore忽略的文件及目录
 
-//撤销第1个commit中指定文件的修改
+//撤销第1个commit中指定文件的提交，文件的修改还在，git status可查看
 git reset HEAD^ <files>
 git reset HEAD~1 <files>
 git commit --amend / git commit --amend --no-edit
