@@ -1,4 +1,6 @@
 #!/bin/bash
+# 通过跳板机发送文件到内部机器，使用expect自动输入密码，需先配置~/.ssh/config
+# 2024-08-16
 
 function usage() {
     echo "Usage: $0 <file/dir>    scp file/dir to antenna with ssh jump"
@@ -33,17 +35,23 @@ EOF
 }
 
 function main() {
-    local file=${1}
+    local files="$*"
+    local file=
+    local i=0
 
-    if [ $# -ne 1 ]; then
+    if [ $# -eq 0 -o "$1" == "-h" ]; then
         usage
         exit
     fi
-    if [ ! -e ${file} ]; then
-        echo "there is no: ${file}"
-    fi
-
-    scp_to_antenna "${file}"
+    for file in ${files}; do
+        if [ ! -e ${file} ]; then
+            echo "there is no: ${file}"
+            continue
+        fi
+        let i=i+1
+        echo "- [${i}] --------------------------------------------------------"
+        scp_to_antenna "${file}"
+    done
 }
 
 main $*
