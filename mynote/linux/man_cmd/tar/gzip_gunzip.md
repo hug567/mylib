@@ -20,6 +20,13 @@ gzip -d test.gz            # 解压test.gz文件为test
 # 2、gunzip：
 
 ```bash
+gunzip
+    -h                    # 查看帮助
+    -k                    # 保留源文件
+    -c                    # 解压后的内容输出到stdout，同时保留原文件
+
 gunzip test.gz             # 解压test.gz文件为test
-gunzip -k test.gz          # 保留原文件解压
+gunzip -k test.gz          # 保留原文件解压，解压后文件名为test
+# 解压到指定文件，同时保留原文件
+gunzip -c test.gz > test.log
 ```

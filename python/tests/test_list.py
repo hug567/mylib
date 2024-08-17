@@ -32,11 +32,11 @@ def test_traverse_list():
         print("color:", col)
 
     print("traverse 02:----------");
-    # list length: len(colors)
+    # 获取列表长度: len(colors)
     for i in range(0, len(colors)):
         print("color:", colors[i])
 
-# modify, insert and delete list member
+# 修改、插入、删除列表成员
 def test_modify_list():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
@@ -48,9 +48,9 @@ def test_modify_list():
     print("ages:", ages)
 
     print("insert: ----------")
-    # insert to tail
+    # 添加到列表尾部
     ages.append(58)
-    # insert to head
+    # 添加到列表头部
     ages.insert(0, 7)
     # insert by index, start from 0
     ages.insert(2, 22)

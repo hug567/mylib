@@ -32,7 +32,7 @@ ih_comp = 0x00 : none ?
           0x02 : gzip
 ```
 
-## 2、u-boot内存分布：
+# 2、u-boot内存分布：
 
 ```c
 CONFIG_ENV_ADDR=0x04000000  // 环境变量存储地址
@@ -43,13 +43,36 @@ CONFIG_SYS_LOAD_ADDR=0x40200000  //
 CONFIG_DEBUG_UART_BASE=0x9000000
 ```
 
-## 3、u-boot传递给kernel的信息：
+# 3、u-boot传递给kernel的信息：
 
 - 内核地址：
 - initrd地址：
 - dtb地址：x0
 - cmdline：
 
+# 4、u-boot启动：
+
+```bash
+# u-boot启动后自动运行的命令：
+default_bootcmd=run uenvboot; run cp_kernel2ram && bootm ${netstart}
+```
+- 案例：
+```diff
+# petalinux设置u-boot自动从tftp server拉取镜像（非正式方法）：
+# 从yocto u-boot-xlnx build目录拷贝一份自动生成的文件platform-auto.h：
+# 修改后放在如下位置：
+#     project-spec/meta-user/recipes-bsp/u-boot/files/platform-auto.h
+
+--- a/platform-auto.h
++++ b/platform-auto.h
+@@ -189,7 +189,7 @@
+        "test_crc=if imi ${clobstart}; then run test_img; else echo ${img} Bad CRC - ${img} is NOT UPDATED; fi\0" \
+        "test_img=setenv var \"if test ${filesize} -gt ${psize}\\; then run fault\\; else run ${installcmd}\\; fi\"; run var; setenv var\0" \
+        "netboot=tftpboot ${netstart} ${kernel_img} && bootm\0" \
+-       "default_bootcmd=run uenvboot; run cp_kernel2ram && bootm ${netstart}\0" \
++       "default_bootcmd=run uenvboot; tftpboot 0x10000000 image-tftpboot.ub; bootm 0x10000000\0" \
+ ""
+```
 
 
 
