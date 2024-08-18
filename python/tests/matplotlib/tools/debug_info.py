@@ -4,22 +4,26 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import sys
 import argparse
+
+args=None
 
 def get_line_data_by_index(line, index):
     datas = line.split(',')
     return float(datas[index + 1])
 
-def main():
+def parse_args(argv):
     parser = argparse.ArgumentParser(description='Plot debug_info_t data')
     parser.add_argument('-f', '--fname', type=str, help='specify data file')
-    args = parser.parse_args()
+    global args = parser.parse_args()
 
     if not os.path.exists(args.fname):
         print("there is no file:", args.fname)
-        return
+        exit(1)
     print('fname:', args.fname)
 
+def plot_dinfo_index():
     index_col = []
     f = open(args.fname)
     lines = f.readlines()
@@ -42,6 +46,10 @@ def main():
     y = np.array(index_col)
     plt.plot(x, y)
     plt.show()
+
+def main():
+    parse_args(sys.argv)
+    plot_dinfo_index()
 
 if __name__ == '__main__':
     main()
