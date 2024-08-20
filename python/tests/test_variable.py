@@ -6,6 +6,11 @@
 ################################################################################
 import sys
 
+# 全局变量
+g_var_int = 0
+g_var_str = "hello"
+g_var_none = None # python中可将空值None赋值给任何变量
+
 def test_using_var():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
     # print
@@ -77,12 +82,42 @@ def test_var_type():
     var='12345'
     print("var type:", type(var))
 
+# 在函数中修改全局变量
+def change_global_var():
+    # 先声明为全局变量
+    global g_var_int
+    global g_var_str
+    global g_var_none
+
+    # 修改全局变量
+    g_var_int = 1
+    g_var_str = "world"
+    g_var_none = [1, 2, 3, 4, 5]
+
+# python全局变量
+def test_global_var():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    # 在函数中引用全局变量
+    print("g_var_int:", g_var_int)
+    print("g_var_str:", g_var_str)
+    print("g_var_none:", g_var_none)
+
+    # 修改全局变量
+    change_global_var()
+
+    # 再次引用全局变量
+    print("g_var_int:", g_var_int)
+    print("g_var_str:", g_var_str)
+    print("g_var_none:", g_var_none)
+
 def main():
     test_using_var()
     test_using_string()
     test_blank_char()
     test_number()
     test_var_type()
+    test_global_var()
 
 if __name__ == '__main__':
     main()
