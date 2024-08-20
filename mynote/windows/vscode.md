@@ -100,6 +100,23 @@ Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench  Editor: Enable
 #---------------------------------------------#
 ```
 
+```bash
+Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
+# 常用配置：
+#---------------------------------------------#
+{
+    "editor.rulers": [80,120],
+    "files.trimTrailingWhitespace": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.fontSize": 17,
+    "files.autoGuessEncoding": true,
+    "workbench.editor.enablePreview": false,
+}
+#---------------------------------------------#
+```
+
+
+
 ## 2、编译调试C语言：
 
 ```c
