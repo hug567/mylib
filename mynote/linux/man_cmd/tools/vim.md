@@ -406,6 +406,14 @@ nmap <C-a> :MRU<CR>
 let MRU_Window_Height = 20
 ```
 
+### 10）、vim不能显示中文：
+
+```bash
+# 在~/.vimrc中添加：
+set encoding=utf-8
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+```
+
 ## 5、下载配色主题：
 
 ```C
