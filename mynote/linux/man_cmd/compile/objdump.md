@@ -15,8 +15,8 @@ objdump -T xxx.so    # 查看动态符号表
 # 2、常见用法：
 ```bash
 # 常用命令：
-objdump -d -S vmlinux > vmlinux.asm              # 反汇编代码并插入源码
-objdump -d -S -r -l vmlinux > vmlinux.asm        # 反汇编并插入源码、文件和行号
+objdump -dS vmlinux > vmlinux.asm                # 反汇编代码并插入源码
+objdump -dSrl vmlinux > vmlinux.asm              # 反汇编并插入源码、文件和行号
 objdump -h vmlinux                               # 查看节头信息
 # 查看有哪些段
 objdump -h vmlinux
