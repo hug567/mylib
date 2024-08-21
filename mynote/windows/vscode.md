@@ -100,6 +100,14 @@ Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench  Editor: Enable
 #---------------------------------------------#
 ```
 
+#### 10）、禁止vscode自动更新：
+
+```bash
+Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Update: Mode -> manual
+```
+
+- 综合：
+
 ```bash
 Ctrl+Shift+P -> Preferences: Open User Settings (JSON)
 # 常用配置：

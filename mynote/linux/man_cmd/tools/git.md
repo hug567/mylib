@@ -379,6 +379,13 @@ git tag -s v2.35 -m "Add new tag v2.35"
 git tag -v v2.35
 ```
 
+### 2.12、submodule：
+
+```bash
+# 查看帮助
+git submodule --help
+```
+
 ## 3、git lfs：
 
 ```bash
