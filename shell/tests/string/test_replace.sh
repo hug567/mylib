@@ -15,6 +15,11 @@ function test_replace_one_char() {
     echo "str02: [${str02[@]}]"
     echo "str03: [${str03[@]}]"
     echo "str04: [${str04[@]}]"
+
+    # 下划线替换未换行符
+    local str05="my_name_is_Tom"
+    local str06=$(echo "${str05}" | sed "s/_/\n/g")
+    echo "${str06}"
 }
 
 function main() {
