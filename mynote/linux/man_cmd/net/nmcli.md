@@ -48,12 +48,15 @@ sudo cat /etc/NetworkManager/system-connections/ens160
 # 重新启动NetworkManager：
 sudo systemctl restart NetworkManager
 ```
-- wifi连接：？未验证
+- wifi连接：
 ```bash
-# 设置dhcp:
-#sudo nmcli con add type ethernet con-name ens160 ifname ens160
-sudo nmcli connection modify ens160 ipv4.method auto
-sudo nmcli connection modify ens160 connection.autoconnect yes
-sudo nmcli connection up ens160
+# 查看可用的wifi网络：
+nmcli device wifi list
+# 指定网卡连接到wifi网络：
+sudo nmcli device wifi connect <SSID> password <password> wep-key-type key ifname <eth0>
+# 查看连接：
+nmcli connection show
+# 查看生成的配置文件：
+ls /etc/NetworkManager/system-connections
 ```
 
