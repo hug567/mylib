@@ -24,17 +24,17 @@ function extract_frames() {
 
     time_s=$(get_video_duration ${video})
     echo "total time: ${time_s}s"
-    for i in $(seq 1 ${time_s}); do
-        name_sub=$(printf "%03d" ${i})
-        file_name="output_${name_sub}.jpg"
-        echo "will extract image: ${file_name}"
-        ffmpeg -i ${video} -ss ${i} -vframes 1 "${save_dir}/${file_name}" &> /dev/null
-    done
+    pushd ${save_dir}
+    # -r 5: 每秒提取5张图片
+    ffmpeg -i ${video} -r 5 "output_%05d.jpg" &> /dev/null
+    popd
+    return
 }
 
 function main() {
     local video=$1
     local save_dir=$2
+    local video_abs=
 
     if [ $# -ne 2 -o "$1" == "-h" ]; then
         usage
@@ -45,12 +45,13 @@ function main() {
         echo "there is no file ${video}"
         exit 1
     fi
+    video_abs=$(realpath ${video})
     if [ ! -d ${save_dir} ]; then
         echo "there is no dir ${save_dir}"
         exit 1
     fi
 
-    extract_frames ${video} ${save_dir}
+    extract_frames ${video_abs} ${save_dir}
 }
 
 main $*
