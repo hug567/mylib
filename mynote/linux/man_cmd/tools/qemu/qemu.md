@@ -1,11 +1,11 @@
 # 1、基本命令
 ----
 ```c
-//安装
+// 安装
 // ubuntu 22.04
 sudo apt install qemu-system qemu-user-static
 
--cpu         //
+-cpu                                        //
 -M vexpress-a9                              //模拟vexpress-a9单板
 -M help                                     //获取支持的所有单板
 -m 512M                                     //内存512M
