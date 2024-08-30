@@ -23,6 +23,7 @@ mount -t debugfs none /sys/kernel/debug
 
 /sbin/mdev -s
 
+# need enable
 echo /sbin/mdev > /proc/sys/kernel/hotplug
 
 telnetd
