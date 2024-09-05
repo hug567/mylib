@@ -5,6 +5,12 @@ function test_awk_normal() {
     echo "$FUNCNAME:-----------------------------"
 
     local file=/tmp/test_awk.txt
+
+    if [ ! -f ${file} ]; then
+        echo "there is no file: ${file}"
+        return
+    fi
+
     # the default delimiters are space and tab
     # $1: print the first member after split
     echo "print \$1:-----"
@@ -20,8 +26,24 @@ function test_awk_normal() {
     awk -F ':' '{print$2}' $file
 }
 
+# 在shell脚本中使用复杂的awk语句
+function test_awk_multi() {
+    echo "$FUNCNAME:-----------------------------"
+
+    local text=$(ls -l /)
+    echo "${text}" | awk '
+        {
+            size=$5
+            if (size > 0) {
+                print $0
+            }
+        }
+    '
+}
+
 function main() {
     test_awk_normal
+    test_awk_multi
 }
 
 main

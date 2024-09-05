@@ -1,41 +1,42 @@
 #!/usr/bin/awk -f
-# run: ./test_print.awk file.txt
+# run: ./test_function.awk file.txt
 
 BEGIN {
-    # only execute once
+    # BEGAIN中代码只在脚本开始时执行一次
+    # 调用main函数
     main()
 }
 
 END {
 }
 
-# functions with no parameters and no return value
+# 函数无参数和返回值
 function test_hello() {
     print "hello awk"
 }
 
-# functions with parameters
+# 函数有多个参数
 function test_name(name, age) {
-    # using parameter
+    # 使用函数参数
     print "person name: " name ", age: " age
 }
 
-# functions with parameters and return value
+# 函数有多个参数和返回值
 function test_add(a, b) {
     sum = a + b
     return sum
 }
 
 function main() {
-    # function call
+    # 调用函数
     test_hello()
-    # function call with parameters
+    # 调用带参函数
     test_name("Bob", 19)
-    # get function return value
+    # 调用带参函数，并获取返回值
     print "3 + 5 = " test_add(3, 5)
 }
 
-# For each line in the file, execute the code here
+# 处理输入文件的每一行时，均执行一遍此处的代码
 {
     #main()
 }
