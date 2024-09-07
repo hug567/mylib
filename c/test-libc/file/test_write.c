@@ -12,6 +12,14 @@
 
 #define LOG_FILE "/tmp/debug.log"
 
+FILE *__fp;
+#define write_to_file(path, fmt, ...) \
+do { \
+	__fp = fopen(path, "a"); \
+	fprintf(__fp, fmt, __VA_ARGS__); \
+	fclose(__fp); \
+} while(0)
+
 static int test_write02(void)
 {
 	write_to_file("/tmp/test.log", "Enter %s success\n", __func__);

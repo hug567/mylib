@@ -24,6 +24,13 @@ repo sync
 repo start main --all
 repo forall -c "git lfs pull"
 
+# 单编一个recipe
+bash
+export RHOSOONMACHINE=S300BT
+export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE RHOSOONMACHINE"
+source /opt/pkg/petalinux/settings.sh
+petalinux-build -c cpu1_tools
+
 # using bitbake
 source /opt/pkg/petalinux/settings.sh
 source /opt/pkg/petalinux/components/yocto/source/arm/environment-setup-cortexa9hf-neon-xilinx-linux-gnueabi

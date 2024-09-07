@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 2.6)
 # cmake工程名称
 project(test-libc)
 
+if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
+    message(FATAL_ERROR "Connot compile in source code dir")
+endif()
+
 # 设置C编译器
 set(CMAKE_C_COMPILER /usr/bin/gcc)
 
@@ -38,3 +42,5 @@ add_executable(test-libc.elf
     string/string_main.c
     string/test_strlen.c
 )
+
+add_subdirectory(time)

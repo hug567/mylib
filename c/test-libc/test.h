@@ -39,6 +39,7 @@ struct test_module {
 //#define mt_succ(fmt, ...)  printf("[SUCC ][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
 //#define mt_fail(fmt, ...)  printf("[FAIL ][%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__)
 
+#if 0
 FILE *__fp;
 #define write_to_file(path, fmt, ...) \
 do { \
@@ -46,6 +47,7 @@ do { \
 	fprintf(__fp, fmt, __VA_ARGS__); \
 	fclose(__fp); \
 } while(0)
+#endif
 
 #define RUN_TEST(__test__) \
 	do { \

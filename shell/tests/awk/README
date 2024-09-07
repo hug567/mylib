@@ -1,9 +1,11 @@
 待学习：
     if else，if直接判断函数返回真假
+    bool
+    for
     while do/while
     switch
+    逻辑运行：与或非
     数值比较
     字符串比较
     字符串操作：连接、截取等
-    布尔
     ...
