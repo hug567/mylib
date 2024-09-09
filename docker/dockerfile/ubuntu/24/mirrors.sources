@@ -1,0 +1,16 @@
+Types: deb deb-src
+URIs: https://mirrors.aliyun.com/ubuntu/
+Suites: noble noble-updates noble-backports noble-security noble-proposed
+Components: main universe restricted multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+# URIs: http://mirrors.aliyun.com/ubuntu/
+# URIs: https://mirrors.aliyun.com/ubuntu/
+# URIs: http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+# URIs: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+# URIs: http://mirrors.ustc.edu.cn/ubuntu/
+# URIs: https://mirrors.ustc.edu.cn/ubuntu/
+# URIs: http://mirrors.cloud.tencent.com/ubuntu/
+# URIs: https://mirrors.cloud.tencent.com/ubuntu/
+# URIs: http://mirrors.huaweicloud.com/ubuntu/
+# URIs: https://mirrors.huaweicloud.com/ubuntu/
