@@ -2,6 +2,8 @@
 # 命令举例:
 #     cd mylib/docker/dockerfile/ubuntu/24/
 #     docker build -t myubuntu24:v0.1 -f myubuntu24.df ./
+# 运行：
+#     docker run -it myubuntu24:v0.1 --net=host bash
 # 2024-09-09
 
 # 以镜像ubunut:24.04为基础
@@ -12,23 +14,23 @@ COPY mirrors.sources /etc/apt/sources.list.d/
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 安装必要工具
-RUN apt update
-RUN apt-get -y install apt-utils && \
-    apt-get -y install sudo locales adduser vim git zsh tmux iputils-ping \
-                       net-tools python3
-
-RUN locale-gen en_US.UTF-8 && \
-    update-locale
-
-# 时区配置
-
 ARG user=hx
 ARG passwd=0427
+
+# 安装必要工具
 # 创建新用户，赋予sudo权限，设置用户密码
-RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
+RUN apt update && \
+    apt-get -y install apt-utils && \
+    apt-get -y install sudo locales adduser vim git zsh tmux iputils-ping \
+                       net-tools python3 && \
+    locale-gen en_US.UTF-8 && \
+    update-locale && \
+    useradd --create-home --no-log-init --shell /bin/bash ${user} && \
     adduser ${user} sudo && \
-    echo "${user}:${passwd}" | chpasswd
+    echo "${user}:${passwd}" | chpasswd && \
+    cd /usr/bin && ln -s python3 python
+
+# 时区配置
 
 # 设置默认登录用户
 USER hx
