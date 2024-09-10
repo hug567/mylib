@@ -18,6 +18,8 @@ sudo systemctl restart NetworkManager
 
 # 2、常见用法：
 
+## 1)、查看状态：
+
 ```bash
 # 扫描所有wifi信号：
 nmcli device wifi list
@@ -30,7 +32,7 @@ nmcli device status
 nmcli connection show
 ```
 
-- 设置开机自动配置静态ip：
+## 2)、设置开机自动配置静态ip：
 
 ```bash
 # 有线网卡设置静态ip：
@@ -48,7 +50,8 @@ sudo cat /etc/NetworkManager/system-connections/ens160
 # 重新启动NetworkManager：
 sudo systemctl restart NetworkManager
 ```
-- wifi连接：
+## 3)、wifi连接：
+
 ```bash
 # 查看可用的wifi网络：
 nmcli device wifi list
@@ -58,5 +61,18 @@ sudo nmcli device wifi connect <SSID> password <password> wep-key-type key ifnam
 nmcli connection show
 # 查看生成的配置文件：
 ls /etc/NetworkManager/system-connections
+```
+
+## 4)、修改指定网卡的dns：
+
+```bash
+# 查看网卡对应的连接：
+nmcli connection show
+# 修改指定连接的dns：
+sudo nmcli con mod 'Wired connection 3' ipv4.dns "119.29.29.29"
+# 使配置生效：
+sudo nmcli con up 'Wired connection 3'
+# 查看网页对应的dns：
+resolvectl status
 ```
 

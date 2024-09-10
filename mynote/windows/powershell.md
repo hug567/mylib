@@ -28,6 +28,6 @@ Get-Process | Sort-Object WS -Descending | Select-Object -First 20
 
 ```bash
 # 需在powershell中执行：
-Get-FileHash <file> -Algorithm MD5 | FOrmat-List
+Get-FileHash <file> -Algorithm MD5 | Format-List
 ```
 
