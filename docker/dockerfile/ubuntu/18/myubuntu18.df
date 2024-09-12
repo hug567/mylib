@@ -7,23 +7,23 @@
 # pull ubuntu 18.04: docker pull ubuntu:18.04
 FROM ubuntu:18.04
 
-# using http://...
 COPY sources.list /etc/apt/
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG user=hx
 ARG passwd=hx2023
-# Add new user, grant permissions to sudo , set user password
-RUN useradd --create-home --no-log-init --shell /bin/bash ${user} && \
-    adduser ${user} sudo && \
-    echo "${user}:${passwd}" | chpasswd
 
+# Add new user, grant permissions to sudo , set user password
 RUN apt update
 RUN apt-get -y install apt-utils && \
-    apt-get -y install sudo locales vim git zsh tmux iputils-ping net-tools && \
-    locale-gen en_US.UTF-8 && \
-    update-locale
+    apt-get -y install sudo locales vim git zsh tmux iputils-ping net-tools \
+                       python3 && \
+    cd /usr/bin && ln -s python3 python && \
+    locale-gen en_US.UTF-8 && update-locale && \
+    useradd --create-home --no-log-init --shell /bin/bash ${user} && \
+    adduser ${user} sudo && \
+    echo "${user}:${passwd}" | chpasswd
 
 # Set time zone
 #RUN apt-get -y install systemd
@@ -31,7 +31,3 @@ RUN apt-get -y install apt-utils && \
 
 # Set default login user
 USER ${user}
-
-COPY --chown=${user}:${user} homefiles/ /home/${user}/
-
-RUN echo "[ -f ~/.myshell/main.sh ] && source ~/.myshell/main.sh" >> ~/.bashrc
