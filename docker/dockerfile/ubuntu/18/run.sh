@@ -1,15 +1,18 @@
 #!/bin/bash
 
+function usage() {
+    echo "Usage: $0 work                     run in work computer"
+    echo "Usage: $0 personal                 run in work personal computer wsl2"
+}
+
 function run_in_work_compute() {
     docker run \
         --net=host \
-        -v /tmp/docker:/tmp/docker \
-        -v /home/hx/code:/home/hx/code \
-        -v /home/hx/share:/home/hx/share \
-        -v /home/hx/temp:/home/hx/temp \
-        -v /home/hx/tools:/home/hx/tools \
-        -v /home/hx/workspace:/home/hx/workspace \
-        -v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro \
+        -v ${HOME}/code:/home/hx/code \
+        -v ${HOME}/share:/home/hx/share \
+        -v ${HOME}/temp:/home/hx/temp \
+        -v ${HOME}/tools:/home/hx/tools \
+        -v ${HOME}/repo:/home/hx/repo \
         --hostname DockerUbuntu18 \
         -it myubuntu18:v0.1 \
         /bin/bash
@@ -33,6 +36,9 @@ function main() {
         run_in_work_compute
     elif [ "${machine}" == "personal" ]; then
         run_in_personal_wsl2
+    else
+        usage
+        exit
     fi
 }
 

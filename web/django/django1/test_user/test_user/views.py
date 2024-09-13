@@ -54,3 +54,14 @@ def mylogout_submit(request):
 def index(request):
     context = {}
     return render(request, 'index.html', context)
+
+def main():
+    # return
+    # 在数据库中创建两个用户：user/user, admin/admin
+    if not User.objects.filter(username='user').exists():
+        print("thier is no user: user")
+        # User.objects.create_user('user', None, 'user')
+    # if not User.objects.filter(username='admin').exists():
+        # User.objects.create_user('admin', None, 'admin')
+
+main()

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[django] index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <script>
+    //需要jquery
+    $(document).ready(function () {
+      logInfo("document ready: ------------------------------------\n");
+      //django渲染时替换为指定内容
+      var jsonOrigin = "{{JsonFileDictOrigin}}";
+      var jsonOrdered = "{{JsonFileDictOrdered}}";
+      var jsonStr = "{{JsonFileStr}}";
+
+      logInfo("jsonOrigin: [" + jsonOrigin + "]\n");
+      logInfo("jsonOrdered: [" + jsonOrdered + "]\n");
+      logInfo("jsonStr: [" + jsonStr + "]\n");
+
+      //将&quot;替换为双引号
+      jsonStrRestore = jsonStr.replaceAll("&quot;", "\"");
+      logInfo("jsonStrRestore: [" + jsonStrRestore + "]\n");
+      //解析json字符串
+      var jsonData = $.parseJSON(jsonStrRestore);
+      //遍历json
+      for (var key in jsonData) {
+        value = jsonData[key];
+        logInfo("key: [" + key + "], value: [" + value + "]\n");
+      }
+    });
+  </script>
+
+  <div>
+    <h3>Leanging django json:</h3>
+  </div>
+
+  <div>
+    <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
+    <textarea rows="30" cols="200" id="idDebugLogWindow"></textarea>
+    <script>
+      function logInfo(log) {
+        document.getElementById("idDebugLogWindow").value += log;
+        document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+      }
+      document.getElementById("idButtonDebugLogWindow").onclick = function (event) {
+        document.getElementById("idDebugLogWindow").value = "";
+        document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+      }
+    </script>
+  </div>
+
+  {% block content %}
+  {% endblock %}
+</body>
+
+</html>
