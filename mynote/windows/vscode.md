@@ -94,7 +94,7 @@ Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Files: Auto guess Encodin
 
 ```bash
 # 打开文件后默认保持打开状态，打开新的文件不会关闭当前文件：
-Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench  Editor: Enable Preview -> 取消勾选
+Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench Editor: Enable Preview -> 取消勾选
 #---------------------------------------------#
     "workbench.editor.enablePreview": false,
 #---------------------------------------------#
@@ -106,7 +106,16 @@ Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench  Editor: Enable
 Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Update: Mode -> manual
 ```
 
-- 综合：
+#### 11）、文件标签栏多行显示：
+
+```bash
+Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench Editor: Wrap Tabs -> 勾选
+#---------------------------------------------#
+    "workbench.editor.wrapTabs": true,
+#---------------------------------------------#
+```
+
+#### 综合：
 
 ```bash
 Ctrl+Shift+P -> Preferences: Open User Settings (JSON)

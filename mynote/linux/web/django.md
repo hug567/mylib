@@ -3,6 +3,8 @@
 ```bash
 # ubuntu 16.04, ubuntu 18.04
 sudo apt install python3-django
+# 查看版本：
+django-admin --version
 ```
 
 # 2、创建项目：
