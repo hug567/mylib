@@ -7,9 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <body>
+    <!--加载自定义的标签-->
+    {% load my_tags %}
+
     <div class="container">
         <h3>Leanging django:</h3>
-        <h5>tests:</h5>
+        <h5><a>这是一段normal用户和admin用户都可看到的文字</a></h5>
+        <!--使用自定义的标签-->
+        {% if User == "normal" %}
+        <h5>这是一个段admin用户才能看到的文字</h5>
+        {% endif %}
+        <div>current user: {{User}}</div>
     </div>
 
     {% block content %}

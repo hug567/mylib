@@ -7,6 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+from test_user.models import TestUser
 
 def mylogin(request):
     context = {}
@@ -47,21 +50,60 @@ def mylogout_submit(request):
     return HttpResponse(json.dumps(dict))
 
 # 要求有具体的权限才可访问：
-#@login_required
-#@permission_required('test_user.normal')
-#@permission_required('test_user.admin')
-@permission_required('test_user.root')
+# @login_required
+@permission_required('test_user.normal')
+# @permission_required('test_user.admin')
 def index(request):
     context = {}
+    user = request.user
+    context["User"] = user
+    print("[INFO] current user:", user, "type(user):", type(user))
     return render(request, 'index.html', context)
 
+def _create_permission_by_codename(codename):
+    content_type = ContentType.objects.get_for_model(TestUser)
+    # 先判断是否已创建了权限
+    all_permissions = Permission.objects.all()
+    for perm in all_permissions:
+        if perm.codename == codename:
+            # 已有则直接返回
+            return perm
+    # 若没有则新建
+    print("[INFO] will create permission:", codename)
+    perm = Permission.objects.create(
+        codename = codename,
+        name = codename,
+        content_type = content_type,
+    )
+    return perm
+
+def _create_user_with_permissions(username, *perms):
+    # 创建用户
+    if not User.objects.filter(username=username).exists():
+        print("[INFO] will create user:", username)
+        user = User.objects.create_user(username, None, username)
+        # 给用户添加权限，可添加多个权限
+        for perm in perms:
+            if not user.has_perm(perm):
+                print("[INFO] add perm", perm.codename, "to user", username)
+                user.user_permissions.add(perm)
+        user.save()
+        return user
+    return None
+
 def main():
-    # return
-    # 在数据库中创建两个用户：user/user, admin/admin
-    if not User.objects.filter(username='user').exists():
-        print("thier is no user: user")
-        # User.objects.create_user('user', None, 'user')
-    # if not User.objects.filter(username='admin').exists():
-        # User.objects.create_user('admin', None, 'admin')
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_file = os.path.join(base_dir, 'db.sqlite3')
+    # 无数据库文件时不能判断用户是否存在
+    if not os.path.exists(db_file):
+        print("[ERROR] there is no sqlite file")
+        return
+
+    # 创建权限
+    perm_normal = _create_permission_by_codename("normal")
+    perm_admin = _create_permission_by_codename("admin")
+
+    _create_user_with_permissions("normal", perm_normal)
+    _create_user_with_permissions("admin", perm_normal, perm_admin)
 
 main()

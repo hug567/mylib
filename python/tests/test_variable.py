@@ -111,6 +111,25 @@ def test_global_var():
     print("g_var_str:", g_var_str)
     print("g_var_none:", g_var_none)
 
+# 一个或多个参数，至少一个
+def _print_args_one_or_more(first, *left):
+    print("-----------")
+    print("var1:", first)
+    length = len(left)
+    print("left var length:", length)
+    i = 2
+    for var in left:
+        print("var" + str(i) + ":", var)
+        i = i + 1
+
+# python可变参数
+def test_func_args():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    _print_args_one_or_more(1)
+    _print_args_one_or_more(2, 3)
+    _print_args_one_or_more(4, 5, 6)
+
 def main():
     test_using_var()
     test_using_string()
@@ -118,6 +137,7 @@ def main():
     test_number()
     test_var_type()
     test_global_var()
+    test_func_args()
 
 if __name__ == '__main__':
     main()

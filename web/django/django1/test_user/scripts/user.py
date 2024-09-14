@@ -108,6 +108,7 @@ def add_permissions_to_groups():
     add_one_perm_to_group("admin", "root")
     add_one_perm_to_group("root", "root")
 
+#------------------------------------------------------------------------------#
 def print_all_users_in_group(group):
     users = group.user_set.all()
     for user in users:

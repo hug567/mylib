@@ -64,6 +64,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # 配置添加的自定义标签和过滤器
+            'libraries' : {
+                'my_tags' : 'templatetags.my_tags'
+            }
         },
     },
 ]
