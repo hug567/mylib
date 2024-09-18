@@ -56,8 +56,10 @@ def mylogout_submit(request):
 def index(request):
     context = {}
     user = request.user
-    context["User"] = user
-    print("[INFO] current user:", user, "type(user):", type(user))
+    context["User"] = str(user)
+    if str(user) == 'admin':
+        context['isAdmin'] = True
+    print("[INFO] current user:", str(user), "， type(user):", type(user))
     return render(request, 'index.html', context)
 
 def _create_permission_by_codename(codename):
@@ -67,6 +69,7 @@ def _create_permission_by_codename(codename):
     for perm in all_permissions:
         if perm.codename == codename:
             # 已有则直接返回
+            print("[INFO] permission", codename, "already exists")
             return perm
     # 若没有则新建
     print("[INFO] will create permission:", codename)
@@ -79,24 +82,31 @@ def _create_permission_by_codename(codename):
 
 def _create_user_with_permissions(username, *perms):
     # 创建用户
+    user = None
     if not User.objects.filter(username=username).exists():
         print("[INFO] will create user:", username)
         user = User.objects.create_user(username, None, username)
+    else:
+        all_users = User.objects.all()
+        for user in all_users:
+            if user.get_username() == username:
+                print("[INFO] user", str(user), "alerady exists")
+                break
+    if user is not None:
         # 给用户添加权限，可添加多个权限
         for perm in perms:
             if not user.has_perm(perm):
-                print("[INFO] add perm", perm.codename, "to user", username)
+                print("[INFO] will add perm", perm.codename, "to user", username)
                 user.user_permissions.add(perm)
         user.save()
-        return user
-    return None
+    return user
 
 def main():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     db_file = os.path.join(base_dir, 'db.sqlite3')
     # 无数据库文件时不能判断用户是否存在
     if not os.path.exists(db_file):
-        print("[ERROR] there is no sqlite file")
+        print("[WARN] there is no sqlite file")
         return
 
     # 创建权限

@@ -69,7 +69,7 @@ def add_users_to_groups():
     add_one_user_to_group("root", "root")
 
 def create_permissions():
-    content_type = ContentType.objects.get_for_model(TestUser)
+    content_type = ContentType.objects.get_for_model()
     perm_normal = Permission.objects.create(
         codename = 'normal',
         name = 'normal user',

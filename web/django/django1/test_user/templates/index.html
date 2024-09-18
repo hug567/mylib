@@ -14,10 +14,14 @@
         <h3>Leanging django:</h3>
         <h5><a>这是一段normal用户和admin用户都可看到的文字</a></h5>
         <!--使用自定义的标签-->
-        {% if User == "normal" %}
-        <h5>这是一个段admin用户才能看到的文字</h5>
+        {% if isAdmin %}
+        <h5>01-通过变量是否存在判断: 这是一个段admin用户才能看到的文字</h5>
+        {% endif %}
+        {% if User == "admin" %}
+        <h5>02-通过比较字符串判断: 这是一个段admin用户才能看到的文字</h5>
         {% endif %}
         <div>current user: {{User}}</div>
+        <div>isAdmin: {{isAdmin}}</div>
     </div>
 
     {% block content %}
