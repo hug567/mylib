@@ -37,6 +37,17 @@ netsh advfirewall firewall del rule name="开启23578端口"
 
 - 不建议使用的端口：10080等，最好使用不常见端口；
 
+```bash
+# cmd中打开powershell
+powershell
+# 查看权限
+Get-ExecutionPolicy
+# powershell中获取管理员权限
+Set-ExecutionPolicy RemoteSigned
+```
+
+
+
 ## 2）、网桥相关：
 
 ```bash
