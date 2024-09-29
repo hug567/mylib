@@ -72,6 +72,7 @@
     listen()
     accept()
     sendto()
+    setsockopt()
 
 #include <sys/un.h>
     struct sockaddr_un
@@ -97,3 +98,6 @@
 
 #include <sys/file.h>
     flock()
+
+#include <sys/time.h>
+    struct timeval
