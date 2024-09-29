@@ -90,6 +90,26 @@ def get_file_func_linenum():
     print("[hx-debug] exec location: {", sys._getframe().f_code.co_filename, "}: ",
           sys._getframe().f_code.co_name, "()/", sys._getframe().f_lineno, sep='')
 
+#------------------------------------------------------------------------------#
+# python函数返回多个值
+def _return_multi():
+    x = 10
+    y = 20
+    z = 30
+    return x, y, z
+
+def test_return_multi():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    # 调用返回多个值的函数
+    x, y, z = _return_multi()
+    print("x:", x, "y:", y, "z:", z)
+
+    # 多个返回值存储在一个变量中，该变量是一个元组，包含多个返回值
+    ret = _return_multi()
+    print("ret:", ret)
+#------------------------------------------------------------------------------#
+
 # 主函数
 def main():
     test_get_time()
@@ -112,5 +132,6 @@ def main():
     test_print_num(10, 11)
     test_print_num(10, 11, 12)
     get_file_func_linenum()
+    test_return_multi()
 
 main()
