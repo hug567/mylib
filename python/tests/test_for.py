@@ -9,8 +9,13 @@ import sys
 # list, array, string, i 0-10
 # for i in range(0, 10) # 0-9
 
+def test_for_base():
+    # for循环遍历，0—9
+    for i in range(0, 10):
+        print("i:", i)
+
 def main():
-    print("xx")
+    test_for_base()
 
 if __name__ == "__main__":
     main()
