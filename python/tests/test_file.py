@@ -77,9 +77,9 @@ def create_delete_file():
     os.remove(fname)
     check_file_exist(fname)
 
-# 检查目录是否存在
+# 检查目录是否存在，必须是一个目录
 def check_dir_exist(dname):
-    if os.path.exists(dname):
+    if os.path.exists(dname) and os.path.isdir(dname):
         print("dir", dname, "exist")
     else:
         print("dir", dname, "does not exist")
