@@ -4,57 +4,80 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>[js] test_string</title>
-  </head>
-  <body>
-    <!--JavaScript脚本---------------------------------------------------------->
-    <script>
-        //字符串连接
-        function test_connect() {
-            document.write("test_connect: ---------------------------" + "<br>");
-            var str1 = "hello";
-            var str2 = "world";
-            var str3 = str1 + " " + str2;
-            document.write("str1 + str2 = [" + str3 + "]<br>");
-        }
 
-        //字符串转数字
-        function test_str2num() {
-            document.write("test_string: ----------------------------" + "<br>");
+<head>
+  <meta charset="UTF-8">
+  <title>[js] test_string</title>
+</head>
 
-            //整形
-            var strInt = "1234";
-            var numInt = parseInt(strInt) + 1;
-            document.write("typeof(numInt): " + typeof(numInt) + "<br>");
-            document.write("strInt: " + strInt + ", numInt + 1 = " + numInt + "<br>");
+<body>
+  <!--JavaScript脚本---------------------------------------------------------->
+  <script>
+    //字符串基本操作
+    function test_base() {
+      document.write("test_base: --------------------------------" + "<br>");
 
-            //浮点型
-            var strFloat = "567.8900";
-            var numFloat = parseFloat(strFloat) + 2.1;
-            document.write("typeof(numFloat): " + typeof(numFloat) + "<br>");
-            document.write("strFlot: " + strFloat + ", numFloat: " + numFloat + ", numFloat + 2.1 = " + numFloat + "<br>");
-        }
+      var str1 = "Hello world!";
+      //字符串长度
+      var len = str1.length;
+      document.write("str1 len: " + len + "<br>");
 
-        //数字转字符串：.toString()
-        function test_num2str() {
-            document.write("test_string: ----------------------------" + "<br>");
+      //判断字符是否为空
+      if (str1 != "") {
+        document.write("str1 is not empty<br>");
+      }
+      str2 = ""
+      if (str2 == "") {
+        document.write("str2 is empty<br>");
+      }
+    }
 
-            var num = 123;
-            var str = num.toString();
-            document.write("typeof(str): " + typeof(str) + "<br>");
-            document.write("str: " + str + "<br>");
-        }
+    //字符串连接
+    function test_connect() {
+      document.write("test_connect: ---------------------------" + "<br>");
+      var str1 = "hello";
+      var str2 = "world";
+      var str3 = str1 + " " + str2;
+      document.write("str1 + str2 = [" + str3 + "]<br>");
+    }
 
-        function main() {
-            test_connect();
-            test_str2num();
-            test_num2str();
-        }
+    //字符串转数字
+    function test_str2num() {
+      document.write("test_str2num: ---------------------------" + "<br>");
 
-        main();
-    </script>
-    <!-------------------------------------------------------------------------->
-  </body>
+      //整形
+      var strInt = "1234";
+      var numInt = parseInt(strInt) + 1;
+      document.write("typeof(numInt): " + typeof (numInt) + "<br>");
+      document.write("strInt: " + strInt + ", numInt + 1 = " + numInt + "<br>");
+
+      //浮点型
+      var strFloat = "567.8900";
+      var numFloat = parseFloat(strFloat) + 2.1;
+      document.write("typeof(numFloat): " + typeof (numFloat) + "<br>");
+      document.write("strFlot: " + strFloat + ", numFloat: " + numFloat + ", numFloat + 2.1 = " + numFloat + "<br>");
+    }
+
+    //数字转字符串：.toString()
+    function test_num2str() {
+      document.write("test_num2str: ---------------------------" + "<br>");
+
+      var num = 123;
+      var str = num.toString();
+      document.write("typeof(str): " + typeof (str) + "<br>");
+      document.write("str: " + str + "<br>");
+    }
+
+    function main() {
+      test_base();
+      test_connect();
+      test_str2num();
+      test_num2str();
+    }
+
+    main();
+  </script>
+  <!-------------------------------------------------------------------------->
+</body>
+
 </html>
