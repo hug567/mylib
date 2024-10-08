@@ -6,6 +6,7 @@
 ################################################################################
 
 import sys
+import copy
 
 def test_define_list():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
@@ -21,6 +22,18 @@ def test_define_list():
     print("students[3]:", students[3])
     # access the last student with index -1
     print("last student:", students[-1])
+
+    # 复制列表
+    name1 = ['Tom', 'Jerry', 'Bob']
+    # 适用复制简单列表，若列表中元素是子列表，不会复制子列表，子列表还指向原对象
+    name2 = name1[:]
+    # 若name1中元素是子列表，copy.deepcopy()会将子列表同时也复制一份
+    name3 = copy.deepcopy(name1)
+    # 修改name1不会影响name2和name3中的值
+    name1.append('Alice')
+    print('name1:', name1)
+    print('name2:', name2)
+    print('name3:', name3)
 
 # 遍历列表
 def test_traverse_list():
