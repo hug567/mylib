@@ -1,0 +1,44 @@
+<!--
+  练习：JavaScript中sleep()
+  时间：2024-10-09
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>test_sleep</title>
+</head>
+
+<body>
+  <!--JavaScript脚本-->
+  <script>
+    //通过while循环和查询时间实现延时
+    function delayMs(timeMs) {
+      var startTime = new Date().getTime();
+      var endTime = startTime + timeMs;
+      while (true) {
+        var curTime = new Date().getTime();
+        if (curTime > endTime) {
+          return;
+        }
+      }
+    }
+
+    function test_delay() {
+      document.write("test_delay: ----------------------------------" + "<br>");
+
+      document.write("will sleep 1s" + "<br>");
+      delayMs(1000);
+      document.write("finish sleep 1s" + "<br>");
+    }
+
+    function main() {
+      test_delay();
+    }
+
+    main();
+  </script>
+</body>
+
+</html>
