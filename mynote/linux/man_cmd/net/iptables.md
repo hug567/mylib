@@ -61,6 +61,9 @@ sudo iptables -t filter -D FORWARD 1
 # filter表规则有：INPUT、OUTPUT、FORWARD
 # 规则行为有：ACCEPT、DROP
 sudo iptables -P FORWARD ACCEPT
+
+# 将80端口的流量转发到8080端口
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 ```
 
 # 3、相关概念：
