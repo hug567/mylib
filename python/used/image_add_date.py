@@ -38,15 +38,27 @@ def color_str_to_list(color_str):
 
     if color_str == 'white':
         color_list = (255, 255, 255)
+    elif color_str == 'red':
+        color_list = (35, 35, 243)
+    elif color_str == 'blue':
+        color_list = (243, 35, 35)
+    else:
+        color_list = (255, 255, 255)
+    print(f'using color list: {color_list}')
 
     return color_list
 
 def add_date_text_to_image(args):
     # 高、宽、字体大小、字体粗细、添加位置x坐标、添加位置y坐标
     supported_img = [
-        [4608, 2144, 1.5, 2, 50, 4558 ],
-        [4000, 1856, 1.5, 2, 50, 3950 ],
+        [1080, 1920, 1.0, 2, 30, 1050 ],
         [1280, 720,  0.6, 1, 20, 1260 ],
+        [1707, 1280, 0.8, 1, 30, 1677 ],
+        [1702, 1276, 1.0, 1, 30, 1672 ],
+        [1856, 4000, 2.0, 3, 50, 1806 ],
+        [1920, 1080, 0.8, 1, 30, 1890 ],
+        [4000, 1856, 1.5, 2, 50, 3950 ],
+        [4608, 2144, 1.5, 2, 50, 4558 ],
     ]
 
 
@@ -55,8 +67,7 @@ def add_date_text_to_image(args):
         print('read image failed')
         return
     height, width, channels = image.shape
-    print('image height:', height)
-    print('image width:', width)
+    print(f'image size: ({height} x {width})')
 
     text_size = 0
     text_thickness = 0
@@ -77,7 +88,7 @@ def add_date_text_to_image(args):
 
     print('text_size:', text_size)
     print('text_thickness:', text_thickness)
-    print('text_x/y: (', text_x, ',', text_y, ')')
+    print(f'text_x/y: ({text_x}, {text_y})')
 
     # add date text to image
     cv2.putText(image, args.date, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX,
@@ -85,7 +96,7 @@ def add_date_text_to_image(args):
                 cv2.LINE_AA)
     # save image
     saved_fname = args.date + '.jpg'
-    print("will save to file:", saved_fname)
+    print(f'add text to image success, will save to file: {saved_fname}')
     cv2.imwrite(saved_fname, image)
 
 def main():

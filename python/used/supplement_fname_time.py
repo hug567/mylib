@@ -37,7 +37,7 @@ def supplement_fname_time(fname):
     if timestamp == '':
         print('get timestamp from fname', fname, 'failed')
         return
-    name, ext = os.path.splitext(os.path.basename(fname ))
+    name, ext = os.path.splitext(os.path.basename(fname))
     new_fname = name + '_' + timestamp + ext
     print('will rename', fname, 'to', new_fname)
     os.rename(fname, new_fname)
