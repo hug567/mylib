@@ -35,6 +35,7 @@ grep --exclude=\*.{map,md,html} -nr "input-group"
 grep --exclude-dir='dist' -nr "row-cols-1"
 # grep排除多个目录
 grep --exclude-dir='data' --exclude-dir='gnu' -nr "u-boot"
+grep -nr "meta-yocto-bsp" --exclude-dir={build\*,documentation}
 
 # grep搜索指定类型文件
 grep -nr "dist" --include="*.bb"

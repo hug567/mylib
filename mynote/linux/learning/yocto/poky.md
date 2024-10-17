@@ -35,7 +35,33 @@ export no_proxy='127.0.0.1'
 # 3、poky添加layer：
 
 ```bash
+# 下载开源layer：
 cd poky
 git clone https://github.com/kraj/meta-altera.git
 ```
 
+# 4、常用设置：
+
+## 1）、默认加载指定layer：
+
+```bash
+# 修改文件：meta-poky/conf/templates/default/bblayers.conf.sample
+#----------------------------------------------------#
+# 新增自定义layer: meta-qemu
+BBLAYERS ?= " \
+  ##OEROOT##/meta \
+  ##OEROOT##/meta-poky \
+  ##OEROOT##/meta-yocto-bsp \
+  ##OEROOT##/meta-qemu \
+  "
+#----------------------------------------------------#
+```
+
+## 2）、设置默认平台为arm：
+
+```bash
+# 修改文件：meta-poky/conf/templates/default/local.conf.sample
+#----------------------------------------------------#
+MACHINE ?= "qemuarm"
+#----------------------------------------------------#
+```
