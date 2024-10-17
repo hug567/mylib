@@ -15,7 +15,7 @@ def guess_date_by_fname(fname):
 
     # eg: mmexport1723093243581.jpg
     #     wx_camera_1722823585742.jpg
-    pattern = r'172\d{10}'
+    pattern = r'17[2-9]\d{10}'
     mth = re.search(pattern, fname)
     if mth:
         timestamp = mth.group(0)
@@ -25,7 +25,7 @@ def guess_date_by_fname(fname):
         date = cst_time.strftime('%Y-%m-%d')
 
     # eg: IMG_20240712_123129.jpg
-    pattern = r'IMG_(202\d{5})_'
+    pattern = r'IMG_(202[4-9][0-1]\d[0-3]\d)_'
     mth = re.search(pattern, fname)
     if mth:
         time_str = mth.group(1)
@@ -61,7 +61,6 @@ def add_date_text_to_image(args):
         [4000, 1856, 1.5, 2, 50, 3950 ],
         [4608, 2144, 1.5, 2, 50, 4558 ],
     ]
-
 
     image = cv2.imread(args.file)
     if image is None:
