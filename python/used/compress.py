@@ -1,3 +1,5 @@
+# 多层随机混合压缩指定目录中的所有文件
+# 2024-10-14
 import os
 import zipfile
 import tarfile
