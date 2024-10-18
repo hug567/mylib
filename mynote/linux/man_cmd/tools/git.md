@@ -47,9 +47,17 @@ git log --pretty=format:"%cd" --date=format:"%Y" -1 main.c
 /* 指定文件倒序提交时间 */
 git log --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M:%S" --reverse main.c
 
-git status --ignored                                     //查看忽略的文件
+//查看忽略的文件
+git status --ignored
 //查看仓库顶层目录
 git rev-parse --show-toplevel
+
+//从远端拉取更新到本地
+git fetch -p
+//从远端拉取更新到本地时指定remote
+git fetch <remote>
+//只拉取特定分支
+git fetch <remote> <branch>
 ```
 
 ### 2.2、本地分支管理
@@ -118,6 +126,13 @@ git push github HEAD:master                              //推送至github
 git remote add local /home/hx/code/linux-5.10
 // 查看分支作者
 git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n
+
+//仓库commit太多，如linux截至2014-10-18有1309687条commit，分批次推送到远端：
+//先推送最开始的100000条：
+git log --oneline | tail -n 100000 | head -n 1
+//将commit推送到远端分支
+git push origin <commit ID>:refs/heads/master
+//后续可以此类推
 ```
 
 ### 2.4、commit操作
