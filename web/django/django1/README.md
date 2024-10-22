@@ -3,6 +3,8 @@
 # ubuntu 16.04, ubuntu 18.04
 sudo apt install python3
 sudo apt install python3-django
+# Windows安装django：
+pip install Django
 # 查看版本：
 django-admin --version
 ```
@@ -23,7 +25,7 @@ cd helloworld
 ```bash
 # hellowrold/helloworld/settings.py
 #--------------------------------------------------------#
-# 允许所有ip打开网站：
+# 允许所有ip打开网站，将ALLOWED_HOSTS修改为：
 ALLOWED_HOSTS = ["*"]
 #--------------------------------------------------------#
 ```
@@ -40,18 +42,17 @@ python3 manage.py runserver 0.0.0.0:9100
 # 5、创建第一个页面：
 
 ```bash
-# 创建html文件并写入内容：
+# 创建html文件放置目录：
 cd helloworld
 mkdir templates
 cd templates
+# 创建html文件并写入内容：
 touch index.html
 
 # 配置hellowrold/helloworld/settings.py：
 #--------------------------------------------------------#
 TEMPLATES = [
-...
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-...
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
 ]
 #--------------------------------------------------------#
 
@@ -69,10 +70,8 @@ def index(request):
 from . import views
 
 urlpatterns = [
-...
     url(r'^$', views.index),
     url(r'^index.html$', views.index),
-...
 ]
 #--------------------------------------------------------#
 ```
