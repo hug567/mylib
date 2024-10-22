@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[django] run shell</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <script>
+    //需要jquery
+    $(document).ready(function () {
+      logInfo("document ready: ------------------------------------\n");
+    });
+  </script>
+
+  <div>
+    <h3>Leanging run shell cmd in server and show result in web:</h3>
+  </div>
+
+  <div>
+    <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
+    <textarea rows="30" cols="200" id="idDebugLogWindow"></textarea>
+    <script>
+      function logInfo(log) {
+        document.getElementById("idDebugLogWindow").value += log;
+        document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+      }
+      document.getElementById("idButtonDebugLogWindow").onclick = function (event) {
+        document.getElementById("idDebugLogWindow").value = "";
+        document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+      }
+    </script>
+  </div>
+
+  {% block content %}
+  {% endblock %}
+</body>
+
+</html>
