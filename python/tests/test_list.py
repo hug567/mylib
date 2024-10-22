@@ -8,19 +8,20 @@
 import sys
 import copy
 
+# 定义列表
 def test_define_list():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
-    # define list
+    # 定义字符串列表
     students = ['Tom', 'Jerry', 'Bob', 'Alice']
-    # print whole list
+    # 打印整个列表
     print(students)
-    # access list member, index start from 0
+    # 使用索引访问列表元素, 索引从0开始
     print("students[0]:", students[0])
     print("students[1]:", students[1])
     print("students[2]:", students[2])
     print("students[3]:", students[3])
-    # access the last student with index -1
+    # 访问最后一个元素，索引为-1
     print("last student:", students[-1])
 
     # 复制列表

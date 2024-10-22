@@ -50,13 +50,13 @@ def test_decompress_part():
     print('middle:', middle)
     print('last:', last)
 
-    # 星号表达式在尾部获取0个或多个数据
+    # 星号表达式在尾部获取0个数据(没有尾部数据)
     member1 = ['Tom', 25]
     name, age, *phone = member1
     print('name:', name)
     print('age:', age)
     print('phone:', phone)
-
+    # 星号表达式在尾部获取多个数据
     member2 = ['Bob', 25, 18212345678]
     name, age, *phone = member2
     print('name:', name)
