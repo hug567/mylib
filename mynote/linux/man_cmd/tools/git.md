@@ -12,11 +12,25 @@ cat ~/.ssh/id_rsa.pub                                    //查看SSH Key
 git config --global credential.helper store              //长期缓存账号密码
 ```
 
-## 1.1）、基本操作：
+### 1.1）、使用代理下载：
 
 ```bash
 # 下载代码时使用代理：
 git clone -c http.proxy="http://127.0.0.1:10809" https://github.com/transcode-open/apt-cyg.git
+```
+### 1.2）、下载大体积仓库：
+
+```bash
+# 当仓库提交历史记录太多导致直接下载容易失败时，可使用如下方法：
+# 先在clone时指定深度为1，只下载最新的一个commit：
+git clone https://github.com/wolfSSL/wolfssl.git --depth=1 ./
+# 再使用fetch逐步拉取所有commit：
+git fetch --depth=1000
+git fetch --depth=2000
+git fetch --depth=3000
+...
+# 最后去除深度限制再fetch一次：
+git fetch --unshallow
 ```
 
 ## 2、常用操作：
@@ -399,6 +413,12 @@ git tag -v v2.35
 ```bash
 # 查看帮助
 git submodule --help
+# 下载带有子模块的仓库后，初始化并更新子模块：
+git submodule update --init --recursive
+# 在下载仓库的同时下载子模块：
+git clone --recurse-submodules <repository_url>
+# 拉取子模块更新：
+git submodule update --recursive --remote
 ```
 
 ## 3、git lfs：
