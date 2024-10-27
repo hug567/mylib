@@ -10,11 +10,13 @@ wsl --shutdown
 # 更新wsl
 wsl --update
 # 安装ubuntu
-wsl --install -d Ubuntu-18.04
+wsl --install -d <Ubuntu-18.04>
 # 设置wsl2运行linux发行版
-wsl --set-version Ubuntu-18.04 2
+wsl --set-version <Ubuntu-18.04> 2
 # 启动linux发行版
-wsl -d Ubuntu-18.04
+wsl -d <Ubuntu-18.04>
+# 终止linux发行版
+wsl -4 <Ubuntu-18.04>
 
 # 若wsl卡住，以管理员身份运行powershell/cmd
 netsh winsock reset  # 然后重启
