@@ -48,6 +48,8 @@ git clone https://git.yoctoproject.org/linux-yocto
 
 ## 1）、打印：
 
+### 1.1)、打印：
+
 ```bash
 # 匿名函数打印调试信息
 python() {
@@ -239,7 +241,7 @@ do_configure[nostamp] = "1"
 # 3、sysroot：
 
 - recipe-sysroot：目标架构sysroot
-- recipr-sysroot：host架构sysroot
+- recipe-sysroot-native：host架构sysroot
 - 安装：do_install时，将文件安装到${D}指定的目录中(一般是image目录)；
 - 填充：do_populate_sysroot时，将安装到${D}中的内容，填充到sysroot目录；
 - SYSROOT_DIRS：要填充到sysroot中的目录列表；

@@ -18,6 +18,7 @@ def test_lambda():
     num = (lambda x, y: x * y)(5, 6)
     print(f'num: {num}')
 
+# filter()根据提供的函数对指定列表做过滤
 def test_lambda_filter():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
@@ -26,9 +27,24 @@ def test_lambda_filter():
     expensive = list(filter(lambda x: x > 10, price))
     print(f'expensive: {expensive}')
 
+# map()根据提供的函数对指定序列做映射
+def test_lambda_map():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    # map()计算平方
+    num = [1, 2, 3, 4, 5, 6]
+    # map()返回迭代器，可用list转换为列表
+    num_sqaure = list(map(lambda x: x ** 2, num))
+    print(f'num square: {num_sqaure}')
+
+    # map()实现两个列表相加
+    sum = list(map(lambda x, y: x + y, [1, 3, 5], [6, 4, 2]))
+    print(f'sum: {sum}')
+
 def main():
     test_lambda()
     test_lambda_filter()
+    test_lambda_map()
 
 if __name__ == '__main__':
     main()

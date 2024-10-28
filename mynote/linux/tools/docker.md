@@ -73,6 +73,7 @@ docker pull ubuntu:16.04
 docker pull ubuntu:18.04
 docker pull ubuntu:20.04
 docker pull ubuntu:22.04
+docker pull ubuntu:24.04
 docker pull fedora:35
 docker pull opensuse/leap:15.3
 
