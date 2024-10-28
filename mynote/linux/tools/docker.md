@@ -25,6 +25,7 @@ sudo vim /etc/docker/daemon.json
         "https://cr.console.aliyun.com/"
   ]
 }
+# 若上述不可用，登录aliyun查看私有加速地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
 # 重启docker
 sudo systemctl restart docker
 # 查看镜像源
