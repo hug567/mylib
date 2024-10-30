@@ -38,6 +38,13 @@ function usage() {
     echo "   eg: $0 \$HOME mobaxterm"
 }
 
+function vim_version() {
+    local version
+
+    version=$(vim --version | grep "Vi IMproved" | head -n 1 | awk '{print$5}')
+    echo -n "${version}"
+}
+
 function is_git_bash() {
     if [ -f /git-bash.exe ]; then
         return 0
