@@ -16,7 +16,7 @@ add_compile_options(-std=c++11 -Wall -Werror)
 function(compile_single_file)
     foreach(file ${ARGV})
         message(DEBUG "[${CMAKE_CURRENT_FUNCTION}] file: ${file}")
-        string(REGEX MATCH "[A-Za-z0-9_-]+\.cpp$" file_bin ${file})
+        string(REGEX MATCH "[A-Za-z0-9_-]+\.c.*$" file_bin ${file})
         string(REGEX MATCH "^[A-Za-z0-9_-]+" file_bin ${file_bin})
         add_executable(${file_bin} ${file})
     endforeach()
@@ -26,4 +26,5 @@ compile_single_file(
     test_sort.cpp
     test_string.cpp
     test_function.cpp
+    test_vector.cc
 )
