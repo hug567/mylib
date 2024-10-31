@@ -18,12 +18,18 @@ struct Point {
   int x;
   int y;
 
-  // 结构体重载+
-  struct Point operator+ (const struct Point &a, const struct Point &b) {
+  // 结构体重载运算符: +
+  Point operator+ (const Point &b) {
     struct Point temp;
-    temp.x = a.x + b.x;
-    temp.y = a.y + b.y;
+    temp.x = this->x + b.x;
+    temp.y = this->y + b.y;
     return temp;
+  }
+
+  // 结构体重载输出流: <<
+  friend ostream& operator<< (ostream&, Point &p) {
+    cout << "(" << p.x << ", " << p.y << ")";
+    return cout;
   }
 };
 
@@ -51,10 +57,11 @@ void TestStruct(void) {
   cout << "[" << __FUNCTION__ << ":" << __LINE__ <<
     "]:---------------------------------------------" << endl;
 
-  struct Point point_a = Point(1, 2);
-  struct Point point_b = Point(3, 4);
-  struct Point point_sum = point_a + point_b;
-  cout << "point_sum: (" << point_sum.x << ", " << point_sum.y << ")" << endl;
+  struct Point point_a = {1, 2};
+  struct Point point_b = {1, 4};
+  // 结构体使用模板函数，需先重载模板中对成员使用的操作符，如：+
+  struct Point point_sum = Add(point_a, point_b);
+  cout << "point_sum: " << point_sum << endl;
 }
 
 int main(void) {
