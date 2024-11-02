@@ -46,5 +46,7 @@ void Test03(void) {
 
 int main(void) {
     Test01();
+    Test02();
+    Test03();
     return 0;
 }
