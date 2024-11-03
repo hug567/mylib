@@ -48,11 +48,7 @@ Qt6Svg.dll：SVG相关
 
 # 2、打包成单独exe文件：
 
-## 1）、带安装程序的打包工具：
-
-- 使用打包工具，将上述程序和库打包成一个单独的exe文件， 如Inno：https://jrsoftware.org/isdl.php#stable
-
-## 2）、单文件打包工具：
+## 1）、单文件打包工具：
 
 - Enigma Virtual Box：https://enigmaprotector.com/en/downloads.html
 
@@ -63,3 +59,5 @@ Qt6Svg.dll：SVG相关
 -> 打包
 ```
 
+- 打包配置文件：
+  - 例：使用上述打包工具将config.xml打包到exe文件中即可；
