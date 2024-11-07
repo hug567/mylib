@@ -87,8 +87,9 @@ function(test_ifdefined_or)
     message("${CMAKE_CURRENT_FUNCTION}: --------------------------------------")
 
     set(ret)
-    # 至少有一个定义
-    ifdefined_or(ret CONFIG_TEST_INT CONFIG_TEST_STRING CONFIG_TEST_XXX CONFIG_TEST_YYY)
+    # 至少有一个定义(写在多行)
+    ifdefined_or(ret CONFIG_TEST_INT CONFIG_TEST_STRING
+                     CONFIG_TEST_XXX CONFIG_TEST_YYY)
     if(ret)
         message("CONFIG_TEST_INT or CONFIG_TEST_STRING or CONFIG_TEST_XXX or CONFIG_TEST_YYY is defined")
     endif()
