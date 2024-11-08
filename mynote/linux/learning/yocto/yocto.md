@@ -25,7 +25,7 @@ git clone https://git.yoctoproject.org/yocto-kernel-cache
 ./tmp/work/qemuarm64-poky-linux/linux-yocto/5.15.32+gitAUTOINC+meta_machine-r0/temp/run.do_compile
 ```
 
-# 1）、需下载的包：
+## 1）、需下载的包：
 
 ```bash
 cd downloads
@@ -42,6 +42,14 @@ BB_NO_NETWORK
 tmp/work-shared/qemuarm64/kernel-source
 git://git.yoctoproject.org/linux-yocto.git
 git clone https://git.yoctoproject.org/linux-yocto
+```
+
+## 3）、构建native sdk：
+
+```bash
+bitbake <image> -c populate_sdk
+# 如：
+bitbake core-image-minimal -c populate_sdk
 ```
 
 # 2、recipe：

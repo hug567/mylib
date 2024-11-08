@@ -72,6 +72,8 @@ git fetch -p
 git fetch <remote>
 //只拉取特定分支
 git fetch <remote> <branch>
+//拉取所有tag
+git fetch -t
 ```
 
 ### 2.2、本地分支管理

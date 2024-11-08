@@ -45,10 +45,12 @@ bitbake-layer show-appends
 ## 2）、创建layer：
 
 ```bash
+# 使用bash
+bash
 # 创建layer
 cd poky
-source oe-init-build-env    # 自动进入了build目录
-cd ..                       # 推出build目录，进入上一级目录
+source oe-init-build-env    # 会自动进入build目录
+cd ..                       # 退出build目录，进入上一级目录
 bitbake-layers create-layer meta-qemu
 # 添加layer
 bitbake-layers add-layer meta-qemu
