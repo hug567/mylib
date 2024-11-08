@@ -43,6 +43,7 @@ function main() {
         usage
         exit
     fi
+    ssh-keygen -R 192.168.0.2
     for file in ${files}; do
         if [ ! -e ${file} ]; then
             echo "there is no: ${file}"

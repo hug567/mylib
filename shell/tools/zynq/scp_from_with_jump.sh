@@ -41,6 +41,7 @@ function main() {
         usage
         exit
     fi
+    ssh-keygen -R 192.168.0.2
     scp_from_antenna "${file}"
 }
 

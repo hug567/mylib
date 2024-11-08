@@ -9,6 +9,10 @@ function test_split_with_space() {
     for member in ${str[@]}; do
         echo "member: $member"
     done
+
+    local platform="CONFIG_PLATFORM_TEST"
+    local short=$(echo ${platform} | awk -F '_' '{print$NF}')
+    echo "platform: ${platform}, short: ${short}"
 }
 
 function main() {
