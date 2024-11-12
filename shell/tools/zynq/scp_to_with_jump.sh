@@ -3,11 +3,12 @@
 # 2024-08-16
 
 function usage() {
-    echo "Usage: $0 <file/dir>    scp file/dir to antenna with ssh jump"
+    echo "Usage: $0 <dst_dir> <file/dir>...    scp file/dir to antenna with ssh jump"
 }
 
 function scp_to_antenna() {
-    local file=${1}
+    local file_or_dir=${1}
+    local dst_dir=${2}
     local jump_name=rhosoon
     local jump_ip=192.168.99.50
     local jump_passwd=R123456
@@ -23,7 +24,7 @@ function scp_to_antenna() {
 
 expect <<EOF
     set timeout 1000
-    spawn scp ${file} antenna:~
+    spawn scp -r ${file_or_dir} antenna:${dst_dir}
     expect {
         "${jump_name}@${jump_ip}'s password" { send "${jump_passwd}\r"; exp_continue }
         "${antenna_name}@${antenna_ip}'s password" { send "${antenna_passwd}\r"; exp_continue }
@@ -35,23 +36,25 @@ EOF
 }
 
 function main() {
-    local files="$*"
-    local file=
-    local i=0
+    local dst_dir=$1
+    local files="${@:2}"
+    local src_file=
+    local i=o
 
-    if [ $# -eq 0 -o "$1" == "-h" ]; then
+    if [ $# -lt 2 -o "$1" == "-h" ]; then
         usage
         exit
     fi
+
     ssh-keygen -R 192.168.0.2
-    for file in ${files}; do
-        if [ ! -e ${file} ]; then
-            echo "there is no: ${file}"
-            continue
-        fi
+    for src_file in $(echo "$files"); do
         let i=i+1
-        echo "- [${i}] --------------------------------------------------------"
-        scp_to_antenna "${file}"
+        echo "[$i]: -----------------------------------------------------------"
+        if [ ! -e $src_file ]; then
+             echo "file or dir [$src_file] does not exist"
+             continue
+        fi
+        scp_to_antenna $src_file $dst_dir
     done
 }
 
