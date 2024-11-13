@@ -1,0 +1,130 @@
+<!--
+    练习：echarts图表曲线平移
+    源码：https://github.com/apache/echarts.git
+    时间：2024-11-12
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[echarts] test_move</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/css/bootstrap/4.6.2/bootstrap.min.css">
+  <script src="static/js/jquery/3.7.1/jquery.min.js"></script>
+  <script src="static/js/bootstrap/4.6.2/js/bootstrap.min.js"></script>
+  <script src="static/js/echarts/5.4.3/echarts.min.js"></script>
+</head>
+
+<body>
+  <script>
+    var myChart;
+    var lineX = new Array();
+    var lineXShow = new Array();
+    var xSize = 64;
+    var maxX = xSize;
+    var lineData = new Array();
+
+    function initCharts() {
+
+      for (var i = 0; i < xSize; i++) {
+        lineX[i] = i + 1;
+        lineXShow[i] = i + 1;
+      }
+
+      myChart = echarts.init(document.getElementById('myChart-line'));
+      var option = {
+        // 创建2个X轴，一个显示一个不显示，显示的X轴坐标值不变化，不显示的x轴坐标跟随
+        // 数据值一起变化，以实现曲线的平移效果
+        xAxis: [
+          {
+            type: 'category',
+            show: false, //会变化的x轴坐标不显示
+            data: lineX, //跟随数据一起变化的x轴坐标
+          },
+          {
+            type: 'category',
+            position: 'bottom', //第二个显示出来的x轴坐标，位于曲线图底部
+            data: lineXShow,
+          }],
+        yAxis: {
+          type: 'value',
+          max: 4,
+          min: 2,
+        },
+        series: [{
+          type: 'line',
+          symbol: "none",
+        }],
+      };
+      option && myChart.setOption(option);
+    }
+
+    $(document).ready(function () {
+      initCharts();
+    });
+
+    //更新曲线数据
+    function updateChartData() {
+      var len = lineData.length;
+      //更新曲线数据
+      if (len < xSize) {
+        lineData[len] = Math.random() / 2 + 3;
+      } else {
+        for (var i = 0; i < len - 1; i++) {
+          lineData[i] = lineData[i + 1];
+        }
+        lineData[len - 1] = Math.random() / 2 + 3;
+
+        //更新不显示的x轴坐标，跟随数据一起变化，以实现曲线平移效果
+        var i;
+        for (i = 0; i < xSize; i++) {
+          lineX[i] = lineX[i + 1];
+        }
+        lineX[i] = maxX + 1;
+        maxX = maxX + 1;
+
+      }
+      myChart.setOption({
+        xAxis: [
+          {
+            data: lineX, //不显示的x轴坐标，跟随y轴一起变化，实现曲线平移效果
+          },
+          {
+            data: lineXShow, //显示的x轴坐标，值不变
+          }],
+        series: [{
+          data: lineData,  //曲线数据
+        }],
+      });
+    }
+
+    setInterval(function () {
+      updateChartData();
+    }, 300)
+  </script>
+
+  <div class="container">
+    <br>
+    <br><br>
+    <div id="myChart-line" style="height: 400px;"></div>
+
+    <div>
+      <p><br>调试窗口：<button id="idButtonDebugLogWindow">清除</button></p>
+      <textarea rows="10" cols="100" id="idDebugLogWindow"></textarea>
+      <script>
+        function logInfo(log) {
+          document.getElementById("idDebugLogWindow").value += log;
+          document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+        }
+        document.getElementById("idButtonDebugLogWindow").onclick = function (event) {
+          document.getElementById("idDebugLogWindow").value = "";
+          document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+        }
+      </script>
+    </div>
+
+  </div>
+</body>
+
+</html>
