@@ -51,7 +51,7 @@ function main() {
         let i=i+1
         echo "[$i]: -----------------------------------------------------------"
         if [ ! -e $src_file ]; then
-             echo "file or dir [$src_file] does not exist"
+             echo "[${PWD}]: file or dir [$src_file] does not exist"
              continue
         fi
         scp_to_antenna $src_file $dst_dir
