@@ -1,0 +1,49 @@
+<!--
+  练习：JavaScript字典
+  时间：2024-11-19
+-->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <title>test_alert</title>
+</head>
+
+<body>
+  <!--JavaScript脚本-->
+  <script>
+    function test_dictionary() {
+      document.write('[test_dictionary]: --------------------------------<br>');
+
+      var info = {
+        'Tom' : {
+          age: 18,
+          height: 180,
+          native: 'Anhui',
+        },
+        'Jerry' : {
+          age: 19,
+          height: 181,
+          native: 'Jiangsu',
+        },
+      };
+      var name = 'Tom';
+      document.write(name + ' age: ' + info[name].age + '<br>');
+      document.write(name + ' height: ' + info[name].height + '<br>');
+      document.write(name + ' vative: ' + info[name].native + '<br>');
+      var name = 'Jerry';
+      document.write(name + ' age: ' + info[name].age + '<br>');
+      document.write(name + ' height: ' + info[name].height + '<br>');
+      document.write(name + ' vative: ' + info[name].native + '<br>');
+    }
+
+    function main() {
+      test_dictionary();
+    }
+
+    main();
+  </script>
+</body>
+
+</html>
