@@ -101,7 +101,7 @@ def add_date_text_to_image(args):
     cv2.imwrite(saved_fname, image)
 
 def main():
-    parser = argparse.ArgumentParser(description='Get student information')
+    parser = argparse.ArgumentParser(description='Add date to image')
 
     parser.add_argument('-f', '--file', type=str, help='image file name')
     parser.add_argument('-d', '--date', type=str, help='added date string')

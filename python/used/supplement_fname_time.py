@@ -43,7 +43,7 @@ def supplement_fname_time(fname):
     os.rename(fname, new_fname)
 
 def main():
-    parser = argparse.ArgumentParser(description='Get student information')
+    parser = argparse.ArgumentParser(description='Supplement time to file name')
 
     parser.add_argument('-d', '--dir', type=str, help='files dir')
     args = parser.parse_args()

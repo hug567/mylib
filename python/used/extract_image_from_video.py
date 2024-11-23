@@ -45,7 +45,7 @@ def extract_image_from_video(video, frames_per_s=5):
     cap.release()
 
 def main():
-    parser = argparse.ArgumentParser(description='Get student information')
+    parser = argparse.ArgumentParser(description='Extract image from video')
 
     parser.add_argument('-v', '--video', type=str, help='files dir')
     args = parser.parse_args()

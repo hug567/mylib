@@ -10,7 +10,7 @@ function scp_to_antenna() {
     local file_or_dir=${1}
     local dst_dir=${2}
     local jump_name=rhosoon
-    local jump_ip=192.168.99.50
+    local jump_ip=192.168.99.123
     local jump_passwd=R123456
     local antenna_name=root
     local antenna_ip=192.168.0.2
