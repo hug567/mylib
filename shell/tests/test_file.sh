@@ -45,9 +45,21 @@ function test_file_exist() {
     fi
 }
 
+# 从文件路径中获取各个部分
+function test_get_fname() {
+    echo "$FUNCNAME:-----------------------------"
+
+    local fname="modemserver.log-20240927-074847.gz"
+    local base1=${fname%.*} # modemserver.log-20240927-074847
+    echo "base1: ${base1}"
+    local base2=${fname%%.*} # modemserver
+    echo "base2: ${base2}"
+}
+
 function main() {
     read_file_by_line /tmp/vim_tmp.txt
     test_file_exist
+    test_get_fname
 }
 
 main
