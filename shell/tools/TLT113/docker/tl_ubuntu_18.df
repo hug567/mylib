@@ -1,0 +1,33 @@
+# create myjenkins docker image
+# build image:
+#     cd mylib/docker/dockerfile/ubuntu/18/
+#     docker build -t myubuntu18:v0.1 -f base.df ./
+# 2024-12-03
+
+# pull ubuntu 18.04: docker pull ubuntu:18.04
+FROM ubuntu:18.04
+
+COPY sources.list /etc/apt/
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG user=t113
+ARG passwd=t113
+
+# Add new user, grant permissions to sudo , set user password
+RUN apt update
+RUN apt-get -y install apt-utils && \
+    apt-get -y install sudo locales vim git zsh tmux iputils-ping net-tools \
+                       python3 && \
+    cd /usr/bin && ln -s python3 python && \
+    locale-gen en_US.UTF-8 && update-locale && \
+    useradd --create-home --no-log-init --shell /bin/bash ${user} && \
+    adduser ${user} sudo && \
+    echo "${user}:${passwd}" | chpasswd
+
+# Set time zone
+#RUN apt-get -y install systemd
+#RUN timedatectl set-timezone "Asia/Shanghai"
+
+# Set default login user
+USER ${user}
