@@ -36,7 +36,7 @@
         <thead class="thead-dark">
           <tr>
             <th colspan="2">
-              <h3>标题</h3>
+              <h4>表格1</h4>
             </th>
           </tr>
         </thead>
@@ -62,18 +62,46 @@
         border-color: #dee2e6;
       }
 
+      /* mytable-right */
       .myt-r {
         border-left: none;
       }
 
+      /* mytable-second */
       .myt-2nd {
         border-top: none;
       }
 
+      /* mytable-second-right */
       .myt-2nd-r {
         border-top: none;
         border-left: none;
       }
+
+      /* mytable-border-right */
+      .myt-border-r {
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
+      }
+
+      /* mytable-border-bottom */
+      .myt-border-b {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+      }
+
+      /* mytable-border-right-bottom */
+      .myt-border-rb {
+        border-top: none;
+        border-left: none;
+      }
+
+      .mypy-4 {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      };
     </style>
 
     <script>
@@ -109,10 +137,15 @@
       });
     </script>
 
+    <!--
+      带表头表格，表头独占一行
+      屏幕宽时，下面的内容占两列
+      屏幕窄时，下面的内容占一列，原第一和第二列交叉重排
+    -->
     <div class="ml-3 mr-3" style="text-align: center;">
-      <div class="row">
+      <div class="row" style="background-color: #007bff;">
         <div class="col mytable">
-          <h3>标题</h3>
+          <h4 style="color: white">表格2</h4>
         </div>
       </div>
       <div class="row">
@@ -128,17 +161,138 @@
         <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">表格六</div>
       </div>
     </div>
+
     <br>
-    <div class="row">
-      <div class="col-12 col-md-6 mytable">无表头表格一</div>
-      <div class="col-12 col-md-6 mytable myt-r mytd-head2">无表头表格二</div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-md-6 mytable myt-2nd">无表头表格三</div>
-      <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">无表头表格四</div>
+    <!--
+      带表头表格，表头独占一行
+      屏幕宽时，下面的内容占四列，每行四列
+      屏幕窄时，下面的内容占两列，每行两列，原第一和第二列交叉重排
+    -->
+    <div class="ml-3 mr-3" style="text-align: center;">
+      <div class="row" style="background-color: #007bff;">
+        <div class="col mytable">
+          <h4 style="color: white">表格3</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 mytable myt-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格一(1)</div>
+            <div class="col-6">表格一(2)</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格二(1)</div>
+            <div class="col-6">表格二(2)</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 mytable myt-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格三(1)</div>
+            <div class="col-6">表格三(2)</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格四(1)</div>
+            <div class="col-6">表格四(2)</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 mytable myt-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格五(1)</div>
+            <div class="col-6">表格五(2)</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格六(1)</div>
+            <div class="col-6">表格六(2)</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
+    <br>
+    <!--
+      带表头表格，表头独占一行
+      屏幕宽时，下面的内容占四列，每行四列
+      屏幕窄时，下面的内容占两列，每行两列，原第二列完全在第一列之后
+    -->
+    <div class="ml-3 mr-3" style="text-align: center;">
+      <div class="row" style="background-color: #007bff;">
+        <div class="col mytable">
+          <h4 style="color: white">表格4</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 mytable myt-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-rb mypy-4">表格一(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">表格一(2)</div>
+          </div>
+          <div class="row">
+            <div class="col-6 mytable myt-border-rb mypy-4">表格二(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">表格二(2)</div>
+          </div>
+          <div class="row">
+            <div class="col-6 mytable myt-border-r mypy-4">表格三(1)</div>
+            <div class="col-6 mypy-4">表格三(2)</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-rb mypy-4">表格四(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">表格四(2)</div>
+          </div>
+          <div class="row">
+            <div class="col-6 mytable myt-border-rb mypy-4">表格五(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">表格五(2)</div>
+          </div>
+          <div class="row">
+            <div class="col-6 mytable myt-border-r mypy-4">表格六(1)</div>
+            <div class="col-6 mypy-4">表格六(2)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-12 col-md-6 mytable myt-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格二(1)</div>
+            <div class="col-6">表格二(2)</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">
+          <div class="row">
+            <div class="col-6 mytable myt-border-r">表格四(1)</div>
+            <div class="col-6">表格四(2)</div>
+          </div>
+        </div>
+      </div> -->
+
+    <br>
+    <!--
+      不带表头表格
+      屏幕宽时，下面的内容占两列
+      屏幕窄时，下面的内容占一列
+    -->
+    <div class="ml-3 mr-3" style="text-align: center;">
+      <div class="row">
+        <div class="col-12 col-md-6 mytable">无表头表格一</div>
+        <div class="col-12 col-md-6 mytable myt-r mytd-head2">无表头表格二</div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 mytable myt-2nd">无表头表格三</div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">无表头表格四</div>
+      </div>
+    </div>
+  </div> <!--container-->
 </body>
 
 </html>
