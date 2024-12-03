@@ -10,7 +10,7 @@ function scp_to_antenna() {
     local file_or_dir=${1}
     local dst_dir=${2}
     local jump_name=rhosoon
-    local jump_ip=192.168.99.123
+    local jump_ip=192.168.99.50
     local jump_passwd=R123456
     local antenna_name=root
     local antenna_ip=192.168.0.2
@@ -26,7 +26,7 @@ expect <<EOF
     set timeout 1000
     spawn scp -r ${file_or_dir} antenna:${dst_dir}
     expect {
-        "${jump_name}@${jump_ip}'s password" { send "${jump_passwd}\r"; exp_continue }
+        "${jump_name}@*password" { send "${jump_passwd}\r"; exp_continue }
         "${antenna_name}@${antenna_ip}'s password" { send "${antenna_passwd}\r"; exp_continue }
         "Are you sure you want to continue connecting" { send "yes\r"; exp_continue}
         "100%" {}
