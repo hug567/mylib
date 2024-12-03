@@ -62,11 +62,15 @@
         border-color: #dee2e6;
       }
 
-      .mytable-second {
+      .myt-r {
+        border-left: none;
+      }
+
+      .myt-2nd {
         border-top: none;
       }
 
-      .mytable-second-right {
+      .myt-2nd-r {
         border-top: none;
         border-left: none;
       }
@@ -76,14 +80,22 @@
       function redrawTable() {
         var windowWidth = $(window).width();
         if (windowWidth < 768) {
-          $('.mytable-dynamic').each(function () {
-            $(this).removeClass('mytable-second-right');
-            $(this).addClass('mytable-second');
+          $('.mytd-2nd').each(function () {
+            $(this).removeClass('myt-2nd-r');
+            $(this).addClass('myt-2nd');
+          });
+          $('.mytd-head2').each(function () {
+            $(this).removeClass('myt-r');
+            $(this).addClass('myt-2nd');
           });
         } else {
-          $('.mytable-dynamic').each(function () {
-            $(this).removeClass('mytable-second');
-            $(this).addClass('mytable-second-right');
+          $('.mytd-2nd').each(function () {
+            $(this).removeClass('myt-2nd');
+            $(this).addClass('myt-2nd-r');
+          });
+          $('.mytd-head2').each(function () {
+            $(this).removeClass('myt-2nd');
+            $(this).addClass('myt-r');
           });
         }
       }
@@ -99,20 +111,31 @@
 
     <div class="ml-3 mr-3" style="text-align: center;">
       <div class="row">
-        <div class="col mytable"><h3>标题</h3></div>
+        <div class="col mytable">
+          <h3>标题</h3>
+        </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 mytable mytable-second">表格一</div>
-        <div class="col-12 col-md-6 mytable mytable-second-right mytable-dynamic">表格二</div>
+        <div class="col-12 col-md-6 mytable myt-2nd">表格一</div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">表格二</div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 mytable mytable-second">表格三</div>
-        <div class="col-12 col-md-6 mytable mytable-second-right mytable-dynamic">表格四</div>
+        <div class="col-12 col-md-6 mytable myt-2nd">表格三</div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">表格四</div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 mytable mytable-second">表格五</div>
-        <div class="col-12 col-md-6 mytable mytable-second-right mytable-dynamic">表格六</div>
+        <div class="col-12 col-md-6 mytable myt-2nd">表格五</div>
+        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">表格六</div>
       </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12 col-md-6 mytable">无表头表格一</div>
+      <div class="col-12 col-md-6 mytable myt-r mytd-head2">无表头表格二</div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 mytable myt-2nd">无表头表格三</div>
+      <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">无表头表格四</div>
     </div>
 
   </div>
