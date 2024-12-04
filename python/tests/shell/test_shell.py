@@ -48,6 +48,15 @@ def run_cmd_return_result(cmd):
     # 返回命令是否执行成功，以及命令执行的输出
     return ret, output_str.strip()
 
+# 执行shell命令，获取stdout、stderr的输出，并获取shell命令执行是否成功
+def run_cmd_stdout_stderr_exitcode(cmd):
+    p = subprocess.Popen(cmd, shell=True, text=True, stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE)
+    stdout, stderr = p.communicate()
+    ret = p.returncode
+    return ret, stdout, stderr
+
+#------------------------------------------------------------------------------#
 def test_run_shell_and_check_success():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
@@ -108,12 +117,32 @@ def test_os_popen():
     print(f.read())
 
 #------------------------------------------------------------------------------#
+# python中获取stdout, stderr, returncode
+def test_get_stdout_stderr_returncdoe():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    cmd = 'ls -l /'
+    ret, stdout, stderr = run_cmd_stdout_stderr_exitcode(cmd)
+    print('type(ret):', type(ret))
+    print('type(stdout):', type(stdout))
+    print('type(stderr):', type(stderr))
+    print(f'cmd: {cmd}')
+    print(f'ret: {ret}')
+    print(f'stdout: {stdout}')
+    print(f'stderr: {stderr}')
+    if stdout == '':
+        print('stdout is empty')
+    else:
+        print(f'stdout first line:', stdout.splitlines()[0])
+
+#------------------------------------------------------------------------------#
 def main():
     test_os_system()
     test_os_popen()
     test_subprocess()
     test_run_shell_return_result()
     test_run_shell_and_check_success()
+    test_get_stdout_stderr_returncdoe()
 
 if __name__ == '__main__':
     main()

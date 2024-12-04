@@ -4,7 +4,9 @@
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+import other
 
+# 设置日志记录器，日志记录器的名称可自定义
 logger = logging.getLogger(__name__)
 
 def test_logging():
@@ -26,11 +28,17 @@ def test_logging():
     logger.error("this is an error log")
     logger.critical("this is an critical log")
 
-    for i in range(0, 100000):
+    for i in range(0, 3):
         logger.info(f'this is an info log: {i}')
+
+# 调用定义在另一个文件中的函数，在另一个文件中使用logger记录日志
+def test_logging_other():
+    # 调用子文件中的函数，其会使用主程序中的日志记录器记录日志
+    other.write_log()
 
 def main():
     test_logging()
+    test_logging_other()
 
 if __name__ == '__main__':
     main()

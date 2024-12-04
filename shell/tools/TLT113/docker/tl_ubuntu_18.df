@@ -18,7 +18,8 @@ ARG passwd=t113
 RUN apt update
 RUN apt-get -y install apt-utils && \
     apt-get -y install sudo locales vim git zsh tmux iputils-ping net-tools \
-                       python3 bc u-boot-tools kmod cpio liblzo2-2 && \
+                       python3 bc u-boot-tools kmod cpio liblzo2-2 busybox \
+                       libncurses5-dev && \
     cd /usr/bin && ln -s python3 python && \
     locale-gen en_US.UTF-8 && update-locale && \
     useradd --create-home --no-log-init --shell /bin/bash ${user} && \
