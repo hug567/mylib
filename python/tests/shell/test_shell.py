@@ -48,13 +48,20 @@ def run_cmd_return_result(cmd):
     # 返回命令是否执行成功，以及命令执行的输出
     return ret, output_str.strip()
 
-# 执行shell命令，获取stdout、stderr的输出，并获取shell命令执行是否成功
+# 执行shell命令，stderr重定向到stdout，获取stdout的输出，并获取shell命令执行是否成功
 def run_cmd_stdout_stderr_exitcode(cmd):
     p = subprocess.Popen(cmd, shell=True, text=True, stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE)
+                        stderr=subprocess.STDOUT)
     stdout, stderr = p.communicate()
     ret = p.returncode
     return ret, stdout, stderr
+
+def run_return_list(cmd):
+    stdout_list = []
+    ret, stdout, stderr = run_cmd_stdout_stderr_exitcode(cmd)
+    if stdout != '':
+        stdout_list = stdout.splitlines()
+    return stdout_list
 
 #------------------------------------------------------------------------------#
 def test_run_shell_and_check_success():
@@ -134,6 +141,13 @@ def test_get_stdout_stderr_returncdoe():
         print('stdout is empty')
     else:
         print(f'stdout first line:', stdout.splitlines()[0])
+
+    print('------------------------------')
+    cmd = 'ls -l /'
+    stdout_list = run_return_list(cmd)
+    print('type(stdout_list):', type(stdout_list))
+    for line in stdout_list:
+        print(f'stdout_list line: [{line}]')
 
 #------------------------------------------------------------------------------#
 def main():
