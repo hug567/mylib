@@ -7,7 +7,7 @@
 
 <head>
   <meta charset='UTF-8'>
-  <title>test_alert</title>
+  <title>test_dictionary</title>
 </head>
 
 <body>
@@ -38,8 +38,23 @@
       document.write(name + ' vative: ' + info[name].native + '<br>');
     }
 
+    //遍历字典
+    function test_traverse_dictionary() {
+      document.write('[test_traverse_dictionary]: -----------------------<br>');
+
+      var student = {
+        name : 'Tom',
+        age : 18,
+        height : 178
+      };
+      for (var key in student) {
+        document.write('student ' + key + ': ' + student[key] + '<br>');
+      }
+    }
+
     function main() {
       test_dictionary();
+      test_traverse_dictionary();
     }
 
     main();

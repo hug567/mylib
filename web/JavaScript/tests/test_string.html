@@ -68,11 +68,40 @@
       document.write("str: " + str + "<br>");
     }
 
+    //判断字符串是否相等
+    function test_str_equal() {
+      document.write("test_equal: -----------------------------" + "<br>");
+
+      var str = 'hello';
+      //判断字符串是否相等
+      if (str === 'hello') {
+        document.write("str equal to hello<br>");
+      }
+      //判断字符串是否不等
+      if (str !== 'world') {
+        document.write("str not equal to world<br>");
+      }
+    }
+
+    //字符串替换
+    function test_str_replace() {
+      document.write("test_str_replace: ----------------------------" + "<br>");
+
+      //将字符串中的单引号替换为双引号
+      var str = "{\'name\' : \'Tom\'}";
+      //replaceAll()：对所有匹配的字符串都进行替换
+      var str_new = str.replaceAll("\'", "\"");
+      document.write("str: [" + str + "]<br>");
+      document.write("str_new: [" + str_new + "]<br>");
+    }
+
     function main() {
       test_base();
       test_connect();
       test_str2num();
       test_num2str();
+      test_str_equal();
+      test_str_replace();
     }
 
     main();
