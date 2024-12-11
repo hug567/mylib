@@ -8,6 +8,11 @@ import sys
 def test_compare():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
+    # 字符串为空
+    str1 = ''
+    if str1 == '':
+        print('str1 is empty')
+
     # 相等
     str1="hello"
     str2="hello"
