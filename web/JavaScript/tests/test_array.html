@@ -83,6 +83,42 @@
       for (var i = 0; i < cars.length; i++) {
         document.write("car name: " + cars[i][0] +", car price: " + cars[i][1] + "<br>");
       }
+
+      //向数组中添加元素
+      function test_add_element() {
+        document.write("[test_add_element] ------------------------------<br>");
+
+        var names = new Array();
+        //向数组末尾添加元素
+        names.push('Tom');
+        names.push('Jerry');
+        names.push('Bob');
+        document.write('names: ' + names + '<br>');
+      }
+
+      //删除数组元素
+      function test_delete_element() {
+        document.write("[test_delete_element] ---------------------------<br>");
+
+        var names = new Array('Bob', 'Tom', 'Jerry');
+        document.write('names: ' + names + '<br>');
+        //根据数组下面删除元素，下标从0开始
+        names.splice(1, 1); //从下标1开始，删除一个元素
+        document.write('names: ' + names + '<br>');
+
+        names.push('Alice');
+        document.write('names: ' + names + '<br>');
+        //根据元素内容删除元素
+        names.splice(names.indexOf('Bob'), 1); //先获取元素下标，再删除元素
+        document.write('names: ' + names + '<br>');
+      }
+
+      function main() {
+        test_add_element();
+        test_delete_element();
+      }
+
+      main();
     </script>
   </body>
 </html>

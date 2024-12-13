@@ -37,6 +37,10 @@ sudo tcpdump -i eth1 -nn 'icmp[4:2]=1234 and src 10.42.0.23 and dst 10.42.0.21'
 
 # 监听来自或发放指定地址的arp包
 sudo tcpdump -i eth1 -nn 'arp and src or dst 10.42.0.23'
+
+# 监听HTTP GET请求
+sudo tcpdump -i ens160 -s 0 -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420'
+
 ```
 
 # 3、打印含义：
