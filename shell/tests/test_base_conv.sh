@@ -1,6 +1,7 @@
 #!/bin/bash
 # 不同进制间的转换
 
+# 十进制转换为其他进制
 function test_from_decimal() {
     echo "$FUNCNAME:-----------------------------"
     local num=20
