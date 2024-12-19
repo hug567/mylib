@@ -24,3 +24,23 @@ apt show xxx
 apt-cache madison xxx
 sudo apt install xxx=x.y.z
 ```
+
+# 2、离线安装openssh-server：
+
+- ubuntu 18.04：(未验证成功)
+
+```bash
+# 先在连网的ubuntu 18中下载openssh-server及其所有依赖的deb包：
+apt download $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends openssh-client | grep -v i386 | grep "^\w")
+apt download $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends openssh-server | grep -v i386 | grep "^\w")
+
+# 在需要安装的机器上通过scp从下载deb包的机器上获取所有deb包：
+scp -r hx@192.168.99.112:/tmp/openssh ./
+
+# 安装所有deb包：
+cd openssh
+echo "$(ls *.deb)" | while read deb; do sudo dpkg -i $deb; done
+```
+
+
+

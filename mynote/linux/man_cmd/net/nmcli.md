@@ -26,10 +26,15 @@ nmcli device wifi list
 # 连接wifi：
 sudo nmcli device wifi connect "<SSID>" password "<password>" ifname wlx502b731c5285
 
-# 查看可用的网络接口：
+# 查看网口连接状态：
 nmcli device status
 # 查看可用的网络连接：
-nmcli connection show
+nmcli con show
+# 查看活动的网络连接
+nmcli con show -active
+# 查看网络设备详情：
+nmcli dev show
+nmcli dev show <ens160>
 ```
 
 ## 2)、设置开机自动配置静态ip：
@@ -65,14 +70,26 @@ ls /etc/NetworkManager/system-connections
 
 ## 4)、修改指定网卡的dns：
 
+- 添加dns：
+
 ```bash
 # 查看网卡对应的连接：
 nmcli connection show
 # 修改指定连接的dns：
 sudo nmcli con mod 'Wired connection 3' ipv4.dns "119.29.29.29"
+sudo nmcli con mod <UUID> ipv4.dns "119.29.29.29"
 # 使配置生效：
 sudo nmcli con up 'Wired connection 3'
-# 查看网页对应的dns：
+sudo nmcli con up <UUID>
+# 查看网卡对应的dns：
+nmcli dev show
 resolvectl status
+systemd-resolve --status
+```
+
+- 删除dns：
+
+```bash
+sudo nmcli con mod eth0 -ipv4.dns 8.8.8.8
 ```
 
