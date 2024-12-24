@@ -62,3 +62,27 @@ filebrowser users rm <user>
 filebrowser -c ./config.json -d ./filebrowser.db
 ```
 
+# 4、开启https：
+
+- ssl证书：
+  - key：服务器上的私钥文件，用于对发送给客户端数据的加密，以及对从客户端接收到数据的解密
+  - csr：证书签名请求文件，用于提交给证书颁发机构（CA）对证书签名
+  - crt：由证书颁发机构（CA）签名后的证书，或者是开发者自签名的证书，包含证书持有人的信息，持有人的公钥，以及签署者的签名等信息
+
+```bash
+# 安装openssl
+sudo apt install openssl
+# 生成未加密的私钥文件(key)：
+openssl genpkey -algorithm RSA -out filebrowser.key
+# 根据私钥文件(key)生成证书签名请求文件(csr)：
+openssl req -new -key filebrowser.key -out filebrowser.csr
+# 根据私钥文件(key)和证书签名请求文件(csr)生成自签名证书(crt)，有效期3560天：
+openssl x509 -req -days 3650 -in filebrowser.csr -signkey filebrowser.key -out filebrowser.crt
+
+# 修改filebrowser配置文件：
+
+# 启动filebrowser：
+
+filebrowser -c ./config.json -d ./filebrowser.db config set --cert filebrowser.crt --key filebrowser.key
+```
+

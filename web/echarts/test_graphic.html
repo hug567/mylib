@@ -1,14 +1,14 @@
 <!--
-    练习：echarts图表
+    练习：echarts图中显示额外信息并动态更新
     源码：https://github.com/apache/echarts.git
-    时间：2024-02-26
+    时间：2024-12-23
 -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>[echarts] test_line</title>
+  <title>[echarts] test_graphic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="static/css/bootstrap/4.6.2/bootstrap.min.css">
   <script src="static/js/jquery/3.7.1/jquery.min.js"></script>
@@ -19,35 +19,14 @@
 <body>
   <script>
     var myChart;
-    $(document).ready(function () {
-      /*
-          console.log("Enter ready\n");
-          console.log("Enter ready 2\n");
-          myChart = echarts.init(document.getElementById('myChart-line'));
-          myChart.setOption({
-              title: {
-                  text: '折线图标题'
-              },
-              xAxis: {
-                  type: 'category',
-                  data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-              },
-              yAxis: {
-                  type: 'value'
-              },
-              series: [{
-                  data: [120, 200, 150, 80, 70, 110, 130],
-                  type: 'line'
-              }]
-          });
-          */
-      //import * as echarts from 'echarts';
+    var gCount = 0;
 
+    function createChart() {
       myChart = echarts.init(document.getElementById('myChart-line'));
       var option = {
         xAxis: {
           type: 'category',
-          data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+          data: [1, 2, 3, 4, 5, 6, 7]
         },
         yAxis: {
           type: 'value'
@@ -58,23 +37,45 @@
             type: 'line'
           }
         ],
+        graphic: {
+          elements: [{
+            type: 'text',
+            left: 'center',
+            top: '27',
+            style: {
+              text: "init value",
+              textAlgin: 'center',
+            },
+          }],
+        },
       };
 
       option && myChart.setOption(option);
+    }
 
-    });
+    $(document).ready(function () {
+      createChart();
 
-    $(function () {
-      $("#idButton").click(function () {
-        var newData = new Array(150, 23, 360);
-        myChart.setOption({series: [{data: newData,}]});
-      });
+      setInterval(function () {
+        myChart.setOption({
+          graphic: {
+            elements: [{
+              type: 'text',
+              left: 'center',
+              top: '27',
+              style: {
+                text: 'gCount: ' + gCount.toString(),
+                textAlgin: 'center',
+              },
+            }],
+          },
+        });
+        gCount++;
+      }, 1000);
     });
   </script>
 
   <div class="container">
-    <br>
-    <button type="submit" class="btn btn-primary" id="idButton">按钮</button>
     <br><br>
     <div id="myChart-line" style="height: 400px; background-color: #eeeeee;"></div>
 
