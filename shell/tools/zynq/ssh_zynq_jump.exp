@@ -1,0 +1,32 @@
+#!/bin/expect
+# 通过跳板机ssh连接天线，使用expect自动输入密码，需先配置~/.ssh/config
+# 2024-12-25
+
+set timeout 60
+
+set jump_name rhosoon
+set jump_ip 192.168.99.50
+set jump_passwd R123456
+set antenna_name root
+set antenna_ip 192.168.0.2
+set antenna_passwd root
+
+spawn ssh antenna
+expect {
+    "$jump_name@* password" {
+        send "$jump_passwd\r"
+        exp_continue
+    }
+    "$antenna_name@$antenna_ip's password" {
+        send "$antenna_passwd\r"
+        exp_continue
+    }
+    "Are you sure you want to continue connecting" {
+        send "yes\r"
+        exp_continue
+    }
+    "root@zynq7020:" {}
+    timeout { exit 127 }
+}
+
+interact
