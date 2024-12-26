@@ -11,6 +11,8 @@ set antenna_name root
 set antenna_ip 192.168.0.2
 set antenna_passwd root
 
+#exec bash -c { ssh-keygen -R 192.168.0.2 }
+
 spawn ssh antenna
 expect {
     "$jump_name@* password" {
