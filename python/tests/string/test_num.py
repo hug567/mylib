@@ -15,6 +15,7 @@ def test_str_to_int():
     num2 = int(str2)
     print("num2 type: ", type(num2), ", num2 = ", num2, sep='')
 
+# 字符串转浮点数
 def test_str_to_float():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
@@ -26,6 +27,7 @@ def test_str_to_float():
     num2 = float(str2)
     print("num2 type: ", type(num2), ", num2 = ", num2, sep='')
 
+# 浮点数转字符串
 def test_float_to_string():
     print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
 
