@@ -4,38 +4,49 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>[js] test_array</title>
-  </head>
-  <body>
-    <!--JavaScript脚本-->
-    <script>
-      document.write("---------------------------------------------------<br>");
+
+<head>
+  <meta charset="UTF-8">
+  <title>[js] test_array</title>
+</head>
+
+<body>
+  <!--JavaScript脚本-->
+  <script>
+    function log_info(log_str) {
+      var date = new Date();
+      document.write('[' + date.toLocaleString() + '][INFO] ' + log_str);
+    }
+
+    function test_define_array() {
+      log_info("[test_define_array]: ------------------------------------<br>");
       //字符串数组
       var students = new Array("Tom", "Jerry", "Bob");
       for (var i = 0; i < 3; i++) {  //数组下标从0开始
-        document.write("student name: " + students[i] + "<br>");
+        log_info("student name: " + students[i] + "<br>");
       }
 
-      document.write("---------------------------------------------------<br>");
+      log_info("---------------------------------------------------------<br>");
       //数字数组
       var ages = new Array(18, 20, 25, 19, 31);
       for (var i = 0; i < 5; i++) {
-        document.write("age: " + ages[i] + "<br>");
+        log_info("age: " + ages[i] + "<br>");
       }
 
-      document.write("---------------------------------------------------<br>");
+      log_info("---------------------------------------------------------<br>");
       //先声明数组，再赋值
       var scores = new Array();
       scores[0] = 85;
       scores[1] = 97;
       scores[2] = 93;
       for (var i = 0; i < scores.length; i++) {  //数组长度：scores.length
-        document.write("score: " + scores[i] + "<br>");
+        log_info("score: " + scores[i] + '<br>');
       }
+    }
 
-      document.write("---------------------------------------------------<br>");
+    //二维数组
+    function test_define_2dim_array() {
+      log_info("[test_define_2dim_array]: ---------------------------------<br>");
       //二维数组：定义二位数组
       var matrix = new Array();
       for (var i = 0; i < 3; i++) {
@@ -49,14 +60,14 @@
       }
       //打印二维数组
       for (var i = 0; i < 3; i++) {
-        document.write("matrix: ");
+        log_info("matrix: ");
         for (var j = 0; j < 3; j++) {
           document.write(matrix[i][j] + " ");
         }
         document.write("<br>");
       }
 
-      document.write("---------------------------------------------------<br>");
+      log_info("-----------------------------------------<br>");
       //在定义二维数组时赋初值，可以每行长度不同
       var studentInfo = new Array(
         new Array("Tom", "Jerry", "Bob"),
@@ -65,14 +76,14 @@
       );
       //遍历定义时已赋值的二维数组
       for (var i = 0; i < studentInfo.length; i++) {
-        document.write("studentInfo[" + i + "]: ");
+        log_info("studentInfo[" + i + "]: ");
         for (var j = 0; j < studentInfo[i].length; j++) {
           document.write(studentInfo[i][j] + " ");
         }
         document.write("<br>");
       }
 
-      document.write("---------------------------------------------------<br>");
+      log_info("-----------------------------------------<br>");
       //二维数组中存储不同类型数据
       var cars = new Array(
         new Array("lavida", 10.39),
@@ -81,44 +92,82 @@
       );
       //打印
       for (var i = 0; i < cars.length; i++) {
-        document.write("car name: " + cars[i][0] +", car price: " + cars[i][1] + "<br>");
+        log_info("car name: " + cars[i][0] + ", car price: " + cars[i][1] + "<br>");
       }
+    }
 
-      //向数组中添加元素
-      function test_add_element() {
-        document.write("[test_add_element] ------------------------------<br>");
+    //向数组中添加元素
+    function test_add_element() {
+      log_info("[test_add_element] --------------------------------------<br>");
 
-        var names = new Array();
-        //向数组末尾添加元素
-        names.push('Tom');
-        names.push('Jerry');
-        names.push('Bob');
-        document.write('names: ' + names + '<br>');
+      var names = new Array();
+      //向数组末尾添加元素
+      log_info('[INFO] add data to array tail: <br>');
+      names.push('Tom');
+      names.push('Jerry');
+      names.push('Bob');
+      log_info('names: ' + names + '<br>');
+
+      //向数据头部添加数据
+      log_info('[INFO] add data to array head: <br>');
+      names.unshift('Alice');
+      log_info('names: ' + names + '<br>');
+    }
+
+    //删除数组元素
+    function test_delete_element() {
+      log_info("[test_delete_element] -----------------------------------<br>");
+
+      var names = new Array('Bob', 'Tom', 'Jerry', 'James', 'Robert', 'John');
+      log_info('names: ' + names + '<br>');
+      //根据数组下标删除元素，下标从0开始
+      names.splice(1, 1); //从下标1开始，删除一个元素
+      log_info('names: ' + names + '<br>');
+
+      names.push('Alice');
+      log_info('names: ' + names + '<br>');
+      //根据元素内容删除元素
+      names.splice(names.indexOf('Bob'), 1); //先获取元素下标，再删除元素
+      log_info('names: ' + names + '<br>');
+
+      //删除尾部元素
+      names.pop();
+      log_info('names: ' + names + '<br>');
+
+      //删除头部元素
+      names.shift();
+      // log_info('names: ' + names + '<br>');
+      log_info('names: ' + names + '<br>');
+    }
+
+    //截取数据
+    function test_array_cut() {
+      log_info("[test_array_cut] ----------------------------------------<br>");
+
+      var num = new Array();
+      for (var i = 0; i < 10; i++) {
+        num.push(10 - i);
       }
+      log_info('num array: ' + num + '<br>');
 
-      //删除数组元素
-      function test_delete_element() {
-        document.write("[test_delete_element] ---------------------------<br>");
+      //提取数组，数组的索引从0开始
+      //从索引1开始提取，提取到索引3前面一个元素，不包含索引3
+      //slice()不修改原数组的值
+      var num_new = num.slice(1, 3);
+      log_info('num_new array: ' + num_new + '<br>');
+      log_info('num_old array: ' + num + '<br>');
+    }
 
-        var names = new Array('Bob', 'Tom', 'Jerry');
-        document.write('names: ' + names + '<br>');
-        //根据数组下面删除元素，下标从0开始
-        names.splice(1, 1); //从下标1开始，删除一个元素
-        document.write('names: ' + names + '<br>');
+    function main() {
+      test_define_array();
+      test_define_2dim_array();
+      test_add_element();
+      test_delete_element();
+      test_array_cut();
+    }
 
-        names.push('Alice');
-        document.write('names: ' + names + '<br>');
-        //根据元素内容删除元素
-        names.splice(names.indexOf('Bob'), 1); //先获取元素下标，再删除元素
-        document.write('names: ' + names + '<br>');
-      }
+    main();
+  </script>
+</body>
 
-      function main() {
-        test_add_element();
-        test_delete_element();
-      }
-
-      main();
-    </script>
-  </body>
 </html>

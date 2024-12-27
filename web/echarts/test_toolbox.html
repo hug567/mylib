@@ -1,0 +1,182 @@
+<!--
+    练习：echarts图表中显示toolbox
+    源码：https://github.com/apache/echarts.git
+    时间：2024-12-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[echart] test_select</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/css/bootstrap/4.6.2/bootstrap.min.css">
+  <script src="static/js/jquery/3.7.1/jquery.min.js"></script>
+  <script src="static/js/bootstrap/4.6.2/bootstrap.min.js"></script>
+  <script src="static/js/echarts/5.4.3/echarts.min.js"></script>
+</head>
+
+<body>
+  <script>
+    var myChart01;
+    var xDataLen = 3000;
+
+    function createChart01() {
+      myChart01 = echarts.init(document.getElementById('idDivChart01'));
+      var option = {
+        xAxis: {
+          type: 'category',
+          data: [],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: [],
+            type: 'line'
+          }
+        ],
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          right: 10,
+          top: 10,
+          itemSize: 30,
+          itemGap: 0,
+          feature: {
+            myTool300: {
+              show: true,
+              icon: 'image://static/icon/number-300.svg',
+              onclick: function () {
+                updateChartXSize(300);
+              }
+            },
+            myTool1000: {
+              show: true,
+              icon: 'image://static/icon/number-1000.svg',
+              onclick: function () {
+                updateChartXSize(1000);
+              }
+            },
+            myTool3000: {
+              show: true,
+              icon: 'image://static/icon/number-3000.svg',
+              onclick: function () {
+                updateChartXSize(3000);
+              }
+            },
+          },
+        },
+      };
+
+      var xData = new Array();
+      for (var i = 1; i <= xDataLen; i++) {
+        xData.push(i);
+      }
+      option.xAxis.data = xData;
+      var yData = new Array();
+      for (var i = 1; i <= xDataLen; i++) {
+        if (i <= 100) {
+          yData.push(Math.random() + 1);
+        } else if (xDataLen - i <= 100) {
+          yData.push(Math.random() + 3);
+        } else {
+          yData.push(Math.random() + 5);
+        }
+      }
+      option.series[0].data = yData;
+
+      option && myChart01.setOption(option);
+    }
+
+    function updateChartXSize(size) {
+      console.log('new chart X size: ' + size);
+      var newData = new Array();
+      for (var i = 1; i <= size; i++) {
+        newData.push(i);
+      }
+
+      var chart = myChart01;
+      var option = chart.getOption();
+      chart.setOption({
+        xAxis: {
+          data: newData,
+        },
+      });
+
+      var curXSize = option.xAxis[0].data.length;
+      console.log('curXSize: ' + curXSize);
+      var seriesData = option.series[0].data;
+      if (curXSize > size) {
+        var seriesLen = seriesData.length;
+        console.log('seriesLen: ' + seriesLen);
+        var newSeriesLen;
+        if (size > seriesLen) {
+          newSeriesLen = seriesLen;
+        } else {
+          newSeriesLen = size;
+        }
+        console.log('newSeriesLen: ' + newSeriesLen);
+
+        var count = 0;
+        var newSeriesData = new Array();
+        for (var i = seriesLen - 1; i >= 0; i--) {
+          newSeriesData.unshift(seriesData[i]);
+          count++;
+          if (count >= newSeriesLen) {
+            break;
+          }
+        }
+        console.log('count: ' + count);
+        console.log('newSeriesData.length: ' + newSeriesData.length);
+        // console.log('newSeriesData: ' + newSeriesData);
+        chart.setOption({
+          series: [{
+            data: newSeriesData,
+          }],
+        });
+      }
+    }
+
+    $(document).ready(function () {
+      createChart01();
+    });
+  </script>
+
+  <div class="container">
+    <duiv>
+      <h3>echarts图表中显示工具栏toolbox：</h3>
+    </duiv>
+    <div id="idDivChart01" style="height: 400px; background-color: #eefcf0;"></div>
+
+    <div id="dropdown-container">
+      <select id="chartTypeSelect">
+        <option value="line">折线图</option>
+        <option value="bar">柱状图</option>
+        <option value="pie">饼图</option>
+      </select>
+    </div>
+
+    <div>
+      <p><br>调试窗口：<button id="idClearDebugLogWindow">清除</button></p>
+      <textarea rows="30" cols="148" id="idDebugLogWindow"></textarea>
+      <script>
+        function logInfo(log) {
+          const now = new Date();
+          const timeStr = now.toLocaleString();
+          document.getElementById("idDebugLogWindow").value += "[" + timeStr + "] ";
+          document.getElementById("idDebugLogWindow").value += log;
+          document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+        }
+        document.getElementById("idClearDebugLogWindow").onclick = function (event) {
+          document.getElementById("idDebugLogWindow").value = "";
+          document.getElementById("idDebugLogWindow").scrollTop = document.getElementById("idDebugLogWindow").scrollHeight;
+        }
+      </script>
+    </div>
+
+  </div>
+</body>
+
+</html>

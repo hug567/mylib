@@ -1,0 +1,40 @@
+<!--
+  练习：JavaScript数字操作
+  时间：2024-12-27
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[js] test_number</title>
+</head>
+
+<body>
+  <!--JavaScript脚本---------------------------------------------------------->
+  <script>
+    //数字转字符串
+    function test_num_to_str() {
+      document.write("test_num_to_str:-------------------------------" + "<br>");
+
+      //整数转字符串
+      var numInt = 18;
+      var numIntStr = numInt.toString();
+      document.write('numInt: ' + numInt + ', numIntStr: ' + numIntStr + '<br>');
+
+      //浮点数转字符串
+      var numFloat = 25.38700
+      var numFloatStr = numFloat.toString();
+      document.write('numFloat: ' + numFloat + ', numFloatStr: ' + numFloatStr + '<br>');
+    }
+
+    function main() {
+        test_num_to_str();
+    }
+
+    main();
+  </script>
+  <!-------------------------------------------------------------------------->
+</body>
+
+</html>

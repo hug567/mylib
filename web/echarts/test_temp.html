@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECharts 下拉框示例</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+    <style>
+        #main {
+            width: 600px;
+            height: 400px;
+        }
+
+        /* 隐藏下拉框 */
+        #dropdown-container {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        select {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main"></div>
+<div id="dropdown-container">
+    <select id="chartTypeSelect">
+        <option value="line">折线图</option>
+        <option value="bar">柱状图</option>
+        <option value="pie">饼图</option>
+    </select>
+</div>
+
+<script>
+    // 初始化 ECharts
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var option = {
+        title: {
+            text: 'ECharts 自定义工具栏下拉框示例'
+        },
+        toolbox: {
+            show: true,
+            orient: 'horizontal',
+            left: 'center',
+            top: 10,
+            feature: {
+                myTool: {
+                    show: true,
+                    title: '选择图表类型',
+                    icon: 'path://M2,2 L18,2 L18,18 L2,18 Z',  // 简单的矩形图标
+                    onclick: function() {
+                        // 显示下拉框
+                        document.getElementById('dropdown-container').style.display = 'block';
+                    }
+                }
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [120, 132, 101, 134, 90, 230, 210],
+            type: 'line'  // 默认是折线图
+        }]
+    };
+
+    myChart.setOption(option);
+
+    // 监听下拉框选择事件
+    document.getElementById('chartTypeSelect').addEventListener('change', function (event) {
+        var selectedType = event.target.value;  // 获取选择的图表类型
+        // 更新图表的系列类型
+        myChart.setOption({
+            series: [{
+                type: selectedType,
+                data: [120, 132, 101, 134, 90, 230, 210]
+            }]
+        });
+        // 隐藏下拉框
+        document.getElementById('dropdown-container').style.display = 'none';
+    });
+
+    // 点击页面其他区域时隐藏下拉框
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('#dropdown-container') && !event.target.closest('#toolbox-container')) {
+            document.getElementById('dropdown-container').style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
