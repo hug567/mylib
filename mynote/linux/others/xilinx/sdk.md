@@ -54,3 +54,10 @@ Window -> Preferences -> General -> Content Types -> Text -> Default encoding: -
 Window -> Show View -> Other... -> C/C++ -> C/C++ Projects
 ```
 
+## 3、调试操作：
+
+### 1）、下载程序到cpu1：
+
+```bash
+```
+
