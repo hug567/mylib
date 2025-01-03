@@ -1,0 +1,167 @@
+<!--
+    练习：bootstrap modal模态框
+    时间：2025-01-02
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[bootstrap] test_modal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/css/bootstrap.min.css"> <!--bootstrap 4.6.2-->
+  <link rel="stylesheet" href="static/css/bootstrap-icons.min.css"> <!--bootstrap-icons 1.9.1-->
+  <script src="static/js/jquery.min.js"></script> <!--jquery 3.7.1-->
+  <script src="static/js/popper.min.js"></script> <!--popper 1.5.0-->
+  <script src="static/js/bootstrap.min.js"></script> <!--bootstrap 4.6.2-->
+</head>
+
+<body>
+  <div class="container">
+    <br><br>
+
+    <!-- bootstrap普通模态窗 ------------------------------------------------------------------------------------------->
+    <!-- 通过按钮触发模态窗 -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#idModal01">
+      弹窗01
+    </button>
+
+    <!-- 按下按钮后显示的模态窗 -->
+    <div class="modal fade" id="idModal01" tabindex="-1" aria-labelledby="idModatTitle01" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="idModatTitle01">Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            这是弹窗01
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 在js中动态创建bootstrap modal并显示 ---------------------------------------------------------------------------->
+    <script>
+      function popupInfo(info_str) {
+        // 创建 Modal 的 HTML 结构
+        var subStr = parseInt(Math.random() * 10000).toString();
+        var idDivModal = 'idDivDymanicModal_' + subStr;
+        var idDivModalLabel = 'idDivDymanicModalLabel_' + subStr;
+        console.log('subStr: ' + subStr);
+        console.log('idDivModal: ' + idDivModal);
+        console.log('idDivModalLabel: ' + idDivModalLabel);
+        const modalHTML = `
+          <div class="modal fade" id="` + idDivModal + `" tabindex="-1" aria-labelledby="`
+          + idDivModalLabel + `" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="` + idDivModalLabel + `">提示</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">` + info_str + `</div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        `;
+
+        // 将 Modal 添加到页面
+        $('body').append(modalHTML);
+
+        // 初始化并显示 Modal
+        var modal = new bootstrap.Modal(document.getElementById(idDivModal));
+        modal.show();
+
+        // 清理 Modal 元素（在 Modal 关闭后移除 DOM 元素）
+        $("#" + idDivModal).on("hidden.bs.modal", function () {
+          console.log('will delete element with id: ' + idDivModal);
+          $("#" + idDivModal).remove();
+        });
+      }
+
+      $(function () {
+        $('#idButtonModal02').on('click', function () {
+          popupInfo('这是在js中动态创建的弹窗，退出后将自动删除当前弹窗！');
+        });
+      });
+    </script>
+    <button type="button" class="btn btn-primary" id="idButtonModal02">
+      弹窗02
+    </button>
+
+    <!-- 在js中动态创建bootstrap modal，并在一段事件后自动退出 ------------------------------------------------------------>
+    <script>
+      function popupInfoHidden(info_str) {
+        var subStr = parseInt(Math.random() * 10000).toString();
+        var idDivModal = 'idDivDymanicModal_' + subStr;
+        var idDivModalLabel = 'idDivDymanicModalLabel_' + subStr;
+        console.log('subStr: ' + subStr);
+        console.log('idDivModal: ' + idDivModal);
+        console.log('idDivModalLabel: ' + idDivModalLabel);
+        const modalHTML = `
+          <div class="modal fade" id="` + idDivModal + `" tabindex="-1" aria-labelledby="`
+          + idDivModalLabel + `" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="` + idDivModalLabel + `">提示(3)</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">` + info_str + `</div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        `;
+
+        $('body').append(modalHTML);
+        var modal = new bootstrap.Modal(document.getElementById(idDivModal));
+        modal.show();
+
+        var countdownTime = 2;
+        var interval = setInterval(function() {
+          $('#' + idDivModalLabel).text('提示(' + countdownTime + ')')
+          countdownTime--;
+          if (countdownTime < 0) {
+            console.log('will hide modal: ' + idDivModal);
+            clearInterval(interval);
+            modal.hide();
+          }
+        }, 1000);
+
+        $("#" + idDivModal).on("hidden.bs.modal", function () {
+          console.log('will delete element with id: ' + idDivModal);
+          clearTimeout(interval);
+          $("#" + idDivModal).remove();
+        });
+      }
+
+      $(function () {
+        $('#idButtonModal03').on('click', function () {
+          popupInfoHidden('这是在js中动态创建的弹窗，会在3秒后自动退出！');
+        });
+      });
+    </script>
+    <button type="button" class="btn btn-primary" id="idButtonModal03">
+      弹窗03，会自动退出
+    </button>
+
+  </div>
+</body>
+
+</html>
