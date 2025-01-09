@@ -95,6 +95,23 @@
       document.write("str_new: [" + str_new + "]<br>");
     }
 
+    //字符串查找
+    function test_str_find() {
+      document.write("test_str_find: -------------------------------" + "<br>");
+
+      var str01 = "hello world";
+      var str01head = "he";
+      var str01tail = 'rld';
+      //字符串是否已指定字符串开头
+      // if (str01.indexOf(str01head) == 0) {
+      if (str01.startsWith(str01head)) {
+        document.write(str01head + " is on (" + str01 + ")'s head<br>");
+      }
+      if (str01.endsWith(str01tail)) {
+        document.write(str01tail + " is on (" + str01 + ")'s tail<br>");
+      }
+    }
+
     function main() {
       test_base();
       test_connect();
@@ -102,6 +119,7 @@
       test_num2str();
       test_str_equal();
       test_str_replace();
+      test_str_find();
     }
 
     main();

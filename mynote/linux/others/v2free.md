@@ -38,5 +38,15 @@ external-controller: 10.110.0.3:9090 # 本机访问，建议使用 127.0.0.1:909
 external-ui: /home/hx/tools/clash/clash-dashboard # clash-dashboard的路径
 secret: 'hx2023clash' # 连接的密钥，自行设置
 #-----------------------------------------------------------------#
+
+# 网页上选择的节点，存储在当前目录cache.db文件中，后续更新config.yaml，选择过的节点不需要再重新选择一次
+```
+
+## 3）、更新订阅：
+
+```bash
+# 重新下载配置文件即可更新订阅：
+wget -U "Mozilla/6.0" -O ~/.config/mihomo/config.yaml "https://cdn.v2free.top/link/gi0NXWB4bw9Sfpui?clash=2"
+# 重新下载后，可将网页管理相关的配置再加入到新的配置文件中
 ```
 

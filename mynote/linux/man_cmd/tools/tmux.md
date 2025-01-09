@@ -96,6 +96,8 @@ tmux capture-pane -S -351                //保存当前窗格中倒数指定行�
 tmux capture-pane -S - -t 1              //保存当前window指定pane中所有历史到buffer [-t target-pane]
 tmux capture-pane -t main:3.2 -S -       //保存其他pane所有历史到buffer， session:main, window:3, pane:2
 tmux save-buffer output.log              //buffer内容保存到文件
+//将当前窗格所有历史存入日志文件output.log
+tmux capture-pane -S -; tmux save-buffer output.log
 ```
 
 ## 6、tmux支持256色：

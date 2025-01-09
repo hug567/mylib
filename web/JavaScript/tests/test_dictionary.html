@@ -52,9 +52,32 @@
       }
     }
 
+    //字典元素值是数组
+    function test_value_array() {
+      document.write('[test_value_array]: -------------------------------<br>');
+
+      var data = {
+        numArray: [
+          {
+            title: 'first',
+            value: 18,
+          },
+          {
+            title: 'second',
+            value: 20,
+          },
+        ],
+      };
+      document.write('data.numArray[0]: ' + data.numArray[0] +'<br>');
+      document.write('data.numArray[0].title: ' + data.numArray[0].title +'<br>');
+      document.write('data.numArray[0].value: ' + data.numArray[0].value +'<br>');
+      console.log('data.numArray[0]: ' + data.numArray[0]);
+    }
+
     function main() {
       test_dictionary();
       test_traverse_dictionary();
+      test_value_array();
     }
 
     main();
