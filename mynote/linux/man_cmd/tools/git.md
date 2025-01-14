@@ -149,6 +149,9 @@ git log --oneline | tail -n 100000 | head -n 1
 //将commit推送到远端分支
 git push origin <commit ID>:refs/heads/master
 //后续可以此类推
+
+//拉取远端指定分支到本地
+git pull origin <origin_branch>:<local_branch>
 ```
 
 ### 2.4、commit操作

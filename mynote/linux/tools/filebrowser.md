@@ -7,27 +7,27 @@ filebrowser config init
 # 创建管理员用户，有管理员权限
 filebrowser users add admin ddf3#jusQR^Z3CTC
 # 设置用户scope
-filebrowser users update admin --scope /home/rhosoon/filebrowser
+filebrowser users update admin --scope /home/hx/filebrowser
 # 为用户添加admin权限
 filebrowser users update admin --perm.admin
 
 # 创建普通用户
-filebrowser users add rhosoon rs123456
+filebrowser users add hx hx123456
 # 设置用户scope
-filebrowser users update rhosoon --scope /home/rhosoon/filebrowser
+filebrowser users update hx --scope /home/hx/filebrowser
 # 允许普通用户下载文件
-filebrowser users update rhosoon --perm.download
+filebrowser users update hx --perm.download
 # 禁止普通用户以下权限
-filebrowser users update rhosoon --perm.create=false
-filebrowser users update rhosoon --perm.rename=false
-filebrowser users update rhosoon --perm.delete=false
-filebrowser users update rhosoon --perm.share=false
-filebrowser users update rhosoon --perm.execute=false
+filebrowser users update hx --perm.create=false
+filebrowser users update hx --perm.rename=false
+filebrowser users update hx --perm.delete=false
+filebrowser users update hx --perm.share=false
+filebrowser users update hx --perm.execute=false
 # 禁止普通用户修改密码
-filebrowser users update rhosoon --lockPassword=true
+filebrowser users update hx --lockPassword=true
 
 # 查看用户
-filebrowser users list
+filebrowser users ls
 
 # 删除用户
 filebrowser users rm <user>
@@ -37,18 +37,18 @@ filebrowser users rm <user>
 
 ```bash
 {
-        "port" : 45000,
+        "port" : 53000,
         "address" : "0.0.0.0",
         "log" : "/var/log/filebrowser.log",
-        "root" : "/home/rhosoon/filebrowser",
-        "database" : "/home/rhosoon/tools/linux-amd64-filebrowser/filebrowedr.db",
+        "root" : "/home/hx/filebrowser",
+        "database" : "/home/hx/tools/linux-amd64-filebrowser/filebrowser.db",
         "signup" : false,
         "lockPassword" : true,
         "locale" : "zh-cn",
         "singleClick" : true,
         "dateFormat" : true,
         "branding" : {
-                "name": "Rhosoon",
+                "name": "hx",
                 "filesPerPage": 50,
                 "theme" : "light"
         },
@@ -58,8 +58,56 @@ filebrowser users rm <user>
 
 # 3、启动filebrowser：
 
+## 1）、手动启动：
+
 ```bash
 filebrowser -c ./config.json -d ./filebrowser.db
+```
+
+## 2）、systemd中开机自启动：
+
+- 创建启动脚本：
+
+```bash
+# 创建启动脚本，systemd不能直接执行二进制，需在脚本中执行：
+vim systemd_filebrowser.sh
+#----------------------------------------------#
+cd /home/hx/tools/filebrowser
+./filebrowser -c ./config.json
+#----------------------------------------------#
+```
+
+- 创建自启动服务：
+
+```bash
+# 创建自定义任务文件：
+touch filebrowser.service
+# 编辑任务内容：
+vim filebrowser.service
+#----------------------------------------------#
+[Unit]
+Description=filebrowser
+After=network.target
+
+[Service]
+User=hx
+ExecStart=/bin/bash /home/hx/tools/filebrowser/systemd_filebrowser.sh
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+#----------------------------------------------#
+# 复制到系统任务目录：
+sudo cp filebrowser.service /lib/systemd/system
+# 设置开机自启动：
+sudo systemctl enable filebrowser
+# 启动任务：
+sudo systemctl start filebrowser
+
+# 查看启动日志：
+journalctl -u filebrowser
+# 查看启动进程：
+ps aux | grep filebrowser
 ```
 
 # 4、开启https：

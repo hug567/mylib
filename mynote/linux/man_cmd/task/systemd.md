@@ -64,7 +64,9 @@ systemd-analyze log-target                             # 打印systemd日志输�
 # 4、新增任务：
 
 ```bash
+# 创建自定义任务文件：
 touch my_service.service
+# 编辑任务内容：
 vim my_service.service
 #----------------------------------------------#
 [Unit]
@@ -72,14 +74,18 @@ Description=My Service
 After=network.target
 
 [Service]
+User=hx
 ExecStart=/bin/bash /usr/sbin/myservice/main.sh
 Restart=no
 
 [Install]
 WantedBy=multi-user.target
 #----------------------------------------------#
+# 复制到系统任务目录：
 sudo cp my_service.service /lib/systemd/system
+# 设置开机自启动：
 sudo systemctl enable my_service
+# 启动任务：
 sudo systemctl start my_service
 ```
 
