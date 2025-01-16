@@ -8,6 +8,7 @@ function build_all_platforms() {
         "QQFTC"
         "S450AT"
         "S450AY"
+        "S450BT"
     )
     local platform
 

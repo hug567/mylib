@@ -14,6 +14,7 @@ function build_all_platforms() {
         "S450AT"
         "S450AY"
         "UWB"
+        "S450BT"
     )
     local platform
 
