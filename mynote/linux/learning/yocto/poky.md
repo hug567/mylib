@@ -7,12 +7,14 @@ cd poky
 git checkout yocto-2.2.2
 ```
 
-# 2、poky主线编译linux：
+# 2、编译：
+
+## 1）、poky主线编译linux：
 
 - 2024-06-05: https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html
 
 ```bash
-sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 python3-subunit zstd liblz4-tool file locales libacl1
+sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 python3-subunit zstd liblz4-tool file locales libacl1 xz-utils
 sudo locale-gen en_US.UTF-8
 
 git clone https://git.yoctoproject.org/poky
@@ -30,6 +32,25 @@ export ftp_proxy='http://127.0.0.1:7890/'
 export ALL_PROXY='socks://127.0.0.1:7890/'
 export all_proxy='socks://127.0.0.1:7890/'
 export no_proxy='127.0.0.1'
+```
+
+## 2）、编译sdk：
+
+```bash
+bitbake core-image-minimal -c populate_sdk
+```
+
+## 3）、本地编译：
+
+```bash
+# 在layer的配置文件layer.conf中添加：
+BB_NO_NETWORK = "1"
+# 初始化编译环境：
+source oe-init-build-env
+# 复制已下载的源码文件到build目录：
+cp -r .../downloads ./
+# 编译平台：
+bitbake core-image-minimal
 ```
 
 # 3、poky添加layer：
@@ -101,6 +122,9 @@ cd downloas/git2
 ls | grep e2fsprogs
 # 通过其他途径下载仓库，并复制到downloads/git2目录中：
 git clone git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
+# 如果使用的分支不是默认分支，还需要切换到使用的目标分支：
+cd e2fsprogs
+git checkout xxx
 # 对仓库重命名：
 mv e2fsprogs git.kernel.org.pub.scm.fs.ext2.e2fsprogs.git
 # 重新从本地拉取源码：
@@ -112,6 +136,33 @@ bitbake e2fsprogs-native -c do_fetch
 ```bash
 # glibc：
 git clone https://mirrors.tuna.tsinghua.edu.cn/git/glibc.git
+```
+
+## 5）、配置uninative包：
+
+### 5.1）、网上下载：
+
+- yocto 5.0对应的包为：https://downloads.yoctoproject.org/releases/uninative/4.6/x86_64-nativesdk-libc-4.6.tar.xz
+
+### 5.2）、本地构建：
+
+```bash
+# 本地编译：
+bitbake uninative-tarball
+```
+### 5.3）、使用本地nativesdk文件：
+
+```bash
+# 将编译成功后文件复制到downloads/uninative目录：
+cp tmp/deploy/sdk/x86_64-nativesdk-libc.tar.xz downloads/uninative
+# 查看文件sha256值：
+sha256sum downloads/uninative/x86_64-nativesdk-libc.tar.xz
+# 在.../conf/layer.conf中添加配置：
+ENABLE_UNINATIVE = "1"
+UNINATIVE_URL ?= "file://${DL_DIR}/uninative/"
+UNINATIVE_DLDIR ?= "${DL_DIR}/uninative/"
+UNINATIVE_TARBALL ?= "x86_64-nativesdk-libc.tar.xz"
+UNINATIVE_CHECKSUM[x86_64] ?= "970827f8d836cc749ad22d347459bceccf05c29623a5621ced72226dd3c295fc"
 ```
 
 
