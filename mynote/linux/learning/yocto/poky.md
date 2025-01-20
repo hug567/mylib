@@ -165,5 +165,19 @@ UNINATIVE_TARBALL ?= "x86_64-nativesdk-libc.tar.xz"
 UNINATIVE_CHECKSUM[x86_64] ?= "970827f8d836cc749ad22d347459bceccf05c29623a5621ced72226dd3c295fc"
 ```
 
+## 6、运行：
 
+### 1）、qemu运行arm镜像：
 
+```bash
+cd tmp/deploy/images/qemuarm
+# 登录用户名：root，无密码
+qemu-system-arm \
+    -drive id=disk0,file=core-image-minimal-qemuarm.rootfs.ext4,if=none,format=raw \
+    -device virtio-blk-device,drive=disk0 \
+    -machine virt,highmem=off \
+    -cpu cortex-a15 \
+    -smp 4 -m 256 -serial mon:stdio -nographic \
+    -kernel zImage \
+    -append 'root=/dev/vda rw  mem=256M swiotlb=0'
+```
