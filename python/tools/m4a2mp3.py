@@ -2,6 +2,8 @@
 # m4a转mp3脚本
 # windows中需先下载ffmpeg，并加入系统环境变量PATH：
 #     https://ffmpeg.org/download.html#build
+# linux中需先安装ffmpeg:
+#    sudo apt instll ffmpeg
 # 需安装：pip install ffmpeg
 #         pip install pydub
 # 2025-01-21
@@ -14,9 +16,7 @@ from pydub import AudioSegment
 def m4a2mp3(fname):
     print(f'm4a file: {fname}')
     mp3_prefix = os.path.basename(fname).split('.')[0]
-    audio = AudioSegment(fname, format='m4a')
-    #audio = AudioSegment.from_file(fname, format="m4a")
-    #audio = AudioSegment.from_m4a(fname, format="m4a")
+    audio = AudioSegment.from_file(fname, format="m4a")
     mp3_fname = mp3_prefix + '.mp3'
     print(f'will save to mp3 file: {mp3_fname}')
     audio.export(mp3_fname, format='mp3')
