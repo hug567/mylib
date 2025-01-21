@@ -12,6 +12,8 @@ def parse_args(argv):
     parser.add_argument('-a', '--age', type=int, help='supply age')
     # 带默认值的整型参数
     parser.add_argument('-w', '--weight', type=int, default=50, help='supply weight')
+    # 带默认值的浮点型参数
+    parser.add_argument('-t', '--height', type=float, default=173.5, help='supply height')
     # 指定可选值的字符串型参数
     parser.add_argument('-g', '--gender', type=str, default='male', choices=['male', 'female'], help='supply gender')
     args = parser.parse_args()
@@ -19,6 +21,7 @@ def parse_args(argv):
     print('name:', args.name)
     print('age:', args.age)
     print('weight:', args.weight)
+    print('height:', args.height)
     print('gender:', args.gender)
 
 def main():
