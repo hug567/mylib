@@ -39,7 +39,7 @@ filebrowser users rm <user>
 {
         "port" : 53000,
         "address" : "0.0.0.0",
-        "log" : "/var/log/filebrowser.log",
+        "log" : "/home/hx/tools/linux-amd64-filebrowser/filebrowser.log",
         "root" : "/home/hx/filebrowser",
         "database" : "/home/hx/tools/linux-amd64-filebrowser/filebrowser.db",
         "signup" : false,
@@ -61,7 +61,7 @@ filebrowser users rm <user>
 ## 1）、手动启动：
 
 ```bash
-filebrowser -c ./config.json -d ./filebrowser.db
+filebrowser -c ./config.json
 ```
 
 ## 2）、systemd中开机自启动：
@@ -127,10 +127,9 @@ openssl req -new -key filebrowser.key -out filebrowser.csr
 # 根据私钥文件(key)和证书签名请求文件(csr)生成自签名证书(crt)，有效期3560天：
 openssl x509 -req -days 3650 -in filebrowser.csr -signkey filebrowser.key -out filebrowser.crt
 
-# 修改filebrowser配置文件：
-
-# 启动filebrowser：
-
-filebrowser -c ./config.json -d ./filebrowser.db config set --cert filebrowser.crt --key filebrowser.key
+# 将ssl配置写入数据库文件filebrowser.db：
+filebrowser config set --cert filebrowser.crt --key filebrowser.key
+# 重新启动filebrowser：
+filebrowser -c ./config.json
 ```
 
