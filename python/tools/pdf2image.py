@@ -9,8 +9,9 @@ import sys
 import fitz
 import argparse
 
-def pdf2image(fname, zoom):
+def one_pdf_to_image(fname, zoom):
     image_prefix = os.path.basename(fname).split('.')[0]
+    print(f'will transmit all pdf pages to png file: {fname} -----------------')
     print(f'image_prefix: {image_prefix}')
     pdf = fitz.open(fname)
     for i in range(0, pdf.page_count):
@@ -23,17 +24,34 @@ def pdf2image(fname, zoom):
         pm.save(image_name)
     pdf.close()
 
+def pdfs_to_images(dpath, zoom):
+    #one_pdf_to_image(fname, zoom)
+    list = os.listdir(dpath)
+    for i in range(0, len(list)):
+        path = os.path.join(dpath, list[i])
+        if os.path.isfile(path) and path.endswith('.pdf'):
+            print(f'path: {path}')
+            one_pdf_to_image(path, zoom)
+        else:
+            print(f'path: {path} may not be a pdf file')
+
 def main():
     parser = argparse.ArgumentParser(description='Pdf to image png')
     parser.add_argument('-f', '--file', type=str, help='pdf file')
+    parser.add_argument('-d', '--dir', type=str, help='pdf file dir')
     parser.add_argument('-z', '--zoom', type=float, default=2.0, help='zoom factor')
 
     args = parser.parse_args()
-    if not args.file or not os.path.exists(args.file):
-        print('there is no file:', args.file)
+
+    if args.file and os.path.isfile(args.file):
+        one_pdf_to_image(args.file, args.zoom)
         return
 
-    pdf2image(args.file, args.zoom)
+    if not args.dir or not os.path.isdir(args.dir):
+        print('does not specify dir')
+        return
+
+    pdfs_to_images(args.dir, args.zoom)
 
 if __name__ == '__main__':
     main()
