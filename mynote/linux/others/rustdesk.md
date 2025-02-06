@@ -1,5 +1,7 @@
 # 1、自建rustdesk服务器：
 
+## 1）、创建服务：
+
 - ubuntu 22.04：
 
 ```bash
@@ -35,3 +37,7 @@ echo $(cat /opt/rustdesk/hbbs/root/id_ed25519.pub)
 ```
 
 - rustdesk使用到的网络端口：21114、21115、21116(tcp/udp)、21117、21118、21119
+
+## 2）、开机自启动：
+
+- 配合sytemd，开机时启动已创建好的docker容器；

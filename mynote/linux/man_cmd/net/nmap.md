@@ -3,7 +3,9 @@
 ## 1、常用参数：
 
 ```bash
-nmat
+sudo apt install nmap
+
+nmap
 	-h                        # 查看帮助
 	-p <port>                 # 指定端口
 	-Pn                       # 认为对端机器均在线，不进行在线检测
