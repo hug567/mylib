@@ -6,8 +6,8 @@ exit 0
 # 不能使用zsh
 bash
 source /opt/pkg/petalinux/settings.sh
-petalinux-create --type project --template zynq --name ax_peta
-cd ax_peta/
+petalinux-create --type project --template zynq --name zynq7020
+cd zynq7020/
 petalinux-config --get-hw-description ../linux_base.sdk
 petalinux-config -c kernel
 petalinux-config -c rootfs
@@ -87,8 +87,8 @@ modprobe rpmsg_user_dev_driver
 # 不能使用zsh
 bash
 source /opt/pkg/petalinux/settings.sh
-petalinux-create --type project --template zynq --name ax_peta
-cd ax_peta/
+petalinux-create --type project --template zynq --name zynq7020
+cd zynq7020/
 petalinux-config --get-hw-description ../linux_base.sdk
 petalinux-config -c kernel
 petalinux-config -c rootfs
