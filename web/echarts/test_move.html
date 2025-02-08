@@ -23,7 +23,7 @@
     var lineXShow = new Array();
     var xSize = 64;
     var maxX = xSize;
-    var lineData = new Array();
+    var lineYData = new Array();
 
     function initCharts() {
 
@@ -66,15 +66,15 @@
 
     //更新曲线数据
     function updateChartData() {
-      var len = lineData.length;
+      var len = lineYData.length;
       //更新曲线数据
       if (len < xSize) {
-        lineData[len] = Math.random() / 2 + 3;
+        lineYData[len] = Math.random() / 2 + 3;
       } else {
         for (var i = 0; i < len - 1; i++) {
-          lineData[i] = lineData[i + 1];
+          lineYData[i] = lineYData[i + 1];
         }
-        lineData[len - 1] = Math.random() / 2 + 3;
+        lineYData[len - 1] = Math.random() / 2 + 3;
 
         //更新不显示的x轴坐标，跟随数据一起变化，以实现曲线平移效果
         var i;
@@ -94,7 +94,7 @@
             data: lineXShow, //显示的x轴坐标，值不变
           }],
         series: [{
-          data: lineData,  //曲线数据
+          data: lineYData,  //曲线数据
         }],
       });
     }

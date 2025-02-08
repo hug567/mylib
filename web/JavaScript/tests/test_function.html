@@ -4,38 +4,88 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>[js] test_function</title>
-  </head>
-  <body>
-    <!--JavaScript脚本-->
-    <script>
-      //没有参数和返回值的函数
-      function printName() {
-        document.write("My name is Tom!<br>");
+
+<head>
+  <meta charset="UTF-8">
+  <title>[js] test_function</title>
+</head>
+
+<body>
+  <!--JavaScript脚本-->
+  <script>
+    //没有参数和返回值的函数
+    function printName() {
+      document.write("My name is Tom!<br>");
+    }
+
+    //有单个参数
+    function printAge(age) {
+      document.write("My age is: " + age + "<br>");
+    }
+
+    //有多个参数
+    function printPosition(pos, id) {
+      document.write("My position is: " + pos + ", id is: " + id + "<br>");
+    }
+
+    //有返回值
+    function getSalarySum(base, sub) {
+      return base + sub;
+    }
+
+    //------------------------------------------------------------------------
+    function _set_name(option) {
+      // option.name = 'Tom';
+      // option = {
+      //   name: 'Bob',
+      // }
+      // return option
+      option.info[0].name = 'Tom';
+      option.info[1].name = 'Bob';
+    }
+
+    function _set_age(option) {
+      // option.age = 18;
+      // option = {
+      //   age: 19,
+      // }
+      // return option;
+      option.info[0].age = 18;
+      option.info[1].age = 19;
+    }
+
+    function test_multi_func() {
+      document.write("test_multi_func: --------------------------------<br>");
+
+      var option = {
+        info: [
+          {
+            name: '',
+            age: 0,
+          },
+          {
+            name: '',
+            age: 0,
+          },
+        ]
       }
 
-      //有单个参数
-      function printAge(age) {
-        document.write("My age is: " + age + "<br>");
-      }
+      _set_name(option);
+      _set_age(option);
+      document.write("option.info[0].name: " + option.info[0].name + "<br>");
+      document.write("option.info[0].age: " + option.info[0].age + "<br>");
+      document.write("option.info[1].name: " + option.info[1].name + "<br>");
+      document.write("option.info[1].age: " + option.info[1].age + "<br>");
+    }
+    //------------------------------------------------------------------------
 
-      //有多个参数
-      function printPosition(pos, id) {
-        document.write("My position is: " + pos + ", id is: " + id + "<br>");
-      }
+    //调用函数
+    printName();
+    printAge(29);
+    printPosition("engineer", 12345);
+    document.write("My salary is: " + getSalarySum(10, 20) + "<br>");
+    test_multi_func();
+  </script>
+</body>
 
-      //有返回值
-      function getSalarySum(base, sub) {
-        return base + sub;
-      }
-
-      //调用函数
-      printName();
-      printAge(29);
-      printPosition("engineer", 12345);
-      document.write("My salary is: " + getSalarySum(10, 20) + "<br>");
-    </script>
-  </body>
 </html>
