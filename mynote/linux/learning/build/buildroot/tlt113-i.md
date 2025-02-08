@@ -18,7 +18,7 @@ sudo apt install bc u-boot-tools kmod cpio liblzo2-2 busybox rsync
 ## 3）、在docker中编译：
 
 ```bash
-# 加压文件：
+# 解压文件：
 mkdir test01
 cd test01
 tar -xvf ../LinuxSDK-v1.4.tar.gz
