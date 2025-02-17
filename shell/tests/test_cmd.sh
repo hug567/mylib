@@ -23,6 +23,12 @@ function test_cmd_traverse_result() {
     echo "$content" | while read item; do
         echo "item: [$item]"
     done
+
+    # 逐行遍历时保留每行前面的空格
+    # 遍历循环中如何满足某种条件，可将flag写入文件中，后续代码通过文件去判断
+    echo "${content}" | while IFS= raed -r item; do
+        echo "item: [$item]"
+    done
 }
 
 # 判断命令返回值
