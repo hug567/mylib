@@ -130,6 +130,24 @@ function test_bc_float() {
     echo " 3 / 2 = $(echo "scale=4; 3 / 2" | bc)"
 }
 
+# 使用awk进行float浮点数计算
+function test_awk_float() {
+    echo "$FUNCNAME:-----------------------------"
+
+    echo " 3.5 + 2.1 = $(awk 'BEGIN { print 3.5 + 2.1 }')"
+    echo " 3.5 - 2.1 = $(awk 'BEGIN { print 3.5 - 2.1 }')"
+    echo " 3.5 * 2.1 = $(awk 'BEGIN { print 3.5 * 2.1 }')"
+    echo " 3.5 / 2.1 = $(awk 'BEGIN { print 3.5 / 2.1 }')"
+    echo " 1 / 2 = $(awk 'BEGIN { print 1 / 2 }')"
+    echo " 5 / 3 = $(awk 'BEGIN { print 5 / 3 }')"
+
+    # 向awk中传递shell变量
+    local num1=10
+    local num2=3
+    local ret="$(echo ${num1} ${num2} | awk '{ print $1 / $2 }')"
+    echo "$num1 / $num2 = ${ret}"
+}
+
 # 双圆括号数学计算: + - * / % ++ -- & | ~ && || << >> **
 function test_brackets() {
     echo "$FUNCNAME:-----------------------------"
@@ -146,6 +164,7 @@ function main() {
     test_expr
     test_square
     test_bc_float
+    test_awk_float
     test_brackets
 }
 
