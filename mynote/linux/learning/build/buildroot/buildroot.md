@@ -1,5 +1,7 @@
 # 1、编译buildroot主线：
 
+## 1）、在线编译：
+
 ```bash
 git clone https://git.busybox.net/buildroot
 cd buildroot
@@ -7,8 +9,38 @@ cd buildroot
 make menuconfig
 ......
 
-# 编译：
+# 使用默认配置：
 make qemu_arm_vexpress_defconfig
+# 编译：
+make -j12
+
+# 使用qemu运行编译成功的镜像：
+qemu-system-arm \
+	-M vexpress-a9 -smp 2 -m 1024M \
+	-kernel output/images/zImage \
+	-append "root=/dev/mmcblk0 console=ttyAMA0 loglevel=8" \
+	-dtb output/images/vexpress-v2p-ca9.dtb \
+	-drive if=sd,format=raw,file=output/images/rootfs.ext2 \
+	-nographic
+
+# 使用buildroot编译出的qemu运行linux镜像：
+output/build/host-qemu-9.2.0/build/qemu-system-arm \
+        -M vexpress-a9 -smp 2 -m 1024M \
+        -kernel output/images/zImage \
+        -append "root=/dev/mmcblk0 console=ttyAMA0 loglevel=8" \
+        -dtb output/images/vexpress-v2p-ca9.dtb \
+        -drive if=sd,format=raw,file=output/images/rootfs.ext2 \
+        -nographic
+```
+
+## 2）、离线编译：
+
+```bash
+# 在线编译成功后，将下载的dl目录复制到新代码目录中，即可离线编译：
+cd buildroot
+cp -r .../dl ./
+make qemu_arm_vexpress_defconfig
+make -j12
 ```
 
 # 2、添加recipe：
