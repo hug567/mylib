@@ -79,12 +79,27 @@
     }
     //------------------------------------------------------------------------
 
+    //函数返回多个数值：将多个数值放入数组中，返回数组
+    function returnMultiValue() {
+      return [101, 308];
+    }
+
+    function test_return_multi_val() {
+      document.write("test_return_multi_val: ----------------------------<br>");
+
+      //调用返回多个数值的函数
+      var [a, b] = returnMultiValue();
+      document.write('a = ' + a + '<br>');
+      document.write('b = ' + b + '<br>');
+    }
+
     //调用函数
     printName();
     printAge(29);
     printPosition("engineer", 12345);
     document.write("My salary is: " + getSalarySum(10, 20) + "<br>");
     test_multi_func();
+    test_return_multi_val();
   </script>
 </body>
 
