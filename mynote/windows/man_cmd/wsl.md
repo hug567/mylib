@@ -106,7 +106,32 @@ localhostForwarding=true
 # 重启wsl
 ```
 
-# 4、FAQ
+# 4、wsl使用代理：
+
+- windows中使用v2rayN代理，wsl中如何使用windows的代理：
+
+- 1、在v2rayN中允许局域网使用代理：
+  - 设置 -> 参数设置 -> Core: 基础设置 -> 勾选：允许来自局域网的连接 -> 确定
+
+- 2、查看v2rayN的局域网http代理端口：
+  - 在v2rayN主页面左下角查看局域网http代理端口，如：局域网: [socks: 10810] | [http: 10811]
+- 3、在window中查看网卡vEthernel (WSL)的ip，并在wsl中可ping通windows的ip，如：
+
+```bash
+ping 192.168.240.1
+```
+
+- 4、在wsl中设置代理，并验证是否生效：
+
+```bash
+# 设置代理：
+export http_proxy="http://192.168.240.1:10811"
+export https_proxy="http://192.168.240.1:10811"
+# 验证是否生效：
+wget www.google.com
+```
+
+# 5、FAQ
 
 ## 1)、wsl2网络：
 - wsl2网络受VPN软件影响，如OpenVPN，需卸载VPN软件后重启Windows；
