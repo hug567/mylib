@@ -18,6 +18,8 @@ mount /dev/sda /var     # 挂载磁盘/dev/sda到目录/var
 # 挂载ext4镜像文件
 mkdir mount_dir
 sudo mount -o loop file.ext4 mount_dir
+# 挂载ext2格式文件：
+sudo mount -t ext2 rootfs.ext2 rootfs/
 
 # 开机自动挂载磁盘: /etc/fstab
 /dev/sda	/disk/sda	ext4	defaults	0	0
