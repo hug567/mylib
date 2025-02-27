@@ -50,6 +50,21 @@ ls out/t113_i_linux_tlt113-evm-nand-sdboot_uart0.img
 ./build.sh pack
 ```
 
+### 1）、单独编译u-boot环境编辑文件env.fex
+
+```bash
+# 修改文件：
+T113-i_v1.0/device/config/chips/t113_i/configs/tlt113-evm-nand/longan/env.cfg
+# 打包时会编译env.fex文件：
+./build.sh pack
+# 验证：
+head -c 1000 out/pack_out/env.fex
+# 烧写env.fex(sd卡启动):
+dd if=env.fex of=/dev/mmcblk0p2
+# 重启：
+reboot
+```
+
 ## 4）、刷写到开发板中：
 
 ```bash
