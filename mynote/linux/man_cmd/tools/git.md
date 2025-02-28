@@ -418,12 +418,19 @@ git tag -v v2.35
 ```bash
 # 查看帮助
 git submodule --help
-# 下载带有子模块的仓库后，初始化并更新子模块：
-git submodule update --init --recursive
+
 # 在下载仓库的同时下载子模块：
 git clone --recurse-submodules <repository_url>
-# 拉取子模块更新：
+
+# 已下载主仓库但没有下载子仓库：
+# 初始化并拉取子仓库：
+git submodule update --init --recursive
+
+# 拉取子仓库的更新：
 git submodule update --recursive --remote
+
+# 只更新指定子仓库：(在.gitmodules文件中可查看子仓库路径)
+git submodule update --init --remote FreeRTOS-Plus/ThirdParty/wolfSSL
 ```
 
 ## 3、git lfs：
