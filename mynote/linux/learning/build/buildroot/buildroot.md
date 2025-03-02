@@ -4,6 +4,7 @@
 
 ```bash
 git clone https://git.busybox.net/buildroot
+git clone https://github.com/buildroot/buildroot.git
 cd buildroot
 # 图形化配置：
 make menuconfig
