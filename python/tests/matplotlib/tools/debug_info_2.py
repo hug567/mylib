@@ -1,11 +1,13 @@
 # 绘制cpu1程序上传的debug_info_t中的数据
 # 2025-02-28
 
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 import sys
 import argparse
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import savgol_filter
+from scipy.ndimage import gaussian_filter1d
 
 args=None
 g_max_size = 16
@@ -93,6 +95,43 @@ def dat_parse_all_data():
 
     return all_data
 
+def gaussian_kernel(size, sigma):
+    center = size // 2
+    kernel = np.zeros(size)
+    for i in range(size):
+        x = i - center
+        kernel[i] = np.exp(-(x ** 2) / (2 * sigma ** 2))
+    # 归一化高斯核，确保权重总和为 1
+    kernel = kernel / np.sum(kernel)
+    return kernel
+
+def gaussian_filter_manual(data, window_size, sigma):
+    kernel = gaussian_kernel(window_size, sigma)
+    data_length = len(data)
+    padded_data = np.pad(data, (window_size // 2, window_size // 2), mode='edge')
+    filtered_data = np.zeros(data_length)
+    for i in range(data_length):
+        if i < window_size:
+            filtered_data[i] = data[i]
+        else:
+            #filtered_data[i] = np.sum(padded_data[i:i + window_size] * kernel)
+            filtered_data[i] = np.sum(padded_data[i - window_size:i] * kernel)
+    return filtered_data
+
+# 一阶高斯滤波实现
+def my_gausian_filter(data):
+    return gaussian_filter_manual(data, 100, 30)
+
+# 对如snr的数据进行滤波：
+def y_data_filter(data):
+    #window_size = 100
+    #poly_order = 5
+    #smoothed_data = savgol_filter(data, window_size, poly_order)
+
+    #smoothed_data = gaussian_filter1d(data, sigma=30)
+    smoothed_data = my_gausian_filter(data)
+
+    return smoothed_data
 
 def dat_plot_dinfo():
     size = len(args.index)
@@ -115,7 +154,18 @@ def dat_plot_dinfo():
         ax = plt.subplot(x, y, num + 1)
         num = num + 1
         plt.sca(ax)
-        plt.plot(x_data, all_data[i][start:start+length])
+        y_data = all_data[i][start:start+length]
+        #smoothed_data1 = y_data_filter(y_data)
+        #smoothed_data2 = y_data_filter(smoothed_data1)
+        #smoothed_data3 = y_data_filter(smoothed_data2)
+        #plt.plot(x_data, y_data, smoothed_data1, smoothed_data2, smoothed_data3)
+        plt.plot(x_data, y_data, label='y_data')
+        #plt.plot(x_data, smoothed_data1, label='smoothed_data1')
+        #plt.plot(x_data, smoothed_data2, label='smoothed_data2')
+        #plt.plot(x_data, smoothed_data3, label='smoothed_data3')
+        plt.legend()
+        # 显示网格
+        plt.grid(True)
 
     # 绘图窗口最大化
     manager = plt.get_current_fig_manager()
