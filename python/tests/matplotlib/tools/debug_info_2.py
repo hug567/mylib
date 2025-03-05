@@ -18,7 +18,7 @@ def parse_args(argv):
     # 原始数据文件
     parser.add_argument('-f', '--fname', type=str, help='specify data file')
     # index: 绘制数据的索引，默认为-1，表示绘制所有数据
-    #        至少指定要给索引，指定多个索引，会储存在要给列表中，args.index类型为list
+    #        至少指定1个索引，指定多个索引，会储存在要给列表中，args.index类型为list
     # 示例：-i 1
     #       -i 0 1 2 3 4 5
     #       -i 2 5 8
@@ -133,6 +133,20 @@ def y_data_filter(data):
 
     return smoothed_data
 
+def limit_max_change_ratio(data):
+    filtered_data = []
+    filtered_data.append(data[0])
+    last = data[0]
+    for i in range(1, len(data)):
+        cur = data[i]
+        new = data[i]
+        #if abs(cur - last) > 0.1:
+        #    new = (cur + last) / 2
+        new = (cur + last) / 2
+        filtered_data.append(new)
+        last = new
+    return filtered_data
+
 def dat_plot_dinfo():
     size = len(args.index)
     index_list = args.index
@@ -163,6 +177,21 @@ def dat_plot_dinfo():
         #plt.plot(x_data, smoothed_data1, label='smoothed_data1')
         #plt.plot(x_data, smoothed_data2, label='smoothed_data2')
         #plt.plot(x_data, smoothed_data3, label='smoothed_data3')
+
+        #no_repeat = []
+        #no_repeat.append(y_data[0])
+        #for i in range(1, len(y_data)):
+        #    if y_data[i] != y_data[i - 1]:
+        #        no_repeat.append(y_data[i])
+        #plt.plot(range(len(no_repeat)), no_repeat, label='y_data')
+
+        #diff = []
+        #diff.append(0)
+        #for i in range(1, len(y_data)):
+        #    diff.append(abs(y_data[i] - y_data[i - 1]))
+        #plt.plot(x_data, diff, label='diff')
+        #plt.plot(x_data, limit_max_change_ratio(y_data), label='limit max change ratio')
+
         plt.legend()
         # 显示网格
         plt.grid(True)
@@ -178,8 +207,10 @@ def main():
     if is_dat_file():
         print("supplied file is a dat file")
         dat_plot_dinfo()
-    if is_csv_file():
+    elif is_csv_file():
         print("supplied file is a dat file")
+    else:
+        dat_plot_dinfo()
 
 if __name__ == '__main__':
     main()
