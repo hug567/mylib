@@ -24,6 +24,8 @@ class MyPlot():
         # 水平/数值直线，默认不绘制，类型为list
         self.xlines = None
         self.ylines = None
+        # 是否绘制在一个子图中，默认每个曲线分别绘制在不同子图中
+        self.onesub = None
 
     # 根据要绘制的图形的数量，决定在在一个窗口中排列的行数和列数
     def __plot_arrangement_style(self, size):
@@ -34,7 +36,7 @@ class MyPlot():
                 return [x, y]
         return [1, size]
 
-    def __plot_data(self, one_sub):
+    def plot(self):
         if self.index[0] == -1:
             self.index = np.array(range(len(self.data)))
         self.length = min(self.length, len(self.data[0]) - self.start)
@@ -50,16 +52,34 @@ class MyPlot():
         num = 0
         x_data = np.array(range(self.length))
         for i in self.index:
-            if one_sub:
+            if self.onesub:
                 ax = plt.subplot(1, 1, 1)
             else:
                 ax = plt.subplot(x, y, num + 1)
             plt.sca(ax)
             y_data = self.data[i][self.start:self.start+self.length]
+
+            # 对数据作处理后再绘制
+            #if i == 9:
+            #    y_data = [(x - 129) * 20 / 2.4 for x in y_data]
+
+            # 打印猫符合锁定条件的波峰宽度
+            #count = 0
+            #for i in range(len(y_data)):
+            #    if y_data[i] > 2:
+            #        count += 1
+            #    elif count > 0:
+            #        print(f'lock count: {count}')
+            #        count = 0
+            #    if count > 0 and i == len(y_data) - 1:
+            #        print(f'last lock count: {count}')
+
             y_max = max(y_data)
+            y_max_index = y_data.index(y_max)
             y_min = min(y_data)
-            y_middle = (y_max + y_min) / 2
-            print(f'i: {i}, y_max: {y_max}, y_min: {y_min}, y_middle: {y_middle}')
+            y_min_index = y_data.index(y_min)
+            y_middle = round((y_max + y_min) / 2, 3)
+            print(f'i: {i}, y_max({y_max_index}): {y_max}, y_min({y_min_index}): {y_min}, y_middle: {y_middle}')
             plt.plot(x_data, y_data, label='y_data')
             if self.xlines:
                 for xp in self.xlines:
@@ -76,11 +96,3 @@ class MyPlot():
         manager.window.showMaximized()
         # 显示绘图窗口
         plt.show()
-
-    # 一个子窗口绘制一个曲线
-    def plot(self):
-        self.__plot_data(False)
-
-    # 选定的曲线都绘制在一个窗口中
-    def plot_one_sub(self):
-        self.__plot_data(True)

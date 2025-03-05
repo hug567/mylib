@@ -30,6 +30,8 @@ def parse_args(argv):
     parser.add_argument('-x', '--xlines', type=int, nargs='+', help='vertical lines')
     # 水平直线
     parser.add_argument('-y', '--ylines', type=float, nargs='+', help='horizontal lines')
+    # 是否绘制在一个子图中
+    parser.add_argument('-o', '--onesub', action='store_true', help='plot in one sub')
 
     g_args = parser.parse_args()
 
@@ -71,7 +73,8 @@ def plot_data():
     mplot.arrangement = g_args.arrangement
     mplot.xlines = g_args.xlines
     mplot.ylines = g_args.ylines
-    mplot.plot_one_sub()
+    mplot.onesub = g_args.onesub
+    mplot.plot()
 
 def main():
     parse_args(sys.argv)
