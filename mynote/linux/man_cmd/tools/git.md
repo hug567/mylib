@@ -31,6 +31,15 @@ git fetch --depth=3000
 ...
 # 最后去除深度限制再fetch一次：
 git fetch --unshallow
+
+# 只克隆不检出，深度1，只拉取一个分支
+git clone --no-checkout --depth=1 --single-branch --branch master https://github.com/RT-Thread/rt-thread.git
+# 待测试环境变量：
+# GIT_HTTP_LOW_SPEED_LIMIT：最低传输速度（字节/秒）
+# GIT_HTTP_LOW_SPEED_TIME：如果传输速度低于 GIT_HTTP_LOW_SPEED_LIMIT 并持续指定时间（秒），则中止操作
+
+# 查看本地仓库深度：
+git log --oneline | wc -l
 ```
 
 ## 2、常用操作：
