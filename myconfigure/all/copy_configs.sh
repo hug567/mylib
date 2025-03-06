@@ -36,6 +36,7 @@ function usage() {
     echo "   eg: $0 \$HOME linux"
     echo "   eg: $0 \$HOME gitbash"
     echo "   eg: $0 \$HOME mobaxterm"
+    echo "   eg: $0 \$HOME cygwin"
 }
 
 function vim_version() {
@@ -50,6 +51,14 @@ function is_git_bash() {
         return 0
     fi
     return 1
+}
+
+function is_cygwin() {                                                                     │[huangxing@DESKTOP-8606LAV] ~ 9:39:40
+    local ret=$(uname -o)                                                                  │ $
+    if [ "${ret}" == "Cygwin" ]; then                                                      │
+        return 0                                                                           │
+    fi                                                                                     │
+    return 1                                                                               │
 }
 
 function copy_files() {
@@ -90,9 +99,33 @@ function copy_need_overwritten_files() {
 
 function copy_configures() {
     local dst=$1
+    local environment=$2
 
     copy_need_overwritten_files $dst
     copy_not_exist_files $dst
+}
+
+function dos2unix_one_file() {
+    local file=$1
+    if [ ! -f "${file}" ]; then
+        return
+    fi
+    dos2unix $file
+}
+
+function dos2unix_files() {
+    local dst=$1
+    local ret
+
+    ret=$(which dos2unix)
+    if [ "${ret}" == "" ]; then
+        echo "there is no cmd: dos2unix"
+        return
+    fi
+    dos2unix_one_file ${dst}/.tmux.conf
+    dos2unix_one_file ${dst}/.tmux/conf/tmux_2.1
+    dos2unix_one_file ${dst}/.tmux/conf/tmux_2.6
+    dos2unix_one_file ${dst}/.tmux/conf/tmux_3.0a
 }
 
 function main() {
@@ -110,6 +143,8 @@ function main() {
     fi
     local abs_dst=$(cd ${dst}; pwd)
     copy_configures $dst ${environment}
+
+    dos2unix_files
 }
 
 main $*
