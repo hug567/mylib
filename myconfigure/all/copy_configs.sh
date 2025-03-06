@@ -53,12 +53,12 @@ function is_git_bash() {
     return 1
 }
 
-function is_cygwin() {                                                                     │[huangxing@DESKTOP-8606LAV] ~ 9:39:40
-    local ret=$(uname -o)                                                                  │ $
-    if [ "${ret}" == "Cygwin" ]; then                                                      │
-        return 0                                                                           │
-    fi                                                                                     │
-    return 1                                                                               │
+function is_cygwin() {
+    local ret=$(uname -o)
+    if [ "${ret}" == "Cygwin" ]; then
+        return 0
+    fi
+    return 1
 }
 
 function copy_files() {
@@ -108,9 +108,32 @@ function copy_configures() {
 function dos2unix_one_file() {
     local file=$1
     if [ ! -f "${file}" ]; then
+        echo "there is no file: ${file}"
         return
     fi
-    dos2unix $file
+    dos2unix ${file}
+}
+
+function dos2unix_all_files_in_dir() {
+    local dir=${1}
+    local all_files
+    local file
+
+    if [ ! -d "${dir}" ]; then
+        echo "there is no dir: ${dir}"
+        return
+    fi
+    all_files=$(find ${dir} -name "*")
+    if [ "${all_files}" == "" ]; then
+        echo "there is no file in dir: ${dir}"
+        return
+    fi
+    echo "${all_files}" | while read file; do
+        if [ ! -f "${file}" ]; then
+            continue
+        fi
+        dos2unix_one_file ${file}
+    done
 }
 
 function dos2unix_files() {
@@ -123,9 +146,15 @@ function dos2unix_files() {
         return
     fi
     dos2unix_one_file ${dst}/.tmux.conf
-    dos2unix_one_file ${dst}/.tmux/conf/tmux_2.1
-    dos2unix_one_file ${dst}/.tmux/conf/tmux_2.6
-    dos2unix_one_file ${dst}/.tmux/conf/tmux_3.0a
+    dos2unix_all_files_in_dir ${dst}/.tmux/conf
+
+    dos2unix_one_file ${dst}/.vimrc
+    dos2unix_all_files_in_dir ${dst}/.vim/autoload
+    dos2unix_all_files_in_dir ${dst}/.vim/colors
+    dos2unix_all_files_in_dir ${dst}/.vim/plugin
+    dos2unix_all_files_in_dir ${dst}/.vim/plugged
+    dos2unix_all_files_in_dir ${dst}/.vim/scripts
+    dos2unix_all_files_in_dir ${dst}/.vim/vimrc
 }
 
 function main() {
@@ -142,9 +171,9 @@ function main() {
         exit 1
     fi
     local abs_dst=$(cd ${dst}; pwd)
-    copy_configures $dst ${environment}
+    copy_configures ${abs_dst} ${environment}
 
-    dos2unix_files
+    dos2unix_files ${abs_dst}
 }
 
 main $*
