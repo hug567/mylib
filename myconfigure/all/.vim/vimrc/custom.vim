@@ -8,6 +8,7 @@ map <F8> :call MyPrintReg0Contents()<CR>
 
 "------------------------------------------------------------------------------"
 " 保存寄存器"中的内容到临时文件中
+" 已验证支持：vim 8.0/8.2/9.1
 func! SaveToTmpFile()
     let lines = getreg("\"")
     let len = strlen(lines)
@@ -66,9 +67,10 @@ command LoadFromTmpFile call LoadFromTmpFile()
 map <C-p> :call LoadFromTmpFile()<CR>
 "------------------------------------------------------------------------------"
 
+" 已验证支持：vim 8.0/8.2/9.1
 func! CreateTime()
     let l:date = system("date '+%Y-%m-%d %H:%M:%S'")
-    let l:str = " * Create: " .. l:date
+    let l:str = printf(" * Create: %s", l:date)
     " delete tail char
     let l:len = len(l:str)
     let l:newstr = strpart(l:str, 0, len - 1)
@@ -76,7 +78,7 @@ func! CreateTime()
     call append(line('.'), l:newstr)
     " move the cursor to the next line
     normal! j
-    let l:str = "# Create: " .. l:date
+    let l:str = printf("# Create: %s", l:date)
     " delete tail char
     let l:len = len(l:str)
     let l:newstr = strpart(l:str, 0, len - 1)

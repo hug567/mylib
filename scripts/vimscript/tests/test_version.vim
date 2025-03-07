@@ -7,8 +7,8 @@
 
 function! TestGetVersion()
     echo "TestGetVersion: -------------------------------------"
-    let l:var = version
-    echo "current vim version: " .. l:var
+    let var = version
+    echo "current vim version: " . var
 endfunction
 
 function! Main()
