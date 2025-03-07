@@ -60,8 +60,14 @@ class MyPlot():
             y_data = self.data[i][self.start:self.start+self.length]
 
             # 对数据作处理后再绘制
-            #if i == 9:
-            #    y_data = [(x - 129) * 20 / 2.4 for x in y_data]
+            #if i == 1:
+            #    for i in range(len(y_data)):
+            #        if y_data[i] >= -0.2 and y_data[i] <= 0.2:
+            #            y_data[i] = 0
+            #if i == 2:
+            #    y_data = [(x + 220) for x in y_data]
+            #if i == 0:
+            #    y_data = [(x - 17) for x in y_data]
 
             # 打印猫符合锁定条件的波峰宽度
             #count = 0
