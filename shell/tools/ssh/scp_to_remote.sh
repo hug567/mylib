@@ -71,6 +71,8 @@ function main() {
     local port="22"
     local password="root"
     local no_password="false"
+    local file_or_dir
+    local dst_dir="~"
 
     while [ -n "$1" ]; do
         case $1 in
@@ -79,13 +81,20 @@ function main() {
             -p) port=$2; shift;;
             -w) password=$2; shift;;
             -n) no_password="true";;
+            -f) file_or_dir=$2; shift;;
+            -d) dst_dir=$2; shift;;
             -h) usage; exit 1;
         esac
         shift
     done
 
+    if [ "${file_or_dir}" == "" -o ! -e ${file_or_dir} ]; then
+        echo "there is no file or dir: ${file_or_dir}"
+        exit 1
+    fi
+
     init_ssh_connect ${user} ${ip} ${port} ${password} ${no_password}
-    ssh_remote ${user} ${ip} ${port} ${password} ${no_password}
+    #ssh_remote ${user} ${ip} ${port} ${password} ${no_password}
 }
 
 main $*
