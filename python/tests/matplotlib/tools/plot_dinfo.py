@@ -4,6 +4,7 @@
 import os
 import sys
 import argparse
+import numpy as np
 from lib.myplot import MyPlot
 
 g_args=None
@@ -63,10 +64,62 @@ def read_data_from_file(fname):
 
     return all_data
 
+# 一维高斯核，size需是奇数
+def _my_gaussian_kernel(size, sigma):
+    center = size // 2
+    kernel = np.zeros(size) # 长度为size的np数组
+    for i in range(size):
+        x = i - center
+        kernel[i] = np.exp(-(x * x) / (2 * sigma * sigma))
+    # 归一化高斯核，确保权重总和为1
+    kernel = kernel / np.sum(kernel)
+    return kernel
+
+def _my_gaussian_filter(data):
+    kernel_size = 31
+    sigma = 100
+    kernel = _my_gaussian_kernel(kernel_size, sigma)
+    print(f'kernel: {kernel}')
+    filter_data = np.zeros(len(data))
+    for i in range(kernel_size):
+        filter_data[i] = data[i]
+    for i in range(kernel_size, len(data)):
+        filter_data[i] = np.sum(data[i-kernel_size:i] * kernel)
+
+    return filter_data
+
+def _my_average_filter(data):
+    old = data[:]
+    for i in range(len(data)):
+        if i < 10:
+            data[i] = sum(old[0:i+1]) / (i + 1)
+        else:
+            data[i] = sum(old[i-10:i+1]) / 10
+    return data
+
+def _my_filter(data):
+    #return data
+    #return _my_average_filter(data)
+    #filter_data = gaussian_filter1d(data, 30)
+    #print(f'type(filter_data): {type(filter_data)}')
+    filter_data = _my_gaussian_filter(data)
+    return list(filter_data)
+
+# 对数据做处理
+def handle_data(data_arr):
+    for i in range(len(data_arr)):
+        if i == 0:
+            # 一维列表中元素统一减去一个固定值
+            data_arr[i] = list(np.array(data_arr[i]) - 16)
+        if i == 2:
+            data_arr[i] = _my_filter(data_arr[i])
+    return data_arr
+
 def plot_data():
-    data = read_data_from_file(g_args.fname)
+    data_arr = read_data_from_file(g_args.fname)
+    data_arr = handle_data(data_arr)
     mplot = MyPlot()
-    mplot.data = data
+    mplot.data = data_arr
     mplot.index = g_args.index
     mplot.start = g_args.start
     mplot.length = g_args.length

@@ -5,6 +5,7 @@ import sys
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.ndimage import gaussian_filter1d
 
 class MyPlot():
 
@@ -59,27 +60,6 @@ class MyPlot():
             plt.sca(ax)
             y_data = self.data[i][self.start:self.start+self.length]
 
-            # 对数据作处理后再绘制
-            #if i == 1:
-            #    for i in range(len(y_data)):
-            #        if y_data[i] >= -0.2 and y_data[i] <= 0.2:
-            #            y_data[i] = 0
-            #if i == 2:
-            #    y_data = [(x + 220) for x in y_data]
-            #if i == 0:
-            #    y_data = [(x - 17) for x in y_data]
-
-            # 打印猫符合锁定条件的波峰宽度
-            #count = 0
-            #for i in range(len(y_data)):
-            #    if y_data[i] > 2:
-            #        count += 1
-            #    elif count > 0:
-            #        print(f'lock count: {count}')
-            #        count = 0
-            #    if count > 0 and i == len(y_data) - 1:
-            #        print(f'last lock count: {count}')
-
             y_max = max(y_data)
             y_max_index = y_data.index(y_max)
             y_min = min(y_data)
@@ -89,16 +69,19 @@ class MyPlot():
             plt.plot(x_data, y_data, label='y_data')
             if self.xlines:
                 for xp in self.xlines:
-                    plt.axvline(x=xp, color='r', linestyle='-.')
+                    plt.axvline(x=xp, color='r', linestyle=':', linewidth=1)
             if self.ylines:
                 for yp in self.ylines:
-                    plt.axhline(y=yp, color='r', linestyle='-.')
+                    plt.axhline(y=yp, color='r', linestyle=':', linewidth=1)
             # 显示网格
             plt.grid(True)
             num += 1
 
+        backend = plt.get_backend()
+        print(f'type(backend): {type(backend)}, backend: {backend}')
         # 绘图窗口最大化
-        manager = plt.get_current_fig_manager()
-        manager.window.showMaximized()
+        if backend == 'qtagg':
+            manager = plt.get_current_fig_manager()
+            manager.window.showMaximized()
         # 显示绘图窗口
         plt.show()
