@@ -8,8 +8,8 @@ bind-key '-' split-window -v -c '#{pane_current_path}'
 # 设置tmux消息属性
 set -g message-style fg=black,bg=yellow,bold,bright
 # 设置面板样式
-set -g pane-border-style fg=white,bg='#272822'
-set -g pane-active-border-style fg=green,bg='#272822'
+set -g pane-border-style fg=white,bg='#272825'
+set -g pane-active-border-style fg=green,bg='#272825'
 # 设置状态栏样式
 set -g status-style fg=white,bg='#353535'
 setw -g window-status-current-format '#[fg=colour226,bg=default]#I:#W*'
