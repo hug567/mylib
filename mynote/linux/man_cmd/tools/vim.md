@@ -462,6 +462,31 @@ vim --version | grep clipboard                  //查看剪切板支持
 ./configure --enable-pythoninterp --enable-python3interp
 cd src
 make -j
+
+# ubuntu18源码编译vim v8.0.1850
+sudo apt install python-dev python3-dev libncurses5-dev libncursesw5-dev build-essential
+# 查看配置脚本帮助信息：
+./configure -h
+./configure \
+    --with-features=huge \
+    --with-x \
+    --with-gnome \
+    --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+    --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu \
+    --enable-rubyinterp=yes \
+    --enable-luainterp=yes \
+    --enable-perlinterp=yes \
+    --enable-pythoninterp=yes \
+    --enable-python3interp=yes \
+    --enable-mzschemeinterp=yes \
+    --enable-tclinterp=yes \
+    --enable-multibyte \
+    --enable-cscope \
+    --enable-fontset \
+    --enable-gui=auto \
+    --with-global-runtime=/usr/share/vim
+make -j
+./src/vim --version
 ```
 
 ## 7、安装YouCompleteMe：

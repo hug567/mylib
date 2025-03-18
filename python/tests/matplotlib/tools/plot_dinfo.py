@@ -108,7 +108,7 @@ def _my_filter(data):
 # 对数据做处理
 def handle_data(data_arr):
     for i in range(len(data_arr)):
-        if i == 0:
+        if i == 100:
             # 一维列表中元素统一减去一个固定值
             data_arr[i] = list(np.array(data_arr[i]) - 16)
         if i == 2:
