@@ -101,7 +101,9 @@
       .mypy-4 {
         padding-top: 4px;
         padding-bottom: 4px;
-      };
+      }
+
+      ;
     </style>
 
     <script>
@@ -231,32 +233,32 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 mytable myt-2nd">
+        <div class="col-12 col-lg-6 mytable myt-2nd">
           <div class="row">
-            <div class="col-6 mytable myt-border-rb mypy-4">表格一(1)</div>
-            <div class="col-6 mytable myt-border-b mypy-4">表格一(2)</div>
+            <div class="col-6 mytable myt-border-rb mypy-4">格子一(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">格子一(2)</div>
           </div>
           <div class="row">
-            <div class="col-6 mytable myt-border-rb mypy-4">表格二(1)</div>
-            <div class="col-6 mytable myt-border-b mypy-4">表格二(2)</div>
+            <div class="col-6 mytable myt-border-rb mypy-4">格子二(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">格子二(2)</div>
           </div>
           <div class="row">
-            <div class="col-6 mytable myt-border-r mypy-4">表格三(1)</div>
-            <div class="col-6 mypy-4">表格三(2)</div>
+            <div class="col-6 mytable myt-border-r mypy-4">格子三(1)</div>
+            <div class="col-6 mypy-4">格子三(2)</div>
           </div>
         </div>
-        <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">
+        <div class="col-12 col-lg-6 mytable myt-2nd-r mytd-2nd">
           <div class="row">
-            <div class="col-6 mytable myt-border-rb mypy-4">表格四(1)</div>
-            <div class="col-6 mytable myt-border-b mypy-4">表格四(2)</div>
+            <div class="col-6 mytable myt-border-rb mypy-4">格子四(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">格子四(2)</div>
           </div>
           <div class="row">
-            <div class="col-6 mytable myt-border-rb mypy-4">表格五(1)</div>
-            <div class="col-6 mytable myt-border-b mypy-4">表格五(2)</div>
+            <div class="col-6 mytable myt-border-rb mypy-4">格子五(1)</div>
+            <div class="col-6 mytable myt-border-b mypy-4">格子五(2)</div>
           </div>
           <div class="row">
-            <div class="col-6 mytable myt-border-r mypy-4">表格六(1)</div>
-            <div class="col-6 mypy-4">表格六(2)</div>
+            <div class="col-6 mytable myt-border-r mypy-4">格子六(1)</div>
+            <div class="col-6 mypy-4">格子六(2)</div>
           </div>
         </div>
       </div>
@@ -292,6 +294,100 @@
         <div class="col-12 col-md-6 mytable myt-2nd-r mytd-2nd">无表头表格四</div>
       </div>
     </div>
+
+    <br><br><br>
+
+    <style>
+      .mypy-4 {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+    </style>
+    <div class="ml-3 mr-3" style="text-align: center;">
+      <div class="row" style="background-color: #007bff;">
+        <div class="col">
+          <h4 style="color: white">card替代表格</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <div class="row">
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol1_1 mypy-4">1</div>
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol1_2">2</div>
+          </div>
+          <div class="row">
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol1_1 mypy-4">3</div>
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol1_2">4</div>
+          </div>
+          <div class="row">
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol1_1 mypy-4">5</div>
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol1_2">6</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <div class="row">
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol2_1 mypy-4">7</div>
+            <div class="col-6 card rounded-0 border-top-0 mycol2_2">8</div>
+          </div>
+          <div class="row">
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol2_1 mypy-4">9</div>
+            <div class="col-6 card rounded-0 border-top-0 mycol2_2">10</div>
+          </div>
+          <div class="row">
+            <div class="col-6 card rounded-0 border-top-0 border-right-0 mycol2_1 mypy-4">11</div>
+            <div class="col-6 card rounded-0 border-top-0 mycol2_2">12</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function handleCartTableBorder() {
+        var width = $(window).width();
+        if (width < 992) {
+          $(".mycol1_2").each(function (index, element) {
+            $(element).removeClass('border-right-0');
+          });
+        } else {
+          $(".mycol1_2").each(function (index, element) {
+            $(element).addClass('border-right-0');
+          });
+        }
+      }
+
+      $(document).ready(function () {
+        handleCartTableBorder();
+      });
+
+      $(window).resize(function () {
+        handleCartTableBorder();
+      });
+    </script>
+
+    <br><br><br>
+
+    <style>
+      .myh-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div class="mx-3" style="text-align: center;">
+      <div class="row myh-center" style="background-color: #007bff;">
+        <div class="col myh-center">
+          <h4 style="color: white">自定义表格</h4>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <!--屏幕宽时分成两列，屏幕窄时分成一列-->
+        <div class="col-md-12 col-lg-6" style="background-color: #b6f3be;">x</div>
+        <!--屏幕宽时分成两列，屏幕窄时分成一列-->
+        <div class="col-md-12 col-lg-6" style="background-color: #d5e98d;">y</div>
+      </div>
+    </div>
+
+    <br><br><br><br><br><br>
   </div> <!--container-->
 </body>
 

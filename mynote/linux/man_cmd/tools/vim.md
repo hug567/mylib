@@ -457,15 +457,19 @@ vim --version | grep VIM                        //查看vim版本
 vim --version | grep python                     //查看python支持
 vim --version | grep clipboard                  //查看剪切板支持
 ```
-### 1）、编译v8.0.1850：
+### 1）、简单编译：
 ```bash
+./configure --enable-pythoninterp --enable-python3interp
+cd src
+make -j
+
 # ubuntu18源码编译vim v8.0.1850
 sudo apt install python-dev python3-dev libncurses5-dev libncursesw5-dev build-essential
 # 查看配置脚本帮助信息：
 ./configure -h
-# 配置：
 ./configure \
     --with-features=huge \
+    --with-x \
     --with-gnome \
     --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
     --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu \
@@ -480,40 +484,9 @@ sudo apt install python-dev python3-dev libncurses5-dev libncursesw5-dev build-e
     --enable-cscope \
     --enable-fontset \
     --enable-gui=auto \
-    --prefix=/usr
-# 编译：
+    --with-global-runtime=/usr/share/vim
 make -j
-# 运行：
-./src/vim
-```
-
-### 2）、编译v8.1.2424：
-
-```bash
-# ubuntu18源码编译vim v8.1.2424：
-sudo apt install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev
-# 配置：
-./configure \
-    --with-features=huge \
-    --with-gnome \
-    --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
-    --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu \
-    --enable-rubyinterp=yes \
-    --enable-luainterp=yes \
-    --enable-perlinterp=yes \
-    --enable-pythoninterp=yes \
-    --enable-python3interp=yes \
-    --enable-mzschemeinterp=yes \
-    --enable-tclinterp=yes \
-    --enable-multibyte \
-    --enable-cscope \
-    --enable-fontset \
-    --enable-gui=auto \
-    --prefix=/usr
-# 编译：
-make -j
-# 运行：
-./scr/vim
+./src/vim --version
 ```
 
 ## 7、安装YouCompleteMe：

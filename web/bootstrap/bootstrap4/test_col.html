@@ -4,6 +4,7 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>[bootstrap] test_col</title>
@@ -12,6 +13,7 @@
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <p style="background-color: aquamarine;">class: container</p>
@@ -136,6 +138,73 @@
             <div class="col-12 col-md-6" style="background-color: #8fe9e4;">col-12 col-md-6</div>
             <div class="col-12 col-md-6" style="background-color: #bbe98f;">col-12 col-md-6</div>
         </div>
-    </div>
+
+        <br><br><br>
+        <div class="row">
+            <div class="col-6 col-2 col-lg-2" style="background-color: #8fe9e4;">第1列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #aef7ac;">第2列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #e9ca8f;">第3列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #e98f97;">第4列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #cee98f;">第5列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #cee98f;">第6列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #8fe9b2;">第7列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #be979a;">第8列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #cbceec;">第9列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #afc9f1;">第10列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #e98fa6;">第11列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #8fc58a;">第12列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #d9e98f;">第13列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #e98fc7;">第14列</div>
+            <div class="col-6 col-2 col-lg-2" style="background-color: #8fd7e9;">第15列</div>
+            <div class="col-6 col-4 col-lg-4" style="background-color: #e9bb8f;">第16列</div>
+        </div>
+
+        <br><br><br>
+        <!--
+            先分外围的列，屏幕大时分为两个等宽的列，屏幕窄时分为一个列；
+            每个列内部再分两个列，屏幕宽时左边的列窄、右边的列宽，屏幕窄时内部的两个列宽度相同
+        -->
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #9df1be;">1</div>
+                    <div class="col-6 col-lg-8" style="background-color: #c8b1f1;">2</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #dba287;">3</div>
+                    <div class="col-6 col-lg-8" style="background-color: #bac58a;">4</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #87bcdb;">5</div>
+                    <div class="col-6 col-lg-8" style="background-color: #c5968a;">6</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #dadb87;">7</div>
+                    <div class="col-6 col-lg-8" style="background-color: #f39696;">8</div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #f3c096;">9</div>
+                    <div class="col-6 col-lg-8" style="background-color: #c58a94;">10</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #8788db;">11</div>
+                    <div class="col-6 col-lg-8" style="background-color: #a9e487;">12</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #8ef0b7;">13</div>
+                    <div class="col-6 col-lg-8" style="background-color: #ec8e8e;">14</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-lg-4" style="background-color: #8aceee;">15</div>
+                    <div class="col-6 col-lg-8" style="background-color: #f1ea7b;">16</div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- class="container" -->>
+    <br><br><br><br><br><br>
 </body>
+
 </html>
