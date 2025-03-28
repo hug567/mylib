@@ -5,7 +5,6 @@ import sys
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.ndimage import gaussian_filter1d
 
 class MyPlot():
 
@@ -69,10 +68,10 @@ class MyPlot():
             plt.plot(x_data, y_data, label='y_data')
             if self.xlines:
                 for xp in self.xlines:
-                    plt.axvline(x=xp, color='r', linestyle=':', linewidth=1)
+                    plt.axvline(x=xp, color='r', linestyle=':', linewidth=2)
             if self.ylines:
                 for yp in self.ylines:
-                    plt.axhline(y=yp, color='r', linestyle=':', linewidth=1)
+                    plt.axhline(y=yp, color='r', linestyle=':', linewidth=2)
             # 显示网格
             plt.grid(True)
             num += 1

@@ -107,12 +107,14 @@ def _my_filter(data):
 
 # 对数据做处理
 def handle_data(data_arr):
+    #return data_arr
     for i in range(len(data_arr)):
         if i == 100:
             # 一维列表中元素统一减去一个固定值
-            data_arr[i] = list(np.array(data_arr[i]) - 16)
-        if i == 2:
-            data_arr[i] = _my_filter(data_arr[i])
+            #data_arr[i] = list((np.array(data_arr[i]) + 70) / 6 + 3)
+            data_arr[i] = list((np.array(data_arr[i]) - 4) / 4 + 0)
+        #if i == 2:
+        #    data_arr[i] = _my_filter(data_arr[i])
     return data_arr
 
 def plot_data():
