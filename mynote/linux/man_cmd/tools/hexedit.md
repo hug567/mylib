@@ -23,5 +23,8 @@ Ctrl + X                                                 # 保存并退出
 Ctrl + C                                                 # 退出不保存
 PageUp/PageDown                                          # 翻页
 </>                                                      # 跳转到文件：开头/结尾
+
+# 跳转到指定位置(如：0x1000)：
+Ctrl + G -> 0x1000 -> Enter
 ```
 

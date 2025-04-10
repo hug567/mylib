@@ -484,7 +484,7 @@ sudo apt install python-dev python3-dev libncurses5-dev libncursesw5-dev build-e
     --enable-cscope \
     --enable-fontset \
     --enable-gui=auto \
-    --with-global-runtime=/usr/share/vim
+    --prefix=/usr
 make -j
 ./src/vim --version
 ```

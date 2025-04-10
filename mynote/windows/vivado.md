@@ -211,9 +211,9 @@ desktop.ini
 !*.m
 ```
 
-- 打开vivado，在底部Tcl console中执行：
+- 打开vivado，通过菜单栏运行init.tcl：
 
 ```bash
-cd D:/code/vivado/led; source init.tcl
+Tools -> Run Tcl Script... -> init.tcl -> OK
 ```
 
