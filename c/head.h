@@ -57,6 +57,7 @@
 
 #include <signal.h>
     struct sigaction
+    signal()
     sigaction()
 
 #include <pthread.h>

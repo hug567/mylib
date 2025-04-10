@@ -5,8 +5,6 @@ function build_all_platforms() {
         "QQE"
         "QQF"
         "QQFC"
-        "QQFT"
-        "QQFTC"
         "S100AT"
         "S300BT"
         "S300F"

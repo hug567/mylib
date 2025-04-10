@@ -73,8 +73,6 @@ function build_all_QQF() {
     local all_platforms=(
         "QQF"
         "QQFC"
-        "QQFT"
-        "QQFTC"
         "S450AT"
         "S450AY"
     )
