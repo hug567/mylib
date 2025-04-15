@@ -192,14 +192,19 @@ function build_all_cpu1() {
 
 function main() {
     local cur_dir=$PWD
+    local cpu1_dir=$cur_dir
     local bit_file="cpu1-QQF/ku_x2_wrapper_hw_platform_0/ku_x2_wrapper.bit"
 
-    if [ ! -f ${bit_file} ]; then
-        echo "[ERROR] current is not in all cpu1 repo root dir"
+    if [ -f "../AutoX1V3_V3_3LC/AutoX1V3_V3_3LC_wrapper.hdf" ]; then
+        log_info "probably in one sub cpu1 repo root dir"
+        cpu1_dir=$(cd $cur_dir/..; pwd)
+    elif [ ! -f ${bit_file} ]; then
+        log_err "[ERROR] current is not in all cpu1 repo root dir"
         exit 1
     fi
 
-    build_all_cpu1 ${cur_dir}
+    build_all_cpu1 ${cpu1_dir}
+    cd ${cur_dir}
 }
 
 main $*
