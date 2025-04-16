@@ -73,8 +73,7 @@ function build_all_QQF() {
     local all_platforms=(
         "QQF"
         "QQFC"
-        "S450AT"
-        "S450AY"
+        "S450A"
     )
     local fmt="cpu1-QQF"
     local platform
@@ -95,8 +94,8 @@ function build_all_QQF() {
 function build_all_S400() {
     local top_dir=${1}
     local all_platforms=(
-        "S400AT"
-        "S100AT"
+        "S400A"
+        "S100A"
         "S450B"
     )
     local fmt="S400"
