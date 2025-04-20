@@ -7,7 +7,6 @@ PATH="/usr/sbin:/usr/bin:/sbin:/bin"
 [ -f ~/.myshell/alias.sh ] && source ~/.myshell/alias.sh
 [ -f ~/.myshell/env.sh   ] && source ~/.myshell/env.sh
 [ -f ~/.myshell/cmd.sh   ] && source ~/.myshell/cmd.sh
-[ -f ~/.cur.shell        ] && source ~/.cur.shell
 
 if is_bash; then
     source_file ~/.myshell/bash/main.sh
@@ -20,3 +19,4 @@ fi
 
 PATH=${OLDPATH}
 [ -f ~/.myshell/path.sh  ] && source ~/.myshell/path.sh
+[ -f ~/.cur.shell        ] && source ~/.cur.shell
