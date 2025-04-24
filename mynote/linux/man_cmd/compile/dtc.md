@@ -1,6 +1,9 @@
 # 1、编译dts：
 
 ```bash
+# 安装：
+sudo apt install device-tree-compiler
+
 dtc -I dts -O dtb -o output.dtb input.dts
 ```
 
