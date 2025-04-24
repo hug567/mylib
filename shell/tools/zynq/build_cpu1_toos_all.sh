@@ -14,6 +14,7 @@ function build_all_platforms() {
         "TEST"
         "S300E"
         "S450B"
+        "DEMO"
     )
     local platform
 

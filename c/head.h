@@ -78,6 +78,9 @@
 #include <sys/un.h>
     struct sockaddr_un
 
+#include <net/if.h>
+    struct ifreq
+
 #include <netinet/in.h>
     #define IPPROTO_TCP
     struct sockaddr_in
@@ -102,3 +105,13 @@
 
 #include <sys/time.h>
     struct timeval
+
+#include <linux/can.h>
+    struct sockaddr_can
+
+#include <sys/ipc.h>
+    ftok()
+
+#include <sys/shm.h>
+    shmget()
+    shmat()
