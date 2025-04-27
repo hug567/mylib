@@ -240,6 +240,53 @@ function test_cmp_float() {
     echo "$(expr $var1 == $var2) "
 }
 
+# 十六进制数大小比较
+function test_hex_cmp() {
+    echo "$FUNCNAME:-----------------------------"
+    local num1
+    local num2
+
+    # 十六进制数直接比较：(())
+    echo "[(())]: -----------"
+    num1=0x1234
+    num2=0x3456
+    if (( num1 < num2 )); then
+        echo "${num1} < ${num2}"
+    fi
+
+    num1=0x0100
+    num2=0x0100
+    if (( num1 == num2 )); then
+        echo "${num1} == ${num2}"
+    fi
+
+    num1=0x20000000
+    num2=0x01000000
+    if (( num1 > num2 )); then
+        echo "${num1} > ${num2}"
+    fi
+
+    # 十六进制数转为十进制数后再比较：prrintf
+    echo "[printf]: -----------"
+    num1=0x1234
+    num2=0x3456
+    if [ $(printf %d ${num1}) -lt $(printf %d ${num2}) ]; then
+        echo "${num1} < ${num2}"
+    fi
+
+    num1=0x0100
+    num2=0x0100
+    if [ $(printf %d ${num1}) -eq $(printf %d ${num2}) ]; then
+        echo "${num1} == ${num2}"
+    fi
+
+    num1=0x20000000
+    num2=0x01000000
+    if [ $(printf %d ${num1}) -gt $(printf %d ${num2}) ]; then
+        echo "${num1} > ${num2}"
+    fi
+}
+
 function main() {
     test_para_num $*
     test_pwd
@@ -250,6 +297,7 @@ function main() {
     test_num_cmp_02
     test_string_cmp
     test_cmp_float
+    test_hex_cmp # 十六进制数大小比较
 }
 
 main $*
