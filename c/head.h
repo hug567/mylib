@@ -48,6 +48,7 @@
     unlink()
     fork()
     pipe()
+    sysconf()
 
 #include <time.h>
     struct tm
@@ -115,3 +116,7 @@
 #include <sys/shm.h>
     shmget()
     shmat()
+
+#include <sys/mman.h>
+    mmap()
+    munmap()
