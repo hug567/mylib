@@ -2,6 +2,8 @@
 
 ```bash
 sudo apt install iproute2
+# ubuntu 22.04:
+sudo apt install iputils-ping
 
 # 安装的命令：dpkg -L iproute2 | grep bin
 /bin/ip
