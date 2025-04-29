@@ -15,6 +15,7 @@ function build_all_platforms() {
         "S300E"
         "S450B"
         "DEMO"
+        "KU_2D_FDD_RESAS"
     )
     local platform
 

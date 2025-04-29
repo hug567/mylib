@@ -1,0 +1,41 @@
+# 在基础镜像的基础上创建docker镜像
+# 命令举例:
+#     cd mylib/docker/dockerfile/ubuntu/22/
+#     docker build -t wordpress:v0.1 -f wordpress.df ./
+# 运行：
+#     docker run -it wordpress:v0.1 --net=host bash
+# Create: 2025-04-28 11:31:47
+
+# 以镜像ubunut:22.04为基础
+FROM ubuntu:22.04
+
+# 从当前目录拷贝文件到镜像中
+COPY sources.list /etc/apt/
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOSTNAME docker
+
+ARG user=wordpress
+ARG passwd=wordpressYYDS
+
+RUN echo 'Acquire::https::Verify-Peer "false"; Acquire::https::Verify-Host "false";' >> /etc/apt/apt.conf.d/99insecure
+
+# 安装必要工具
+# 创建新用户，赋予sudo权限，设置用户密码
+RUN apt update --allow-unauthenticated --allow-insecure-repositories && \
+    apt-get -y install sudo locales adduser vim git zsh tmux expect sshpass \
+                       iputils-ping net-tools tree htop python3 \
+                       systemd systemd-sysv && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* \
+    locale-gen en_US.UTF-8 && \
+    update-locale && \
+    useradd --create-home --no-log-init --shell /bin/bash ${user} && \
+    adduser ${user} sudo && \
+    echo "${user}:${passwd}" | chpasswd && \
+    cd /usr/bin && ln -s python3 python
+
+CMD ["/sbin/init"]
+
+# 设置默认登录用户
+USER wordpress
