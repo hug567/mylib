@@ -89,6 +89,12 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 # 拉取镜像：
 docker pull etherpad/etherpad
+
+# 指定镜像站点拉取镜像：
+docker pull hub.c.163.com/library/wordpress:latest
+
+# 在指定站点搜索镜像：
+https://c.163.com/hub#/home
 ```
 
 ## 4）、镜像文件：
@@ -114,6 +120,11 @@ docker load -i <myopensuse.tar>
 
 # 查看容器启动日志：
 docker logs <ID>
+
+# 镜像文件重命名，先创建新tag，再删除旧tag：
+# （当镜像被多个tag引用时，docker只删除tag，不删除实际镜像）
+docker tag hub.c.163.com/library/wordpress:latest wordpress:latest
+docker rmi hub.c.163.com/library/wordpress:latest
 ```
 
 ## 5）、容器操作：
