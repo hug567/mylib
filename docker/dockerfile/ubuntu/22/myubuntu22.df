@@ -1,36 +1,37 @@
 # 在基础镜像的基础上创建docker镜像
 # 命令举例:
-#     cd mylib/docker/dockerfile/ubuntu/24/
-#     docker build -t myubuntu24:v0.1 -f myubuntu24.df ./
+#     cd mylib/docker/dockerfile/ubuntu/22/
+#     docker build -t myubuntu22:v0.1 -f myubuntu22.df ./
 # 运行：
-#     docker run -it myubuntu24:v0.1 --net=host bash
-# 2024-09-09
+#     docker run -it myubuntu22:v0.1 --net=host bash
+# Create: 2025-05-19 20:59:47
 
-# 以镜像ubunut:24.04为基础
-FROM ubuntu:24.04
+# 以镜像ubunut:22.04为基础
+FROM ubuntu:22.04
 
 # 从当前目录拷贝文件到镜像中
-COPY mirrors.sources /etc/apt/sources.list.d/
+COPY sources.list /etc/apt/
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV HOSTNAME docker
 
 ARG user=hx
-ARG passwd=0427
+ARG passwd=hx2023
+
+RUN echo 'Acquire::https::Verify-Peer "false"; Acquire::https::Verify-Host "false";' >> /etc/apt/apt.conf.d/99insecure
 
 # 安装必要工具
 # 创建新用户，赋予sudo权限，设置用户密码
 RUN apt update && \
     apt-get -y install apt-utils && \
-    apt-get -y install sudo locales adduser vim git zsh tmux iputils-ping \
-                       net-tools python3 dos2unix && \
+    apt-get -y install sudo locales adduser vim git zsh tmux expect sshpass \
+                       iputils-ping net-tools tree htop python3 dos2unix && \
     locale-gen en_US.UTF-8 && \
     update-locale && \
     useradd --create-home --no-log-init --shell /bin/bash ${user} && \
     adduser ${user} sudo && \
     echo "${user}:${passwd}" | chpasswd && \
     cd /usr/bin && ln -s python3 python
-
-# 时区配置
 
 # 设置默认登录用户
 USER hx

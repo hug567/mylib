@@ -25,7 +25,7 @@ RUN echo 'Acquire::https::Verify-Peer "false"; Acquire::https::Verify-Host "fals
 RUN apt update --allow-unauthenticated --allow-insecure-repositories && \
     apt-get -y install apt-utils && \
     apt-get -y install sudo locales adduser vim git zsh tmux expect sshpass \
-                       iputils-ping net-tools tree htop python3 \
+                       iputils-ping net-tools tree htop python3 dos2unix \
                        systemd systemd-sysv && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* \

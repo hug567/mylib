@@ -113,11 +113,34 @@ def test_rename_file():
     print("will rename file from", fname, "to", new_fname)
     os.rename(fname, new_fname)
 
+# 复制文件
+def test_copy_file():
+    print(sys._getframe().f_code.co_name, ": -------------------------", sep='')
+
+    fname = "/tmp/test_python.txt"
+    new_fname = "/tmp/test_python_new.txt"
+    new_fname2 = "/tmp/test_python_new2.txt"
+    if not os.path.exists(fname):
+        print(f'will create file: {fname}')
+        file = open(fname, 'w')
+        file.close()
+    if os.path.exists(new_fname):
+        os.remove(new_fname)
+
+    # 复制文件
+    print(f'will copy file {fname} to {new_fname}')
+    shutil.copy(fname, new_fname)
+
+    # 复制文件，同时复制元数据
+    print(f'will copy file {fname} to {new_fname2}, and keep metadata')
+    shutil.copy2(fname, new_fname2)
+
 def main():
     learning_file()
     create_delete_file()
     create_delete_dir()
     test_rename_file()
+    test_copy_file()
 
 if __name__ == '__main__':
     main()
