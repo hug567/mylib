@@ -1,0 +1,68 @@
+<!--
+    练习：ag-grid创建普通表格
+    时间：2025-05-22
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script> -->
+    <script src="static/js/ag-grid-community.min.js"></script>
+    <style>
+        #myGrid {
+          height: 500px;
+          width: 100%;
+        }
+        .ag-theme-alpine {
+          /* 可选主题 */
+        }
+      </style>
+</head>
+
+<body>
+    <div id="myGrid"></div>
+
+    <script>
+        // 表格数据
+        const rowData = [
+            { make: "Toyota", model: "Celica", price: 35000 },
+            { make: "Ford", model: "Mondeo", price: 32000 },
+            { make: "Porsche", model: "Boxster", price: 72000 }
+        ];
+
+        // 列定义
+        const columnDefs = [
+            { field: "make" },
+            { field: "model" },
+            { field: "price" }
+        ];
+
+        // 表格配置
+        const gridOptions = {
+            columnDefs: columnDefs,
+            rowData: rowData,
+            defaultColDef: {
+                sortable: true,
+                filter: true,
+                resizable: true,
+                editable: true
+            },
+            pagination: true,
+            paginationPageSize: 10
+        };
+
+        // 初始化表格
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("will init ag-grid table");
+            const gridDiv = document.querySelector('#myGrid');
+            new agGrid.Grid(gridDiv, gridOptions);
+            // new Grid(gridDiv, gridOptions);
+        });
+    </script>
+</body>
+
+</html>

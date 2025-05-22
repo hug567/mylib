@@ -1,0 +1,47 @@
+<!--
+    练习：grid.js创建普通表格
+    时间：2025-05-22
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test_table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script> -->
+    <!-- <script src="static/js/ag-grid-community.min.js"></script> -->
+    <!-- <style>
+        #myGrid {
+          height: 500px;
+          width: 100%;
+        }
+        .ag-theme-alpine {
+          /* 可选主题 */
+        }
+      </style> -->
+    <link href="static/css/mermaid.min.css" rel="stylesheet" />
+    <script src="static/js/gridjs.umd.js"></script>
+</head>
+
+<body>
+    <div id="wrapper"></div>
+    <script>
+        function createTable() {
+            new gridjs.Grid({
+                columns: ["序号", "时间", "名称", "第一行", "第二行"],
+                data: [
+                    ["1", "", "", "", ""],
+                ]
+            }).render(document.getElementById("wrapper"));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("will init grid.js table");
+            createTable();
+        });
+    </script>
+</body>
+
+</html>
