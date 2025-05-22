@@ -18,8 +18,8 @@ function handle_mp3_files() {
             rm "${dst_dir}/${file}"
         fi
         #ffmpeg -i "${src_dir}/${file}" -af loudnorm=I=-16:LRA=11:TP=-1.5 "${dst_dir}/${file}" &> /dev/null
-        #ffmpeg -i "${src_dir}/${file}" -af loudnorm=I=-13:LRA=9:TP=-1.0 "${dst_dir}/${file}" &> /dev/null
-        ffmpeg -i "${src_dir}/${file}" -af loudnorm=I=-10:LRA=9:TP=-1.0 "${dst_dir}/${file}" &> /dev/null
+        ffmpeg -i "${src_dir}/${file}" -af loudnorm=I=-13:LRA=9:TP=-1.0 "${dst_dir}/${file}" &> /dev/null
+        #ffmpeg -i "${src_dir}/${file}" -af loudnorm=I=-10:LRA=9:TP=-1.0 "${dst_dir}/${file}" &> /dev/null
         if [ $? -ne 0 ]; then
             echo "handle flile fail: ${src_dir}/${file} <<<<<<<<<<<<<<<<<<<<<<<"
             exit 1
@@ -32,9 +32,6 @@ function handle_mp3_files() {
 }
 
 function main() {
-    local pwd=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
-
-    cd $pwd
     handle_mp3_files
 }
 
