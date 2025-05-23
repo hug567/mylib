@@ -100,6 +100,7 @@
 #include <sys/stat.h>
     stat()
     fstat()
+    mkfifo()
 
 #include <sys/file.h>
     flock()
