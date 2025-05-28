@@ -14,8 +14,9 @@ def test_find():
         print("find \'Tom\' in str \'" + str1 + "\'")
 
     # 查找的子串中包含空格
-    if str1.find(" is") >= 0:
-        print("find \'name is\' in str \'" + str1 + "\'")
+    index = str1.find(" is")
+    if index >= 0:
+        print(f'find \' is\' in str \'{str1}\' with index: {index}')
 
     # 没查找到子串时，返回-1
     ret = str1.find("xxx")
