@@ -3,7 +3,8 @@
 ### 1)、Linux设置端口转发：
 
 ```shell
-socat TCP4-LISTEN:1234,reuseaddr,fork TCP4:192.168.0.1:80 &          # 设置端口转发
+sudo apt install socat
+sudo socat TCP4-LISTEN:1234,reuseaddr,fork TCP4:192.168.0.1:80 &     # 设置端口转发
 http://101.45.74.234:1234                                            # 访问端口
 netstat -antup                                                       # 查看所有转发端口
 ps aux | grep socat                                                  # 查看端口转发后台进程

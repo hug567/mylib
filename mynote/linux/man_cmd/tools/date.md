@@ -12,6 +12,8 @@ date
 ```bash
 date
 date "+%Y-%m-%d %H:%M:%S"
+# 读取unix时间戳：
+date +%s
 ```
 
 ## 2.2、设置时间：

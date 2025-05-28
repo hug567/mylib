@@ -51,6 +51,9 @@ sudo iptables -L -t nat -n -v --line-number
 # 查看过滤规则：INPUT, OUTPUT, FORWARD
 sudo iptables -L -t filter -n -v --line-number
 
+sudo iptables -t nat -L -n -v
+sudo iptables -L FORWARD -n -v
+
 # 删除nat表路由后规则：1
 sudo iptables -t nat -D POSTROUTING 1
 
@@ -64,6 +67,29 @@ sudo iptables -P FORWARD ACCEPT
 
 # 将80端口的流量转发到8080端口
 sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+```
+
+- iptables设置端口转发：
+
+```bash
+sudo vim /etc/sysctl.conf
+#-------------------------------------------#
+net.ipv4.ip_forward=1
+#-------------------------------------------#
+sudo sysctl -p
+sudo apt install iptables-persistent
+
+# 设置 DNAT (Destination NAT) 规则
+sudo iptables -t nat -A PREROUTING -p tcp --dport 10280 -j DNAT --to-destination 192.168.0.2:80
+# 设置 SNAT (Source NAT) 规则
+sudo iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.2 --dport 80 -j MASQUERADE
+# 允许转发流量
+sudo iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 80 -j ACCEPT
+
+# 保存iptables规则：
+sudo netfilter-persistent save
+# 防火墙允许访问端口：
+sudo ufw allow 10280/tcp
 ```
 
 # 3、相关概念：
