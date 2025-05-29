@@ -21,20 +21,46 @@
           /* 可选主题 */
         }
       </style> -->
-    <link href="static/css/mermaid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="static/css/bootstrap.min.css"> <!--bootstrap 4.6.2-->
+    <link rel="stylesheet" href="static/css/mermaid.min.css">
+    <script src="static/js/jquery.min.js"></script> <!--jquery 3.7.1-->
+    <script src="static/js/bootstrap.min.js"></script> <!--bootstrap 4.6.2-->
     <script src="static/js/gridjs.umd.js"></script>
 </head>
 
 <body>
-    <div id="wrapper"></div>
+    <div class="container">
+        <div class="row">
+            <div id="idDivGridJsTable"></div>
+        </div>
+    </div>
+
+
     <script>
         function createTable() {
             new gridjs.Grid({
-                columns: ["序号", "时间", "名称", "第一行", "第二行"],
+                columns: ["经度", "纬度", "高度", "Az", "Ez", "Vz"],
                 data: [
-                    ["1", "", "", "", ""],
-                ]
-            }).render(document.getElementById("wrapper"));
+                    ["x", "", "", "", "", ""],
+                ],
+                className: {
+                    table: 'table table-striped table-bordered',
+                    th: 'table-header',
+                    td: 'table-cell'
+                },
+                style: {
+                    th: {
+                        'background-color': '#007bff',
+                        color: '#f7f9ff',
+                    },
+                    td: {
+                        // border: '1px solid #ccc',
+                    },
+                    table: {
+                        // 'font-size': '15px'
+                    }
+                }
+            }).render(document.getElementById("idDivGridJsTable"));
         }
 
         document.addEventListener('DOMContentLoaded', () => {

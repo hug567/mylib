@@ -42,13 +42,32 @@ iptables
   - SNAT 策略用在nat表的POSTROUTING链；
 - DNAT：Destination Network Address Translation，目标地址转换；
   - 用来修改目标IP地址和目标端口，用在 nat 表的PREROUTING链和OUTPUT链中；
+- nat表：用于网络地址转换的专用表，修改数据包的源或目标地址，是实现IP共享、端口转发和网络地址转换的核心机制；
+  - PREROUTING链：在数据包进入本机并经过路由判断之前修改数据包；
+    - 如：
+
+  - POSTROUTING链：在数据包即将离开本机之后修改数据包；
+    - 如：
+
+  - OUTPUT：对本机产生的出站数据包进行地址转换；
+    - 如：
+
+
+- filter表：iptables默认的表，主要用于包过滤，控制网络流量的转发等；
+  - filter表的处理链有：FORWARD、INPUT、OUTPUT；
+    - INPUT链：处理目标地址是本机的数据包，过滤进入本机的流量，默认行为为ACCEPT，都可进入；
+    - OUTPUT链：处理从本机发出的数据包，限制本机访问外部资源，默认行为为ACCEPT，都可发出；
+    - FORWARD链：处理经过本机转发的数据包，如在不同接口间转发流量，默认行为为DROP，都不转发；
+
+  - filter表中链的行为方式有：ACCEPT、DROP等；
+
 
 # 2、常见用法：
 
 ```bash
-# 查看nat规则
+# 查看nat表规则：
 sudo iptables -L -t nat -n -v --line-number
-# 查看过滤规则：INPUT, OUTPUT, FORWARD
+# 查看filter表过滤规则：INPUT, OUTPUT, FORWARD
 sudo iptables -L -t filter -n -v --line-number
 
 sudo iptables -t nat -L -n -v
@@ -62,7 +81,7 @@ sudo iptables -t filter -D FORWARD 1
 
 # 设置filter表FORWARD规则默认行为为ACCEPT：
 # filter表规则有：INPUT、OUTPUT、FORWARD
-# 规则行为有：ACCEPT、DROP
+# 上述规则的行为有：ACCEPT、DROP
 sudo iptables -P FORWARD ACCEPT
 
 # 将80端口的流量转发到8080端口
@@ -79,11 +98,14 @@ net.ipv4.ip_forward=1
 sudo sysctl -p
 sudo apt install iptables-persistent
 
+# 内核启用端口转发：
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward“
+
 # 设置 DNAT (Destination NAT) 规则
 sudo iptables -t nat -A PREROUTING -p tcp --dport 10280 -j DNAT --to-destination 192.168.0.2:80
 # 设置 SNAT (Source NAT) 规则
 sudo iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.2 --dport 80 -j MASQUERADE
-# 允许转发流量
+# 允许转发流量：
 sudo iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 80 -j ACCEPT
 
 # 保存iptables规则：

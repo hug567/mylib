@@ -1,0 +1,67 @@
+<!--
+    练习：bootstrap卡片
+    时间：2025-05-28
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>[bootstrap] test_card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css"> <!--bootstrap 4.6.2-->
+    <link rel="stylesheet" href="static/css/bootstrap-icons.min.css"> <!--bootstrap-icons 1.9.1-->
+    <script src="static/js/jquery.min.js"></script> <!--jquery 3.7.1-->
+    <script src="static/js/popper.min.js"></script> <!--popper 1.5.0-->
+    <script src="static/js/bootstrap.min.js"></script> <!--bootstrap 4.6.2-->
+    <style>
+        .div-inline {
+            display: inline-block;
+        };
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Antenna:</h5>
+                        <div>
+                            <div class="div-inline">Longitude (deg):</div>
+                            <div class="div-inline" id="idDivAntennaLongitude">-35.991703</div>
+                        </div>
+                        <div>
+                            <div class="div-inline">Latitude (deg):</div>
+                            <div class="div-inline" id="idDivAntennaLongitude">85.050850</div>
+                        </div>
+                        <div>
+                            <div class="div-inline">Altitude (km):</div>
+                            <div class="div-inline" id="idDivAntennaLongitude">884.529541</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Satellite:</h5>
+                        <p class="card-text">Longitude (deg): -35.991703<br>Latitude (deg): 85.050850<br>Altitude (km):
+                            884.529541</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Beam:</h5>
+                        <p class="card-text">Az (deg): xx<br>Ez (deg): xx<br>Vz (deg): xx</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

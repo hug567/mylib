@@ -54,5 +54,7 @@ icmp
 udp
 # 捕获TCP包
 tcp
+# 捕获http包
+http
 ```
 
