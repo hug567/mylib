@@ -425,6 +425,12 @@ git tag -v v2.35
 ### 2.12、submodule：
 
 ```bash
+# 查看当前仓单的子仓库：
+git submodule
+# 查看当前仓单的子仓库的配置：
+cat .gitmodules
+# 低轨查看当前目录下所有仓单的子仓库：
+git submodule status --recursive
 # 查看帮助
 git submodule --help
 
@@ -435,7 +441,7 @@ git clone --recurse-submodules <repository_url>
 # 初始化并拉取子仓库：
 git submodule update --init --recursive
 
-# 拉取子仓库的更新：
+# 已有子仓，拉取子仓库的更新：
 git submodule update --recursive --remote
 
 # 只更新指定子仓库：(在.gitmodules文件中可查看子仓库路径)
