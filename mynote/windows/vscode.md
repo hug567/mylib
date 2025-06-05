@@ -100,11 +100,17 @@ Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Workbench Editor: Enable 
 #---------------------------------------------#
 ```
 
-#### 10）、禁止vscode自动更新：
+#### 10）、vscode更新：
 
 ```bash
-# 静止更新后vscode每次连接到linux也不会更新linux中的vscode，可加快启动：
+# 禁止自动更新，禁止后vscode每次连接到linux也不会更新linux中的vscode，可加快启动：
 Ctrl + Shift + P -> Preferences: Open Settings (UI) -> Update: Mode -> manual
+#---------------------------------------------#
+    "update.mode": "manual",
+#---------------------------------------------#
+
+# 手动检查更新：
+菜单栏 -> 帮助(H) -> 检查更新...
 ```
 
 #### 11）、文件标签栏多行显示：
