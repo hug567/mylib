@@ -13,7 +13,7 @@ ld -s -o hello hello.o                                   //链接
 ### 1）、关键字：
 
 ```c
-.global symbol    //声明符号对链接器可见
+.global symbol    //声明符号为全局符号，试其对其他c文件或链接脚本可见
 .extern symbol    //声明符号为外部符号，链接时从外部文件搜索符号
 .section          //段
 .text             //代码段
@@ -84,7 +84,7 @@ tbnz w19, #0, ffff8000101f1c2c <find_get_entries+0x14c>  //w19第0位不为0则�
 
 ```c
 mov ra, rb          //将rb中存放的数据传送给ra，mov只能在寄存器间传递数据，或将立即数传递给寄存器,不能直接操作内存中的数据
-mov ra, #0x12       //将立即数0x12存入ra寄存器中，立即数不能太大，太大用ldr
+mov ra, #0x12       //将立即数0x12存入ra寄存器中，立即数不能太大，mov最多只能操作16位的立即数，太大用ldr
 mov ra, #'A'        //将字符A存入ra寄存器中
 //按位取反后传送
 mvn r1, #0xFF      //r1=0xFFFFFF00
@@ -92,6 +92,8 @@ mvn r1, #0xFF      //r1=0xFFFFFF00
 movw r1, 0xDF0D     //r1=0x0000DF0D
 //加载到寄存器高半部，低半部不受影响：0x0000-0xFFFF
 movt r1, #0xFFFF    //r1=0xFFFF0000
+//复合指令，将 r8 的值右移 12 位后，存储到 r0 中
+mov r0, r8, LSR #12
 
 stp                 //入栈指令 (aarch64栈由高地址向底地址增长)
 /*

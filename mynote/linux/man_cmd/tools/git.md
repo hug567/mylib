@@ -429,9 +429,9 @@ git tag -v v2.35
 git submodule
 # 查看当前仓单的子仓库的配置：
 cat .gitmodules
-# 低轨查看当前目录下所有仓单的子仓库：
+# 递归查看当前目录下所有仓单的子仓库：
 git submodule status --recursive
-# 查看帮助
+# 查看帮助：
 git submodule --help
 
 # 在下载仓库的同时下载子模块：

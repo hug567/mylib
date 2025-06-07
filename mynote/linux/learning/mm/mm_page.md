@@ -106,6 +106,52 @@ idmap_pg_dir  //identity mapping，恒等映射，在mmu使能前，建立的物
 - 第二段：kernel image mapping，将kernel running需要的地址（kernel txt、dernel rodata、data、bss等等）进行映射；
 - 第三段：blob memory对应的mapping；
 
+```c
+//u-boot启动linux arm时，将dtb物理地址写入r2，传递给linux
+
+// arm中，KERNEL_OFFSET：内核在虚拟地址空间中的起始位置，链接器使用这个地址作为起始地址链接代码，常用值如：0xC0000000 (3GB处)
+// linux启动时，打开MMU前，直接操作物理地址；打开MMU后，临时创建恒等映射，通常将物理内存起始地址映射到虚拟地址KERNEL_OFFSET
+// 注：物理内存起始可能时0，也可能不是0，如：0x800000000
+//     映射后：物理地址 = 虚拟地址 - KERNEL_OFFSET
+// 内核初始页表（swapper_pg_dir）将物理内存区域映射到 [KERNEL_OFFSET, KERNEL_OFFSET + RAM_SIZE] 的虚拟地址范围
+#define KERNEL_OFFSET          (PAGE_OFFSET)
+
+// PAGE_OFFSET：内核起始虚拟地址，通常与KERNEL_OFFSET等价
+#define PAGE_OFFSET            UL(CONFIG_PAGE_OFFSET)
+
+// PHYS_OFFSET：实际物理内存起始地址
+#define PHYS_OFFSET     ((phys_addr_t)__pv_phys_pfn_offset << PAGE_SHIFT)
+
+// TEXT_OFFSET：内核镜像在物理内存中的起始地址相当于PHYS_OFFSET的偏移
+// arm中的定义：arch/arm/Makefile
+textofs-y	:= 0x00008000
+TEXT_OFFSET := $(textofs-y)
+
+//已知虚拟地址，可计算出其物理地址：pa = va - PAGE_OFFSET + PHYS_OFFSET
+```
+
+- linux arm32启动阶段获取起始物理地址过程：
+
+```c
+//arch/arm/include/asm/memory.h
+#define PLAT_PHYS_OFFSET      UL(CONFIG_PHYS_OFFSET)
+
+// arch/arm/kernel/head.S
+ENTRY(stext)
+    adr_l   r8, _text
+    sub     r8, r8, #TEXT_OFFSET
+    bl      __fixup_pv_table
+ENDPROC(stext)
+
+// arch/arm/kernel/phys2virt.S
+ENTRY(__fixup_pv_table)
+    mov     r0, r8, lsr #PAGE_SHIFT
+    str_l   r0, __pv_phys_pfn_offset, r3
+ENDPROC(__fixup_pv_table)
+```
+
+
+
 # 6、调试文件：
 
 ```bash
