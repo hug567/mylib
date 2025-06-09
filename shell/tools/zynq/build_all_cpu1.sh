@@ -33,7 +33,7 @@ function build_all_LC() {
     log_info "[${fmt}]: -------------------------------------------------------"
     for platform in ${all_platforms[@]}; do
         log_info "[${fmt}][${platform}]: ------------------------------------"
-        ./build.sh &> /tmp/"${platform}.log"
+        ./build.sh ${platform} &> /tmp/"${platform}.log"
         if [ $? -ne 0 ]; then
             log_err "[${fmt}] build platform ${platform} failed"
             exit 1
