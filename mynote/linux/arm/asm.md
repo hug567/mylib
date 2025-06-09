@@ -46,7 +46,8 @@ flag：a：可分配
 ### 2）、伪指令：
 
 ```c
-adr r0, symbol    //获取标号symbol的地址，存储到r0中
+adr r0, symbol      //获取标号symbol的地址，存储到r0中
+adr_l r0, symbol    //symbol地址可能超过正负4k
 
 //定义一个段，a:可分配
 .section .init.ramfs,"a"

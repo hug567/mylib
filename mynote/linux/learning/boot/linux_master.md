@@ -15,6 +15,7 @@ git clone https://github.com/torvalds/linux.git
 cd linux
 
 export PATH="$HOME/tools/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-linux-gnueabihf/bin:$PATH"
+arm-none-linux-gnueabihf-gcc --version
 make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- vexpress_defconfig
 make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- -j12
 make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- modules -j12
@@ -48,8 +49,8 @@ make -C ../ O=`pwd` ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- install
 mkdir rootfs                                              # 新建文件夹
 cd rootfs                                                 # 进入目录
 cp -r ../busybox/build-arm/_install/* .                   # 复制文件
-sudo mkdir -p proc sys dev etc etc/init.d                 # 新建目录
-sudo vim ./etc/init.d/rcS                                 # 新建文件并写入
+mkdir -p proc sys dev etc etc/init.d                 # 新建目录
+vim ./etc/init.d/rcS                                 # 新建文件并写入
 # ------------------------------------------------------- #
 #!/bin/sh
 mount -t proc none /proc

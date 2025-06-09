@@ -133,12 +133,29 @@ TEXT_OFFSET := $(textofs-y)
 - linux arm32启动阶段获取起始物理地址过程：
 
 ```c
-//arch/arm/include/asm/memory.h
-#define PLAT_PHYS_OFFSET      UL(CONFIG_PHYS_OFFSET)
+//编译后查看_text符号地址：0xC0008000
+arm-none-eabi-nm vmlinux | grep " _text"
+readelf -s vmlinux | grep " _text"
+
+//arch/arm/boot/compressed/Makefile
+ZTEXTADDR       := $(CONFIG_ZBOOT_ROM_TEXT)                     //CONFIG_ZBOOT_ROM_TEXT=0x0
+CPPFLAGS_vmlinux.lds := -DTEXT_START="$(ZTEXTADDR)" -DBSS_START="$(ZBSSADDR)"
+
+//arch/arm/boot/compressed/vmlinux.lds.S
+  . = TEXT_START;                                               //当前地址 = TEXT_START
+  _text = .;                                                    //_text = 当前地址
+
+  .text : {
+    _start = .;
+    *(.start)
+    *(.text)
+    *(.text.*)
+    ARM_STUBS_TEXT
+  }
 
 // arch/arm/kernel/head.S
 ENTRY(stext)
-    adr_l   r8, _text
+    adr_l   r8, _text  //adr_l：汇编命令宏封装，将符号_text运行时地址加载到r8中
     sub     r8, r8, #TEXT_OFFSET
     bl      __fixup_pv_table
 ENDPROC(stext)
@@ -146,11 +163,9 @@ ENDPROC(stext)
 // arch/arm/kernel/phys2virt.S
 ENTRY(__fixup_pv_table)
     mov     r0, r8, lsr #PAGE_SHIFT
-    str_l   r0, __pv_phys_pfn_offset, r3
+    str_l   r0, __pv_phys_pfn_offset, r3  //str_l：汇编命令的宏封装，将r0寄存器的值写入变量__pv_phys_pfn_offset的地址中，r3是临时寄存器
 ENDPROC(__fixup_pv_table)
 ```
-
-
 
 # 6、调试文件：
 
