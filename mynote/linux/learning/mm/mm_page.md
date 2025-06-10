@@ -122,9 +122,10 @@ idmap_pg_dir  //identity mapping，恒等映射，在mmu使能前，建立的物
 // PHYS_OFFSET：实际物理内存起始地址
 #define PHYS_OFFSET     ((phys_addr_t)__pv_phys_pfn_offset << PAGE_SHIFT)
 
-// TEXT_OFFSET：内核镜像在物理内存中的起始地址相当于PHYS_OFFSET的偏移
+// TEXT_OFFSET：内核镜像在物理内存中的起始地址相对于PHYS_OFFSET的偏移：
+// 预留空间用于存储bootloader传递的参数、启动阶段临时页表等：
 // arm中的定义：arch/arm/Makefile
-textofs-y	:= 0x00008000
+textofs-y	:= 0x00008000                   //32k
 TEXT_OFFSET := $(textofs-y)
 
 //已知虚拟地址，可计算出其物理地址：pa = va - PAGE_OFFSET + PHYS_OFFSET
@@ -133,6 +134,25 @@ TEXT_OFFSET := $(textofs-y)
 - linux arm32启动阶段获取起始物理地址过程：
 
 ```c
+//arch/arm/boot/compressed/head.S
+//保存u-boot通过r2寄存器传递的dtb地址：
+mov     r8, r2
+//将当前pc值写入r0寄存器：
+mov     r0, pc
+//地址按128M对齐，认为对齐后的地址就是起始物理地址：
+and     r0, r0, #0xf8000000
+//内核镜像代码段的物理地址
+add     r4, r0, #TEXT_OFFSET
+//解压内核镜像：
+bl      decompress_kernel
+//解压完跳转到解压后的内核执行：
+bne     __enter_kernel
+    mov     r0, #0               //r0：0
+    mov     r1, r7               //r1: cpu架构编号
+    mov     r2, r8               //r2：dtb物理地址
+    mov     pc, r4
+    bx      r4                   //跳转到解压后的内核代码地址
+
 //编译后查看_text符号地址：0xC0008000
 arm-none-eabi-nm vmlinux | grep " _text"
 readelf -s vmlinux | grep " _text"
@@ -165,6 +185,14 @@ ENTRY(__fixup_pv_table)
     mov     r0, r8, lsr #PAGE_SHIFT
     str_l   r0, __pv_phys_pfn_offset, r3  //str_l：汇编命令的宏封装，将r0寄存器的值写入变量__pv_phys_pfn_offset的地址中，r3是临时寄存器
 ENDPROC(__fixup_pv_table)
+```
+
+- linux arm32启动阶段创建页表：
+
+```c
+// arch/arm/kernel/head.S
+// 内核代码的前面有32M保留空间，在代码的前的16M空间创建一级页表：
+bl      __create_page_tables
 ```
 
 # 6、调试文件：
