@@ -97,8 +97,22 @@ idmap_pg_dir  //identity mapping，恒等映射，在mmu使能前，建立的物
 ```
 
 - PAGE_OFFSET：内核空间和用户空间虚拟地址的空间的划分界限，如：0xffff,0000,0000,0000
-
 - TEXT_OFFSET：编译内核时指定，表示内核代码起始的偏移
+
+- linux arm32 3级页表：
+
+```bash
+| 31      20 | 19      12 | 11        0 |
+| PGD Index  | PTE Index  | Page Offset |
+| 12 bits    | 8 bits     | 12 bits     |
+
+# PGD：全局只有一个PGD，大小16k，有4096个条目，一个条目指向一个PTE表，一个PGD条目寻址1M地址空间
+# PTE：一个PTE表有256个条目，占用1k空间，一个PTE条目寻址4K空间
+# OFFSET：12位，可寻址4k地址空间
+# 总寻址空间大小：4096 * 512 * 4096 = 4G
+```
+
+
 
 ## 1）、起始阶段页表创建：
 
@@ -175,7 +189,7 @@ CPPFLAGS_vmlinux.lds := -DTEXT_START="$(ZTEXTADDR)" -DBSS_START="$(ZBSSADDR)"
 
 // arch/arm/kernel/head.S
 ENTRY(stext)
-    adr_l   r8, _text  //adr_l：汇编命令宏封装，将符号_text运行时地址加载到r8中
+    adr_l   r8, _text  //adr_l：汇编命令宏封装，将符号_text运行时地址加载到r8中，此时还没启用mmu，读取到的_text地址是物理地址
     sub     r8, r8, #TEXT_OFFSET
     bl      __fixup_pv_table
 ENDPROC(stext)
