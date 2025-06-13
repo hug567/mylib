@@ -1,0 +1,92 @@
+<!--
+    练习：bootstrap tooltip 鼠标悬停时显示帮助信息
+    时间：2025-06-13
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>[bootstrap] test_tooltip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css"> <!--bootstrap 4.6.2-->
+    <link rel="stylesheet" href="static/css/bootstrap-icons.min.css"> <!--bootstrap-icons 1.9.1-->
+    <script src="static/js/jquery.min.js"></script> <!--jquery 3.7.1-->
+    <script src="static/js/popper.min.js"></script> <!--popper 1.5.0-->
+    <script src="static/js/bootstrap.min.js"></script> <!--bootstrap 4.6.2-->
+
+    <style>
+        .tooltip {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            transition-delay: 0.1s;
+        }
+
+        .tooltip .arrow {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .tooltip.show .arrow {
+            opacity: 1;
+            transition-delay: 0.1s;
+        }
+
+        .tooltip.bs-tooltip-top .arrow::before {
+            border-top-color: white;
+        }
+
+        .tooltip.bs-tooltip-bottom .arrow::before {
+            border-bottom-color: white;
+        }
+
+        .tooltip.bs-tooltip-left .arrow::before {
+            border-left-color: white;
+        }
+
+        .tooltip.bs-tooltip-right .arrow::before {
+            border-right-color: white;
+        }
+
+        .tooltip-inner {
+            background-color: white;
+            color: black;
+            font-size: 14px;
+            border-radius: 8px;
+            padding: 10px 10px;
+            box-shadow: 0 5px 10px #9e9e9e;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <br><br><br>
+        <div class="row">
+            <div class="col text-center">
+                <div data-toggle="tooltip" title="这是帮助信息，鼠标悬停在元素上时会显示">文本元素</div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" data-toggle="tooltip" title="这是按钮的帮助信息">按钮</button>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({ trigger: 'hover' });
+        });
+    </script>
+</body>
+
+</html>
