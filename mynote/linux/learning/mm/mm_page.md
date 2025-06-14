@@ -110,9 +110,8 @@ idmap_pg_dir  //identity mapping，恒等映射，在mmu使能前，建立的物
 # PTE：一个PTE表有256个条目，占用1k空间，一个PTE条目寻址4K空间
 # OFFSET：12位，可寻址4k地址空间
 # 总寻址空间大小：4096 * 512 * 4096 = 4G
+# linux arm32使用两级页表时，sizeof(pgd_t) = 8
 ```
-
-
 
 ## 1）、起始阶段页表创建：
 
