@@ -246,6 +246,15 @@ BB_DONT_CACHE="1"
 do_configure[nostamp] = "1"
 ```
 
+## 12）、任务签名：
+
+```bash
+# 签名文件位置：
+build/conf/locked-sigs.inc
+# 查看签名：
+bitbake -c dump_sig <recipr> -f -v
+```
+
 # 3、sysroot：
 
 - recipe-sysroot：目标架构sysroot
