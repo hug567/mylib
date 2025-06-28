@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AG Grid Vanilla JS 示例</title>
+    <!-- 引入 AG Grid 样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .ag-theme-alpine {
+            height: 300px;
+            width: 600px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="myGrid" class="ag-theme-alpine"></div>
+
+    <!-- 引入 AG Grid 脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+
+    <script>
+        // 列定义
+        const columnDefs = [
+            { headerName: "姓名", field: "name" },
+            { headerName: "年龄", field: "age" },
+            { headerName: "职业", field: "job" }
+        ];
+
+        // 行数据
+        const rowData = [
+            { name: "张三", age: 28, job: "工程师" },
+            { name: "李四", age: 35, job: "产品经理" },
+            { name: "王五", age: 22, job: "设计师" }
+        ];
+
+        // 网格配置
+        const gridOptions = {
+            columnDefs: columnDefs,
+            rowData: rowData,
+            defaultColDef: {
+                sortable: true,
+                filter: true
+            }
+        };
+
+        console.log(window.agGrid);
+        // 初始化 AG Grid
+        const gridDiv = document.getElementById('myGrid');
+        agGrid.createGrid(gridDiv, gridOptions);
+    </script>
+
+</body>
+
+</html>

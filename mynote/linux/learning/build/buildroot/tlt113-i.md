@@ -50,7 +50,7 @@ ls out/t113_i_linux_tlt113-evm-nand-sdboot_uart0.img
 ./build.sh pack
 ```
 
-### 1）、单独编译u-boot环境编辑文件env.fex
+### 3.1）、单独编译u-boot环境变量文件env.fex
 
 ```bash
 # 修改文件：
@@ -65,8 +65,48 @@ dd if=env.fex of=/dev/mmcblk0p2
 reboot
 ```
 
+### 3.2）、单独编译u-boot：
+
+```bash
+# 编译：
+./build.sh brandy
+# 打包：
+./build.sh pack
+# 镜像文件：包含u-boot、设备树、sys_config配置
+ls -lh out/pack_out/boot_package.fex
+
+dd if=boot_package.fex of=/dev/mmcblk0p1
+reboot
+```
+
 ## 4）、刷写到开发板中：
 
 ```bash
+```
+
+# 2、sd卡启动时分区信息：
+
+```bash
+# 分区大小(8G卡)：
+Device           Start      End  Sectors  Size Type
+/dev/mmcblk0p1   43008    53247    10240    5M Microsoft basic data
+/dev/mmcblk0p2   53248    55295     2048    1M Microsoft basic data
+/dev/mmcblk0p3   55296    57343     2048    1M Microsoft basic data
+/dev/mmcblk0p4   57344    98303    40960   20M Microsoft basic data
+/dev/mmcblk0p5   98304  2195455  2097152    1G Microsoft basic data
+/dev/mmcblk0p6 2195456  2197503     2048    1M Microsoft basic data
+/dev/mmcblk0p7 2197504  2199551     2048    1M Microsoft basic data
+/dev/mmcblk0p8 2199552  2330623   131072   64M Microsoft basic data
+/dev/mmcblk0p9 2330624 15120383 12789760  6.1G Microsoft basic data
+
+/dev/mmcblk0p1: bootlogo等资源
+/dev/mmcblk0p2: u-boot环境变量env.fex
+/dev/mmcblk0p3: u-boot环境变量env.fex
+/dev/mmcblk0p4: 内核镜像boot.fex
+/dev/mmcblk0p5: 文件系统镜像rootfs.fex
+/dev/mmcblk0p6: dsp镜像dfs0.fex
+/dev/mmcblk0p7: 暂未使用
+/dev/mmcblk0p8: 用户数据分区
+/dev/mmcblk0p9: sd卡剩余空间分区
 ```
 

@@ -11,58 +11,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script> -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <script src="static/js/ag-grid-community.min.js"></script>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
     <style>
-        #myGrid {
-          height: 500px;
-          width: 100%;
-        }
         .ag-theme-alpine {
-          /* 可选主题 */
+            height: 200px;
+            width: 100%;
         }
-      </style>
+    </style>
 </head>
 
 <body>
-    <div id="myGrid"></div>
 
     <script>
-        // 表格数据
-        const rowData = [
-            { make: "Toyota", model: "Celica", price: 35000 },
-            { make: "Ford", model: "Mondeo", price: 32000 },
-            { make: "Porsche", model: "Boxster", price: 72000 }
-        ];
-
         // 列定义
         const columnDefs = [
-            { field: "make" },
-            { field: "model" },
-            { field: "price" }
+            {
+                headerName: '',  // 不显示标题
+                field: 'col1',
+                colSpan: params => params.data && params.data.isTitle ? 4 : 1
+            },
+            { headerName: "姓名", field: "name" },
+            { headerName: "年龄", field: "age" },
+            { headerName: "职业", field: "job" }
+        ];
+
+        // 行数据
+        const rowData = [
+            { col1: '这是表格总标题（跨四列）', isTitle: true },
+            { name: "张三", age: 28, job: "工程师" },
+            { name: "李四", age: 35, job: "产品经理" },
+            { name: "王五", age: 22, job: "设计师" }
         ];
 
         // 表格配置
         const gridOptions = {
             columnDefs: columnDefs,
             rowData: rowData,
-            defaultColDef: {
-                sortable: true,
-                filter: true,
-                resizable: true,
-                editable: true
-            },
-            pagination: true,
-            paginationPageSize: 10
+            // defaultColDef: {
+            //     sortable: true,
+            //     filter: true,
+            // },
         };
 
         // 初始化表格
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("will init ag-grid table");
             const gridDiv = document.querySelector('#myGrid');
-            new agGrid.Grid(gridDiv, gridOptions);
-            // new Grid(gridDiv, gridOptions);
+            agGrid.createGrid(gridDiv, gridOptions);
+            // gridOptions.pinnedTopRowData = [
+            //     { col1: '这是表格标题行（跨4列）', isTitle: true }
+            // ];
         });
     </script>
+
+    <br>
+    <br>
+    <div class="container">
+        <div class="row" style="background-color: #f33b3b;">
+            <div id="myGrid" class="ag-theme-alpine"></div>
+        </div>
+    </div>
 </body>
 
 </html>

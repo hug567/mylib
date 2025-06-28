@@ -1,0 +1,117 @@
+<!--
+    练习：bootstrap表格
+    时间：2024-02-19
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[bootstrap] test_table2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/css/bootstrap-icons.min.css">
+  <script src="static/js/jquery.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <style>
+    .mymt-n1 {
+      margin-top: -1px;
+    }
+
+    .mytx-center {
+      text-align: center;
+    }
+
+    .myt-bg-blue {
+      background-color: #007bff;
+    }
+
+    .myc-white {
+      color: white;
+    }
+  </style>
+
+  <script>
+    function resizeMy4ColTable() {
+      var windowWidth = $(window).width();
+      if (windowWidth >= 992) {
+        $('.myt-body').each(function () {
+          $(this).css('margin-right', '-1px');
+        });
+        $('.myt-right').each(function () {
+          $(this).css('margin-left', '-1px');
+        });
+      } else {
+        $('.myt-body').each(function () {
+          $(this).css('margin-right', '0px');
+        });
+        $('.myt-right').each(function () {
+          $(this).css('margin-left', '0px');
+        });
+      }
+    }
+
+    $(function () {
+      resizeMy4ColTable();
+    });
+
+    $(window).on('resize', resizeMy4ColTable);
+  </script>
+
+  <div class="container">
+    <br>
+    <div class="no-gutters my-0">
+      <div class="row no-gutters my-0 myt-bg-blue">
+        <div class="col no-gutters my-0">
+          <table class="table table-bordered my-0 mytx-center myc-white">
+            <thead><tr><th><h4>表头</h4></th></tr></thead>
+          </table>
+        </div>
+      </div>
+      <div class="row no-gutters my-0 myt-body">
+        <div class="col-lg-6 col-12 no-gutters myt-left mymt-n1">
+          <table class="table table-bordered my-0 mytx-center">
+            <tbody>
+              <tr>
+                <td style="width: 30%;">第1-1列</td>
+                <td style="width: 70%;">第1-2列</td>
+              </tr>
+              <tr>
+                <td style="width: 30%;">第2-1列</td>
+                <td style="width: 70%;">第2-2列</td>
+              </tr>
+              <tr>
+                <td style="width: 30%;">第3-1列</td>
+                <td style="width: 70%;">第3-2列</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-lg-6 col-12 no-gutters myt-right mymt-n1">
+          <table class="table table-bordered my-0 mytx-center">
+            <tbody>
+              <tr>
+                <td style="width: 30%;">第1-3列</td>
+                <td style="width: 70%;">第2-4列</td>
+              </tr>
+              <tr>
+                <td style="width: 30%;">第2-3列</td>
+                <td style="width: 70%;">第2-4列</td>
+              </tr>
+              <tr>
+                <td style="width: 30%;">第3-3列</td>
+                <td style="width: 70%;">第3-4列</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
