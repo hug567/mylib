@@ -3,7 +3,9 @@
 ## 1）、在线编译：
 
 ```bash
+# 下载源码：
 git clone https://git.busybox.net/buildroot
+# 或：
 git clone https://github.com/buildroot/buildroot.git
 cd buildroot
 # 图形化配置：
